@@ -1,0 +1,170 @@
+/* Dashboard specific styles */
+
+/* Container for summary cards */
+#summary-counts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive grid */
+    gap: 1.5rem; /* Increased gap */
+    margin-bottom: 2.5rem; /* Increased margin */
+}
+
+.summary-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: left; /* Align text to left for a more standard card layout */
+    box-shadow: 0 1px 3px var(--shadow-color);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex; /* For icon and text alignment */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+.summary-card .icon {
+    font-size: 1.8rem; /* Adjusted icon size */
+    margin-bottom: 0.8rem;
+    color: var(--primary-color);
+    width: 40px; /* Give icon a fixed width for alignment */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(74, 144, 226, 0.1); /* Light primary background for icon */
+    border-radius: 50%;
+}
+
+.summary-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+    font-size: 1rem; /* Slightly smaller title */
+    color: var(--text-light); /* Lighter text for title */
+    font-weight: 500;
+}
+
+.summary-card .count {
+    font-size: 1.8rem; /* Adjusted count size */
+    font-weight: 600; /* Bold count */
+    color: var(--text-color); /* Standard text color for count */
+    line-height: 1.2;
+}
+
+/* Ontology Details Container and Sections */
+#ontology-details-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Each section takes full width initially */
+    gap: 2rem;
+    margin-top: 1rem; /* Space above the ontology details */
+}
+
+.ontology-section {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.ontology-section h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem; /* Increased space below title */
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color); /* Accent border */
+    padding-bottom: 0.6rem;
+    font-weight: 600;
+}
+
+.ontology-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ontology-item {
+    padding: 0.8rem 0; /* Vertical padding */
+    border-bottom: 1px solid #f0f0f0; /* Lighter separator */
+}
+
+.ontology-item:last-child {
+    border-bottom: none;
+}
+
+.ontology-item strong {
+    font-weight: 500; /* Medium weight for item name */
+    color: var(--text-color);
+    font-size: 1.05rem;
+    display: block; /* Name on its own line */
+    margin-bottom: 0.25rem;
+}
+
+.ontology-item p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+}
+
+
+/* Recent Activity Feed */
+.recent-activity {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.recent-activity h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.recent-activity ul {
+    list-style-type: none;
+    padding: 0;
+    max-height: 350px; /* Slightly taller scrollable list */
+    overflow-y: auto;
+}
+
+.recent-activity li {
+    padding: 0.8rem 0.5rem; /* Added horizontal padding */
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recent-activity li:last-child {
+    border-bottom: none;
+}
+
+.recent-activity .log-timestamp {
+    font-size: 0.8rem;
+    color: #888; /* Slightly darker timestamp */
+    white-space: nowrap; /* Prevent timestamp from wrapping */
+    margin-left: 1rem;
+}
+
+/* General dashboard section styling */
+.dashboard-section {
+    grid-column: 1 / -1; /* Make sections like recent activity span full width */
+}
+
+/* Responsive adjustments for ontology details if needed */
+@media (min-width: 992px) { /* For larger screens, maybe 2 columns for ontology sections */
+    #ontology-details-container {
+        /* Example: grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
+        /* Keeping it single column for now for simplicity, can be adjusted */
+    }
+}

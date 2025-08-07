@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Role</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="role-architecture-mini.css">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        .tox-notifications-container {
+            bottom: 0 !important;
+            top: auto !important;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            tinymce.init({
+                selector: '#job-description, #key-responsibilities, #decision-scope, #kpis-outcomes',
+                plugins: 'lists link image help wordcount',
+                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | help',
+                promotion: false
+            });
+
+            // Info-icon click functionality
+            document.querySelectorAll('.info-icon').forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const targetId = icon.getAttribute('data-target');
+                    const descriptionBox = document.getElementById(`${targetId}-description`);
+                    if (descriptionBox) {
+                        const isVisible = descriptionBox.style.display === 'block';
+                        descriptionBox.style.display = isVisible ? 'none' : 'block';
+                        descriptionBox.textContent = isVisible ? '' : icon.getAttribute('data-tooltip');
+                    }
+                });
+            });
+
+            const skills = new Set();
+            const tagsDisplay = document.getElementById('tags-display');
+            const skillsTableBody = document.querySelector('#skills-table tbody');
+            const skillInput = document.getElementById('skill-tags-input');
+            const addSkillBtn = document.getElementById('add-skill-btn');
+
+            function addSkill(skillName, minProficiency = 'Intermediate', targetProficiency = 'Advanced') {
+                const skill = skillName.trim();
+                if (skill && !skills.has(skill)) {
+                    skills.add(skill);
+
+                    // Add tag
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = skill;
+                    tag.addEventListener('click', () => removeSkill(skill));
+                    tagsDisplay.appendChild(tag);
+
+                    // Add to table
+                    const skillId = skill.replace(/\s/g, '-');
+                    const newRow = document.createElement('tr');
+                    newRow.id = `skill-row-${skillId}`;
+                    newRow.innerHTML = `
+                        <td class="skill-name">${skill}</td>
+                        <td class="skill-level">
+                            <select id="skill-min-proficiency-${skillId}">
+                                <option value="Basic">Basic</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </td>
+                        <td class="skill-level">
+                            <select id="skill-target-proficiency-${skillId}">
+                                <option value="Basic">Basic</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </td>
+                        <td><!-- Placeholder for actions --></td>
+                    `;
+                    skillsTableBody.appendChild(newRow);
+                    document.getElementById(`skill-min-proficiency-${skillId}`).value = minProficiency;
+                    document.getElementById(`skill-target-proficiency-${skillId}`).value = targetProficiency;
+                }
+                skillInput.value = '';
+            }
+
+            function removeSkill(skillName) {
+                const skill = skillName.trim();
+                if (skills.has(skill)) {
+                    skills.delete(skill);
+
+                    // Remove tag
+                    const tagToRemove = Array.from(tagsDisplay.children).find(tag => tag.textContent === skill);
+                    if (tagToRemove) {
+                        tagsDisplay.removeChild(tagToRemove);
+                    }
+
+                    // Remove from table
+                    const skillId = skill.replace(/\s/g, '-');
+                    const skillRowToRemove = document.getElementById(`skill-row-${skillId}`);
+                    if (skillRowToRemove) {
+                        skillsTableBody.removeChild(skillRowToRemove);
+                    }
+                }
+            }
+
+            function addNewSkillRow() {
+                if (document.querySelector('.temp-skill-row')) return; // Prevent multiple temp rows
+
+                const skillsTableBody = document.querySelector('#skills-table tbody');
+                const tempRow = skillsTableBody.insertRow(0); // Insert at the top
+                tempRow.classList.add('temp-skill-row');
+
+                tempRow.innerHTML = `
+                    <td class="skill-name">
+                        <input type="text" class="form-input" placeholder="Enter skill...">
+                    </td>
+                    <td class="skill-level">
+                        <select class="form-input">
+                            <option value="Basic">Basic</option>
+                            <option value="Intermediate" selected>Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </td>
+                    <td class="skill-level">
+                        <select class="form-input">
+                            <option value="Basic">Basic</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced" selected>Advanced</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm btn-save-skill">Save</button>
+                        <button type="button" class="btn btn-secondary btn-sm btn-cancel-skill">Cancel</button>
+                    </td>
+                `;
+
+                const input = tempRow.querySelector('input[type="text"]');
+                const saveBtn = tempRow.querySelector('.btn-save-skill');
+                const cancelBtn = tempRow.querySelector('.btn-cancel-skill');
+                const selects = tempRow.querySelectorAll('select');
+
+                input.focus();
+
+                const saveAndClose = () => {
+                    const skillName = input.value.trim();
+                    if (skillName) {
+                        if (!skills.has(skillName)) {
+                            addSkill(skillName, selects[0].value, selects[1].value);
+                        } else {
+                            alert('This skill has already been added.');
+                        }
+                    }
+                    tempRow.remove();
+                };
+
+                saveBtn.addEventListener('click', saveAndClose);
+                cancelBtn.addEventListener('click', () => tempRow.remove());
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        saveAndClose();
+                    }
+                });
+            }
+
+            addSkillBtn.addEventListener('click', addNewSkillRow);
+            skillInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill(skillInput.value);
+                }
+            });
+
+            const data = {
+    "role": {
+        "roleTitle": "Senior Full Stack Engineer",
+        "roleSummary": "A Senior Full Stack Engineer is responsible for designing, developing, and maintaining our web applications from end to end. This role requires a blend of front-end and back-end expertise, a passion for creating seamless user experiences, and the ability to lead complex technical projects.",
+        "jobFamily": "Software Engineering",
+        "roleGroup": "Full Stack",
+        "department": "Engineering",
+        "businessUnit": "Core Platform",
+        "roleCode": "ENG-FS-IC04",
+        "createdDate": "2025-07-22",
+
+        "levelStructure": {
+            "level": "Individual Contributor",
+            "grade": "IC04",
+            "seniorityLabel": "Senior",
+            "careerTrack": "Technical",
+            "employmentType": "Full-time",
+            "locationType": "Hybrid"
+        },
+
+        "descriptionAndResponsibilities": {
+            "jobDescription": "<ul><li>As a Senior Full Stack Engineer, you will be a key member of our engineering team, responsible for the entire software development lifecycle of our products.</li><li>You will work on both client-side and server-side technologies to build scalable, high-performance applications.</li><li>This role demands a strong technical background, excellent problem-solving skills, and the ability to mentor other engineers.</li><li>You will be expected to take ownership of major features, make critical architectural decisions, and contribute to a culture of quality and continuous improvement.</li></ul>",
+            "keyResponsibilities": [
+                "Design, develop, and deploy scalable and maintainable web applications using modern technologies.",
+                "Collaborate with product managers, designers, and other engineers to define and implement new features.",
+                "Write clean, efficient, and well-documented code for both front-end and back-end components.",
+                "Lead technical design discussions and contribute to architectural decisions.",
+                "Mentor junior and mid-level engineers, providing guidance and support through code reviews and pair programming.",
+                "Optimize applications for maximum speed, scalability, and reliability.",
+                "Troubleshoot and resolve complex technical issues in production and development environments.",
+                "Stay up-to-date with emerging technologies and industry best practices."
+            ],
+            "decisionScope": "<ul><li>This role has significant autonomy in making technical decisions related to feature development, component architecture, and technology selection for the projects they lead.</li><li>They are expected to own the technical roadmap for their features and make recommendations that align with the broader engineering strategy.</li></ul>"
+        },
+
+        "skillsAndCapabilities": {
+            "skillTags": ["JavaScript", "TypeScript", "React", "Node.js", "Python", "Django", "PostgreSQL", "AWS", "Docker", "Kubernetes"],
+            "skillProficiency": [
+                { "skill": "JavaScript", "minProficiency": "Advanced", "targetProficiency": "Expert" },
+                { "skill": "TypeScript", "minProficiency": "Intermediate", "targetProficiency": "Advanced" },
+                { "skill": "React", "minProficiency": "Advanced", "targetProficiency": "Expert" },
+                { "skill": "Node.js", "minProficiency": "Advanced", "targetProficiency": "Expert" },
+                { "skill": "Python", "minProficiency": "Intermediate", "targetProficiency": "Advanced" },
+                { "skill": "Django", "minProficiency": "Basic", "targetProficiency": "Intermediate" },
+                { "skill": "PostgreSQL", "minProficiency": "Intermediate", "targetProficiency": "Advanced" },
+                { "skill": "AWS", "minProficiency": "Intermediate", "targetProficiency": "Advanced" },
+                { "skill": "Docker", "minProficiency": "Intermediate", "targetProficiency": "Advanced" },
+                { "skill": "Kubernetes", "minProficiency": "Basic", "targetProficiency": "Intermediate" }
+            ],
+            "toolsAndTechnologies": ["Git", "GitHub", "Jira", "Confluence", "Jenkins", "Terraform", "Postman", "Webpack", "Babel"],
+            "certifications": ["AWS Certified Solutions Architect - Associate", "Certified Kubernetes Application Developer (CKAD)"],
+            "learningResources": [
+                {
+                    "name": "Designing Data-Intensive Applications by Martin Kleppmann",
+                    "url": "https://www.amazon.com/Designing-Data-Intensive-Applications-Reliable-Maintainable/dp/1449373321"
+                },
+                {
+                    "name": "Advanced Node.js - Pluralsight",
+                    "url": "https://www.pluralsight.com/courses/advanced-nodejs"
+                }
+            ]
+        },
+
+        "performanceAndGrowth": {
+            "kpis": [
+                "Code quality and maintainability (measured by code reviews and static analysis tools).",
+                "On-time delivery of features and projects.",
+                "System performance and reliability (uptime, latency, error rates).",
+                "Mentorship effectiveness (feedback from mentees).",
+                "Reduction in technical debt."
+            ],
+            "impactAreas": ["Product Innovation", "Technical Leadership", "Team Mentorship", "Platform Stability"],
+            "competencies": ["Technical Expertise", "Leadership", "Communication", "Problem Solving", "Collaboration", "Adaptability"],
+            "careerPathNextRoles": ["Staff Engineer", "Engineering Manager", "Principal Architect"],
+            "feederRoles": ["Mid-Level Full Stack Engineer", "Senior Backend Engineer", "Senior Frontend Engineer"],
+            "mobilityOptions": ["Move to a specialized role such as Site Reliability Engineer (SRE) or a solutions architect role."]
+        },
+
+        "adminMeta": {
+            "createdBy": "hr.admin@example.com",
+            "lastUpdated": "2025-07-22T18:00:00Z",
+            "status": "Active",
+            "approvalStatus": "Approved"
+        }
+    }
+};
+
+            function populateForm() {
+                // Populate Role Overview
+                document.getElementById('role-title').value = data.role.roleTitle;
+                document.getElementById('role-summary').value = data.role.roleSummary;
+                document.getElementById('job-family').value = data.role.jobFamily;
+                document.getElementById('role-group').value = data.role.roleGroup;
+                document.getElementById('department').value = data.role.department;
+                document.getElementById('business-unit').value = data.role.businessUnit;
+                document.getElementById('role-code').value = data.role.roleCode;
+                document.getElementById('created-date').value = data.role.createdDate;
+
+                // Populate Level & Structure
+                document.getElementById('level').value = data.role.levelStructure.level;
+                document.getElementById('grade').value = data.role.levelStructure.grade;
+                document.getElementById('seniority-label').value = data.role.levelStructure.seniorityLabel;
+                document.getElementById('career-track').value = data.role.levelStructure.careerTrack;
+                document.getElementById('employment-type').value = data.role.levelStructure.employmentType;
+                document.getElementById('location-type').value = data.role.levelStructure.locationType;
+
+                // Populate Responsibilities & Description
+                document.getElementById('job-description').value = data.role.descriptionAndResponsibilities.jobDescription;
+                document.getElementById('key-responsibilities').value = '<ul><li>' + data.role.descriptionAndResponsibilities.keyResponsibilities.join('</li><li>') + '</li></ul>';
+                document.getElementById('decision-scope').value = data.role.descriptionAndResponsibilities.decisionScope;
+
+                // Populate Skills & Capabilities
+                data.role.skillsAndCapabilities.skillProficiency.forEach(skillProf => {
+                    addSkill(skillProf.skill, skillProf.minProficiency, skillProf.targetProficiency);
+                });
+                document.getElementById('tools-technologies').value = data.role.skillsAndCapabilities.toolsAndTechnologies.join(', ');
+                document.getElementById('certifications').value = data.role.skillsAndCapabilities.certifications.join(', ');
+                document.getElementById('learning-resources').value = '<ul><li>' + data.role.skillsAndCapabilities.learningResources.map(lr => `${lr.name}: ${lr.url}`).join('</li><li>') + '</li></ul>';
+
+                // Populate Performance & Growth
+                document.getElementById('kpis-outcomes').value = '<ul><li>' + data.role.performanceAndGrowth.kpis.join('</li><li>') + '</li></ul>';
+                document.getElementById('impact-areas').value = data.role.performanceAndGrowth.impactAreas.join(', ');
+                document.getElementById('competencies').value = data.role.performanceAndGrowth.competencies.join(', ');
+                document.getElementById('career-path-next-roles').value = data.role.performanceAndGrowth.careerPathNextRoles.join(', ');
+                document.getElementById('feeder-roles').value = data.role.performanceAndGrowth.feederRoles.join(', ');
+                document.getElementById('mobility-options').value = data.role.performanceAndGrowth.mobilityOptions.join(', ');
+
+                // Populate Admin Metadata
+                document.getElementById('created-by').value = data.role.adminMeta.createdBy;
+                document.getElementById('last-updated').value = new Date(data.role.adminMeta.lastUpdated).toLocaleString();
+                document.getElementById('status').value = data.role.adminMeta.status;
+                document.getElementById('approval-status').value = data.role.adminMeta.approvalStatus;
+            }
+
+            const steps = document.querySelectorAll('.step');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const nextBtn = document.getElementById('next-btn');
+            const backBtn = document.getElementById('back-btn');
+            let currentStep = 1;
+
+            function showStep(stepNumber) {
+                // Hide all tab contents
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Deactivate all steps
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+
+                // Show the current tab content
+                document.getElementById(`step-${stepNumber}`).classList.add('active');
+
+                // Activate the current step
+                const currentStepElement = document.querySelector(`.step[data-step="${stepNumber}"]`);
+                if (currentStepElement) {
+                    currentStepElement.classList.add('active');
+                }
+
+                // Update button visibility
+                if (stepNumber === 1) {
+                    backBtn.style.display = 'none';
+                } else {
+                    backBtn.style.display = 'inline-block';
+                }
+
+                if (stepNumber === steps.length - 1) {
+                    nextBtn.textContent = 'Finish';
+                } else if (stepNumber === steps.length) {
+                    nextBtn.style.display = 'none';
+                }
+                else {
+                    nextBtn.textContent = 'Next';
+                }
+            }
+
+            function goToNextStep() {
+                if (currentStep < steps.length) {
+                    currentStep++;
+                    showStep(currentStep);
+                } else {
+                    // Handle form submission
+                    alert('Form submitted!');
+                }
+            }
+            function populateReview() {
+                // Helper function to create summary items
+                function createSummaryItem(label, value, step, isHighlighted = false) {
+                    const item = document.createElement('div');
+                    item.className = 'summary-item';
+                    
+                    let valueHTML = Array.isArray(value) ? value.join(', ') : value;
+
+                    item.innerHTML = `
+                        <div class="summary-label">${label}</div>
+                        <div class="summary-value ${isHighlighted ? 'highlight' : ''}">${valueHTML}</div>
+                        <a href="#" class="edit-link" data-step="${step}">Edit</a>
+                    `;
+                    item.querySelector('.edit-link').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showStep(step);
+                    });
+                    return item;
+                }
+
+                // Clear previous summary
+                const reviewContent = document.getElementById('review-content');
+                reviewContent.innerHTML = '';
+
+                // Company Job Architecture
+                const architectureNode = document.createElement('div');
+                architectureNode.className = 'summary-node';
+                architectureNode.setAttribute('data-tooltip', 'The overall structure of jobs within the company.');
+                architectureNode.innerHTML = '<h3>Company Job Architecture</h3>';
+                
+                // Job Family
+                const jobFamily = document.getElementById('job-family').value;
+                const jobFamilyNode = document.createElement('div');
+                jobFamilyNode.className = 'summary-node ml-4';
+                jobFamilyNode.setAttribute('data-tooltip', 'A broad group of jobs with similar characteristics.');
+                jobFamilyNode.appendChild(createSummaryItem('Job Family', jobFamily, 1));
+                
+                // Job Profile (using Role Title as proxy)
+                const roleTitle = document.getElementById('role-title').value;
+                const jobProfileNode = document.createElement('div');
+                jobProfileNode.className = 'summary-node ml-4';
+                jobProfileNode.setAttribute('data-tooltip', 'A specific job within a job family.');
+                jobProfileNode.appendChild(createSummaryItem('Job Profile', roleTitle, 1, true));
+
+                // Responsibilities & Description
+                const jobDescription = document.getElementById('job-description').value.substring(0, 100) + '...';
+                const keyResponsibilities = data.role.descriptionAndResponsibilities.keyResponsibilities.slice(0, 3).join(', ') + '...';
+                const decisionScope = document.getElementById('decision-scope').value.substring(0, 100) + '...';
+
+                const responsibilitiesNode = document.createElement('div');
+                responsibilitiesNode.className = 'summary-node ml-4';
+                responsibilitiesNode.setAttribute('data-tooltip', 'The duties and tasks associated with the job profile.');
+                responsibilitiesNode.appendChild(createSummaryItem('Job Description', jobDescription, 3));
+                responsibilitiesNode.appendChild(createSummaryItem('Key Responsibilities', keyResponsibilities, 3));
+                responsibilitiesNode.appendChild(createSummaryItem('Decision Scope', decisionScope, 3));
+                jobProfileNode.appendChild(responsibilitiesNode);
+
+                // Job Level
+                const jobLevel = document.getElementById('grade').value;
+                const jobLevelNode = document.createElement('div');
+                jobLevelNode.className = 'summary-node ml-4';
+                jobLevelNode.setAttribute('data-tooltip', "The level of the job within the company's hierarchy.");
+                jobLevelNode.appendChild(createSummaryItem('Job Level', jobLevel, 2));
+
+                // Role Group
+                const roleGroup = document.getElementById('role-group').value;
+                const roleGroupNode = document.createElement('div');
+                roleGroupNode.className = 'summary-node ml-4';
+                roleGroupNode.setAttribute('data-tooltip', 'A more specific grouping of roles within a job profile.');
+                roleGroupNode.appendChild(createSummaryItem('Role Group', roleGroup, 1));
+
+                // Role Group Skills
+                const roleGroupSkills = Array.from(skills).join(', ');
+                const roleGroupSkillsNode = document.createElement('div');
+                roleGroupSkillsNode.className = 'summary-node ml-4';
+                roleGroupSkillsNode.setAttribute('data-tooltip', 'The skills required for the role group.');
+                roleGroupSkillsNode.appendChild(createSummaryItem('Role Group Skills', roleGroupSkills, 4, true));
+
+                // Role Level
+                const roleLevel = `${document.getElementById('seniority-label').value} ${document.getElementById('role-group').value} - ${document.getElementById('grade').value}`;
+                const roleLevelNode = document.createElement('div');
+                roleLevelNode.className = 'summary-node ml-4';
+                roleLevelNode.setAttribute('data-tooltip', 'The specific level of the role, combining seniority and role group.');
+                roleLevelNode.appendChild(createSummaryItem('Role Level', roleLevel, 2, true));
+
+                // Role Level Skills
+                const roleLevelSkillsNode = document.createElement('div');
+                roleLevelSkillsNode.className = 'summary-node ml-4';
+                roleLevelSkillsNode.setAttribute('data-tooltip', 'The skills and proficiency levels required for this specific role level.');
+                roleLevelSkillsNode.innerHTML = '<h3>Role Level Skills</h3>';
+
+                Array.from(document.querySelectorAll('#skills-table tbody tr')).forEach(row => {
+                    const skill = row.querySelector('.skill-name').textContent;
+                    const minProficiency = row.querySelector('select[id^="skill-min-proficiency-"]').value;
+                    const targetProficiency = row.querySelector('select[id^="skill-target-proficiency-"]').value;
+                    roleLevelSkillsNode.appendChild(createSummaryItem(skill, `Min: ${minProficiency}, Target: ${targetProficiency}`, 4, true));
+                });
+
+                // Build hierarchy
+                roleGroupNode.appendChild(roleGroupSkillsNode);
+                roleGroupNode.appendChild(roleLevelNode);
+                roleLevelNode.appendChild(roleLevelSkillsNode);
+                jobLevelNode.appendChild(roleGroupNode);
+                jobProfileNode.appendChild(jobLevelNode);
+                jobFamilyNode.appendChild(jobProfileNode);
+                architectureNode.appendChild(jobFamilyNode);
+                reviewContent.appendChild(architectureNode);
+            }
+
+            // Call populateReview when entering step 7
+            const originalShowStep = showStep;
+            showStep = function(stepNumber) {
+                originalShowStep(stepNumber);
+                if (stepNumber === 7) {
+                    populateReview();
+                }
+            };
+
+            function goToPrevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            }
+
+            // Add event listeners to buttons
+            nextBtn.addEventListener('click', goToNextStep);
+            backBtn.addEventListener('click', goToPrevStep);
+
+            // Add event listeners to stepper
+            steps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNumber = parseInt(step.getAttribute('data-step'));
+                    currentStep = stepNumber;
+                    showStep(currentStep);
+                });
+            });
+
+            // Initial setup
+            showStep(currentStep);
+            populateForm();
+
+            // Modal functionality
+            const modal = document.getElementById('info-modal');
+            const btn = document.getElementById('info-btn');
+            const span = document.getElementsByClassName('close-btn')[0];
+
+            btn.onclick = function() {
+                modal.style.display = 'block';
+            }
+
+            span.onclick = function() {
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    <header class="main-header">
+        <a href="/index.html" class="home-link">Home</a>
+    </header>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div class="header-text">
+                <h1>Add New Role</h1>
+                <p>Define a new role within the organization.</p>
+            </div>
+            <button id="info-btn" class="btn btn-info">Info</button>
+        </header>
+
+        <div id="info-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Why a Detailed Job Profile Matters</h2>
+                <p>A detailed job profile provides immense value that goes far beyond just filling a vacant position. Here’s how it benefits everyone:</p>
+                <img src="/Images/tip.jpg" alt="Talent Intelligence Solutions Roadmap" style="width: 100%; border-radius: 8px; margin: 16px 0;">
+                
+                <h3>For Employees: Clarity and Growth</h3>
+                <p><strong>Unprecedented Clarity:</strong> A detailed profile outlines responsibilities, decision scope, and KPIs, eliminating ambiguity. This ensures employees know what is expected of them from day one.</p>
+                <p><strong>Career Roadmap:</strong> It provides a clear path for growth, showing the required skills and target proficiency levels for advancement. This is a powerful tool for engagement and retention.</p>
+                <p><strong>Pay Equity:</strong> Standardizing roles at this level of detail ensures that employees with the same grade have similar expectations and impact scopes, which is fundamental to fair compensation.</p>
+
+                <h3>For Managers: Simplified People Management</h3>
+                <p><strong>Better Hiring:</strong> Managers can conduct more focused interviews by asking questions directly related to the defined skills and competencies.</p>
+                <p><strong>Objective Performance Reviews:</strong> Performance conversations are grounded in documented KPIs and skill targets, rather than subjective feelings.</p>
+                <p><strong>Consistent Team Structure:</strong> It helps managers build balanced teams by clearly defining the differences between roles at various levels (e.g., IC3, IC4, IC5).</p>
+
+                <h3>For Organizations: Strategic Talent Management</h3>
+                <p><strong>Data-Driven Decisions:</strong> Structured data from detailed role profiles enables powerful analytics for identifying skill gaps, planning for future workforce needs, and managing compensation strategically.</p>
+                <p><strong>Internal Mobility:</strong> Clearly mapped skills and career paths make it easier to identify and promote internal candidates, which is cost-effective and boosts morale.</p>
+                <p><strong>Scalability:</strong> This disciplined approach ensures that as the organization grows, the structure remains coherent and roles stay consistent.</p>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <div class="card">
+                <h2>Add New Role</h2>
+                <p>This form allows you to define a new role within the organization.</p>
+                <div class="stepper">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Role Overview</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Level & Structure</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Responsibilities & Description</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Skills & Capabilities</div>
+                    </div>
+                    <div class="step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-title">Performance & Growth</div>
+                    </div>
+                    <div class="step" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-title">Admin Metadata</div>
+                    </div>
+                    <div class="step" data-step="7">
+                        <div class="step-number">7</div>
+                        <div class="step-title">Review & Edit</div>
+                    </div>
+                </div>
+                <form id="add-role-form-inline">
+                    <!-- STEP 1: Role Overview -->
+                    <div id="step-1" class="tab-content active">
+                        <div class="details-section">
+                            <h3>Role Overview</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="role-title">Role Title <i class="info-icon" data-tooltip="The official title of the role." data-target="role-title">i</i></label>
+                                    <input type="text" id="role-title" class="form-input" placeholder="Enter role title" required maxlength="100" value="">
+                                    <div class="description-box" id="role-title-description"></div>
+                                </div>
+                                <div class="form-group form-group-full-width">
+                                    <label for="role-summary">Role Summary <i class="info-icon" data-tooltip="A brief, high-level summary of the role's purpose and key responsibilities." data-target="role-summary">i</i></label>
+                                    <textarea id="role-summary" class="form-input" rows="2" maxlength="300" placeholder="A brief 2-3 sentence summary"></textarea>
+                                    <div class="description-box" id="role-summary-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="job-family">Job Family <i class="info-icon" data-tooltip="A grouping of jobs with similar functions and skills (e.g., Engineering, Marketing)." data-target="job-family">i</i></label>
+                                    <select id="job-family" class="form-input" required>
+                                        <option value="">Select Job Family</option>
+                                        <option value="Software Engineering">Software Engineering</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Human Resources">Human Resources</option>
+                                        <option value="Data & Analytics">Data & Analytics</option>
+                                        <option value="Product Management">Product Management</option>
+                                    </select>
+                                    <div class="description-box" id="job-family-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role-group">Role Group <i class="info-icon" data-tooltip="A more specific grouping within a Job Family (e.g., Frontend, Backend)." data-target="role-group">i</i></label>
+                                    <select id="role-group" class="form-input" required>
+                                        <option value="">Select Role Group</option>
+                                        <option value="Front-end">Front-end</option>
+                                        <option value="QA">QA</option>
+                                        <option value="DevOps">DevOps</option>
+                                        <option value="Data">Data</option>
+                                        <option value="Backend">Backend</option>
+                                        <option value="Full Stack">Full Stack</option>
+                                    </select>
+                                    <div class="description-box" id="role-group-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="department">Department <i class="info-icon" data-tooltip="The department this role belongs to." data-target="department">i</i></label>
+                                    <select id="department" class="form-input">
+                                        <option value="">Select Department</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Product">Product</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                    </select>
+                                    <div class="description-box" id="department-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="business-unit">Business Unit <i class="info-icon" data-tooltip="The business unit or division this role supports." data-target="business-unit">i</i></label>
+                                    <input type="text" id="business-unit" class="form-input" placeholder="e.g., Consumer Tech" value="">
+                                    <div class="description-box" id="business-unit-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role-code">Role Code / ID <i class="info-icon" data-tooltip="A unique identifier for the role, often auto-generated." data-target="role-code">i</i></label>
+                                    <input type="text" id="role-code" class="form-input" value="ENG-FE-IC03" readonly>
+                                    <div class="description-box" id="role-code-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="created-date">Created Date <i class="info-icon" data-tooltip="The date this role definition was created." data-target="created-date">i</i></label>
+                                    <input type="date" id="created-date" class="form-input" value="2025-07-22">
+                                    <div class="description-box" id="created-date-description"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 2: Level & Structure -->
+                    <div id="step-2" class="tab-content">
+                        <div class="details-section">
+                            <h3>Level & Structure</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="level">Level <i class="info-icon" data-tooltip="The overall level of the role (e.g., Individual Contributor, Manager)." data-target="level">i</i></label>
+                                    <select id="level" class="form-input" required>
+                                        <option value="">Select Level</option>
+                                        <option value="Individual Contributor">Individual Contributor</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Executive">Executive</option>
+                                        <option value="Support">Support</option>
+                                    </select>
+                                    <div class="description-box" id="level-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="grade">Grade <i class="info-icon" data-tooltip="A specific grade or level within the company's leveling system." data-target="grade">i</i></label>
+                                    <select id="grade" class="form-input" required>
+                                        <option value="">Select Grade</option>
+                                        <option value="IC01">IC01</option>
+                                        <option value="IC02">IC02</option>
+                                        <option value="IC03">IC03</option>
+                                        <option value="IC04">IC04</option>
+                                        <option value="IC05">IC05</option>
+                                        <option value="M01">M01</option>
+                                        <option value="M02">M02</option>
+                                        <option value="M03">M03</option>
+                                        <option value="E01">E01</option>
+                                        <option value="E02">E02</option>
+                                        <option value="E03">E03</option>
+                                    </select>
+                                    <div class="description-box" id="grade-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="seniority-label">Seniority Label <i class="info-icon" data-tooltip="A label indicating the seniority of the role (e.g., Junior, Senior, Lead)." data-target="seniority-label">i</i></label>
+                                    <select id="seniority-label" class="form-input">
+                                        <option value="">Select Seniority</option>
+                                        <option value="Junior">Junior</option>
+                                        <option value="Mid">Mid</option>
+                                        <option value="Senior">Senior</option>
+                                        <option value="Lead">Lead</option>
+                                        <option value="Principal">Principal</option>
+                                    </select>
+                                    <div class="description-box" id="seniority-label-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="career-track">Career Track <i class="info-icon" data-tooltip="The career path this role is on (e.g., Technical, Managerial)." data-target="career-track">i</i></label>
+                                    <select id="career-track" class="form-input">
+                                        <option value="">Select Career Track</option>
+                                        <option value="Technical">Technical</option>
+                                        <option value="Managerial">Managerial</option>
+                                        <option value="Support">Support</option>
+                                        <option value="Executive">Executive</option>
+                                    </select>
+                                    <div class="description-box" id="career-track-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employment-type">Employment Type <i class="info-icon" data-tooltip="The type of employment for this role (e.g., Full-time, Contractor)." data-target="employment-type">i</i></label>
+                                    <select id="employment-type" class="form-input" required>
+                                        <option value="">Select Employment Type</option>
+                                        <option value="Full-time">Full-time</option>
+                                        <option value="Part-time">Part-time</option>
+                                        <option value="Contractor">Contractor</option>
+                                        <option value="Intern">Intern</option>
+                                    </select>
+                                    <div class="description-box" id="employment-type-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location-type">Location Type <i class="info-icon" data-tooltip="The location policy for this role (e.g., On-site, Remote, Hybrid)." data-target="location-type">i</i></label>
+                                    <select id="location-type" class="form-input">
+                                        <option value="">Select Location Type</option>
+                                        <option value="On-site">On-site</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                    </select>
+                                    <div class="description-box" id="location-type-description"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 3: Responsibilities & Description -->
+                    <div id="step-3" class="tab-content">
+                        <div class="details-section">
+                            <h3>Responsibilities & Description</h3>
+                            <div class="form-group form-group-full-width">
+                                <label for="job-description">Job Description <i class="info-icon" data-tooltip="A detailed description of the role's responsibilities, impact, and context." data-target="job-description">i</i></label>
+                                <textarea id="job-description" class="form-input" rows="5" maxlength="3000" placeholder="Full narrative of the role’s responsibilities, impact, and context."></textarea>
+                                <div class="description-box" id="job-description-description"></div>
+                            </div>
+                            <div class="form-group form-group-full-width">
+                                <label for="key-responsibilities">Key Responsibilities <i class="info-icon" data-tooltip="A list of the most important tasks and duties for this role." data-target="key-responsibilities">i</i></label>
+                                <textarea id="key-responsibilities" class="form-input" rows="4" placeholder="List of the role’s most important tasks and responsibilities (4-8 entries recommended, min 3, max 10). Separate with new lines or bullet points."></textarea>
+                                <div class="description-box" id="key-responsibilities-description"></div>
+                            </div>
+                            <div class="form-group form-group-full-width">
+                                <label for="decision-scope">Decision Scope <i class="info-icon" data-tooltip="The areas where this role has decision-making authority." data-target="decision-scope">i</i></label>
+                                <textarea id="decision-scope" class="form-input" rows="3" maxlength="500" placeholder="Defines what this role owns or can make decisions on."></textarea>
+                                <div class="description-box" id="decision-scope-description"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 4: Skills & Capabilities -->
+                    <div id="step-4" class="tab-content">
+                        <div class="details-section">
+                            <h3>Skills & Capabilities</h3>
+                            <div class="form-group form-group-full-width">
+                                <label for="skill-tags">Skills & Proficiency <i class="info-icon" data-tooltip="The skills required for this role and their required proficiency levels." data-target="skill-tags">i</i></label>
+                                <div id="tags-display" class="tags-display">
+                                    <!-- Skill tags will be dynamically added here -->
+                                </div>
+                                <input type="text" id="skill-tags-input" class="form-input" placeholder="Type a skill and press Enter (e.g., JavaScript, React, SQL)" value="">
+                                <table id="skills-table" class="skills-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Skill</th>
+                                            <th>Minimum Proficiency</th>
+                                            <th>Target Proficiency</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Skill rows will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                                <button type="button" id="add-skill-btn" class="add-skill-btn">+ Add New Skill</button>
+                                <div class="description-box" id="skill-tags-description"></div>
+                            </div>
+                            <div class="form-group form-group-full-width">
+                                <label for="tools-technologies">Tools & Technologies <i class="info-icon" data-tooltip="Specific tools and technologies used in this role." data-target="tools-technologies">i</i></label>
+                                <input type="text" id="tools-technologies" class="form-input" placeholder="e.g., GitHub, Postman, Figma. Separate with commas." value="">
+                                <div class="description-box" id="tools-technologies-description"></div>
+                            </div>
+                            <div class="form-group form-group-full-width">
+                                <label for="certifications">Certifications <i class="info-icon" data-tooltip="Any required or preferred certifications for this role." data-target="certifications">i</i></label>
+                                <input type="text" id="certifications" class="form-input" placeholder="e.g., AWS Certified Developer. Separate with commas." value="">
+                                <div class="description-box" id="certifications-description"></div>
+                            </div>
+                            <div class="form-group form-group-full-width">
+                                <label for="learning-resources">Learning Resources <i class="info-icon" data-tooltip="Recommended learning resources for this role." data-target="learning-resources">i</i></label>
+                                <textarea id="learning-resources" class="form-input" rows="3" placeholder="URLs or text for learning resources. Separate with commas."></textarea>
+                                <div class="description-box" id="learning-resources-description"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 5: Performance & Growth -->
+                    <div id="step-5" class="tab-content">
+                        <div class="details-section">
+                            <h3>Performance & Growth</h3>
+                            <div class="form-grid">
+                                <div class="form-group form-group-full-width">
+                                    <label for="kpis-outcomes">KPIs / Outcomes <i class="info-icon" data-tooltip="Key Performance Indicators (KPIs) or desired outcomes for measuring success in this role." data-target="kpis-outcomes">i</i></label>
+                                    <textarea id="kpis-outcomes" class="form-input" rows="3" placeholder="Defines what success looks like (max 5 entries). Separate with new lines or bullet points."></textarea>
+                                    <div class="description-box" id="kpis-outcomes-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="impact-areas">Impact Areas <i class="info-icon" data-tooltip="The primary areas where this role is expected to make an impact." data-target="impact-areas">i</i></label>
+                                    <input type="text" id="impact-areas" class="form-input" placeholder="e.g., Customer Experience, Product Delivery. Separate with commas." value="">
+                                    <div class="description-box" id="impact-areas-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="competencies">Competencies (Behavioral) <i class="info-icon" data-tooltip="The behavioral competencies required for this role (e.g., communication, teamwork)." data-target="competencies">i</i></label>
+                                    <input type="text" id="competencies" class="form-input" placeholder="e.g., Communication, Collaboration. Separate with commas." value="">
+                                    <div class="description-box" id="competencies-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="career-path-next-roles">Career Path – Next Roles <i class="info-icon" data-tooltip="Potential next steps or roles for someone in this position." data-target="career-path-next-roles">i</i></label>
+                                    <input type="text" id="career-path-next-roles" class="form-input" placeholder="Example roles this position can grow into. Separate with commas." value="">
+                                    <div class="description-box" id="career-path-next-roles-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="feeder-roles">Feeder Roles <i class="info-icon" data-tooltip="Roles that typically provide the experience needed for this position." data-target="feeder-roles">i</i></label>
+                                    <input type="text" id="feeder-roles" class="form-input" placeholder="Roles that typically lead into this one. Separate with commas." value="">
+                                    <div class="description-box" id="feeder-roles-description"></div>
+                                </div>
+                                <div class="form-group form-group-full-width">
+                                    <label for="mobility-options">Mobility Options <i class="info-icon" data-tooltip="Opportunities for lateral moves to other roles or teams." data-target="mobility-options">i</i></label>
+                                    <input type="text" id="mobility-options" class="form-input" placeholder="Lateral movement opportunities. Separate with commas." value="">
+                                    <div class="description-box" id="mobility-options-description"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 6: Admin Metadata -->
+                    <div id="step-6" class="tab-content">
+                        <div class="details-section">
+                            <h3>Admin Metadata</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="created-by">Created By / Owner <i class="info-icon" data-tooltip="The person who created or owns this role definition." data-target="created-by">i</i></label>
+                                    <input type="text" id="created-by" class="form-input" placeholder="Name or ID of creator" value="">
+                                    <div class="description-box" id="created-by-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-updated">Last Updated <i class="info-icon" data-tooltip="The date this role definition was last updated." data-target="last-updated">i</i></label>
+                                    <input type="text" id="last-updated" class="form-input" value="7/22/2025, 9:29:05 PM" readonly>
+                                    <div class="description-box" id="last-updated-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status <i class="info-icon" data-tooltip="The current status of the role (e.g., Active, Draft, Archived)." data-target="status">i</i></label>
+                                    <select id="status" class="form-input" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Draft">Draft</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Archived">Archived</option>
+                                    </select>
+                                    <div class="description-box" id="status-description"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="approval-status">Approval Status <i class="info-icon" data-tooltip="The approval status of the role definition." data-target="approval-status">i</i></label>
+                                    <select id="approval-status" class="form-input">
+                                        <option value="">Select Approval Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select>
+                                    <div class="description-box" id="approval-status-description"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- STEP 7: Review & Edit -->
+                    <div id="step-7" class="tab-content">
+                        <div class="details-section">
+                            <h3>Review & Edit</h3>
+                            <p>Review the summary of the role details below. Click "Edit" to jump to a specific step.</p>
+                            <div id="review-content" class="summary-container">
+                                <!-- Hierarchical summary will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <div class="role-details-footer">
+            <button id="back-btn" class="btn btn-secondary">Back</button>
+            <button id="next-btn" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+</body>
+<script>
+    // This script is now consolidated in the head
+</script>
+</html>

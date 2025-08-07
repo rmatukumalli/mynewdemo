@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review AI - Job Role Dashboard</title>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/dist/style.css">
+    <style>
+        /* * All styles are self-contained.
+         * The layout is based on a responsive Flexbox container.
+        */
+
+        /* 1. Base & Global Styles */
+        :root {
+            --primary-text: #1e293b;
+            --secondary-text: #475569;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text);
+            margin: 0;
+            padding: 1.5rem;
+        }
+
+        .dashboard-container {
+            max-width: 1280px;
+            margin: auto;
+        }
+
+        /* 2. Header Styles */
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+        .dashboard-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin: 0;
+        }
+        .dashboard-header p {
+            font-size: 1.125rem;
+            color: var(--secondary-text);
+            margin-top: 0.5rem;
+        }
+
+        /* 3. Card Flexbox Layout */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        /* 4. Card Styling */
+        .card {
+            background-color: var(--card-background);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 320px;
+            min-width: 320px;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+        }
+
+        /* 5. Specific Card Content Styles */
+        
+        /* KPI Cards */
+        .kpi-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1d4ed8;
+        }
+        .kpi-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary-text);
+        }
+
+        /* Key Metrics List */
+        .metrics-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .metrics-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        .metric-label { color: var(--secondary-text); }
+        .metric-value { font-weight: 700; font-size: 1.1rem; }
+        .metric-value.blue { color: #1d4ed8; }
+        .metric-value.green { color: #15803d; }
+        .metric-value.purple { color: #7e22ce; }
+
+        /* Chart Card */
+        .chart-container {
+            position: relative;
+            flex-grow: 1;
+        }
+        
+        /* AI Insight Tiles */
+        .info-tile {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .info-tile:last-child { margin-bottom: 0; }
+        .info-tile-icon { flex-shrink: 0; width: 1.5rem; height: 1.5rem; margin-top: 0.125rem; }
+        .info-tile h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.25rem 0; }
+        .info-tile p { font-size: 0.875rem; margin: 0; line-height: 1.4; }
+
+        .risk-tile { background-color: #fef2f2; color: #991b1b; }
+        .risk-tile svg { color: #dc2626; }
+        
+        .insight-tile { background-color: #eff6ff; color: #1e40af; }
+        .insight-tile svg { color: #2563eb; }
+
+        .action-tile { background-color: #f0fdf4; color: #166534; }
+        .action-tile svg { color: #16a34a; }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <h1>Job Role Dashboard: Captain (A320)</h1>
+            <p>AI-powered insights and metrics for the Captain role.</p>
+        </header>
+
+        <!-- Main Content using Flexbox -->
+        <div class="cards-container">
+            
+            <!-- Card: Key Metrics -->
+            <div class="card">
+                <h2 class="card-title">Captain Performance Metrics</h2>
+                <div class="kpi-metrics">
+                    <div>
+                        <p class="kpi-value">4.5k+</p>
+                        <p class="kpi-label">Flight Hours</p>
+                    </div>
+                    <div>
+                        <p class="kpi-value">98.2%</p>
+                        <p class="kpi-label">On-Time Perf.</p>
+                    </div>
+                    <div>
+                        <p class="kpi-value">100%</p>
+                        <p class="kpi-label">Safety Record</p>
+                    </div>
+                </div>
+                <ul class="metrics-list">
+                    <li><span class="metric-label">Leadership Score</span><span class="metric-value blue">92%</span></li>
+                    <li><span class="metric-label">Technical Proficiency</span><span class="metric-value green">95%</span></li>
+                    <li><span class="metric-label">Next Role Readiness</span><span class="metric-value purple">Check Captain</span></li>
+                </ul>
+            </div>
+            
+            <!-- Card: Role Distribution Data -->
+            <div class="card" style="flex-grow: 0;">
+                <h2 class="card-title">Pilot Pool Distribution</h2>
+                <ul class="metrics-list" style="margin-top: 0;">
+                    <li>
+                        <span class="metric-label">Captains (A320)</span>
+                        <span class="metric-value blue">128</span>
+                    </li>
+                    <li>
+                        <span class="metric-label">First Officers (A320)</span>
+                        <span class="metric-value green">245</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card: Talent Risks -->
+            <div class="card">
+                <h2 class="card-title">Role-Specific Risks</h2>
+                <div class="info-tile risk-tile">
+                    <svg class="info-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>
+                    <div>
+                        <h3>Upcoming Mandatory Retirement</h3>
+                        <p>A number of senior Captains are approaching the mandatory retirement age, creating a potential experience vacuum.</p>
+                    </div>
+                </div>
+                <div class="info-tile risk-tile">
+                    <svg class="info-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" /></svg>
+                    <div>
+                        <h3>Automation Complacency</h3>
+                        <p>Over-reliance on advanced cockpit automation can lead to a degradation of manual flying skills during emergencies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card: Proactive Insights -->
+            <div class="card">
+                <h2 class="card-title">Development Opportunities</h2>
+                <div class="info-tile insight-tile">
+                    <svg class="info-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+                    <div>
+                        <h3>Cross-Fleet Qualification</h3>
+                        <p>High aptitude in A320 operations suggests potential for fast-tracking cross-qualification on A330 or A350 fleets.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card: Recommended Actions -->
+            <div class="card">
+                <h2 class="card-title">Skill Enhancement Actions</h2>
+                <div class="info-tile action-tile">
+                     <svg class="info-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    <div>
+                        <h3>Introduce EFB Advanced Training</h3>
+                        <p>Develop a module for advanced Electronic Flight Bag (EFB) features to optimize flight planning and fuel management.</p>
+                    </div>
+                </div>
+                <div class="info-tile action-tile">
+                    <svg class="info-tile-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                    <div>
+                        <h3>Human Factors Workshop</h3>
+                        <p>Schedule recurrent training focused on Crew Resource Management (CRM) and threat and error management.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

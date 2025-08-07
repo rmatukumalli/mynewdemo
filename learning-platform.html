@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Learning Platform - Akara Talent Hub
+  </title>
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="css/ats_dashboard.css" rel="stylesheet">
+  <link href="css/skills-intelligence-theme.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="css/learning-platform.css" rel="stylesheet">
+  <!-- New CSS file -->
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css';
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="main-container">
+  </div>
+  <section class="section" id="learning-platform-page-area">
+   <div class="container">
+    <h2>
+     Learning Platform
+    </h2>
+    <div class="my-talent-hub-layout-container">
+     <nav class="my-talent-hub-sidebar-nav" id="sidebar-learning-platform">
+      <ul class="my-talent-hub-nav-list">
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link active" data-talenthub-tab="th-home" href="#th-home">
+         <i class="fas fa-home">
+         </i>
+         Home
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-library" href="#th-library">
+         <i class="fas fa-book">
+         </i>
+         Library
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-whats-new" href="#th-whats-new">
+         <i class="fas fa-gift">
+         </i>
+         What's New
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-role-advisor" href="#th-role-advisor">
+         <i class="fas fa-user-tie">
+         </i>
+         Role Advisor
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-certifications" href="#th-certifications">
+         <i class="fas fa-certificate">
+         </i>
+         Certifications
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-skill-benchmarks" href="#th-skill-benchmarks">
+         <i class="fas fa-tachometer-alt">
+         </i>
+         Skill Benchmarks
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-practice-labs" href="#th-practice-labs">
+         <i class="fas fa-flask">
+         </i>
+         Practice Labs
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-ai-simulations" href="#th-ai-simulations">
+         <i class="fas fa-robot">
+         </i>
+         AI Simulations
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-ai-assistant" href="#th-ai-assistant">
+         <i class="fas fa-magic">
+         </i>
+         AI Assistant
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-my-settings" href="#th-my-settings">
+         <i class="fas fa-cog">
+         </i>
+         My Settings
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-help" href="#th-help">
+         <i class="fas fa-question-circle">
+         </i>
+         Help
+        </a>
+       </li>
+      </ul>
+     </nav>
+     <div class="my-talent-hub-main-content">
+      <div class="my-talent-hub-tab-content active" id="th-home">
+       <div class="my-talent-hub-main-dashboard">
+        <div class="my-talent-hub-header">
+         <h1>
+          What would you like to learn today?
+         </h1>
+         <div class="search-bar-my-talent-hub">
+          <input placeholder="Search..." type="text">
+          <button>
+           <i class="fas fa-search">
+           </i>
+          </button>
+         </div>
+        </div>
+        <div class="my-talent-hub-greeting">
+         <p>
+          Greetings, John Doe! Explore, discover, and master new skills.
+         </p>
+        </div>
+        <div class="my-talent-hub-content-tabs">
+         <button class="content-tab-btn active" data-th-content-tab="role">
+          Role
+         </button>
+         <button class="content-tab-btn" data-th-content-tab="recent">
+          Recent Learning
+         </button>
+         <button class="content-tab-btn" data-th-content-tab="live">
+          Live Learning
+         </button>
+         <button class="content-tab-btn" data-th-content-tab="benchmarks">
+          Skill Benchmarks
+         </button>
+         <button class="content-tab-btn" data-th-content-tab="playlists">
+          Playlists
+         </button>
+         <button class="content-tab-btn" data-th-content-tab="goals">
+          Goals
+         </button>
+        </div>
+        <div class="my-talent-hub-content-display">
+         <div class="content-pane active" id="th-content-role">
+          <div class="role-advisor-promo">
+           <div class="role-advisor-icon">
+            <i class="fas fa-chart-line fa-3x">
+            </i>
+           </div>
+           <div class="role-advisor-text">
+            <h2>
+             Get better at your role!
+            </h2>
+            <p>
+             Role Advisor uses your current role to create a personalized professional development plan to help you expand your skills.
+            </p>
+            <button class="btn-primary">
+             Visit your Role Advisor
+             <i class="fas fa-arrow-right">
+             </i>
+            </button>
+           </div>
+          </div>
+         </div>
+         <div class="content-pane" id="content-recent">
+          <div class="profile-section">
+           <p>
+            Recent Learning content placeholder.
+           </p>
+          </div>
+         </div>
+         <div class="content-pane" id="content-live">
+          <div class="profile-section">
+           <p>
+            Live Learning content placeholder.
+           </p>
+          </div>
+         </div>
+         <div class="content-pane" id="content-benchmarks">
+          <div class="profile-section">
+           <p>
+            Skill Benchmarks content placeholder.
+           </p>
+          </div>
+         </div>
+         <div class="content-pane" id="content-playlists">
+          <div class="profile-section">
+           <p>
+            Playlists content placeholder.
+           </p>
+          </div>
+         </div>
+         <div class="content-pane" id="content-goals">
+          <div class="profile-section">
+           <p>
+            Goals content placeholder.
+           </p>
+          </div>
+         </div>
+        </div>
+        <div class="learning-of-the-week card">
+         <img alt="Learning of the week" src="https://dummyimage.com/300x150/003a70/ffffff&text=Course+Image" style="width:100%; border-radius: 8px;">
+         <h4 style="margin-top:1rem; font-size: 0.8rem; color: #862633;">
+          LEARNING OF THE WEEK:
+         </h4>
+         <h3 style="margin-bottom: 0.5rem;">
+          Product Team Visions
+         </h3>
+         <p style="font-size:0.9rem;">
+          Bookmark this Highspot page for future reference.
+         </p>
+         <a class="btn-primary" href="#" style="display:block; text-align:center; margin-top:1rem;">
+          Start now!
+         </a>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-library">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Library
+        </h3>
+        <p>
+         Content for Library will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-whats-new">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - What's New
+        </h3>
+        <p>
+         Content for What's New will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-role-advisor">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Role Advisor
+        </h3>
+        <p>
+         Content for Role Advisor will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-certifications">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Certifications
+        </h3>
+        <p>
+         Content for Certifications will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-skill-benchmarks">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Skill Benchmarks
+        </h3>
+        <p>
+         Content for Skill Benchmarks will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-practice-labs">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Practice Labs
+        </h3>
+        <p>
+         Content for Practice Labs will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-ai-simulations">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - AI Simulations
+        </h3>
+        <p>
+         Content for AI Simulations will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-ai-assistant">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - AI Assistant
+        </h3>
+        <p>
+         Content for AI Assistant will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-my-settings">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - My Settings
+        </h3>
+        <p>
+         Content for My Settings will be here.
+        </p>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-help">
+       <div class="profile-section">
+        <h3>
+         My Talent Hub - Help
+        </h3>
+        <p>
+         Content for Help will be here.
+        </p>
+       </div>
+      </div>
+      <!-- Learning Hub Content (Filters and Grid) -->
+      <div class="my-talent-hub-tab-content" id="learning-hub" style="display: none;">
+       <!-- This might be a separate page or integrated if "Skill Development" is part of Learning Platform -->
+       <div class="container" style="padding-top: 0; padding-bottom: 0;">
+        <h2>
+         Unlock Your Potential: Skill Up for Tomorrow's Opportunities
+        </h2>
+        <div class="search-bar-container">
+         <input id="hubLearningSearchInput" placeholder="Search learning courses..." type="text">
+         <button class="btn-secondary" id="hubLearningSearchButton">
+          Search
+         </button>
+        </div>
+        <div class="learning-tabs">
+         <button class="tab-btn active" data-tab="hub-recommended">
+          Recommended
+         </button>
+         <button class="tab-btn" data-tab="hub-trending">
+          Trending
+         </button>
+         <button class="tab-btn" data-tab="hub-my-learning">
+          My Learning
+         </button>
+        </div>
+        <div id="active-filters-display" style="margin-top: 15px; margin-bottom: 15px; padding: 10px; background-color: #eef2f5; border-radius: 5px; min-height: 30px;">
+         <span class="active-filters-label" style="font-weight: bold; color: #333; font-size:0.9em;">
+          Active Filters:
+         </span>
+         <button class="btn-secondary btn-small" id="clear-all-filters-btn" style="float: right; display: none; font-size:0.8em; padding: 0.3em 0.6em;">
+          Clear All
+         </button>
+        </div>
+        <div class="learning-hub-content-layout" style="display: flex; margin-top: 20px; gap: 20px;">
+         <aside class="learning-filters-sidebar" style="width: 280px; flex-shrink: 0; background-color: #f9f9f9; padding: 15px; border-radius: 8px; height: fit-content;">
+          <h3 style="margin-top:0; margin-bottom:15px; font-size: 1.3em; color: #003366;">
+           Advanced Filters
+          </h3>
+          <div class="filter-group-section" id="filter-group-format">
+           <h4 class="filter-group-title collapsible-toggle active">
+            Content Format:
+            <span class="toggle-icon">
+             &minus;
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content">
+            <button class="material-type-btn filter-btn active" data-filter-group="format" data-filter-value="all">
+             All Formats
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="shorts">
+             Shorts / Microlearning
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="videos">
+             Videos
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="infographics">
+             Infographics / Slides
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="documents">
+             Documents
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="modules">
+             Interactive Modules
+            </button>
+            <button class="material-type-btn filter-btn" data-filter-group="format" data-filter-value="assessments">
+             Assessments
+            </button>
+           </div>
+          </div>
+          <div class="filter-group-section" id="filter-group-goal" style="margin-top:15px;">
+           <h4 class="filter-group-title collapsible-toggle">
+            Learning Goal:
+            <span class="toggle-icon">
+             +
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content collapsed" style="display:none;">
+            <button class="filter-btn active" data-filter-group="goal" data-filter-value="all">
+             All Goals
+            </button>
+            <button class="filter-btn" data-filter-group="goal" data-filter-value="skill-building">
+             Skill-building
+            </button>
+            <button class="filter-btn" data-filter-group="goal" data-filter-value="compliance">
+             Compliance
+            </button>
+            <button class="filter-btn" data-filter-group="goal" data-filter-value="awareness">
+             Awareness
+            </button>
+           </div>
+          </div>
+          <div class="filter-group-section" id="filter-group-audience" style="margin-top:15px;">
+           <h4 class="filter-group-title collapsible-toggle">
+            Audience:
+            <span class="toggle-icon">
+             +
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content collapsed" style="display:none;">
+            <button class="filter-btn active" data-filter-group="audience" data-filter-value="all">
+             All Audiences
+            </button>
+            <button class="filter-btn" data-filter-group="audience" data-filter-value="new-hires">
+             New Hires
+            </button>
+            <button class="filter-btn" data-filter-group="audience" data-filter-value="engineers">
+             Engineers
+            </button>
+            <button class="filter-btn" data-filter-group="audience" data-filter-value="managers">
+             Managers
+            </button>
+           </div>
+          </div>
+          <div class="filter-group-section" id="filter-group-domain" style="margin-top:15px;">
+           <h4 class="filter-group-title collapsible-toggle">
+            Topic / Domain:
+            <span class="toggle-icon">
+             +
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content collapsed" style="display:none;">
+            <button class="filter-btn active" data-filter-group="domain" data-filter-value="all">
+             All Domains
+            </button>
+            <button class="filter-btn" data-filter-group="domain" data-filter-value="aircraft-systems">
+             Aircraft Systems
+            </button>
+            <button class="filter-btn" data-filter-group="domain" data-filter-value="revenue-management">
+             Revenue Management
+            </button>
+            <button class="filter-btn" data-filter-group="domain" data-filter-value="customer-service">
+             Customer Service
+            </button>
+            <button class="filter-btn" data-filter-group="domain" data-filter-value="safety-procedures">
+             Safety Procedures
+            </button>
+           </div>
+          </div>
+          <div class="filter-group-section" id="filter-group-duration" style="margin-top:15px;">
+           <h4 class="filter-group-title collapsible-toggle">
+            Duration:
+            <span class="toggle-icon">
+             +
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content collapsed" style="display:none;">
+            <button class="filter-btn active" data-filter-group="duration" data-filter-value="all">
+             All Durations
+            </button>
+            <button class="filter-btn" data-filter-group="duration" data-filter-value="short">
+             &lt;15 min
+            </button>
+            <button class="filter-btn" data-filter-group="duration" data-filter-value="medium">
+             15 min - 1 hr
+            </button>
+            <button class="filter-btn" data-filter-group="duration" data-filter-value="long">
+             1-2 weeks
+            </button>
+            <button class="filter-btn" data-filter-group="duration" data-filter-value="extended">
+             &gt;4 weeks
+            </button>
+           </div>
+          </div>
+          <div class="filter-group-section" id="filter-group-level" style="margin-top:15px;">
+           <h4 class="filter-group-title collapsible-toggle">
+            Level:
+            <span class="toggle-icon">
+             +
+            </span>
+           </h4>
+           <div class="filter-options-container collapsible-content collapsed" style="display:none;">
+            <button class="filter-btn active" data-filter-group="level" data-filter-value="all">
+             All Levels
+            </button>
+            <button class="filter-btn" data-filter-group="level" data-filter-value="beginner">
+             Beginner
+            </button>
+            <button class="filter-btn" data-filter-group="level" data-filter-value="intermediate">
+             Intermediate
+            </button>
+            <button class="filter-btn" data-filter-group="level" data-filter-value="advanced">
+             Advanced
+            </button>
+           </div>
+          </div>
+         </aside>
+         <div class="learning-grid-container" style="flex-grow: 1;">
+          <div class="learning-grid" id="hubLearningDisplayGrid">
+           <p style="text-align: center; padding: 2rem;">
+            Select filters to view learning content.
+           </p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script src="js/learning-hub-filters.js">
+  </script>
+  <script src="js/learning-platform.js">
+  </script>
+  <!-- New JS file -->
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

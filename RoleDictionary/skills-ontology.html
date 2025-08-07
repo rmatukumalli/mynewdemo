@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Ontology Mock-up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: #f7f9fc;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .ontology-area {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            overflow: hidden;
+            cursor: grab; /* Indicate draggable area */
+        }
+        .ontology-area.dragging {
+            cursor: grabbing;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .node {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.1s ease-in-out; /* Faster transition for smoother pan/zoom */
+            z-index: 2;
+            font-size: 0.85rem;
+            text-align: center;
+            line-height: 1.2;
+            min-width: 100px;
+            max-width: 150px;
+            transform-origin: center center; /* Ensure scaling from center */
+        }
+        .node:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Node Type Specific Styles */
+        .node-skill {
+            background-color: #e0f7fa;
+            border: 1px solid #4dd0e1;
+            color: #00796b;
+        }
+        .node-role {
+            background-color: #e8f5e9;
+            border: 1px solid #81c784;
+            color: #388e3c;
+        }
+        .node-person {
+            background-color: #f3e5f5;
+            border: 1px solid #ba68c8;
+            color: #7b1fa2;
+        }
+        .node-opportunity {
+            background-color: #fff3e0;
+            border: 1px solid #ffb74d;
+            color: #e65100;
+        }
+        .node-highlighted {
+            outline: 3px solid #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .details-panel {
+            background-color: #f7f9fc;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .details-panel h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .details-panel p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .details-panel ul {
+            list-style: disc;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .details-panel li {
+            margin-bottom: 3px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #4a5568;
+        }
+        .legend-color-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1px solid;
+        }
+        .legend-color-box.skill { background-color: #e0f7fa; border-color: #4dd0e1; }
+        .legend-color-box.role { background-color: #e8f5e9; border-color: #81c784; }
+        .legend-color-box.person { background-color: #f3e5f5; border-color: #ba68c8; }
+        .legend-color-box.opportunity { background-color: #fff3e0; border-color: #ffb74d; }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .main-content {
+                flex-direction: row;
+                gap: 20px;
+            }
+            .ontology-area {
+                flex: 3;
+                margin-bottom: 0;
+            }
+            .details-panel {
+                flex: 1;
+                min-width: 280px;
+            }
+        }
+        .custom-footer {
+            background-color: #002D62;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.875rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="pb-20">
+    <div class="container">
+        <div class="header flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Skills Ontology Visualization</h1>
+                <p class="text-gray-600 mt-1">An interactive mock-up demonstrating interconnected skills, roles, people, and opportunities.</p>
+                <div class="mt-2">
+                    <a href="skills-ontology-extended.html" class="text-blue-500 hover:underline">View Extended Ontology Manager</a>
+                    <span class="mx-2 text-gray-400">|</span>
+                    <a href="skills-ontology-v2.html" class="text-blue-500 hover:underline">Blueprint</a>
+                    <span class="mx-2 text-gray-400">|</span>
+                    <a href="relationship-types.html" class="text-blue-500 hover:underline">View Relationship Types</a>
+                </div>
+            </div>
+            <a href="index.html" class="text-blue-500 hover:underline">Homepage</a>
+        </div>
+
+        <div class="main-content">
+            <div class="ontology-area" id="ontologyArea">
+                <canvas id="ontologyCanvas"></canvas>
+                <!-- Nodes will be injected here by JavaScript -->
+            </div>
+            <div class="details-panel" id="detailsPanel">
+                <h3>Node Details</h3>
+                <p class="text-gray-500">Click on any node in the visualization to see its details here.</p>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color-box skill"></div>
+                <span>Skill</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color-box role"></div>
+                <span>Role</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color-box person"></div>
+                <span>Person</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color-box opportunity"></div>
+                <span>Opportunity</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ontologyArea = document.getElementById('ontologyArea');
+        const ontologyCanvas = document.getElementById('ontologyCanvas');
+        const ctx = ontologyCanvas.getContext('2d');
+        const detailsPanel = document.getElementById('detailsPanel');
+
+        let nodes = [];
+        let relationships = [];
+
+        // Viewport state for pan and zoom
+        let scale = 1.0;
+        let offsetX = 0;
+        let offsetY = 0;
+        let isDragging = false;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        // Define your ontology data
+        // Each node has an id, type, name, and position (x, y)
+        // Relationships define connections between node IDs and a description
+        const ontologyData = {
+            nodes: [
+                // Skills
+                { id: 'S1', type: 'skill', name: 'Python Programming', x: 100, y: 150 },
+                { id: 'S2', type: 'skill', name: 'Machine Learning', x: 250, y: 50 },
+                { id: 'S3', type: 'skill', name: 'Data Visualization', x: 250, y: 250 },
+                { id: 'S4', type: 'skill', name: 'Project Management', x: 400, y: 150 },
+                { id: 'S5', 'type': 'skill', name: 'Communication', x: 550, y: 50 },
+                { id: 'S6', type: 'skill', name: 'Leadership', x: 550, y: 250 },
+                { id: 'S7', type: 'skill', name: 'Cloud Computing', x: 100, y: 350 },
+                { id: 'S8', type: 'skill', name: 'SQL', x: 250, y: 450 },
+
+                // Roles
+                { id: 'R1', type: 'role', name: 'Data Scientist', x: 400, y: 50 },
+                { id: 'R2', type: 'role', name: 'Project Lead', x: 700, y: 150 },
+                { id: 'R3', type: 'role', name: 'Software Engineer', x: 400, y: 350 },
+
+                // People
+                { id: 'P1', type: 'person', name: 'Alice (DS)', x: 50, y: 50 },
+                { id: 'P2', type: 'person', name: 'Bob (PL)', x: 800, y: 50 },
+                { id: 'P3', type: 'person', name: 'Carol (SE)', x: 50, y: 450 },
+
+                // Opportunities
+                { id: 'O1', type: 'opportunity', name: 'AI Project', x: 700, y: 350 },
+                { id: 'O2', type: 'opportunity', name: 'Lead Role', x: 800, y: 250 },
+                { id: 'O3', type: 'opportunity', name: 'Cloud Migration', x: 700, y: 450 }
+            ],
+            relationships: [
+                // Person to Skill (HAS_SKILL)
+                { from: 'P1', to: 'S1', type: 'HAS_SKILL', description: 'Python (Expert)' },
+                { from: 'P1', to: 'S2', type: 'HAS_SKILL', description: 'ML (Advanced)' },
+                { from: 'P1', to: 'S3', type: 'HAS_SKILL', description: 'Data Viz (Intermediate)' },
+                { from: 'P2', to: 'S4', type: 'HAS_SKILL', description: 'Project Mgmt (Expert)' },
+                { from: 'P2', to: 'S5', type: 'HAS_SKILL', description: 'Communication (Advanced)' },
+                { from: 'P2', to: 'S6', type: 'HAS_SKILL', description: 'Leadership (Advanced)' },
+                { from: 'P3', to: 'S1', type: 'HAS_SKILL', description: 'Python (Intermediate)' },
+                { from: 'P3', to: 'S7', type: 'HAS_SKILL', description: 'Cloud (Basic)' },
+                { from: 'P3', to: 'S8', type: 'HAS_SKILL', description: 'SQL (Advanced)' },
+
+                // Role to Skill (REQUIRES_SKILL)
+                { from: 'R1', to: 'S1', type: 'REQUIRES_SKILL', description: 'Python (Advanced)' },
+                { from: 'R1', to: 'S2', type: 'REQUIRES_SKILL', description: 'ML (Advanced)' },
+                { from: 'R1', to: 'S3', type: 'REQUIRES_SKILL', description: 'Data Viz (Intermediate)' },
+                { from: 'R1', to: 'S8', type: 'REQUIRES_SKILL', description: 'SQL (Advanced)' },
+                { from: 'R2', to: 'S4', type: 'REQUIRES_SKILL', description: 'Project Mgmt (Expert)' },
+                { from: 'R2', to: 'S5', type: 'REQUIRES_SKILL', description: 'Communication (Expert)' },
+                { from: 'R2', to: 'S6', type: 'REQUIRES_SKILL', description: 'Leadership (Advanced)' },
+                { from: 'R3', to: 'S1', type: 'REQUIRES_SKILL', description: 'Python (Advanced)' },
+                { from: 'R3', to: 'S7', type: 'REQUIRES_SKILL', description: 'Cloud (Intermediate)' },
+
+                // Person to Role (IS_CURRENT_ROLE)
+                { from: 'P1', to: 'R1', type: 'IS_CURRENT_ROLE', description: 'Currently Data Scientist' },
+                { from: 'P2', to: 'R2', type: 'IS_CURRENT_ROLE', description: 'Currently Project Lead' },
+                { from: 'P3', to: 'R3', type: 'IS_CURRENT_ROLE', description: 'Currently Software Engineer' },
+
+                // Opportunity to Skill (NEEDS_SKILL)
+                { from: 'O1', to: 'S2', type: 'NEEDS_SKILL', description: 'ML (Advanced)' },
+                { from: 'O1', to: 'S1', type: 'NEEDS_SKILL', description: 'Python (Advanced)' },
+                { from: 'O2', to: 'S6', type: 'NEEDS_SKILL', description: 'Leadership (Expert)' },
+                { from: 'O3', to: 'S7', type: 'NEEDS_SKILL', description: 'Cloud (Expert)' },
+                { from: 'O3', to: 'S1', type: 'NEEDS_SKILL', description: 'Python (Advanced)' },
+
+                // Skill to Skill (IS_PREREQUISITE_FOR, COMPLEMENTS)
+                { from: 'S1', to: 'S2', type: 'COMPLEMENTS', description: 'Often used together' },
+                { from: 'S2', to: 'S3', type: 'COMPLEMENTS', description: 'Often used together' },
+                { from: 'S4', to: 'S5', type: 'COMPLEMENTS', description: 'Essential for effective PM' },
+                { from: 'S5', to: 'S6', type: 'COMPLEMENTS', description: 'Crucial for leadership' },
+                { from: 'S7', to: 'S1', type: 'COMPLEMENTS', description: 'Cloud often involves Python' },
+
+                // Role to Role (CAN_PROGRESS_TO)
+                { from: 'R1', to: 'R2', type: 'CAN_PROGRESS_TO', description: 'Data Scientist to Project Lead' },
+                { from: 'R3', to: 'R1', type: 'CAN_PROGRESS_TO', description: 'Software Engineer to Data Scientist' }
+            ]
+        };
+
+        function initializeOntology() {
+            // Clear existing nodes
+            ontologyArea.querySelectorAll('.node').forEach(node => node.remove());
+            nodes = [];
+
+            // Set canvas size to match ontologyArea
+            ontologyCanvas.width = ontologyArea.offsetWidth;
+            ontologyCanvas.height = ontologyArea.offsetHeight;
+
+            // Create and position nodes
+            ontologyData.nodes.forEach(nodeData => {
+                const nodeElement = document.createElement('div');
+                nodeElement.id = nodeData.id;
+                nodeElement.className = `node node-${nodeData.type} rounded-xl p-3 shadow-md`;
+                nodeElement.innerHTML = `<span class="font-semibold">${nodeData.name}</span><span class="text-xs text-gray-500 capitalize">${nodeData.type}</span>`;
+                ontologyArea.appendChild(nodeElement);
+                nodes.push({ element: nodeElement, data: nodeData });
+
+                // Add event listeners
+                nodeElement.addEventListener('mouseover', (e) => {
+                    e.stopPropagation(); // Prevent mouseover on node from triggering pan
+                    highlightConnections(nodeData.id);
+                });
+                nodeElement.addEventListener('mouseout', (e) => {
+                    e.stopPropagation();
+                    clearHighlights();
+                });
+                nodeElement.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent click on node from triggering pan
+                    showNodeDetails(nodeData.id);
+                });
+            });
+
+            updateNodePositions();
+            drawConnections();
+        }
+
+        function updateNodePositions() {
+            nodes.forEach(node => {
+                const scaledX = node.data.x * scale + offsetX;
+                const scaledY = node.data.y * scale + offsetY;
+                node.element.style.left = `${scaledX}px`;
+                node.element.style.top = `${scaledY}px`;
+                // Keep node size relatively consistent, or scale it if desired
+                // node.element.style.transform = `scale(${scale})`; // Uncomment to scale node size
+            });
+        }
+
+        function drawConnections(highlightedNodeId = null) {
+            ctx.clearRect(0, 0, ontologyCanvas.width, ontologyCanvas.height); // Clear canvas
+
+            relationships.forEach(rel => {
+                const fromNode = nodes.find(n => n.data.id === rel.from);
+                const toNode = nodes.find(n => n.data.id === rel.to);
+
+                if (fromNode && toNode) {
+                    // Get original positions and apply current scale and offset
+                    const startX = fromNode.data.x * scale + offsetX + fromNode.element.offsetWidth / 2;
+                    const startY = fromNode.data.y * scale + offsetY + fromNode.element.offsetHeight / 2;
+                    const endX = toNode.data.x * scale + offsetX + toNode.element.offsetWidth / 2;
+                    const endY = toNode.data.y * scale + offsetY + toNode.element.offsetHeight / 2;
+
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+
+                    // Determine line style
+                    let lineColor = '#a0aec0'; // Default gray
+                    let lineWidth = 1;
+
+                    if (highlightedNodeId && (rel.from === highlightedNodeId || rel.to === highlightedNodeId)) {
+                        lineColor = '#3b82f6'; // Blue for highlighted connections
+                        lineWidth = 2;
+                    }
+
+                    ctx.strokeStyle = lineColor;
+                    ctx.lineWidth = lineWidth;
+                    ctx.stroke();
+
+                    // Draw arrow head (simple triangle)
+                    const angle = Math.atan2(endY - startY, endX - startX);
+                    const arrowSize = 8;
+                    ctx.save();
+                    ctx.translate(endX, endY);
+                    ctx.rotate(angle);
+                    ctx.fillStyle = lineColor;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(-arrowSize, -arrowSize / 2);
+                    ctx.lineTo(-arrowSize, arrowSize / 2);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+            });
+        }
+
+        function highlightConnections(nodeId) {
+            clearHighlights(); // Clear previous highlights
+
+            const targetNodeElement = document.getElementById(nodeId);
+            if (targetNodeElement) {
+                targetNodeElement.classList.add('node-highlighted');
+            }
+
+            // Highlight connected nodes and redraw lines
+            const connectedNodeIds = new Set();
+            relationships.forEach(rel => {
+                if (rel.from === nodeId) {
+                    connectedNodeIds.add(rel.to);
+                } else if (rel.to === nodeId) {
+                    connectedNodeIds.add(rel.from);
+                }
+            });
+
+            nodes.forEach(node => {
+                if (connectedNodeIds.has(node.data.id)) {
+                    node.element.classList.add('node-highlighted');
+                }
+            });
+
+            drawConnections(nodeId); // Redraw lines with highlighting
+        }
+
+        function clearHighlights() {
+            nodes.forEach(node => {
+                node.element.classList.remove('node-highlighted');
+            });
+            drawConnections(); // Redraw all lines without highlighting
+        }
+
+        function showNodeDetails(nodeId) {
+            const selectedNode = ontologyData.nodes.find(n => n.id === nodeId);
+            if (!selectedNode) {
+                detailsPanel.innerHTML = `<h3>Node Details</h3><p class="text-gray-500">Node not found.</p>`;
+                return;
+            }
+
+            let detailsHtml = `<h3>${selectedNode.name}</h3>`;
+            detailsHtml += `<p><strong>Type:</strong> <span class="capitalize">${selectedNode.type}</span></p>`;
+
+            const incomingRelations = ontologyData.relationships.filter(rel => rel.to === nodeId);
+            const outgoingRelations = ontologyData.relationships.filter(rel => rel.from === nodeId);
+
+            if (outgoingRelations.length > 0) {
+                detailsHtml += `<p class="mt-3 font-semibold">Outgoing Relationships:</p><ul>`;
+                outgoingRelations.forEach(rel => {
+                    const targetNode = ontologyData.nodes.find(n => n.id === rel.to);
+                    if (targetNode) {
+                        detailsHtml += `<li>${rel.type} ${targetNode.name} (${rel.description})</li>`;
+                    }
+                });
+                detailsHtml += `</ul>`;
+            }
+
+            if (incomingRelations.length > 0) {
+                detailsHtml += `<p class="mt-3 font-semibold">Incoming Relationships:</p><ul>`;
+                incomingRelations.forEach(rel => {
+                    const sourceNode = ontologyData.nodes.find(n => n.id === rel.from);
+                    if (sourceNode) {
+                        detailsHtml += `<li>${sourceNode.name} ${rel.type} (${rel.description})</li>`;
+                    }
+                });
+                detailsHtml += `</ul>`;
+            }
+
+            if (incomingRelations.length === 0 && outgoingRelations.length === 0) {
+                detailsHtml += `<p class="mt-3 text-gray-500">No explicit relationships defined for this node in the mock data.</p>`;
+            }
+
+            detailsPanel.innerHTML = detailsHtml;
+        }
+
+        // --- Pan and Zoom Functionality ---
+
+        ontologyArea.addEventListener('wheel', (e) => {
+            e.preventDefault(); // Prevent page scrolling
+
+            const zoomFactor = 1.1;
+            const mouseX = e.clientX - ontologyArea.getBoundingClientRect().left;
+            const mouseY = e.clientY - ontologyArea.getBoundingClientRect().top;
+
+            const oldScale = scale;
+
+            if (e.deltaY < 0) {
+                // Zoom in
+                scale *= zoomFactor;
+            } else {
+                // Zoom out
+                scale /= zoomFactor;
+            }
+
+            // Clamp scale to reasonable limits
+            scale = Math.max(0.5, Math.min(3.0, scale));
+
+            // Adjust offset to zoom around the mouse pointer
+            offsetX = mouseX - (mouseX - offsetX) * (scale / oldScale);
+            offsetY = mouseY - (mouseY - offsetY) * (scale / oldScale);
+
+            updateNodePositions();
+            drawConnections();
+        });
+
+        ontologyArea.addEventListener('mousedown', (e) => {
+            if (e.button === 0) { // Left mouse button
+                isDragging = true;
+                ontologyArea.classList.add('dragging');
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            }
+        });
+
+        ontologyArea.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
+
+                offsetX += deltaX;
+                offsetY += deltaY;
+
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+
+                updateNodePositions();
+                drawConnections();
+            }
+        });
+
+        ontologyArea.addEventListener('mouseup', () => {
+            isDragging = false;
+            ontologyArea.classList.remove('dragging');
+        });
+
+        ontologyArea.addEventListener('mouseleave', () => {
+            isDragging = false; // Stop dragging if mouse leaves the area
+            ontologyArea.classList.remove('dragging');
+        });
+
+
+        // Initialize on window load and handle resize
+        window.onload = function() {
+            // Clone relationships to avoid modifying original data during highlighting
+            relationships = JSON.parse(JSON.stringify(ontologyData.relationships));
+            initializeOntology();
+            showNodeDetails(nodes[0].data.id); // Show details of the first node by default
+        };
+
+        window.addEventListener('resize', () => {
+            ontologyCanvas.width = ontologyArea.offsetWidth;
+            ontologyCanvas.height = ontologyArea.offsetHeight;
+            updateNodePositions(); // Re-position nodes based on new area size
+            drawConnections(); // Redraw connections on resize
+        });
+    </script>
+  <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+</body>
+</html>

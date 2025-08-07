@@ -1,0 +1,94 @@
+<div class="card">
+    <h2>Step 9: Review & Edit</h2>
+    <div class="form-container">
+        <div class="form-sidebar">
+            <div class="stepper">
+                <div class="step" data-step="1">
+                    <div class="step-title">Role Overview</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-title">Organization & Position Structure</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-title">Classification & Hierarchy</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-title">Skills, Capabilities & Requirements</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-title">Performance, Growth & Mobility</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-title">Administrative & Compliance Details</div>
+                </div>
+                <div class="step" data-step="7">
+                    <div class="step-title">Custom Fields</div>
+                </div>
+                <div class="step" data-step="8">
+                    <div class="step-title">Metadata & Activity Log</div>
+                </div>
+                <div class="step active" data-step="9">
+                    <div class="step-title">Review & Edit</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-main">
+            <form id="add-role-form-step9">
+        <div class="details-section">
+            <h3>Review & Edit</h3>
+            <p>Review the summary of the role details below. Click "Edit" to jump to a specific step.</p>
+            <div id="review-content" class="summary-container">
+                <!-- Hierarchical summary will be populated here by script.js -->
+            </div>
+
+            <details class="info-collapsible">
+                <summary>View Job Architecture Best Practices</summary>
+                <div class="info-content">
+                    <p>The most widely accepted and effective job architecture hierarchy is structured as follows, according to HR best practices and leading sources:</p>
+                    
+                    <h4>Standard Job Architecture Hierarchy:</h4>
+                    <ul>
+                        <li><strong>Job Function:</strong> Broadest grouping, representing major organizational domains (e.g., Operations, Finance, Engineering).</li>
+                        <li><strong>Job Family:</strong> Related groups of jobs within a function that involve similar work and require related expertise (e.g., within Engineering: Software Engineering, Mechanical Engineering).</li>
+                        <li><strong>Job Role / Job Title:</strong> Specific positions within a family, describing the basic nature of work (e.g., Software Engineer, QA Analyst).</li>
+                        <li><strong>Job Level:</strong> Tiers reflecting career progression or responsibility, often standardized across families (e.g., Junior, Mid-Level, Senior, Lead/Manager, Director).</li>
+                        <li><strong>Job Descriptions/Competencies/Skills:</strong> Each job level and role has associated job descriptions, required qualifications, skills, and behavioral competencies.</li>
+                        <li><strong>Career Pathways:</strong> Shows possible vertical (promotion) or lateral (cross-functional move) progression based on the defined hierarchy and role competencies.</li>
+                    </ul>
+            
+                    <h4>Visual Example:</h4>
+                    <pre style="background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; border-radius: 5px; font-family: monospace;">
+Job Function
+  └── Job Family
+        └── Job Role/Title
+              └── Job Level
+                    └── Job Description/Competencies/Skills
+                    </pre>
+            
+                    <h4>Example:</h4>
+                    <pre style="background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; border-radius: 5px; font-family: monospace;">
+Engineering
+  └── Software Engineering
+        └── Software Engineer
+              ├── Entry Level
+              │     └── Description, competencies, required skills
+              └── Senior Level
+                    └── Description, competencies, required skills
+        └── QA Analyst
+              └── Entry Level, Senior Level, etc.
+                    </pre>
+            
+                    <h4>Key Insights:</h4>
+                    <ul>
+                        <li>Job Level is always nested under role/title, and both fit within a specific family and function.</li>
+                        <li>This hierarchy ensures pay equity, consistent job evaluation, clear career pathways, and aligned organization structures.</li>
+                        <li>Organizations may add or rename layers (e.g., "Role Group" or "Role Level") for internal purposes, but should keep the core logic intact for clarity and comparability.</li>
+                    </ul>
+            
+                </div>
+            </details>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

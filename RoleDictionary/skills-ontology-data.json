@@ -1,0 +1,75 @@
+{
+  "skills": [
+    { "skillId": "s001", "name": "Aerodynamics", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "The study of the properties of moving air, and especially of the interaction between the air and solid bodies moving through it." },
+    { "skillId": "s002", "name": "Aircraft Systems", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "Knowledge of aircraft components, their functions, and operational procedures." },
+    { "skillId": "s003", "name": "Navigation", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "The process or activity of accurately ascertaining one's position and planning and following a route." },
+    { "skillId": "s004", "name": "Meteorology", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "The scientific study of the atmosphere and its phenomena, especially with a view to forecasting the weather." },
+    { "skillId": "s005", "name": "Flight Planning", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "The process of preparing a flight plan to describe the intended flight of an aircraft." },
+    { "skillId": "s006", "name": "Air Traffic Control Procedures", "type": "Technical", "competencyId": "c001", "criticality": "High", "definition": "Understanding and adherence to rules and procedures governing air traffic." },
+    { "skillId": "s007", "name": "Emergency Procedures", "type": "Operational", "competencyId": "c002", "criticality": "High", "definition": "Knowledge and execution of protocols for handling in-flight emergencies." },
+    { "skillId": "s008", "name": "Crew Resource Management (CRM)", "type": "Soft Skill", "competencyId": "c003", "criticality": "High", "definition": "Utilizing all available resources—information, equipment, and people—to achieve safe and efficient flight operations." },
+    { "skillId": "s009", "name": "Aviation Regulations (e.g., FAA, EASA)", "type": "Compliance", "competencyId": "c004", "criticality": "High", "definition": "In-depth knowledge of national and international aviation laws and regulations." },
+    { "skillId": "s010", "name": "Aircraft Maintenance Basics", "type": "Technical", "competencyId": "c005", "criticality": "Medium", "definition": "Fundamental understanding of aircraft maintenance practices and inspections." },
+    { "skillId": "s011", "name": "Risk Assessment (Aviation)", "type": "Operational", "competencyId": "c002", "criticality": "High", "definition": "Identifying, evaluating, and mitigating potential hazards in flight operations." },
+    { "skillId": "s012", "name": "Communication (Air-to-Ground)", "type": "Soft Skill", "competencyId": "c003", "criticality": "High", "definition": "Clear and concise verbal communication with air traffic control and ground personnel." },
+    { "skillId": "s013", "name": "Decision Making (In-flight)", "type": "Operational", "competencyId": "c002", "criticality": "High", "definition": "Ability to make timely and effective decisions under pressure during flight." },
+    { "skillId": "s014", "name": "Situational Awareness", "type": "Soft Skill", "competencyId": "c003", "criticality": "High", "definition": "Accurate perception of environmental elements and events with respect to time or space, the comprehension of their meaning, and the projection of their status after some change." },
+    { "skillId": "s015", "name": "Fuel Management", "type": "Operational", "competencyId": "c002", "criticality": "High", "definition": "Efficient planning and monitoring of fuel consumption during flight." }
+  ],
+  "competencies": [
+    { "competencyId": "c001", "name": "Flight Technical Skills", "capability": "Technical" },
+    { "competencyId": "c002", "name": "Operational Safety & Procedures", "capability": "Operational" },
+    { "competencyId": "c003", "name": "Aviation Soft Skills", "capability": "Soft Skill" },
+    { "competencyId": "c004", "name": "Regulatory Compliance", "capability": "Compliance" },
+    { "competencyId": "c005", "name": "Aircraft Systems Knowledge", "capability": "Technical" }
+  ],
+  "roles": [
+    { "roleId": "r001", "name": "Cadet Pilot", "jobFamilyId": "jf001", "requiredSkills": [{ "skillId": "s001" }, { "skillId": "s002" }] },
+    { "roleId": "r002", "name": "First Officer", "jobFamilyId": "jf001", "requiredSkills": [{ "skillId": "s003" }] },
+    { "roleId": "r003", "name": "Captain", "jobFamilyId": "jf001", "requiredSkills": [{ "skillId": "s007" }] },
+    { "roleId": "r004", "name": "Flight Instructor", "jobFamilyId": "jf002", "requiredSkills": [{ "skillId": "s008" }] },
+    { "roleId": "r005", "name": "Air Traffic Controller", "jobFamilyId": "jf003", "requiredSkills": [{ "skillId": "s006" }] }
+  ],
+  "persons": [
+    { "personId": "p001", "name": "Alex Johnson", "currentRoleId": "r001", "skills": [{ "skillId": "s001", "proficiencyLevel": 2 }, { "skillId": "s003", "proficiencyLevel": 2 }] },
+    { "personId": "p002", "name": "Maria Garcia", "currentRoleId": "r002", "skills": [{ "skillId": "s007", "proficiencyLevel": 4 }, { "skillId": "s008", "proficiencyLevel": 5 }] }
+  ],
+  "contents": [
+    { "contentId": "c001", "title": "Principles of Aerodynamics Course", "type": "Course", "developsSkills": ["s001"] },
+    { "contentId": "c002", "title": "Advanced Navigation Techniques", "type": "Book", "developsSkills": ["s003"] },
+    { "contentId": "c003", "title": "Emergency Procedures Simulator Training", "type": "Simulator", "developsSkills": ["s007"] },
+    { "contentId": "c004", "title": "CRM Workshop for Pilots", "type": "Workshop", "developsSkills": ["s008"] },
+    { "contentId": "c005", "title": "FAA Regulations Exam Prep", "type": "Certification", "developsSkills": ["s009"] }
+  ],
+  "projects": [
+    { "projectId": "proj001", "name": "Cadet Phase 1 Completion", "stage": "In Progress", "requiredSkills": ["s001", "s003"], "contributors": ["p001"], "linkedRoles": ["r001"] },
+    { "projectId": "proj002", "name": "Type Rating Training (A320)", "stage": "Upcoming", "requiredSkills": ["s002", "s007"], "contributors": ["p002"], "linkedRoles": ["r002"] }
+  ],
+  "jobFamilies": [
+      { "jobFamilyId": "jf001", "name": "Flight Crew" },
+      { "jobFamilyId": "jf002", "name": "Aviation Training" },
+      { "jobFamilyId": "jf003", "name": "Air Traffic Management" }
+  ],
+  "relationships": [
+    { "from": "s001", "to": "s003", "relationshipType": "isPrerequisiteFor" },
+    { "from": "s007", "to": "s013", "relationshipType": "isComplementaryTo" },
+    { "from": "s008", "to": "s012", "relationshipType": "isSpecializationOf" },
+    { "from": "s009", "to": "r001", "relationshipType": "isEssentialFor" },
+    { "from": "s007", "to": "r003", "relationshipType": "requiredBy" },
+    { "from": "s008", "to": "c004", "relationshipType": "isTaughtBy" },
+    { "from": "s007", "to": "c003", "relationshipType": "isPracticedIn" },
+    { "from": "s009", "to": "c005", "relationshipType": "developedBy" },
+    { "from": "s001", "to": "p001", "relationshipType": "possessedBy" },
+    { "from": "p002", "to": "s007", "relationshipType": "isLearning" },
+    { "from": "s001", "to": "proj001", "relationshipType": "requiredFor" },
+    { "from": "r001", "to": "r002", "relationshipType": "isCareerPathTo" },
+    { "from": "r002", "to": "r003", "relationshipType": "isCareerPathTo" },
+    { "from": "r001", "to": "p001", "relationshipType": "heldBy" },
+    { "from": "c005", "to": "s009", "relationshipType": "develops" },
+    { "from": "p001", "to": "s003", "relationshipType": "hasSkill" },
+    { "from": "p002", "to": "proj002", "relationshipType": "contributesTo" },
+    { "from": "proj001", "to": "s001", "relationshipType": "requires" },
+    { "from": "proj002", "to": "r002", "relationshipType": "involves" },
+    { "from": "proj001", "to": "p001", "relationshipType": "hasContributor" }
+  ]
+}

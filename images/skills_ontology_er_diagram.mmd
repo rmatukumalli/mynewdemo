@@ -1,0 +1,284 @@
+erDiagram
+    ORGANIZATION ||--o{ BUSINESS_UNIT : has
+    BUSINESS_UNIT ||--o{ DEPARTMENT : contains
+    DEPARTMENT ||--o{ ROLE : contains
+    JOB_LEVEL ||--o{ ROLE : defines_level
+    ROLE ||--o{ CAREER_PATH : source_of
+    ROLE ||--o{ CAREER_PATH : target_of
+    ROLE ||--o{ LEARNING_PATH : has
+    ROLE_GROUP ||--o{ JOB_PROFILE : groups
+    JOB_LEVEL ||--o{ JOB_PROFILE : defines_level
+    COMPETENCY ||--o{ BEHAVIOR : has
+    COMPETENCY ||--o{ SKILL : contains
+    COMPETENCY ||--o{ ROLE : required_for
+    CAPABILITY ||--o{ COMPETENCY : contains
+    SKILL ||--o{ PROFICIENCY : has
+    SKILL ||--o{ USER_SKILL : tracked_by
+    SKILL ||--o{ ASSESSMENT : evaluated_by
+    SKILL ||--o{ LEARNING_RESOURCE : associated_with
+    SKILL ||--o{ SKILL_GAP : identifies_gap
+    SKILL ||--o{ SKILL_RELATIONSHIP : relates_to
+    SKILL ||--o{ SKILL_TAG_MAP : tagged_with
+    RELATIONSHIP_TYPE ||--o{ SKILL_RELATIONSHIP : defines
+    LEARNING_PATH ||--o{ LEARNING_PATH_RESOURCES : contains
+    LEARNING_RESOURCE ||--o{ LEARNING_PATH_RESOURCES : part_of
+    SKILL_TAG ||--o{ SKILL_TAG_MAP : maps_to
+    USER ||--o{ USER_SKILL : has
+    USER ||--o{ USER_CAREER_HISTORY : has
+    USER ||--o{ SKILL_GAP : identifies_gap_for
+    ORGANIZATION ||--o{ BUSINESS_UNIT : contains
+    BUSINESS_UNIT ||--o{ DEPARTMENT : contains_many
+    JOB_LEVEL ||--o{ BEHAVIOR : defines_level_for
+    JOB_PROFILE ||--o{ SKILL : requires
+
+    ORGANIZATION {
+        VARCHAR id PK
+        VARCHAR company_name
+        VARCHAR industry
+        VARCHAR company_size
+        VARCHAR operating_regions
+        INTEGER founded_year
+        VARCHAR public_or_private
+        VARCHAR stock_symbol
+        VARCHAR vision_mission
+        VARCHAR org_maturity_level
+        BOOLEAN hrms_integrated
+        VARCHAR erp_system
+        BOOLEAN org_chart_available
+        VARCHAR org_metadata_file
+    }
+
+    BUSINESS_UNIT {
+        VARCHAR id PK
+        VARCHAR name
+        VARCHAR head
+        VARCHAR email
+        VARCHAR organization_id FK
+        VARCHAR strategic_priority
+        VARCHAR kpis
+        VARCHAR business_unit_type
+        VARCHAR location
+        INTEGER budget_allocation
+    }
+
+    DEPARTMENT {
+        VARCHAR id PK
+        VARCHAR name
+        VARCHAR business_unit_id FK
+        VARCHAR manager
+        VARCHAR email
+        INTEGER headcount_budget
+        VARCHAR function_type
+        VARCHAR location
+        BOOLEAN shift_coverage
+        VARCHAR time_zone
+        VARCHAR department_code
+    }
+
+    ROLE_GROUP {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        VARCHAR sample_roles
+        VARCHAR strategic_importance
+        BOOLEAN business_critical
+        VARCHAR associated_departments
+        VARCHAR role_family_code
+    }
+
+    JOB_LEVEL {
+        VARCHAR id PK
+        VARCHAR level_name
+        TEXT description
+        INTEGER salary_band_min
+        INTEGER salary_band_max
+        INTEGER min_experience_years
+        VARCHAR allowed_titles
+        VARCHAR level_code
+        BOOLEAN is_managerial
+        VARCHAR promotion_criteria
+    }
+
+    JOB_PROFILE {
+        VARCHAR id PK
+        VARCHAR job_title
+        VARCHAR job_level_id FK
+        VARCHAR role_group_id FK
+        VARCHAR job_family
+        TEXT description
+        VARCHAR education
+        VARCHAR language_requirements
+        VARCHAR reports_to
+        VARCHAR work_model
+        VARCHAR job_type
+        BOOLEAN union_affiliation
+        VARCHAR job_code
+        VARCHAR work_location
+        BOOLEAN travel_required
+        VARCHAR compliance_requirements
+    }
+
+    RELATIONSHIP_TYPE {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+    }
+
+    SKILL_RELATIONSHIP {
+        INTEGER id PK
+        VARCHAR source_skill_id FK
+        VARCHAR target_skill_id FK
+        VARCHAR relationship_type_id FK
+    }
+
+    CAPABILITY {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        DateTime created_at
+        DateTime updated_at
+        JSON custom_fields
+        Boolean is_active
+    }
+
+    COMPETENCY {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        JSON custom_fields
+    }
+
+    BEHAVIOR {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        VARCHAR competency_id FK
+        VARCHAR job_level_id FK "Optional"
+        VARCHAR level
+    }
+
+    SKILL {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        VARCHAR category
+        VARCHAR criticality
+        VARCHAR level
+        DateTime created_at
+        DateTime updated_at
+        JSON custom_fields
+        Boolean is_active
+    }
+
+    PROFICIENCY {
+        INTEGER id PK
+        VARCHAR name
+        TEXT description
+        INTEGER level
+        VARCHAR skill_id FK
+    }
+
+    ROLE {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+        VARCHAR department_id FK
+        VARCHAR job_level_id FK
+        DateTime created_at
+        DateTime updated_at
+        JSON custom_fields
+        Boolean is_active
+    }
+
+    CAREER_PATH {
+        VARCHAR id PK
+        VARCHAR source_role_id FK
+        VARCHAR target_role_id FK
+        VARCHAR transition_type
+        TEXT notes
+        BOOLEAN is_default
+    }
+
+    SKILL_TAG {
+        VARCHAR id PK
+        VARCHAR name
+        TEXT description
+    }
+
+    SKILL_TAG_MAP {
+        VARCHAR skill_id PK,FK
+        VARCHAR tag_id PK,FK
+    }
+
+    USER_SKILL {
+        INTEGER id PK
+        VARCHAR user_id FK
+        VARCHAR skill_id FK
+        INTEGER proficiency_level_id FK
+        Date acquired_date
+        Date last_validated_date
+        VARCHAR validation_status
+    }
+
+    USER_CAREER_HISTORY {
+        INTEGER id PK
+        VARCHAR user_id FK
+        VARCHAR role_id FK
+        Date start_date
+        Date end_date
+        TEXT notes
+    }
+
+    ASSESSMENT {
+        INTEGER id PK
+        VARCHAR name
+        TEXT description
+        VARCHAR skill_id FK
+        VARCHAR assessment_type
+        Date date_created
+        Date last_updated
+    }
+
+    LEARNING_RESOURCE {
+        INTEGER id PK
+        VARCHAR title
+        TEXT description
+        VARCHAR url
+        VARCHAR resource_type
+        VARCHAR skill_id FK
+        VARCHAR author
+        INTEGER estimated_time_minutes
+    }
+
+    LEARNING_PATH {
+        VARCHAR id PK
+        VARCHAR title
+        TEXT description
+        VARCHAR role_id FK "Optional"
+        VARCHAR created_by
+        INTEGER estimated_duration
+        DateTime created_at
+        DateTime updated_at
+        Boolean is_active
+    }
+
+    LEARNING_PATH_RESOURCES {
+        VARCHAR learning_path_id PK,FK
+        INTEGER learning_resource_id PK,FK
+        INTEGER sequence_order
+    }
+
+    SKILL_GAP {
+        VARCHAR id PK
+        VARCHAR user_id FK
+        VARCHAR skill_id FK
+        INTEGER required_proficiency
+        INTEGER current_proficiency
+        INTEGER gap_score
+    }
+
+    USER {
+        VARCHAR id PK
+        VARCHAR username
+        VARCHAR email
+    }

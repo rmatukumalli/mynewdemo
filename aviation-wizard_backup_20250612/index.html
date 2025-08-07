@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="skill-navigator/skillNavigator.css"> <!-- Added Skill Navigator CSS -->
+    <link rel="stylesheet" href="map-to-ontology-modal/mapToOntologyModal.css"> <!-- Added Map to Ontology Modal CSS -->
+    <link rel="stylesheet" href="components/add-skill-modal/addSkillModal.css"> <!-- Added Add Skill Modal CSS -->
+    <!-- Removed link to import-export/styles.css to avoid conflicts -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+
+        a,
+        a:visited,
+        a:hover {
+            color: #4285F4 !important; /* Google Blue */
+        }
+
+        .custom-button-text {
+            color: white !important;
+        }
+
+        /* Style for the active tab - updated to blue theme */
+        .tabs-nav-button.active {
+            background-color: #D2E3FC; /* Light Blue background */
+            color: #4285F4; /* Google Blue text */
+            font-weight: 600;
+        }
+        .tabs-nav-button.active svg {
+            stroke: #4285F4; /* Google Blue icon stroke */
+        }
+
+        /* Style for "Show more" button */
+        button[data-toggle-id="skills-passport-key-areas"] {
+            color: #4285F4 !important; /* Google Blue */
+        }
+
+        /* Custom scrollbar for sidebar (if needed on smaller heights) */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; /* slate-100 */
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* slate-300 */
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* slate-400 */
+        }
+        /* Ensure content cards stretch to fill grid cell height */
+        .content-card {
+            display: flex;
+            flex-direction: column;
+        }
+        .custom-footer {
+            background-color: #002D62;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.875rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="text-slate-700"> <!-- Matched body class from index.html and background from inline style -->
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-full mx-auto px-4 sm:px-6 py-4"> <!-- Consider matching padding with index.html header if needed -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8" style="stroke: #4285F4;">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1.5-1.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path>
+                    </svg>
+                    <h1 class="text-2xl font-bold text-slate-900 ml-3">Job Architecture</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="import-export/index.html" class="custom-button-text text-white text-[14px] px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition-colors">Import/Export Data</a>
+                    <a href="../job-architecture.html" class="custom-button-text text-white text-[14px] px-4 py-2 bg-[#6C757D] rounded-md hover:bg-[#5a6268] transition-colors relative group">
+                        Job Architecture Guide
+                        <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-xs p-2 bg-black text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            &#128712; Need help? The Job Architecture Guide walks you through best practices and tips for setting up your structure.
+                        </span>
+                    </a>
+                    <a href="../index.html" class="text-sm hover:underline">Home</a> <!-- Styled as a link -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-full mx-auto px-8 pt-8">
+        <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg mb-4">
+            <h2 class="text-xl font-semibold text-blue-800 mb-2">Welcome to Job Architecture Setup</h2>
+            <p class="text-blue-700">
+                This guided workflow will help you create a structured job framework for your organization. Start by defining your company, then build out business units, departments, roles, job levels, and career paths. This ensures consistency, clarity, and efficiency in your hiring and workforce planning.
+            </p>
+        </div>
+    </div>
+
+    <main class="max-w-full mx-auto p-8 pt-0"> <!-- Matched padding from index.html main content, removed top padding as it's now on the intro container -->
+        <!-- Stepper Container -->
+        <div id="stepper-container" class="flex justify-between items-center mb-4 overflow-x-auto pb-4"></div>
+
+        <!-- Main Content Area for Steps -->
+        <div class="mt-4 bg-white p-6 rounded-xl shadow-lg min-h-[200px] max-h-[calc(100vh-320px)] overflow-y-auto" id="step-content">
+            <!-- Step content will be injected here by JavaScript -->
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div id="navigation-container" class="mt-4 mb-4 flex justify-between items-center"></div>
+    </main>
+
+    <!-- Modal Container (hidden by default) -->
+    <div id="modal-container"></div>
+    <div id="skill-navigator-modal-container"></div> <!-- Container for the new Skill Navigator -->
+    <div id="map-to-ontology-modal-container"></div> <!-- Container for the Map to Ontology Modal -->
+    <div id="add-skill-modal-container"></div> <!-- Container for the Add Skill Modal -->
+
+    <script type="module" src="main.js?v=${Date.now()}"></script>
+    <script type="module" src="components/add-skill-modal/addSkillModal.js?v=${Date.now()}"></script>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+  <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only
+  </div>
+</body>
+</html>

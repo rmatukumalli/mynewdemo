@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Talent Intelligence Architecture Image
+  </title>
+  <!-- Tailwind CSS CDN for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom styles for color variables and basic layout -->
+  <style>
+   :root {
+            --delta-blue: #2563eb; /* A shade of blue for primary elements */
+            --delta-red: #ef4444; /* A shade of red for accent/danger elements */
+        }
+        body {
+            margin: 0;
+            background-color: #f0f2f5; /* Light gray background for context */
+            display: flex;
+            flex-direction: column; /* Allow content to stack vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif; /* Using Inter font */
+        }
+        .image-container {
+            max-width: 100%; /* Ensure container doesn't overflow small viewports */
+            position: relative; /* For absolute positioning of back button */
+        }
+  </style>
+ </head>
+ <body>
+  <div class="image-container w-full max-w-4xl mx-auto bg-white p-4 rounded-lg shadow-xl relative">
+   <!-- Back Button -->
+   <button class="absolute top-4 left-4 bg-[var(--delta-blue)] text-white p-2 rounded-full shadow-md hover:bg-blue-700 transition duration-300 ease-in-out flex items-center justify-center z-10" onclick="window.history.back()" title="Go back">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+     <path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round">
+     </path>
+    </svg>
+   </button>
+   <h1 class="text-2xl font-bold text-center text-slate-800 mb-4">
+    Talent Intelligence Functional Architecture
+   </h1>
+   <!-- Placeholder image as the original path is external and not provided -->
+   <img alt="Talent Intelligence Functional Architecture Diagram" class="w-full h-auto rounded-lg shadow-lg border border-slate-200" onerror="this.onerror=null;this.src='https://placehold.co/800x600/aabbcc/ffffff?text=Architecture+Diagram+Placeholder';" src="../images/Talent Intelligence Functional Architecture.png"/>
+   <p class="text-center text-slate-500 text-sm mt-4">
+    This diagram illustrates the functional architecture of the Talent Intelligence platform.
+   </p>
+  </div>
+  
+ </body>
+</html>

@@ -1,0 +1,185 @@
+{
+  "role": {
+    "step1_organization_and_position_structure": {
+      "business_unit": "Flight Operations",
+      "department": "Pilot Training",
+      "job_family": "Aviation",
+      "role_group": "Cadet Program",
+      "role_code": "AV-CP-001",
+      "created_date": "2025-08-07",
+      "team_size": 25,
+      "reporting_lines": "Reports to Chief Flight Instructor. No direct reports.",
+      "matrix_relationships": "Works closely with ground school instructors, simulator instructors, and flight examiners."
+    },
+    "step2_classification_and_hierarchy": {
+      "career_track": "Flight Crew",
+      "level": "Trainee",
+      "grade": "CP01",
+      "seniority_label": "Cadet",
+      "feeder_roles": ["Aspiring Pilot"],
+      "reports_to": "Chief Flight Instructor",
+      "location": ["Training Academy Base", "Various Flight Schools"],
+      "location_type": "On-site/Hybrid",
+      "employment_type": "Full-time Trainee",
+      "contract_type": "Fixed-term (Program Duration)"
+    },
+    "step3_role_overview": {
+      "role_title": "Cadet Pilot",
+      "role_summary": "Undergoes comprehensive flight and ground training to become a qualified commercial airline pilot.",
+      "job_description": "The Cadet Pilot will participate in an intensive training program covering theoretical knowledge, simulator training, and actual flight hours. Responsibilities include mastering aviation principles, adhering to safety protocols, and passing all required examinations to obtain commercial pilot licenses and ratings.",
+      "key_responsibilities": [
+        "Complete all phases of flight training (PPL, CPL, IR, ATPL)",
+        "Master aviation theory and operational procedures",
+        "Adhere strictly to safety regulations and company policies",
+        "Maintain accurate flight logs and training records",
+        "Participate actively in ground school and simulator sessions"
+      ],
+      "decision_scope": "Follows instructions from flight instructors and training supervisors; limited independent decision-making in early stages."
+    },
+    "step4_skills_capabilities_requirements": {
+      "capability": "Operational",
+      "competency": "Flight Operations",
+      "experience_requirements": "No prior flight experience required, but strong academic background and aptitude for aviation.",
+      "skills": [
+        { "name": "Aerodynamics", "minimum_proficiency": 2, "target_proficiency": 4 },
+        { "name": "Navigation", "minimum_proficiency": 2, "target_proficiency": 4 },
+        { "name": "Meteorology", "minimum_proficiency": 2, "target_proficiency": 4 },
+        { "name": "Aircraft Systems", "minimum_proficiency": 2, "target_proficiency": 4 },
+        { "name": "Flight Planning", "minimum_proficiency": 2, "target_proficiency": 4 },
+        { "name": "Air Traffic Control Procedures", "minimum_proficiency": 2, "target_proficiency": 4 }
+      ],
+      "soft_skills": [
+        { "name": "Discipline", "minimum_proficiency": 4, "target_proficiency": 5 },
+        { "name": "Attention to Detail", "minimum_proficiency": 4, "target_proficiency": 5 },
+        { "name": "Stress Management", "minimum_proficiency": 3, "target_proficiency": 4 },
+        { "name": "Communication (ATC)", "minimum_proficiency": 3, "target_proficiency": 4 }
+      ],
+      "tools_technologies": ["Flight Simulators", "EFIS", "FMS", "ATC Communication Systems"],
+      "certifications": ["Class 1 Medical Certificate (initial)", "ATPL (frozen)"],
+      "learning_resources": [
+        "https://www.skillsoft.com/channel/aviation-fundamentals",
+        "https://www.skillsoft.com/course/commercial-pilot-license-prep"
+      ]
+    },
+    "step5_performance_growth_mobility": {
+      "kpis_outcomes": [
+        "Achieve 100% pass rate on all ground school exams.",
+        "Complete flight phases within allocated hours and budget.",
+        "Maintain a satisfactory progress report from flight instructors."
+      ],
+      "performance_review_cycle": "Monthly progress reviews with instructors, quarterly formal assessments.",
+      "professional_development_support": "Full sponsorship for flight training, access to airline's internal training resources.",
+      "impact_areas": ["Flight Safety", "Operational Efficiency (future)"],
+      "behavioral_competencies": ["Discipline", "Resilience", "Teamwork"],
+      "feeder_roles": ["Cadet Pilot", "Junior Pilot", "Flight School Graduate"],
+      "career_path_next_roles": ["First Officer (Regional)", "First Officer (Mainline)", "Captain (Regional)"],
+      "mobility_options": ["Airline Operations", "Maintenance (with further training)", "Ground Staff Management", "Aviation Analyst", "HR Specialist (Aviation)", "Project Manager (Aviation)", "Air Traffic Controller (with training)", "Airline Dispatcher"],
+      "career_path_mapping": [
+        {
+          "path_name": "Commercial Airline Pilot Path",
+          "current_role": "Cadet Pilot",
+          "next_roles": [
+            {
+              "role_title": "First Officer (Regional)",
+              "grade": "G2"
+            },
+            {
+              "role_title": "First Officer (Mainline)",
+              "grade": "G3"
+            },
+            {
+              "role_title": "Captain (Regional)",
+              "grade": "G4"
+            }
+          ]
+        },
+        {
+          "path_name": "Flight Instruction & Training Path",
+          "current_role": "Cadet Pilot",
+          "next_roles": [
+            {
+              "role_title": "Flight Instructor (CFI)",
+              "grade": "G2"
+            },
+            {
+              "role_title": "Senior Flight Instructor (Chief CFI)",
+              "grade": "G3"
+            }
+          ]
+        },
+        {
+          "path_name": "Aviation Management Path",
+          "current_role": "Cadet Pilot",
+          "next_roles": [
+            {
+              "role_title": "First Officer (Mainline)",
+              "grade": "G3"
+            },
+            {
+              "role_title": "Captain (Regional)",
+              "grade": "G4"
+            },
+            {
+              "role_title": "Flight Operations Manager",
+              "grade": "G5"
+            }
+          ]
+        }
+      ],
+      "time_allocation": {
+        "ground_school": "40%",
+        "flight_training": "40%",
+        "self_study": "20%"
+      },
+      "succession_plan_ready": false,
+      "criticality_to_business": "High (future talent pipeline)",
+      "backup_resource_assigned": "N/A"
+    },
+    "step6_admin_compliance": {
+      "billable": false,
+      "access_level": "Trainee",
+      "expected_onboarding_date": "2025-09-01",
+      "status": "In Training",
+      "approval_status": "Approved (Program Entry)",
+      "security_clearance": "Required (Aviation Authority)",
+      "background_check": "Required upon program entry",
+      "mandatory_compliance_training": ["Aviation Security Training", "Dangerous Goods Regulations"],
+      "equipment_provisioning": {
+        "uniform": "Provided",
+        "training_materials": ["Flight manuals", "Charts", "Headset"]
+      }
+    },
+    "step7_custom_fields": {
+      "training_program_duration": "24 months",
+      "scholarship_details": "Full tuition, accommodation, and living stipend provided.",
+      "post_graduation_commitment": "5 years of service with the airline.",
+      "medical_requirements": "Must maintain Class 1 Medical Certificate.",
+      "simulator_hours_completed": "0 (initial)"
+    },
+    "step8_metadata_activity_log": {
+      "created_by": "Raj Matukumalli",
+      "last_updated": "2025-08-07T16:15:00Z",
+      "activity_log": [
+        {
+          "changedBy": "Raj Matukumalli",
+          "changedAt": "2025-08-07T16:15:00Z",
+          "changes": {
+            "role_title": {
+              "oldValue": "Senior Frontend Engineer",
+              "newValue": "Cadet Pilot"
+            },
+            "role_summary": {
+              "oldValue": "Designs, develops, and maintains user-facing features for our web applications.",
+              "newValue": "Undergoes comprehensive flight and ground training to become a qualified commercial airline pilot."
+            }
+          },
+          "comment": "Initial creation of Cadet Pilot role data."
+        }
+      ]
+    },
+    "step9_review_and_edit": {
+      "review_ready": true,
+      "edit_enabled": true
+    }
+  }
+}

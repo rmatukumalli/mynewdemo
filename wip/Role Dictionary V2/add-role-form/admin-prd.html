@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD: Enterprise Role Form Configuration Suite v2.5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/RoleDictionary/Role%20Dictionary%20V2/role-architecture-mini.css">
+    <link rel="stylesheet" href="/RoleDictionary/Role%20Dictionary%20V2/add-role-form/form.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4 {
+            scroll-margin-top: 2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f8fafc;
+        }
+        ul {
+            list-style-position: inside;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-text">
+                <h1>Admin Configuration PRD</h1>
+                <p>Detailed requirements for the Admin Configuration Suite.</p>
+            </div>
+        </header>
+        <div class="page-actions" style="text-align: right; margin-bottom: 20px;">
+            <a href="index.html" class="btn btn-secondary">Back to Add New Role</a>
+        </div>
+
+        <aside class="bg-white p-6 rounded-lg shadow-sm mb-8">
+            <h2 class="text-xl font-semibold mb-4">Table of Contents</h2>
+            <ul class="space-y-2 text-blue-600">
+                <li><a href="#summary" class="hover:underline">1. Executive Summary</a></li>
+                <li><a href="#problem" class="hover:underline">2. Problem Statement & User Need</a></li>
+                <li><a href="#requirements" class="hover:underline">3. Functional Requirements: The Configuration Wizard</a>
+                    <ul class="ml-4 mt-2 space-y-2">
+                        <li><a href="#step1" class="hover:underline">3.1 Step 1: Global Settings & Feature Toggles</a></li>
+                        <li><a href="#step2" class="hover:underline">3.2 Step 2: Branding & Appearance</a></li>
+                        <li><a href="#step3" class="hover:underline">3.3 Step 3: Form Structure & Field Configuration</a></li>
+                        <li><a href="#step4" class="hover:underline">3.4 Step 4: Custom Field Management</a></li>
+                        <li><a href="#step5" class="hover:underline">3.5 Step 5: Localization & Cultures</a></li>
+                        <li><a href="#step6" class="hover:underline">3.6 Step 6: Permissions & Access Control</a></li>
+                        <li><a href="#step7" class="hover:underline">3.7 Step 7: Versioning & Deployment</a></li>
+                        <li><a href="#step8" class="hover:underline">3.8 Step 8: Audit Log</a></li>
+                        <li><a href="#step9" class="hover:underline">3.9 Step 9: Review & Activate</a></li>
+                    </ul>
+                </li>
+                <li><a href="#mapping" class="hover:underline">4. Implementation: Frontend & Backend Feature Mapping</a></li>
+                <li><a href="#nfr" class="hover:underline">5. Non-Functional Requirements</a></li>
+            </ul>
+        </aside>
+
+        <main class="bg-white p-6 sm:p-8 rounded-lg shadow-sm space-y-8">
+            
+            <section id="summary">
+                <h2 class="text-2xl font-bold mb-4">1. Executive Summary</h2>
+                <p>This document outlines the requirements for the <strong>Enterprise Role Form Configuration Suite</strong>, a comprehensive backend solution for our SaaS customers. Moving beyond basic settings, this suite will provide administrators with a guided, wizard-like experience to deeply customize every aspect of the "Add/Edit Role Form." Key capabilities include global feature toggles for AI and data management, company branding for exports, granular permission controls, full localization for a global workforce, and robust versioning with a complete audit trail.</p>
+                <p class="mt-2">This evolution is critical to capturing the enterprise market segment, offering unparalleled flexibility and control that allows large organizations to seamlessly integrate our platform into their existing global HR ecosystems.</p>
+                <h3 class="text-lg font-semibold mt-4 mb-2">Success will be measured by:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>75% adoption of the configuration suite by enterprise customers within one year.</li>
+                    <li>Measurable reduction in customer support requests for form customizations by 95%.</li>
+                    <li>Successful deployment in at least 5 multinational customers requiring localization and branding features.</li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <section id="problem">
+                <h2 class="text-2xl font-bold mb-4">2. Problem Statement & User Need</h2>
+                <p>Enterprise customers operate at a scale and complexity that a one-size-fits-all form cannot accommodate. They have diverse global workforces, strict branding guidelines, complex security models, and established terminology. The inability for an administrator to self-serve these customizations creates friction, slows down adoption, and makes our product feel less like a tailored enterprise solution and more like a rigid tool.</p>
+                <p class="mt-2"><strong>User Persona:</strong> Enterprise System Administrator, Global HRIS Administrator.</p>
+                <p class="mt-2"><strong>User Need:</strong> Administrators require a powerful, centralized, and intuitive suite to configure the Role Form. They need to control features, apply corporate branding, define who can do what, adapt the form for different languages and cultures (including RTL), and manage these complex configurations over time with versioning and auditing to meet enterprise-grade compliance and governance standards.</p>
+            </section>
+
+            <hr>
+
+            <section id="requirements">
+                <h2 class="text-2xl font-bold mb-4">3. Functional Requirements: The Configuration Wizard</h2>
+                <p>The admin experience will be structured as a sequential, step-by-step wizard, providing a clear and guided path through all configuration options.</p>
+
+                <div id="step1" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.1 Step 1: Global Settings & Feature Toggles</h3>
+                    <p class="mb-4">A dashboard to enable or disable major, high-level functionalities across their entire instance.</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Setting</th>
+                                    <th class="font-semibold">Field Type</th>
+                                    <th class="font-semibold">Plausible Values</th>
+                                    <th class="font-semibold">Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Generate with AI</strong></td>
+                                    <td>Toggle Switch</td>
+                                    <td>On / Off</td>
+                                    <td>When Off, all "Generate with AI" buttons are hidden from the end-user form.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bulk Import/Export</strong></td>
+                                    <td>Toggle Switch</td>
+                                    <td>On / Off</td>
+                                    <td>When Off, the bulk import/export menu options are hidden from the UI.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Print Preview</strong></td>
+                                    <td>Toggle Switch</td>
+                                    <td>On / Off</td>
+                                    <td>When Off, the "Print Preview" button is hidden from the "Review & Edit" step.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Field-Level Guidance</strong></td>
+                                    <td>Toggle Switch</td>
+                                    <td>On / Off</td>
+                                    <td>When Off, all tooltips are hidden, allowing clients to use their own training materials.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step2" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.2 Step 2: Branding & Appearance</h3>
+                     <p class="mb-4">This step allows customers to apply their corporate identity to the outputs generated from the "Add/Edit Role Form."</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Setting</th>
+                                    <th class="font-semibold">Field Type</th>
+                                    <th class="font-semibold">Plausible Values / Constraints</th>
+                                    <th class="font-semibold">Application</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Company Logo</strong></td>
+                                    <td>File Uploader</td>
+                                    <td>JPG, PNG, SVG. Max 5MB.</td>
+                                    <td>Appears in the header of Print Previews, PDFs, and Excel exports.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Header Text</strong></td>
+                                    <td>Text Input</td>
+                                    <td>"Innovate Corp. Official Role Profile"</td>
+                                    <td>Appears next to the logo in the header of exported documents.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Footer Text</strong></td>
+                                    <td>Text Input</td>
+                                    <td>"Confidential - Internal Use Only © 2025"</td>
+                                    <td>Appears in the footer of every page of exported documents.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step3" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.3 Step 3: Form Structure & Field Configuration</h3>
+                    <p class="mb-4">This interactive module is the core of the form customization. Admins can configure every field from the user-facing form, which are grouped below by their original step.</p>
+                    
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 1: Role Overview Fields</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Role Title</strong></td>
+                                    <td>Text</td>
+                                    <td>The primary title of the role.</td>
+                                    <td>255 characters</td>
+                                    <td>Yes</td>
+                                    <td></td>
+                                    <td>String</td>
+                                    <td>Min 3 chars</td>
+                                    <td>HR System</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Edit Label <br> • Edit Tooltip</td>
+                                    <td>Visibility cannot be changed (System Required).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Role ID</strong></td>
+                                    <td>Text</td>
+                                    <td>Unique identifier for the role.</td>
+                                    <td>50 characters</td>
+                                    <td>No</td>
+                                    <td>Auto-generated</td>
+                                    <td>Alphanumeric</td>
+                                    <td>Unique</td>
+                                    <td>System</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Role Description</strong></td>
+                                    <td>Long Text</td>
+                                    <td>A detailed summary of the role's purpose and scope.</td>
+                                    <td>2000 characters</td>
+                                    <td>Yes</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>Min 50 chars</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Edit Label <br> • Edit Tooltip</td>
+                                    <td>Visibility cannot be changed (System Required).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Role Type</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Type of employment for the role.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Full-time</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Department/Function</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>The department or functional area the role belongs to.</td>
+                                    <td>N/A</td>
+                                    <td>Yes</td>
+                                    <td>Engineering</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>Department Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Location</strong></td>
+                                    <td>Text</td>
+                                    <td>Physical or remote work location(s).</td>
+                                    <td>255 characters</td>
+                                    <td>Yes</td>
+                                    <td>Global</td>
+                                    <td>String</td>
+                                    <td>Valid location</td>
+                                    <td>HR System</td>
+                                    <td>Location Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 2: Organization & Position Structure Fields</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Reporting To</strong></td>
+                                    <td>Lookup</td>
+                                    <td>The role or position this role reports to.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>N/A</td>
+                                    <td>Role ID</td>
+                                    <td>Must be existing role</td>
+                                    <td>HR System</td>
+                                    <td>Role Table (Manager)</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td>Options are sourced from existing roles, not managed here.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Direct Reports</strong></td>
+                                    <td>Multi-Lookup</td>
+                                    <td>Roles or positions that report directly to this role.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Role IDs</td>
+                                    <td>Must be existing roles</td>
+                                    <td>HR System</td>
+                                    <td>Role Table (Direct Reports)</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td>Options are sourced from existing roles, not managed here.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Team/Unit</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>The specific team or unit within the department.</td>
+                                    <td>N/A</td>
+                                    <td>Yes</td>
+                                    <td>Front-end</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>Manual Input</td>
+                                    <td>Team Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Job Family</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>The broader category of jobs with similar characteristics.</td>
+                                    <td>N/A</td>
+                                    <td>Yes</td>
+                                    <td>Software Engineering</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>Job Family Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Job Level/Grade</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>The seniority level or grade of the role.</td>
+                                    <td>N/A</td>
+                                    <td>Yes</td>
+                                    <td>IC01</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>Job Level Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 3: Classification & Hierarchy Fields</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Industry Classification</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Industry sector classification.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Technology</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>External Data</td>
+                                    <td>Industry Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Functional Area</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Specific functional area within the department.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Front-end</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>Manual Input</td>
+                                    <td>Functional Area Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Business Unit</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>The business unit this role contributes to.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Consumer Tech</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>Business Unit Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cost Center</strong></td>
+                                    <td>Number</td>
+                                    <td>Financial cost center code.</td>
+                                    <td>10 digits</td>
+                                    <td>No</td>
+                                    <td>000000</td>
+                                    <td>Integer</td>
+                                    <td>6-digit number</td>
+                                    <td>Finance System</td>
+                                    <td>Cost Center Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Role Status</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Current status of the role.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Draft</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>System/Manual</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 4: Skills, Capabilities, Competencies & Behaviors</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Required Skills</strong></td>
+                                    <td>Multi-Select</td>
+                                    <td>Mandatory skills for the role, with proficiency levels.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Skill ID, Level</td>
+                                    <td>From Skills Ontology</td>
+                                    <td>Skills Library</td>
+                                    <td>Skills Ontology</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td>Options are sourced from the Skills Ontology.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Preferred Skills</strong></td>
+                                    <td>Multi-Select</td>
+                                    <td>Desirable skills for the role, with proficiency levels.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Skill ID, Level</td>
+                                    <td>From Skills Ontology</td>
+                                    <td>Skills Ontology</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td>Options are sourced from the Skills Ontology.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Capabilities</strong></td>
+                                    <td>Long Text</td>
+                                    <td>Key capabilities required for successful performance.</td>
+                                    <td>1000 characters</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Core Competencies</strong></td>
+                                    <td>Multi-Select</td>
+                                    <td>Fundamental competencies applicable across the organization.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Competency ID</td>
+                                    <td>From Competency Library</td>
+                                    <td>HR Framework</td>
+                                    <td>Competency Library</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Key Behaviors</strong></td>
+                                    <td>Long Text</td>
+                                    <td>Observable behaviors critical for success in the role.</td>
+                                    <td>1000 characters</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Certifications/Licenses</strong></td>
+                                    <td>Multi-Select</td>
+                                    <td>Required or preferred professional certifications/licenses.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Certification Name</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Languages</strong></td>
+                                    <td>Multi-Select</td>
+                                    <td>Languages required for the role, with proficiency levels.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>English</td>
+                                    <td>Language, Level</td>
+                                    <td>Predefined options</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Proficiency Scale</strong></td>
+                                    <td>N/A</td>
+                                    <td>Defines the number of levels and their labels for skill and language proficiency.</td>
+                                    <td>N/A</td>
+                                    <td>Yes</td>
+                                    <td>5 levels</td>
+                                    <td>Categorical</td>
+                                    <td>Min 3, Max 10 levels</td>
+                                    <td>System</td>
+                                    <td>N/A</td>
+                                    <td>Visible</td>
+                                    <td>• Define Scale (e.g., 3, 4, 5 levels) <br> • Edit Level Labels (e.g., "Novice", "Expert")</td>
+                                    <td>This setting applies to all skill and language fields.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 5: Performance, Growth & Mobility</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Key Performance Indicators (KPIs)</strong></td>
+                                    <td>Long Text</td>
+                                    <td>Measurable indicators of performance for the role.</td>
+                                    <td>1000 characters</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Success Metrics</strong></td>
+                                    <td>Long Text</td>
+                                    <td>Criteria defining successful role performance.</td>
+                                    <td>1000 characters</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Career Path/Next Roles</strong></td>
+                                    <td>Multi-Lookup</td>
+                                    <td>Potential next roles or career progression paths.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>None</td>
+                                    <td>Role IDs</td>
+                                    <td>Must be existing roles</td>
+                                    <td>HR System</td>
+                                    <td>Role Table</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td>Options are sourced from existing roles, not managed here.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Mobility Requirements</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Requirements for travel or relocation.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Local</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Section 6: Administrative & Compliance Details</h4>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="font-semibold">Field Name</th>
+                                    <th class="font-semibold">Data Type</th>
+                                    <th class="font-semibold">Description</th>
+                                    <th class="font-semibold">Length/Size</th>
+                                    <th class="font-semibold">Required</th>
+                                    <th class="font-semibold">Default Value</th>
+                                    <th class="font-semibold">Format</th>
+                                    <th class="font-semibold">Validation Rules</th>
+                                    <th class="font-semibold">Source</th>
+                                    <th class="font-semibold">Relationships</th>
+                                    <th class="font-semibold">Visibility</th>
+                                    <th class="font-semibold">Configurable Attributes</th>
+                                    <th class="font-semibold">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>FLSA Status</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Fair Labor Standards Act classification.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Exempt</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EEO Category</strong></td>
+                                    <td>Dropdown</td>
+                                    <td>Equal Employment Opportunity category.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>Professionals</td>
+                                    <td>Categorical</td>
+                                    <td>Predefined options</td>
+                                    <td>HR System</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip <br> • Manage Dropdown Options</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Union Affiliation</strong></td>
+                                    <td>Boolean</td>
+                                    <td>Indicates if the role is part of a union.</td>
+                                    <td>N/A</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                    <td>Yes/No</td>
+                                    <td>Boolean</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Regulatory Compliance Notes</strong></td>
+                                    <td>Long Text</td>
+                                    <td>Any specific notes regarding regulatory compliance.</td>
+                                    <td>1000 characters</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Markdown</td>
+                                    <td>N/A</td>
+                                    <td>Manual Input</td>
+                                    <td>None</td>
+                                    <td>Visible</td>
+                                    <td>• Toggle Visibility <br> • Edit Label <br> • Edit Tooltip</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step4" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.4 Step 4: Custom Field Management</h3>
+                    <p class="mb-4">This step allows admins to define and manage a library of organization-specific fields.</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Attribute</th><th>Field Type</th><th>Plausible Values / Constraints</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Field Label</strong></td><td>Text Input</td><td>"Security Clearance Level"</td></tr>
+                                <tr><td><strong>Field Type</strong></td><td>Dropdown</td><td>"Text Input", "Text Area", "Number", "Date", "Checkbox", "Dropdown"</td></tr>
+                                <tr><td><strong>Required</strong></td><td>Checkbox</td><td>Checked / Unchecked</td></tr>
+                                <tr><td><strong>Help Text (Tooltip)</strong></td><td>Text Area</td><td>"Select the security clearance required for this role."</td></tr>
+                                <tr><td><strong>Dropdown Options</strong></td><td>Dynamic List Editor</td><td>(Appears if Field Type is "Dropdown") A list of strings like "None", "Confidential", "Top Secret".</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="step5" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.5 Step 5: Localization & Cultures</h3>
+                    <p class="mb-4">A dedicated workspace for translating the form into multiple languages.</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                             <thead>
+                                <tr><th>Setting</th><th>Field Type</th><th>Plausible Values / Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Add Language</strong></td><td>Searchable Dropdown</td><td>A list of supported languages, e.g., "German (de-DE)", "Japanese (ja-JP)".</td></tr>
+                                <tr><td><strong>Translation Table</strong></td><td>Multi-column Table</td><td>Displays `String Key` (e.g., `field.job_family.label`), `Default Value` ("Job Family"), and an empty `Translated Value` (Text Input) for the admin to fill in. This includes all field labels, tooltips, and dropdown options.</td></tr>
+                                <tr><td><strong>RTL Support</strong></td><td>Toggle Switch</td><td>On / Off. Appears only when an RTL language like Hebrew or Urdu is added.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step6" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.6 Step 6: Permissions & Access Control</h3>
+                    <p class="mb-4">A module for defining granular, role-based access control (RBAC).</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Setting</th><th>Field Type</th><th>Plausible Values / Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Create New Role</strong></td><td>Text Input + Button</td><td>Admin enters a name like "Hiring Manager" and clicks "Create".</td></tr>
+                                <tr><td><strong>Permission Matrix</strong></td><td>Table of Checkboxes</td><td>A grid with roles as rows and permissions as columns. Examples: `actions.create_role`, `fields.salary_band.view`, `fields.salary_band.edit`.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step7" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.7 Step 7: Versioning & Deployment</h3>
+                    <p class="mb-4">A system to manage and deploy configuration sets safely.</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Setting</th><th>Field Type</th><th>Plausible Values / Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Save Version</strong></td><td>Modal with Text Inputs</td><td><strong>Name:</strong> "Q4 2025 Comp Review Update" <br> <strong>Description:</strong> "Added new salary and bonus fields."</td></tr>
+                                <tr><td><strong>Version History</strong></td><td>Table</td><td>Lists all saved versions with Name, Description, Author, and Date.</td></tr>
+                                <tr><td><strong>Activate Button</strong></td><td>Button</td><td>A button next to each inactive version in the history list.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step8" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.8 Step 8: Audit Log</h3>
+                    <p class="mb-4">A comprehensive and immutable log of all administrative activities.</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Setting</th><th>Field Type</th><th>Plausible Values / Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Date Range Filter</strong></td><td>Date Range Picker</td><td>A calendar UI to select a start and end date.</td></tr>
+                                <tr><td><strong>User Filter</strong></td><td>Searchable Dropdown</td><td>A list of all admin users.</td></tr>
+                                <tr><td><strong>Action Type Filter</strong></td><td>Multi-select Dropdown</td><td>"Field Visibility Changed", "Custom Field Created", "Version Activated", etc.</td></tr>
+                                <tr><td><strong>Log Display</strong></td><td>Table</td><td>Read-only table showing Timestamp, User, Action, Item, Old Value, New Value.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="step9" class="mt-6">
+                    <h3 class="text-xl font-semibold mb-3">3.9 Step 9: Review & Activate</h3>
+                    <p>A final summary step that provides a clear "diff" view before deploying changes.</p>
+                    <ul class="list-disc pl-5 mt-2 space-y-1">
+                        <li><strong>Functionality:</strong> Displays a read-only, side-by-side comparison or highlighted summary of all changes made in the current session versus the currently active version. Additions will be shown in green, modifications in yellow, and deletions in red.</li>
+                        <li><strong>Final Confirmation:</strong> The admin can review this clear summary of their impact before clicking the final "Save and Activate" button, which will create a new version and make it live.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <hr>
+
+            <section id="mapping">
+                <h2 class="text-2xl font-bold mb-4">4. Implementation: Frontend & Backend Feature Mapping</h2>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr><th>Feature / Capability</th><th>Frontend Responsibilities (Client-Side)</th><th>Backend Responsibilities (Server-Side)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Overall Configuration Wizard</strong></td><td><ul><li>Build the main sequential wizard UI with "Next" and "Back" buttons.</li><li>Manage the local state of the wizard (which step is active).</li><li>Render the appropriate components for each step.</li></ul></td><td><ul><li>Create a secure endpoint accessible only to admins.</li><li>Provide an API to fetch the current, complete configuration state to populate the wizard on load.</li></ul></td></tr>
+                            <tr><td><strong>Step 1: Global Settings</strong></td><td><ul><li>Render the on/off toggle switches for AI, Import/Export, Print Preview, and Tooltips.</li><li>Display the current state of each toggle based on data from the backend.</li><li>Send an API request when a toggle state is changed.</li></ul></td><td><ul><li>Store the boolean state (true/false) for each global feature toggle in the database per tenant.</li><li>Create API endpoints to `GET` the current state and `PUT` updates for these toggles.</li></ul></td></tr>
+                            <tr><td><strong>Step 2: Branding</strong></td><td><ul><li>Create a file upload component for the company logo with client-side validation (file type, size).</li><li>Display a preview of the uploaded logo.</li><li>Render text input fields for header/footer content.</li><li>Send logo file and text to the backend upon saving.</li></ul></td><td><ul><li>Create an endpoint to handle the logo file upload and store it securely (e.g., in an S3 bucket).</li><li>Store the logo URL and header/footer text in the database per tenant.</li><li>Provide an API to retrieve the current branding assets.</li></ul></td></tr>
+                            <tr><td><strong>Step 3: Form Structure & Field Config</strong></td><td><ul><li>Render a visual representation of the 9-step user form.</li><li>For each field, display controls to toggle visibility, edit the label, and edit the tooltip text.</li><li>For dropdowns, render a UI to add, edit, reorder, and deactivate options.</li><li>Render the UI for defining the skills proficiency scale.</li><li>Manage the state of these changes locally before they are saved.</li></ul></td><td><ul><li>Provide an API to `GET` all configurable fields and their current state (visible, label, tooltip, options).</li><li>Provide an API to `GET` and `PUT` the proficiency scale definition.</li><li>Create endpoints to `PUT` updates for field visibility, labels, and tooltip content.</li><li>Create `POST`, `PUT`, and `DELETE` (soft delete) endpoints for managing dropdown options.</li></ul></td></tr>
+                            <tr><td><strong>Step 4: Custom Field Management</strong></td><td><ul><li>Build a UI for creating a new custom field (form with inputs for label, type, tooltip, etc.).</li><li>Render a list of all existing custom fields with options to edit or deactivate.</li><li>Perform client-side validation on the creation form.</li></ul></td><td><ul><li>Create a database table/collection to store custom field definitions per tenant.</li><li>Implement full CRUD API endpoints (`POST`, `GET`, `PUT`, `DELETE`) for managing custom fields.</li><li>Ensure the main Role Form API can incorporate and serve these custom fields.</li></ul></td></tr>
+                            <tr><td><strong>Step 5: Localization & Cultures</strong></td><td><ul><li>Render a UI to add/remove languages for the tenant.</li><li>Display a two-column table for translating field labels, help text/tooltips, and dropdown options.</li><li>Implement the UI logic to dynamically switch the entire application to RTL when an RTL language is selected by the end-user.</li></ul></td><td><ul><li>Store all translations (key-value pairs) in the database, linked to a specific language and tenant.</li><li>Provide an API to `GET` all translatable strings and `PUT` updated translations.</li><li>Include a `direction: 'rtl'` flag in the user session/profile API when an RTL language is active.</li></ul></td></tr>
+                            <tr><td><strong>Step 6: Permissions & Access</strong></td><td><ul><li>Build a UI for creating and managing roles (e.g., "HRBP").</li><li>Render a permission matrix (grid of checkboxes) for each role.</li><li>Send the updated permission set for a role to the backend when saved.</li></ul></td><td><ul><li>Create database tables to store custom roles and their associated permissions per tenant.</li><li>Implement CRUD APIs for managing these roles.</li><li>Enforce these permissions via middleware on all relevant data access endpoints for the end-user form.</li></ul></td></tr>
+                            <tr><td><strong>Step 7: Versioning</strong></td><td><ul><li>Render a UI that lists all saved configuration versions.</li><li>Provide a button to "Activate" a specific version.</li><li>Display a modal asking the admin to name a new version upon saving changes.</li></ul></td><td><ul><li>Store entire configuration objects as versioned documents in the database.</li><li>Implement logic to flag one version as "active" per tenant.</li><li>Create an API to `GET` all versions and an endpoint to `POST` a new version or `PUT` to change the active version.</li></ul></td></tr>
+                            <tr><td><strong>Step 8: Audit Log</strong></td><td><ul><li>Build a UI to display the audit log in a table format.</li><li>Implement filter controls (date range, user, action type).</li><li>Handle pagination for large logs.</li><li>Render an "Export to CSV" button.</li></ul></td><td><ul><li>Create a logging service that automatically records every change made through the configuration APIs.</li><li>Store immutable logs with all required details (timestamp, user, action, old/new values).</li><li>Provide a powerful query API to search and filter the logs.</li><li>Create an endpoint to generate and stream a CSV export of the filtered log data.</li></ul></td></tr>
+                            <tr><td><strong>Step 9: Review & Activate</strong></td><td><ul><li>Create a read-only summary component that displays all pending changes from the current session.</li><li>Render the final "Save and Activate" button.</li><li>On click, trigger the API call to save the new configuration as a new version and make it active.</li></ul></td><td><ul><li>Create a single, transactional API endpoint that takes the entire pending configuration state, creates a new version, sets it to active, and logs the "Configuration Activated" event in the audit log.</li></ul></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <hr>
+
+            <section id="nfr">
+                <h2 class="text-2xl font-bold mb-4">5. Non-Functional Requirements</h2>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>Security:</strong> The entire suite must be protected by a top-level admin role. The granular permissions defined in Step 6 must be strictly enforced on the frontend and backend.</li>
+                    <li><strong>Localization:</strong> The platform must support UTF-8 character sets. The front-end architecture must be built to support dynamic RTL/LTR switching based on the selected language.</li>
+                    <li><strong>Performance:</strong> All configuration pages must load in under 3 seconds. Activating a new configuration version should propagate to all users in under one minute.</li>
+                    <li><strong>Scalability:</strong> The system must support thousands of custom fields and dropdown options per enterprise tenant without performance degradation.</li>
+                    <li><strong>Data Integrity:</strong> Deactivating options/fields is preferred over hard deletes to ensure historical data remains intact. Rollbacks to previous configuration versions must not corrupt existing role data.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

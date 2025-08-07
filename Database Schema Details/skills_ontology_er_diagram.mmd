@@ -1,0 +1,348 @@
+erDiagram
+    alembic_version {
+        varchar(32) version_num PK
+    }
+    capability {
+        varchar(150) id PK
+        varchar(150) name
+        text description
+        datetime created_at
+        datetime updated_at
+        json custom_fields
+        boolean is_active
+    }
+    competency {
+        varchar(150) id PK
+        varchar(150) name
+        text description
+        json custom_fields
+    }
+    job_level {
+        varchar(150) id PK
+        varchar(150) level_name
+        text description
+        int salary_band_min
+        int salary_band_max
+        int min_experience_years
+        text allowed_titles
+        varchar(50) level_code
+        boolean is_managerial
+        text promotion_criteria
+    }
+    organization {
+        varchar(150) id PK
+        varchar(255) company_name
+        varchar(100) industry
+        varchar(50) company_size
+        text operating_regions
+        int founded_year
+        varchar(50) public_or_private
+        varchar(10) stock_symbol
+        text vision_mission
+        varchar(50) org_maturity_level
+        boolean hrms_integrated
+        varchar(100) erp_system
+        boolean org_chart_available
+        text org_metadata_file
+    }
+    relationship_type {
+        varchar(50) id PK
+        varchar(100) name
+        text description
+    }
+    role_group {
+        varchar(150) id PK
+        varchar(150) name
+        text description
+        text sample_roles
+        varchar(100) strategic_importance
+        boolean business_critical
+        text associated_departments
+        varchar(50) role_family_code
+    }
+    skill {
+        varchar(150) id PK
+        varchar(150) name
+        text description
+        varchar(100) category
+        varchar(50) criticality
+        datetime created_at
+        datetime updated_at
+        json custom_fields
+        boolean is_active
+    }
+    skill_tag {
+        varchar(150) id PK
+        varchar(100) name
+        text description
+    }
+    user {
+        varchar(150) id PK
+        varchar(100) username
+        varchar(150) email
+        text description
+    }
+    assessment {
+        int id PK
+        varchar(255) name
+        text description
+        varchar(150) skill_id FK
+        varchar(100) assessment_type
+        date date_created
+        date last_updated
+    }
+    behavior {
+        varchar(150) id PK
+        varchar(255) name
+        text description
+        varchar(150) competency_id FK
+        varchar(150) job_level_id FK
+    }
+    business_unit {
+        varchar(150) id PK
+        varchar(150) name
+        varchar(150) head
+        varchar(150) email
+        varchar(150) organization_id FK
+        text strategic_priority
+        text kpis
+        varchar(100) business_unit_type
+        varchar(150) location
+        int budget_allocation
+    }
+    capability_competencies {
+        varchar(150) capability_id PK, FK
+        varchar(150) competency_id PK, FK
+    }
+    certification {
+        varchar(150) id PK
+        varchar(255) name
+        varchar(255) issuing_organization
+        date issue_date
+        date expiry_date
+        varchar(255) credential_id
+        text credential_url
+        varchar(150) user_id FK
+        varchar(150) skill_id FK
+        varchar(150) organization_id FK
+        varchar(100) certification_type
+        varchar(50) status
+        datetime created_at
+        datetime updated_at
+    }
+    competency_skills {
+        varchar(150) competency_id PK, FK
+        varchar(150) skill_id PK, FK
+    }
+    job_profile {
+        varchar(150) id PK
+        varchar(255) job_title
+        varchar(150) job_level_id FK
+        varchar(150) role_group_id FK
+        varchar(150) job_family
+        text description
+        text education
+        text language_requirements
+        varchar(150) reports_to
+        varchar(50) work_model
+        varchar(50) job_type
+        boolean union_affiliation
+        varchar(50) job_code
+        varchar(150) work_location
+        boolean travel_required
+        text compliance_requirements
+    }
+    learning_resource {
+        int id PK
+        varchar(255) title
+        text description
+        text url
+        varchar(100) resource_type
+        varchar(150) skill_id FK
+        varchar(150) author
+        int estimated_time_minutes
+    }
+    proficiency {
+        int id PK
+        varchar(100) name
+        text description
+        int level
+        varchar(150) skill_id FK
+    }
+    skill_gap {
+        varchar(150) id PK
+        varchar(150) user_id FK
+        varchar(150) skill_id FK
+        int required_proficiency
+        int current_proficiency
+        int gap_score
+    }
+    skill_relationship {
+        int id PK
+        varchar(150) source_skill_id FK
+        varchar(150) target_skill_id FK
+        varchar(50) relationship_type_id FK
+    }
+    skill_tag_map {
+        varchar(150) skill_id PK, FK
+        varchar(150) tag_id PK, FK
+    }
+    department {
+        varchar(150) id PK
+        varchar(150) name
+        varchar(150) business_unit_id FK
+        varchar(150) manager
+        varchar(150) email
+        int headcount_budget
+        varchar(100) function_type
+        varchar(150) location
+        boolean shift_coverage
+        varchar(50) time_zone
+        varchar(50) department_code
+    }
+    job_profile_required_skills {
+        varchar(150) job_profile_id PK, FK
+        varchar(150) skill_id PK, FK
+    }
+    user_skill {
+        int id PK
+        varchar(150) user_id FK
+        varchar(150) skill_id FK
+        int proficiency_level_id FK
+        date acquired_date
+        date last_validated_date
+        varchar(50) validation_status
+    }
+    business_unit_departments {
+        varchar(150) business_unit_id PK, FK
+        varchar(150) department_id PK, FK
+    }
+    role {
+        varchar(150) id PK
+        varchar(150) name
+        text description
+        varchar(150) department_id FK
+        varchar(150) job_level_id FK
+        datetime created_at
+        datetime updated_at
+        json custom_fields
+        boolean is_active
+    }
+    career_path {
+        varchar(150) id PK
+        varchar(150) source_role_id FK
+        varchar(150) target_role_id FK
+        varchar(100) transition_type
+        text notes
+        boolean is_default
+    }
+    feedback {
+        varchar(150) id PK
+        varchar(150) giver_id FK
+        varchar(150) receiver_id FK
+        text feedback_text
+        date feedback_date
+        varchar(100) feedback_type
+        int rating
+        varchar(150) associated_role_id FK
+        varchar(150) skill_id FK
+        varchar(150) competency_id FK
+        text private_notes
+        text action_items
+        datetime created_at
+        datetime updated_at
+    }
+    learning_path {
+        varchar(150) id PK
+        varchar(255) title
+        text description
+        varchar(150) role_id FK
+        varchar(150) created_by
+        int estimated_duration
+        datetime created_at
+        datetime updated_at
+        boolean is_active
+    }
+    project_or_assignment {
+        varchar(150) id PK
+        varchar(255) name
+        text description
+        date start_date
+        date end_date
+        varchar(50) status
+        varchar(100) project_type
+        int budget
+        varchar(150) manager_id FK
+        varchar(150) organization_id FK
+        varchar(150) associated_role_id FK
+        datetime created_at
+        datetime updated_at
+        boolean is_active
+    }
+    role_competencies {
+        varchar(150) role_id PK, FK
+        varchar(150) competency_id PK, FK
+    }
+    user_career_history {
+        int id PK
+        varchar(150) user_id FK
+        varchar(150) role_id FK
+        date start_date
+        date end_date
+        text notes
+    }
+    learning_path_resources {
+        varchar(150) learning_path_id PK, FK
+        int learning_resource_id PK, FK
+        int sequence_order
+    }
+
+    assessment ||--|{ skill : "skill_id"
+    behavior ||--|{ competency : "competency_id"
+    behavior ||--|{ job_level : "job_level_id"
+    business_unit ||--|{ organization : "organization_id"
+    capability_competencies }|--|| capability : "capability_id"
+    capability_competencies }|--|| competency : "competency_id"
+    certification ||--|{ organization : "organization_id"
+    certification ||--|{ skill : "skill_id"
+    certification ||--|{ user : "user_id"
+    competency_skills }|--|| competency : "competency_id"
+    competency_skills }|--|| skill : "skill_id"
+    job_profile ||--|{ job_level : "job_level_id"
+    job_profile ||--|{ role_group : "role_group_id"
+    learning_resource ||--|{ skill : "skill_id"
+    proficiency ||--|{ skill : "skill_id"
+    skill_gap ||--|{ skill : "skill_id"
+    skill_gap ||--|{ user : "user_id"
+    skill_relationship ||--|{ relationship_type : "relationship_type_id"
+    skill_relationship ||--|{ skill : "source_skill_id"
+    skill_relationship ||--|{ skill : "target_skill_id"
+    skill_tag_map }|--|| skill : "skill_id"
+    skill_tag_map }|--|| skill_tag : "tag_id"
+    department ||--|{ business_unit : "business_unit_id"
+    job_profile_required_skills }|--|| job_profile : "job_profile_id"
+    job_profile_required_skills }|--|| skill : "skill_id"
+    user_skill ||--|{ proficiency : "proficiency_level_id"
+    user_skill ||--|{ skill : "skill_id"
+    user_skill ||--|{ user : "user_id"
+    business_unit_departments }|--|| business_unit : "business_unit_id"
+    business_unit_departments }|--|| department : "department_id"
+    role ||--|{ department : "department_id"
+    role ||--|{ job_level : "job_level_id"
+    career_path ||--|{ role : "source_role_id"
+    career_path ||--|{ role : "target_role_id"
+    feedback ||--|{ role : "associated_role_id"
+    feedback ||--|{ competency : "competency_id"
+    feedback ||--|{ user : "giver_id"
+    feedback ||--|{ user : "receiver_id"
+    feedback ||--|{ skill : "skill_id"
+    learning_path ||--|{ role : "role_id"
+    project_or_assignment ||--|{ role : "associated_role_id"
+    project_or_assignment ||--|{ user : "manager_id"
+    project_or_assignment ||--|{ organization : "organization_id"
+    role_competencies }|--|| competency : "competency_id"
+    role_competencies }|--|| role : "role_id"
+    user_career_history ||--|{ role : "role_id"
+    user_career_history ||--|{ user : "user_id"
+    learning_path_resources }|--|| learning_path : "learning_path_id"
+    learning_path_resources }|--|| learning_resource : "learning_resource_id"

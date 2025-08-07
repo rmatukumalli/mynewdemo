@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Proficiency Levels - Admin Dashboard</title>
+    <link rel="stylesheet" href="../../css/admin-styles.css"> <!-- Common admin styles -->
+    <link rel="stylesheet" href="manage-proficiency-levels.css"> <!-- Specific styles for this page -->
+    <script src="../../js/admin-auth.js" defer></script>
+</head>
+<body class="admin-page">
+<nav class="admin-navbar">
+    <div class="admin-navbar-container">
+        <a href="../../admin-dashboard.html" class="admin-navbar-brand">Admin Panel</a>
+        <ul class="admin-navbar-links">
+            <li><a href="../../admin-dashboard.html">Dashboard</a></li>
+        </ul>
+        <button id="admin-logout-button" class="admin-navbar-logout">Logout</button>
+    </div>
+</nav>
+
+    <div class="container">
+        <header>
+            <h1>Manage Proficiency Levels</h1>
+        </header>
+        <main>
+            <section id="proficiency-levels-content">
+                <p>This section allows administrators to define and manage skill proficiency scales used across the platform.</p>
+                
+                <div class="form-container">
+                    <h2>Add New Proficiency Scale</h2>
+                    <form id="add-scale-form">
+                        <div>
+                            <label for="scale-name">Scale Name:</label>
+                            <input type="text" id="scale-name" name="scale-name" required placeholder="e.g., Standard 5-Level Scale">
+                        </div>
+                        <div>
+                            <label for="scale-description">Description:</label>
+                            <textarea id="scale-description" name="scale-description" placeholder="e.g., Used for technical skills"></textarea>
+                        </div>
+                        <div id="levels-container">
+                            <h3>Levels (e.g., Beginner, Intermediate, Advanced)</h3>
+                            <div class="level-input-group">
+                                <input type="text" name="level_name[]" placeholder="Level 1 Name (e.g., Novice)" required>
+                                <textarea name="level_description[]" placeholder="Level 1 Description" required></textarea>
+                            </div>
+                        </div>
+                        <button type="button" id="add-level-button">Add Another Level</button>
+                        <button type="submit">Save Scale</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h2>Existing Proficiency Scales</h2>
+                    <table id="proficiency-scales-table">
+                        <thead>
+                            <tr>
+                                <th>Scale Name</th>
+                                <th>Description</th>
+                                <th>Number of Levels</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Scales will be populated here by JS -->
+                            <tr>
+                                <td>Standard 5-Level</td>
+                                <td>General proficiency scale for most skills.</td>
+                                <td>5</td>
+                                <td><button class="edit-btn">Edit</button> <button class="delete-btn">Delete</button> <button class="view-levels-btn">View Levels</button></td>
+                            </tr>
+                             <tr>
+                                <td>Leadership 3-Level</td>
+                                <td>Simplified scale for leadership competencies.</td>
+                                <td>3</td>
+                                <td><button class="edit-btn">Edit</button> <button class="delete-btn">Delete</button> <button class="view-levels-btn">View Levels</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Talent Marketplace</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Viewing Proficiency Levels -->
+    <div id="view-levels-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2 id="modal-scale-name">Scale Name</h2>
+            <div id="modal-tabs-container">
+                <!-- Tabs will be generated here by JS -->
+            </div>
+            <div id="modal-tab-content-container">
+                <!-- Tab content will be generated here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="manage-proficiency-levels.js"></script>
+    <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

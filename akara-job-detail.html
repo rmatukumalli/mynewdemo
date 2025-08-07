@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Software Engineer, Backend - Akara Airlines</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- Base & Custom Theme Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1f2937; /* gray-800 */
+        }
+        .akara-blue { color: #1C4E80; }
+        .akara-blue-light { color: #2a73b8; }
+        .bg-akara-red { background-color: #D90429; }
+        .hover-bg-akara-red-dark:hover { background-color: #b80022; }
+
+        /* --- Slide-out Panel & Overlay Styles --- */
+        #analysis-panel {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #analysis-panel.is-open {
+            transform: translateX(0);
+        }
+        #panel-overlay {
+            transition: opacity 0.4s ease-in-out;
+        }
+        #panel-overlay.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- Custom Scrollbar for the Panel --- */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; /* slate-100 */
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* slate-300 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* slate-400 */
+        }
+        
+        /* --- Applicant Insight Chart Styles --- */
+        .vertical-bar-container { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .vertical-bar { background-color: #2a73b8; width: 60%; border-radius: 4px 4px 0 0; transition: height 0.5s ease-out; }
+        .vertical-bar-label { font-size: 10px; color: #64748b; margin-top: 4px; }
+        .pie-chart-skills {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-image: conic-gradient(#1C4E80 0% 40%, #2a73b8 40% 70%, #6DD5ED 70% 90%, #A8E6CE 90% 100%);
+        }
+        .pie-legend-skills li { display: flex; align-items: center; }
+        .pie-legend-skills span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+
+        /* --- Footer Styles --- */
+        .custom-footer {
+            background-color: #002D62;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        body { padding-bottom: 44px; /* Accommodate footer */ }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Content Container -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <div class="lg:flex lg:gap-x-8">
+                <!-- Left Column: Job Details -->
+                <div class="lg:w-2/3 space-y-10">
+                    <!-- Job Header -->
+                    <div class="pb-6 border-b border-gray-200">
+                        <h1 class="text-4xl md:text-5xl font-bold akara-blue mb-3" id="jobTitleHeading">
+                            Senior Software Engineer, Backend
+                        </h1>
+                        <div class="flex flex-wrap items-center text-gray-600 text-lg gap-x-4 gap-y-2 mb-2">
+                            <span class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i>Atlanta, GA, US</span>
+                            <span class="flex items-center"><i class="fas fa-briefcase mr-2 text-gray-400"></i>Engineering</span>
+                            <span class="flex items-center"><i class="fas fa-clock mr-2 text-gray-400"></i>Full-time</span>
+                        </div>
+                        <p class="text-sm text-gray-500">Posted 2 days ago</p>
+                    </div>
+
+                    <!-- AI Call-to-Action Section -->
+                    <section class="p-8 bg-gradient-to-br from-[#1C4E80] to-[#2a73b8] rounded-xl text-center shadow-xl my-10">
+                        <h2 class="text-3xl font-bold text-white mb-4 flex items-center justify-center">
+                            <i class="fas fa-microchip mr-3 text-4xl opacity-90"></i>Ready to See Your Fit?
+                        </h2>
+                        <p class="text-white/90 text-lg mb-8 max-w-xl mx-auto leading-relaxed">
+                            Our AI will instantly highlight how your skills align with this role. Discover your potential with Akara!
+                        </p>
+                        <button id="skill-analysis-trigger" class="bg-white text-[#1C4E80] px-10 py-3.5 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 ease-in-out transform hover:scale-105 text-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-[#6DD5ED] focus:ring-opacity-50">
+                            <i class="fas fa-wand-magic-sparkles mr-2.5"></i>In-depth Skill Analysis
+                        </button>
+                    </section>
+                    
+                    <!-- Enhanced Job Description -->
+                    <section class="prose max-w-none prose-lg prose-h2:font-bold prose-h2:text-3xl prose-h2:akara-blue prose-h3:font-semibold prose-h3:text-xl prose-h3:text-gray-800 prose-ul:pl-2 prose-li:pl-2 prose-li:marker:text-sky-500">
+                        <h2>Job Description</h2>
+                        <p>Join our dynamic engineering team to build and scale critical backend systems. You'll work with modern technologies to enhance the Akara Airlines passenger experience. We are looking for a passionate and experienced backend engineer to contribute to our core services, focusing on reliability, scalability, and performance.</p>
+                        <h3>Responsibilities:</h3>
+                        <ul>
+                            <li>Design, develop, and maintain scalable backend services and APIs.</li>
+                            <li>Collaborate with cross-functional teams including frontend, product, and QA.</li>
+                            <li>Write clean, maintainable, and well-tested code.</li>
+                            <li>Troubleshoot and resolve production issues.</li>
+                        </ul>
+                        <h3>Qualifications:</h3>
+                        <ul>
+                            <li>5+ years of experience in backend development.</li>
+                            <li>Proficiency in Java and Spring Boot framework.</li>
+                            <li>Experience with cloud platforms like AWS or Azure.</li>
+                            <li>Strong understanding of microservices architecture.</li>
+                            <li>Experience with relational and NoSQL databases.</li>
+                        </ul>
+                        <div class="mt-10 text-center not-prose">
+                            <a class="inline-block bg-akara-red text-white px-10 py-3.5 rounded-lg font-semibold hover-bg-akara-red-dark transition-all duration-150 text-lg transform hover:scale-105 shadow-lg hover:shadow-xl" href="#">Apply Now</a>
+                        </div>
+                    </section>
+
+                    <!-- Your Profile Match Section -->
+                    <section class="p-8 bg-gradient-to-br from-[#E0F2FE] to-[#F0F9FF] rounded-xl shadow-lg my-10 border border-sky-100" id="profile-match-section">
+                       <div class="text-center mb-6">
+                        <i class="fas fa-user-check text-5xl text-akara-blue mb-3"></i>
+                        <h2 class="text-3xl font-bold text-akara-blue mb-2">Your Profile Match</h2>
+                        <p class="text-xl text-[#123659]">Based on your profile, you match <span class="font-extrabold">8 out of 10</span> key skills!</p>
+                       </div>
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div>
+                         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center"><i class="fas fa-check-circle mr-2 text-teal-500 text-xl"></i>Skills That Match:</h3>
+                         <ul class="space-y-2 text-gray-700">
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>Java</li>
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>Spring Boot</li>
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>Microservices</li>
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>Problem Solving</li>
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>Communication</li>
+                          <li class="flex items-center"><i class="fas fa-check text-teal-500 mr-3"></i>SQL</li>
+                         </ul>
+                        </div>
+                        <div>
+                         <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center"><i class="fas fa-exclamation-triangle mr-2 text-amber-500 text-xl"></i>Skills to Develop:</h3>
+                         <ul class="space-y-2 text-gray-700">
+                          <li class="flex items-center"><i class="fas fa-arrow-right text-amber-400 mr-3"></i>AWS (Advanced)</li>
+                          <li class="flex items-center"><i class="fas fa-arrow-right text-amber-400 mr-3"></i>NoSQL Databases</li>
+                          <li class="flex items-center"><i class="fas fa-arrow-right text-amber-400 mr-3"></i>Kubernetes</li>
+                         </ul>
+                        </div>
+                       </div>
+                      </section>
+
+                    <!-- Similar Job Openings Section -->
+                    <section>
+                       <h2 class="text-3xl font-bold text-akara-blue mb-8 text-center sm:text-left">Similar Job Openings</h2>
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                         <h3 class="text-xl font-semibold akara-blue hover:underline cursor-pointer mb-2">Backend Developer (Mid-Level)</h3>
+                         <div class="text-sm text-gray-600 mb-4 space-y-1">
+                             <p class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i>Dallas, TX, US</p>
+                             <p class="flex items-center"><i class="fas fa-desktop mr-2 text-gray-400"></i>Hybrid</p>
+                         </div>
+                         <a class="inline-block bg-akara-blue-light text-white px-5 py-2 rounded-md font-medium hover:bg-akara-blue transition duration-150 text-sm" href="#">View Job</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+                         <h3 class="text-xl font-semibold akara-blue hover:underline cursor-pointer mb-2">Cloud Engineer (AWS)</h3>
+                         <div class="text-sm text-gray-600 mb-4 space-y-1">
+                           <p class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i>Remote, US</p>
+                           <p class="flex items-center"><i class="fas fa-wifi mr-2 text-gray-400"></i>Remote</p>
+                         </div>
+                         <a class="inline-block bg-akara-blue-light text-white px-5 py-2 rounded-md font-medium hover:bg-akara-blue transition duration-150 text-sm" href="#">View Job</a>
+                        </div>
+                       </div>
+                      </section>
+                </div>
+
+                <!-- Right Column: Applicant Insights -->
+                <aside class="lg:w-1/3 mt-10 lg:mt-0">
+                    <div class="lg:sticky lg:top-12">
+                        <section class="p-6 bg-gray-50 rounded-xl border border-gray-200 shadow-md">
+                            <h2 class="text-xl font-bold text-akara-blue mb-2 text-center sm:text-left">Applicant Insights</h2>
+                            <p class="text-center sm:text-left text-sm text-gray-500 mb-6">Aggregate data from previous applicants.</p>
+                            <div class="space-y-8">
+                                <!-- Years of Experience Chart -->
+                                <div class="bg-white p-5 rounded-lg shadow-sm">
+                                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Years of Experience</h3>
+                                    <div class="flex justify-around items-end h-24 space-x-2">
+                                        <div class="vertical-bar-container" title="20%"><div class="vertical-bar" style="height: 20%;"></div><p class="vertical-bar-label">&lt;2 yrs</p></div>
+                                        <div class="vertical-bar-container" title="45%"><div class="vertical-bar" style="height: 45%;"></div><p class="vertical-bar-label">2-4 yrs</p></div>
+                                        <div class="vertical-bar-container" title="25%"><div class="vertical-bar" style="height: 75%;"></div><p class="vertical-bar-label">4-8 yrs</p></div>
+                                        <div class="vertical-bar-container" title="10%"><div class="vertical-bar" style="height: 30%;"></div><p class="vertical-bar-label">8+ yrs</p></div>
+                                    </div>
+                                </div>
+                                <!-- Top Skills Chart -->
+                                <div class="bg-white p-5 rounded-lg shadow-sm">
+                                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Top Skills</h3>
+                                    <div class="flex items-center justify-start space-x-6">
+                                        <div class="pie-chart-skills"></div>
+                                        <ul class="pie-legend-skills text-xs text-gray-600 space-y-1.5">
+                                            <li><span style="background-color: #1C4E80;"></span>Java (40%)</li>
+                                            <li><span style="background-color: #2a73b8;"></span>Spring Boot (30%)</li>
+                                            <li><span style="background-color: #6DD5ED;"></span>AWS (20%)</li>
+                                            <li><span style="background-color: #A8E6CE;"></span>Other (10%)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay for Slide-out Panel -->
+    <div id="panel-overlay" class="fixed inset-0 bg-black bg-opacity-60 z-40 opacity-0 pointer-events-none"></div>
+
+    <!-- Skill Analysis Slide-out Panel -->
+    <aside id="analysis-panel" class="fixed top-0 right-0 w-full max-w-2xl h-full bg-slate-50 shadow-2xl z-50 overflow-y-auto custom-scrollbar">
+        <!-- Dynamic analysis content will be injected here by JavaScript -->
+    </aside>
+
+    <!-- Page Footer -->
+    <footer class="custom-footer fixed bottom-0 left-0 w-full z-[1001]">
+        Demo Experience by Raj Matukumalli – For Illustrative Purposes Only - Optimized for Desktop
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DOM ELEMENTS ---
+        const analysisTriggerButton = document.getElementById('skill-analysis-trigger');
+        const analysisPanel = document.getElementById('analysis-panel');
+        const panelOverlay = document.getElementById('panel-overlay');
+
+        // --- MOCK DATA ---
+        const candidateProfile = {
+            name: 'John Doe',
+            skills: [ { name: 'Java', level: 2 }, { name: 'Spring Boot', level: 1 }, { name: 'SQL Databases', level: 2 }, { name: 'Communication', level: 3 } ]
+        };
+        const targetJob = {
+            title: 'Senior Software Engineer, Backend',
+            requiredSkills: [ { name: 'Java', level: 4, importance: 'Critical' }, { name: 'Spring Boot', level: 4, importance: 'Critical' }, { name: 'Microservices Architecture', level: 3, importance: 'High' }, { name: 'Cloud Platforms (AWS/Azure)', level: 3, importance: 'High' }, { name: 'SQL Databases', level: 2, importance: 'Medium' }, { name: 'NoSQL Databases', level: 2, importance: 'Medium' }, { name: 'Problem Solving', level: 4, importance: 'Critical' }, { name: 'Communication', level: 3, importance: 'High' } ]
+        };
+        const recommendedCourses = [ { title: 'Advanced Spring Boot: Building Scalable Microservices', skill: 'Spring Boot', duration: '8 Weeks', difficulty: 'Advanced', icon: 'fa-cubes-stacked' }, { title: 'Designing Microservices with Domain-Driven Design', skill: 'Microservices Architecture', duration: '6 Weeks', difficulty: 'Advanced', icon: 'fa-diagram-project' }, { title: 'AWS Certified Solutions Architect - Associate', skill: 'Cloud Platforms (AWS/Azure)', duration: '12 Weeks', difficulty: 'Intermediate', icon: 'fa-cloud' }, { title: 'Data Modeling with MongoDB', skill: 'NoSQL Databases', duration: '4 Weeks', difficulty: 'Intermediate', icon: 'fa-database'} ];
+        const otherRelevantRoles = [ { title: 'Associate Backend Engineer', alignment: 85, matchType: 'Excellent Fit', location: 'Atlanta, GA' }, { title: 'Software Engineer II, Core Services', alignment: 75, matchType: 'Strong Fit', location: 'Atlanta, GA' }, { title: 'Java Application Developer', alignment: 68, matchType: 'Good Fit', location: 'Remote' } ];
+
+        // --- UTILITY & RENDERING FUNCTIONS ---
+        const proficiencyLevels = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' };
+        const getProficiencyColor = (level) => ({ 1: 'bg-teal-500', 2: 'bg-sky-500', 3: 'bg-blue-600', 4: 'bg-purple-600' }[level] || 'bg-gray-300');
+
+        const createSkillBar = (candidateLevel, requiredLevel) => {
+            const maxLevel = 4;
+            return `
+                <div class="w-full mt-2">
+                    <div class="text-xs text-gray-500 mb-1 flex justify-between">
+                        <span>Your Level: <strong>${proficiencyLevels[candidateLevel] || 'Not Found'}</strong></span>
+                        <span>Required: <strong>${proficiencyLevels[requiredLevel]}</strong></span>
+                    </div>
+                    <div class="h-3 w-full bg-gray-200 rounded-full relative">
+                        <div class="absolute top-0 left-0 h-3 bg-gray-300 rounded-full" style="width: ${(requiredLevel / maxLevel) * 100}%;"></div>
+                        <div class="absolute top-0 left-0 h-3 rounded-full ${getProficiencyColor(candidateLevel)}" style="width: ${(candidateLevel / maxLevel) * 100}%;"></div>
+                    </div>
+                </div>
+            `;
+        };
+        
+        // --- CORE ANALYSIS LOGIC & HTML GENERATION ---
+        const generateAnalysis = () => {
+            let matchedCount = 0, partialCount = 0, gapCount = 0;
+            const skillAnalysisResults = [];
+
+            targetJob.requiredSkills.forEach(reqSkill => {
+                const candSkill = candidateProfile.skills.find(s => s.name === reqSkill.name);
+                const candLevel = candSkill ? candSkill.level : 0;
+                let status, icon, color;
+                if (candLevel >= reqSkill.level) { status = 'Strong Match'; icon = 'fa-check-circle'; color = 'text-green-600'; matchedCount++; } 
+                else if (candLevel > 0) { status = 'Growth Area'; icon = 'fa-arrow-trend-up'; color = 'text-yellow-600'; partialCount++; } 
+                else { status = 'Skill Gap'; icon = 'fa-circle-xmark'; color = 'text-red-600'; gapCount++; }
+                
+                skillAnalysisResults.push({ name: reqSkill.name, status, icon, color, importance: reqSkill.importance, bar: createSkillBar(candLevel, reqSkill.level) });
+            });
+
+            const alignmentScore = Math.round(((matchedCount + partialCount * 0.5) / targetJob.requiredSkills.length) * 100);
+            
+            // Generate the entire HTML content for the panel
+            const panelHTML = `
+                <div class="p-6 lg:p-8">
+                    <div class="flex justify-between items-center pb-4 border-b border-gray-200">
+                        <h2 class="text-2xl font-bold text-gray-800">Your AI-Powered Skill Analysis</h2>
+                        <button id="close-panel-btn" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-times fa-2x"></i></button>
+                    </div>
+                    <div class="my-6 p-4 bg-sky-100 border border-sky-200 rounded-lg">
+                        <h3 class="text-xl font-semibold text-sky-800">Hello, ${candidateProfile.name}!</h3>
+                        <p class="text-sky-700 mt-1">Here's how your profile aligns with the <strong>${targetJob.title}</strong> role. You have a solid foundation, and with focus on a few key areas, you can become a strong candidate.</p>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-3">Overall Alignment: ${alignmentScore}%</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-gradient-to-r from-sky-500 to-blue-600 h-4 rounded-full" style="width: ${alignmentScore}%;"></div></div>
+                        <div class="grid grid-cols-3 gap-4 text-center mt-4">
+                            <div class="p-3 bg-green-50 rounded-lg border border-green-200"><p class="text-2xl font-bold text-green-600">${matchedCount}</p><p class="text-xs font-medium text-green-700">Matched</p></div>
+                            <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200"><p class="text-2xl font-bold text-yellow-600">${partialCount}</p><p class="text-xs font-medium text-yellow-700">Growth Areas</p></div>
+                            <div class="p-3 bg-red-50 rounded-lg border border-red-200"><p class="text-2xl font-bold text-red-600">${gapCount}</p><p class="text-xs font-medium text-red-700">Skill Gaps</p></div>
+                        </div>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">In-depth Skill Breakdown</h3>
+                        <div class="space-y-4">
+                            ${skillAnalysisResults.map(skill => `
+                                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="font-bold text-lg text-gray-800">${skill.name}</h4>
+                                        <span class="flex items-center text-sm font-semibold ${skill.color}"><i class="fa-solid ${skill.icon} mr-2"></i> ${skill.status}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mb-2">Importance: ${skill.importance}</p>
+                                    ${skill.bar}
+                                </div>`).join('')}
+                        </div>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Your Path to Senior Engineer</h3>
+                        <p class="text-gray-600 mb-4">Focus on these areas to bridge the gap. Here are some suggested courses to get you started:</p>
+                        <div class="space-y-3">
+                        ${recommendedCourses.map(course => `
+                            <a href="#" class="block bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-4 hover:border-sky-400 transition-all">
+                                <div class="flex-shrink-0 w-12 h-12 bg-sky-100 text-sky-600 rounded-lg flex items-center justify-center"><i class="fa-solid ${course.icon} fa-xl"></i></div>
+                                <div class="flex-grow"><h4 class="font-semibold text-gray-800">${course.title}</h4><p class="text-xs text-gray-500">Targets: ${course.skill} | ${course.duration} | ${course.difficulty}</p></div>
+                                <div class="flex-shrink-0 text-sky-600"><i class="fa-solid fa-arrow-right"></i></div>
+                            </a>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Alternative Roles to Explore</h3>
+                        <p class="text-gray-600 mb-4">Based on your current profile, these roles at Akara Airlines might be a strong fit for you right now:</p>
+                        <div class="space-y-3">
+                        ${otherRelevantRoles.map(role => `
+                            <a href="#" class="block bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-4 hover:border-green-400 transition-all">
+                                <div class="flex-shrink-0 text-center"><p class="text-2xl font-bold text-green-600">${role.alignment}%</p><p class="text-xs font-semibold text-green-700">${role.matchType}</p></div>
+                                <div class="flex-grow"><h4 class="font-semibold text-gray-800">${role.title}</h4><p class="text-xs text-gray-500">${role.location}</p></div>
+                                <div class="flex-shrink-0 text-sky-600"><i class="fa-solid fa-arrow-right"></i></div>
+                            </a>`).join('')}
+                        </div>
+                    </div>
+                </div>`;
+
+            analysisPanel.innerHTML = panelHTML;
+            // Add event listener to the newly created close button
+            document.getElementById('close-panel-btn').addEventListener('click', closePanel);
+        };
+        
+        // --- PANEL CONTROL FUNCTIONS ---
+        const openPanel = () => {
+            generateAnalysis(); // Generate content just-in-time
+            analysisPanel.classList.add('is-open');
+            panelOverlay.classList.add('is-visible');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closePanel = () => {
+            analysisPanel.classList.remove('is-open');
+            panelOverlay.classList.remove('is-visible');
+            document.body.style.overflow = '';
+        };
+
+        // --- EVENT LISTENERS ---
+        analysisTriggerButton.addEventListener('click', openPanel);
+        panelOverlay.addEventListener('click', closePanel);
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+[
+    { "id": "bu1", "unit_name": "Flight Operations", "unit_head": "Capt. John Smith" },
+    { "id": "bu2", "unit_name": "Maintenance, Repair, and Overhaul (MRO)", "unit_head": "Jane Doe" },
+    { "id": "bu3", "unit_name": "Cargo & Logistics", "unit_head": "Peter Jones" },
+    { "id": "bu4", "unit_name": "Customer Experience & Services", "unit_head": "Mary Johnson" },
+    { "id": "bu5", "unit_name": "Corporate Functions", "unit_head": "David Williams" },
+    { "id": "bu6", "unit_name": "Technology & Innovation", "unit_head": "Dr. Susan Brown" }
+]

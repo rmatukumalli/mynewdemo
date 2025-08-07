@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   AirlineTalent Pro - Skills Planning
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="css/skills-intelligence-theme.css" rel="stylesheet">
+  <style>
+   /* Generic Animations & Base Styles (non-theme specific) */
+        body {
+            font-family: 'Inter', sans-serif; /* Fallback if --font-family-sans is not defined by theme */
+            background-color: #F0F0F0; /* Fallback if --delta-light-grey is not defined */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #app-container {
+            flex-grow: 1;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-modalShow {
+            animation: modalShow 0.3s ease-out forwards;
+        }
+        @keyframes modalShow {
+            from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .custom-card {
+            background-color: white;
+            border-radius: 0.5rem; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+        }
+        .custom-card-header {
+            background-color: var(--delta-light-grey, #F0F0F0); /* Use theme color or fallback */
+            border-bottom: 1px solid #e5e7eb; 
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: var(--delta-light-grey, #F0F0F0);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--delta-silver, #A5A5A5);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--delta-dark-grey, #58595B);
+        }
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: var(--delta-silver, #A5A5A5) var(--delta-light-grey, #F0F0F0);
+        }
+        .site-footer {
+            background-color: #374151; /* Fallback for --delta-secondary-blue */
+            color: #f3f4f6; /* Fallback for --delta-light-gray */
+            text-align: center;
+            padding: 1.5rem 1rem;
+            font-size: 0.875rem;
+            /* margin-top: auto; /* Ensures it's pushed to the bottom by flex container */
+        }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="text-gray-800">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div id="app-container">
+   <!-- App content will be rendered here by js/skills-intelligence.js -->
+   Loading Skills Planning Platform...
+  </div>
+  <script src="js/skills-intelligence.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

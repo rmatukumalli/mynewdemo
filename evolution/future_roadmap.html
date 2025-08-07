@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Future Roadmap (FY'26+)
+  </title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom styles for color variables and basic layout -->
+  <style>
+   :root {
+            --delta-blue: #2563eb; /* A shade of blue for primary elements */
+            --delta-red: #ef4444; /* A shade of red for accent/danger elements */
+        }
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f8fafc; /* Lighter background */
+            line-height: 1.6;
+            color: #334155;
+            padding: 20px;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--delta-blue), #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .feature-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card svg {
+            color: var(--delta-blue); /* Default icon color */
+        }
+  </style>
+ </head>
+ <body>
+  <!-- Phase 2: Future Roadmap (FY'26+) -->
+  <section class="content-phase max-w-6xl mx-auto py-12" id="phase2">
+   <h3 class="text-3xl md:text-4xl font-extrabold mb-4 text-center gradient-text">
+    Future Roadmap (FY'26+)
+   </h3>
+   <p class="text-center text-slate-700 mb-12 max-w-4xl mx-auto leading-relaxed">
+    Charting the course for next-generation learning experiences and talent intelligence, our roadmap focuses on delivering deeper insights, enhanced interactivity, and seamless integration for a truly transformative platform.
+   </p>
+   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- AI Interactive Experience & Authoring Platform Tile -->
+    <div class="feature-card bg-white p-6 rounded-xl shadow-lg border border-slate-100">
+     <div class="flex items-center justify-center w-14 h-14 bg-[#ddeafe] rounded-full mb-4">
+      <svg class="w-7 h-7 text-[var(--delta-blue)]" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12L17 14.25l-1.25-2.25L13.5 11l2.25-1.25L17 7.5l1.25 2.25L20.5 11l-2.25 1.25z" stroke-linecap="round" stroke-linejoin="round">
+       </path>
+      </svg>
+     </div>
+     <div class="feature-card-content">
+      <h4 class="text-xl font-bold text-[var(--delta-blue)] mb-2">
+       AI Interactive Experience &amp; Authoring Platform
+      </h4>
+      <p class="text-slate-600 mb-3">
+       Revolutionizing content creation and consumption with advanced AI-driven capabilities for richer learning experiences.
+      </p>
+      <ul class="list-disc list-inside text-slate-500 text-sm space-y-1">
+       <li>
+        LX Design Studio &amp; CAISY for intuitive authoring
+       </li>
+       <li>
+        Agentic AI Experiences and Workflows
+       </li>
+       <li>
+        Enhanced course building &amp; document management
+       </li>
+       <li>
+        Gamified experiences and diverse HTML templates
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- Talent Intelligence: Our Strategic Dream Tile -->
+    <div class="feature-card clickable-card bg-white p-6 rounded-xl shadow-lg border border-slate-100">
+     <div class="flex items-center justify-center w-14 h-14 bg-[#ddeafe] rounded-full mb-4">
+      <svg class="w-7 h-7 text-[var(--delta-blue)]" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <path d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12A2.25 2.25 0 0020.25 14.25V3M3.75 21h16.5M16.5 3.75h.008v.008H16.5V3.75z" stroke-linecap="round" stroke-linejoin="round">
+       </path>
+      </svg>
+     </div>
+     <div class="feature-card-content">
+      <h4 class="text-xl font-bold text-[var(--delta-blue)] mb-2">
+       Talent Intelligence: Our Strategic Dream
+      </h4>
+      <p class="text-slate-600 mb-3">
+       Imagine a world where every employee is equipped with the precise skills they need to excel, where career growth seamlessly aligns with organizational goals, and talent management becomes a true strategic advantage.
+      </p>
+      <!-- Link corrected to point to the architecture page -->
+      <a class="text-base text-[var(--delta-red)] font-semibold mt-4 hover:underline block" href="talent_intelligence_architecture.html">
+       Click to see how we'll build this »
+      </a>
+      <div class="mt-2 text-sm text-slate-500">
+       Key Pillars: Skills Central, Talent Intelligence Platform (TIP), HR Suite Integrations.
+      </div>
+     </div>
+    </div>
+    <!-- LXP + LMS = LMXP (Unified Learning Experience) Tile -->
+    <div class="feature-card bg-white p-6 rounded-xl shadow-lg border border-slate-100">
+     <div class="flex items-center justify-center w-14 h-14 bg-[#ddeafe] rounded-full mb-4">
+      <svg class="w-7 h-7 text-[var(--delta-blue)]" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <path d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" stroke-linecap="round" stroke-linejoin="round">
+       </path>
+      </svg>
+     </div>
+     <div class="feature-card-content">
+      <h4 class="text-xl font-bold text-[var(--delta-blue)] mb-2">
+       LXP + LMS = LMXP (Unified Learning Experience)
+      </h4>
+      <p class="text-slate-600 mb-3">
+       Merging the best of LXP and LMS for a seamless and powerful Learning Experience Platform, providing a comprehensive and engaging learning ecosystem.
+      </p>
+      <ul class="list-disc list-inside text-slate-500 text-sm space-y-1">
+       <li>
+        Enhanced Engaging Experience: Advanced Search &amp; Discovery, Mobile, Books 2.0
+       </li>
+       <li>
+        Extended Enterprise capabilities and robust Content &amp; Curation Management
+       </li>
+       <li>
+        Comprehensive Regulatory Compliance and Instructor-Led Training support
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- Enhanced Integration Studio Tile -->
+    <div class="feature-card bg-white p-6 rounded-xl shadow-lg border border-slate-100">
+     <div class="flex items-center justify-center w-14 h-14 bg-[#ddeafe] rounded-full mb-4">
+      <svg class="w-7 h-7 text-[var(--delta-blue)]" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-linecap="round" stroke-linejoin="round">
+       </path>
+      </svg>
+     </div>
+     <div class="feature-card-content">
+      <h4 class="text-xl font-bold text-[var(--delta-blue)] mb-2">
+       Enhanced Integration Studio
+      </h4>
+      <p class="text-slate-600 mb-3">
+       Becoming the central connection point for a seamless learning ecosystem, facilitating effortless data flow and interoperability across various platforms.
+      </p>
+      <ul class="list-disc list-inside text-slate-500 text-sm space-y-1">
+       <li>
+        Self-service Application Framework for inbound/outbound integrations
+       </li>
+       <li>
+        Integration Assistant to simplify connectivity
+       </li>
+       <li>
+        Strengthening our role as "the connection" in the learning tech stack
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <div class="mt-12 text-center p-8 bg-[#eef2ff] rounded-lg shadow-inner">
+    <h5 class="text-2xl font-bold text-[var(--delta-blue)] mb-4">
+     Underpinned by Foundational Principles
+    </h5>
+    <p class="text-slate-700 max-w-2xl mx-auto text-lg">
+     This transformative evolution is meticulously guided by a steadfast commitment to:
+     <strong>
+      Measurement &amp; Validity
+     </strong>
+     , strict adherence to
+     <strong>
+      Industry Standards &amp; Frameworks
+     </strong>
+     , provision of
+     <strong>
+      Verifiable Credentials
+     </strong>
+     , and ensuring all learning is demonstrably
+     <strong>
+      Traceable to Business KPIs
+     </strong>
+     .
+    </p>
+   </div>
+  </section>
+  
+ </body>
+</html>

@@ -1,0 +1,62 @@
+/* Styles specific to Skills Ontology Statistics page */
+
+#ontology-stats-content > p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.stat-card h2 {
+    font-size: 1.3em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.stat-card .stat-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #007bff; /* Primary color for stat values */
+    margin-bottom: 0;
+}
+
+.stat-card .stat-value.error-text {
+    font-size: 1.2em; /* Smaller font for error messages */
+    color: #dc3545; /* Red for error text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    }
+    .stat-card {
+        margin-bottom: 15px;
+    }
+    .stat-card .stat-value {
+        font-size: 2em;
+    }
+}

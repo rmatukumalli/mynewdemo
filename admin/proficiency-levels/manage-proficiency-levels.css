@@ -1,0 +1,381 @@
+/* Styles specific to Manage Proficiency Levels page */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#proficiency-levels-content p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-container, .table-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.form-container h2, .table-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+#add-scale-form div {
+    margin-bottom: 15px;
+}
+
+#add-scale-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+#add-scale-form input[type="text"],
+#add-scale-form textarea {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#add-scale-form textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+#levels-container h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.level-input-group {
+    border: 1px dashed #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.level-input-group input[type="text"]{
+    margin-bottom: 10px;
+}
+
+#add-level-button {
+    background-color: #17a2b8; /* Info color */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+#add-level-button:hover {
+    background-color: #138496;
+}
+
+#add-scale-form button[type="submit"] {
+    background-color: #007bff; /* Admin primary color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#add-scale-form button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+#proficiency-scales-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#proficiency-scales-table th,
+#proficiency-scales-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+#proficiency-scales-table th {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: bold;
+}
+
+#proficiency-scales-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#proficiency-scales-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.edit-btn, .delete-btn, .view-levels-btn {
+    padding: 8px 15px; /* Slightly larger padding */
+    margin-right: 8px; /* Increased margin */
+    border: none;
+    border-radius: 5px; /* Slightly more rounded corners */
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500; /* Medium font weight */
+    transition: all 0.2s ease-in-out; /* Smooth transition for multiple properties */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+    text-transform: capitalize;
+}
+
+.edit-btn {
+    background-color: #28a745; /* Green for edit - more positive action */
+    color: white;
+}
+.edit-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Enhanced shadow on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+}
+.edit-btn:active {
+    background-color: #1e7e34;
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red for delete - kept for clarity */
+    color: white;
+}
+.delete-btn:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+.delete-btn:active {
+    background-color: #bd2130;
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.view-levels-btn {
+    background-color: #007bff; /* Blue for view/info - more engaging */
+    color: white;
+}
+.view-levels-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+.view-levels-btn:active {
+    background-color: #004085;
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #add-scale-form input[type="text"],
+    #add-scale-form textarea,
+    .level-input-group input[type="text"],
+    .level-input-group textarea {
+        width: 100%;
+    }
+
+    #proficiency-scales-table,
+    #proficiency-scales-table thead,
+    #proficiency-scales-table tbody,
+    #proficiency-scales-table th,
+    #proficiency-scales-table td,
+    #proficiency-scales-table tr {
+        display: block;
+    }
+
+    #proficiency-scales-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #proficiency-scales-table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    #proficiency-scales-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+
+    #proficiency-scales-table td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    #proficiency-scales-table td:nth-of-type(1):before { content: "Scale Name"; }
+    #proficiency-scales-table td:nth-of-type(2):before { content: "Description"; }
+    #proficiency-scales-table td:nth-of-type(3):before { content: "Levels"; }
+    #proficiency-scales-table td:nth-of-type(4):before { content: "Actions"; }
+
+    .edit-btn, .delete-btn, .view-levels-btn {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 25px;
+    border: 1px solid #888;
+    width: 60%; /* Could be more or less, depending on screen size */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close-modal-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.close-modal-btn:hover,
+.close-modal-btn:focus {
+    color: #333; /* Darker on hover/focus */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-scale-name {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Tab Styles */
+#modal-tabs-container {
+    display: flex;
+    border-bottom: 2px solid #4285F4; /* Google Blue for the bottom border of the tab bar */
+    margin-bottom: 20px;
+}
+
+.modal-tab-button {
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px 18px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1em;
+    color: #555;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-right: 2px; /* Small gap between tabs */
+    border-bottom: 2px solid transparent; /* For active state alignment */
+}
+
+.modal-tab-button:hover {
+    background-color: #ddd;
+}
+
+.modal-tab-button.active {
+    background-color: #fff; /* White background for active tab */
+    color: #4285F4; /* Google Blue text for active tab */
+    border-top: 2px solid #4285F4;
+    border-left: 2px solid #4285F4;
+    border-right: 2px solid #4285F4;
+    border-bottom: 2px solid #fff; /* Make it look connected to content */
+    position: relative;
+    top: 2px; /* Align with the container's bottom border */
+}
+
+.modal-tab-content {
+    display: none; /* Hidden by default */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none; /* Tabs form the top border */
+    border-radius: 0 0 6px 6px;
+    background-color: #fff;
+    line-height: 1.6;
+    color: #333;
+}
+
+.modal-tab-content.active {
+    display: block;
+}
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+    }
+    #modal-tabs-container {
+        flex-direction: column; /* Stack tabs vertically on small screens */
+        border-bottom: none;
+    }
+    .modal-tab-button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 2px; /* Gap between stacked tabs */
+        border-radius: 6px; /* Rounded corners for all sides */
+        border: 1px solid #ddd;
+    }
+    .modal-tab-button.active {
+        background-color: #4285F4; /* Google Blue background for active tab */
+        color: white;
+        border: 1px solid #4285F4;
+        top: 0;
+    }
+    .modal-tab-content {
+        border-top: 1px solid #ddd; /* Add top border when tabs are stacked */
+    }
+}

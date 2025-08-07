@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Talent Marketplace</title>
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <!-- <link rel="stylesheet" href="css/main-layout.css"> Assuming admin-styles.css will cover layout or be adapted -->
+    <script src="js/admin-auth.js" defer></script>
+</head>
+<body class="admin-page">
+<nav class="admin-navbar">
+    <div class="admin-navbar-container">
+        <a href="dummy.html" class="admin-navbar-brand">Admin Panel</a>
+        <ul class="admin-navbar-links">
+            <li><a href="dummy.html" id="nav-dashboard">Dashboard</a></li>
+            <li><a href="dummy.html" id="nav-sitemap">Sitemap</a></li>
+        </ul>
+        <button id="admin-logout-button" class="admin-navbar-logout">Logout</button>
+    </div>
+</nav>
+    <div class="container">
+        <!-- The header h1 can be part of the main content now -->
+        <main>
+            <h1>Admin Dashboard</h1>
+            <section>
+                <h2>Welcome, Admin!</h2>
+                <p>This is the admin dashboard. You can manage application settings and users from here.</p>
+                <!-- Placeholder for admin functionalities -->
+                <div id="admin-content">
+                    <p>Future admin features will be displayed here.</p>
+                </div>
+            </section>
+
+            <section id="skills-competency-management">
+                <h2>Skills & Competency Management</h2>
+                <ul>
+                    <li>
+                        <strong>Skills Ontology Dashboard:</strong> View statistics and an overview of the skills ontology.
+                        <a href="admin/skills-ontology/skills-ontology-stats.html" class="admin-feature-link">View Ontology Dashboard</a>
+                    </li>
+                    <li>
+                        <strong>Skill Validation & Endorsement Oversight:</strong> Monitor and manage the process of skill validation and endorsements.
+                        <a href="admin/skill-validation/manage-skill-validation.html" class="admin-feature-link">Oversee Validation</a>
+                    </li>
+                    <li>
+                        <strong>Proficiency Level Management:</strong> Define and manage skill proficiency scales.
+                        <a href="admin/proficiency-levels/manage-proficiency-levels.html" class="admin-feature-link">Manage Proficiency</a>
+                    </li>
+                    <li>
+                        <strong>Skills Gap Analysis Configuration:</strong> Set parameters for organization-wide or team-specific skill gap analyses.
+                        <a href="admin/skills-gap-analysis/configure-gap-analysis.html" class="admin-feature-link">Configure Analysis</a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Talent Marketplace</p>
+        </footer>
+    </div>
+    <script src="js/admin-dashboard.js"></script>
+    <!-- Inline logout script removed, handled by js/admin-auth.js -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = window.location.pathname.split('/').pop();
+    if (currentPage === 'admin-dashboard.html') {
+      document.getElementById('nav-dashboard')?.classList.add('active');
+    }
+  });
+</script>
+<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

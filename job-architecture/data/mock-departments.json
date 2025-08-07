@@ -1,0 +1,12 @@
+[
+    { "id": "dept1", "department_name": "Flight Crew", "unit": "bu1", "department_head": "Jessica Johnson", "cost_center": "FC101", "employee_count": "3500" },
+    { "id": "dept2", "department_name": "Ground Staff", "unit": "bu1", "department_head": "Michael Smith", "cost_center": "GS102", "employee_count": "2500" },
+    { "id": "dept3", "department_name": "Airframe Maintenance", "unit": "bu2", "department_head": "Emily Williams", "cost_center": "AM201", "employee_count": "1500" },
+    { "id": "dept4", "department_name": "Avionics", "unit": "bu2", "department_head": "David Brown", "cost_center": "AV202", "employee_count": "1000" },
+    { "id": "dept5", "department_name": "Freight Forwarding", "unit": "bu3", "department_head": "Sarah Davis", "cost_center": "FF301", "employee_count": "800" },
+    { "id": "dept6", "department_name": "In-Flight Services", "unit": "bu4", "department_head": "Christopher Miller", "cost_center": "IS401", "employee_count": "3000" },
+    { "id": "dept7", "department_name": "Human Resources", "unit": "bu5", "department_head": "Amanda Wilson", "cost_center": "HR501", "employee_count": "250" },
+    { "id": "dept8", "department_name": "Finance", "unit": "bu5", "department_head": "James Moore", "cost_center": "FIN502", "employee_count": "300" },
+    { "id": "dept9", "department_name": "IT Infrastructure", "unit": "bu6", "department_head": "Jennifer Taylor", "cost_center": "IT601", "employee_count": "700" },
+    { "id": "dept10", "department_name": "Software Development", "unit": "bu6", "department_head": "Robert Anderson", "cost_center": "SD602", "employee_count": "500" }
+]

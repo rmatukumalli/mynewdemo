@@ -1,0 +1,114 @@
+/* css/requisitions.css */
+
+/* Styles specific to the requisitions.html page */
+body {
+    background-color: #ffffff; 
+    padding: 0; 
+    margin: 0;
+    font-family: var(--delta-font-primary, sans-serif); /* Inherit font from parent if possible */
+}
+
+.requisitions-dashboard {
+    padding: 10px; /* Reduced padding to minimize whitespace */
+}
+.requisitions-header h3 {
+    margin-top: 0; /* Reduce top margin of the header */
+}
+.styled-table th, .styled-table td {
+    padding: 8px 10px; /* Slightly reduce cell padding */
+}
+
+/* Status badge styling (if not already globally defined or needing override) */
+.status-badge {
+    padding: 0.25em 0.6em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.status-badge.status-open {
+    background-color: #28a745; /* Green for Open */
+}
+
+.status-badge.status-closed {
+    background-color: #dc3545; /* Red for Closed */
+}
+
+.status-badge.status-pending {
+    background-color: #ffc107; /* Yellow for Pending */
+}
+.status-badge.status-new {
+    background-color: #17a2b8; /* Info blue for New */
+}
+
+
+/* Modal styles - ensure they are scoped or specific if needed */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050; /* Ensure it's above other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Adjusted for better centering */
+    padding: 25px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.modal-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ensure form elements within the modal are styled consistently if needed */
+#manualJobForm .form-group {
+    margin-bottom: 1rem;
+}
+
+#manualJobForm .form-row {
+    display: flex;
+    gap: 1rem;
+}
+#manualJobForm .form-row .form-group {
+    flex: 1;
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 5px; /* Space between buttons */
+    align-items: center; /* Align items nicely if they wrap */
+}
+
+.action-buttons-group .btn-small {
+    margin-right: 0; /* Remove individual margins if .gap is used */
+    margin-bottom: 0; /* Ensure no bottom margin causing them to stack if td is too narrow */
+}

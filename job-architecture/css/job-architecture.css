@@ -1,0 +1,207 @@
+/* Responsive styles for Job Architecture Wizard */
+
+/* Stepper styles for horizontal scrolling */
+#stepper {
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+#stepper::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, Edge */
+}
+
+/* Fade shadows for scroll indication */
+.stepper-container-wrapper {
+    position: relative;
+    overflow: hidden; /* Clip content for fade effect */
+}
+
+.stepper-container-wrapper::before,
+.stepper-container-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px; /* Increased width of the fade effect */
+    pointer-events: none; /* Allow clicks through the fade */
+    z-index: 10; /* Ensure fade is above content and stepper */
+}
+
+.stepper-container-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.stepper-container-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Show fade shadows when scrolling is possible and not at the end */
+.stepper-container-wrapper.show-left-fade::before {
+    opacity: 1;
+}
+
+.stepper-container-wrapper.show-right-fade::after {
+    opacity: 1;
+}
+
+/* Ensure stepper itself has scroll snap type */
+#stepper {
+    scroll-snap-type: x mandatory;
+}
+
+/* Mobile specific styles for stepper tabs */
+@media (max-width: 768px) {
+    .stepper-tab {
+        min-width: 120px; /* Ensure a minimum width for each tab */
+        padding: 10px 12px; /* Adjust padding for better tap target */
+        font-size: 0.875rem; /* text-sm */
+    }
+}
+
+/* Responsive adjustments for the main content and form sections */
+@media (max-width: 768px) {
+    /* Adjust padding for the main content area */
+    main .bg-white.p-8 {
+        padding: 1rem; /* Reduce overall padding on small screens */
+    }
+
+    /* Adjust padding for individual sections within the form */
+    .form-section section {
+        padding: 1rem; /* Reduce padding for sections */
+    }
+
+    /* Ensure form inputs and textareas take full width and have appropriate vertical spacing */
+    .form-section input[type="text"],
+    .form-section select,
+    .form-section textarea {
+        width: 100%;
+        margin-bottom: 0.75rem; /* Add some space between stacked inputs */
+    }
+
+    /* Adjust button spacing and size for mobile */
+    .form-section .flex.justify-end {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 0.75rem; /* Space between stacked buttons */
+    }
+
+    .form-section .flex.justify-end button {
+        width: 100%; /* Full width buttons */
+        text-align: center;
+    }
+
+    /* Specific adjustments for the skill mapping area placeholder */
+    #new-job-skill-mapping-area {
+        padding: 1rem; /* Ensure consistent padding */
+    }
+
+    /* Styles for the Skill Analysis tab content */
+    #tab-content-skills .skills-list-container > div {
+        flex-direction: column; /* Stack skill items vertically */
+        align-items: flex-start; /* Align content to the start */
+        gap: 0.75rem; /* Space between skill name/status and button */
+        padding: 1rem; /* Ensure consistent padding for each skill item */
+    }
+
+    #tab-content-skills .skills-list-container > div > div:first-child {
+        width: 100%; /* Ensure the text content takes full width */
+        display: flex; /* Use flex for skill name and badge */
+        flex-wrap: wrap; /* Allow skill name and badge to wrap */
+        align-items: center;
+        gap: 0.5rem; /* Space between skill name and badge */
+    }
+
+    #tab-content-skills .skills-list-container .map-skill-btn {
+        display: block; /* Ensure the button takes its own line */
+        width: 100%; /* Make the button full width */
+        text-align: center;
+        margin-top: 0.75rem; /* Add more space above the button */
+        padding: 0.75rem 1rem; /* Adjust padding for better tap target */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        white-space: nowrap; /* Prevent text from wrapping inside the button */
+        overflow: hidden; /* Hide overflow if text is too long */
+        text-overflow: ellipsis; /* Add ellipsis if text is truncated */
+        font-size: 0.75rem; /* text-xs - Adjusted for smaller screens */
+    }
+
+    /* Default: Hide icon, show text */
+    #tab-content-skills .skills-list-container .map-skill-btn .button-icon {
+        display: none;
+    }
+    #tab-content-skills .skills-list-container .map-skill-btn .button-text {
+        display: inline;
+    }
+
+    /* Ensure Font Awesome icons within the button are visible and sized correctly on mobile */
+    #tab-content-skills .skills-list-container .map-skill-btn i {
+        font-size: 1.25rem; /* text-xl - Make icon larger */
+        color: inherit; /* Inherit color from parent button */
+        vertical-align: middle; /* Align icon vertically */
+    }
+
+    /* Adjustments for skill pills */
+    .skill-pill {
+        margin-bottom: 0.25rem; /* Add some vertical space between pills */
+    }
+
+    /* Adjust padding for the "Map Extracted Skills to Ontology" section */
+    #skills-analysis-section > div.bg-gray-100 {
+        padding: 1rem; /* p-4 on small screens */
+    }
+
+    /* Mobile: Hide text, show icon */
+    #tab-content-skills .skills-list-container .map-skill-btn .button-text {
+        display: none;
+    }
+    #tab-content-skills .skills-list-container .map-skill-btn .button-icon {
+        display: inline;
+    }
+}
+
+/* Increase tap target size for buttons */
+button {
+    min-height: 44px;
+    min-width: 48px;
+}
+
+/* Modal responsiveness and z-index fix */
+.modal-dialog {
+    z-index: 1001; /* Ensure modal is above the footer (footer z-index is 1000) */
+    padding: 1rem; /* Add some padding around the modal on smaller screens */
+}
+
+.modal-content-wrapper {
+    max-height: 90vh; /* Limit height to 90% of viewport height */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Specific styles for modal content to ensure buttons are visible */
+.modal-content-wrapper .modal-footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    padding-top: 1rem; /* Add padding above the footer buttons */
+    border-top: 1px solid #e2e8f0; /* Add a subtle border */
+    margin-top: 1rem; /* Space from content above */
+}
+
+@media (max-width: 768px) {
+    .modal-dialog {
+        align-items: flex-end; /* Align modal to bottom on small screens */
+        padding: 0; /* Remove padding to allow full width */
+    }
+
+    .modal-content-wrapper {
+        width: 100%; /* Full width on small screens */
+        max-width: none; /* Remove max-width constraint */
+        border-bottom-left-radius: 0; /* Remove bottom radius for full width */
+        border-bottom-right-radius: 0; /* Remove bottom radius for full width */
+        margin: 0; /* Remove margin */
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom)); /* Account for footer height and safe area */
+    }
+}

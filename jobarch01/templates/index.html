@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Wizard | Akara Airlines</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="/static/dist/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        #stepper-container { border-bottom: 1px solid #e2e8f0; }
+        .stepper-tab.active { border-color: #2563eb; color: #2563eb; }
+        .stepper-tab.completed { color: #475569; cursor: pointer; }
+        .stepper-tab:not(.completed):not(.active) { cursor: pointer; }
+        .modal-overlay { transition: opacity 0.2s ease-in-out; }
+        .modal-container { transition: transform 0.2s ease-in-out; }
+        .custom-footer {
+            background-color: #002D62;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        body {
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="h-screen flex flex-col bg-slate-100">
+        <header class="bg-white border-b border-slate-200 flex items-center justify-between px-4 py-2 sticky top-0 z-20">
+            <div class="flex items-center gap-3">
+                <svg class="h-7 w-7 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 013-3h.008c1.538 0 2.962.836 3.75 2.121" /></svg>
+                <h1 class="text-lg font-bold text-slate-800">Job Architecture</h1>
+            </div>
+            <div class="flex items-center gap-2">
+                 <img src="https://placehold.co/32x32/dbeafe/1e3a8a?text=HR" class="rounded-full" alt="User Avatar">
+                 <p class="text-sm font-semibold text-slate-800">HR Admin</p>
+            </div>
+        </header>
+
+        <main class="p-4 flex-1 flex flex-col">
+            <div class="w-full max-w-7xl mx-auto flex-1 flex flex-col">
+                <div id="welcome-banner" class="bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                    <h2 class="text-lg font-bold text-slate-800 mb-1">Welcome to Job Architecture Setup</h2>
+                    <p class="text-sm text-slate-600">This guided workflow will help you create a structured job framework for your organization.</p>
+                </div>
+                <div id="stepper-container" class="mb-4">
+                    <div id="stepper" class="flex items-center gap-1"></div>
+                </div>
+                <div id="wizard-content-wrapper" class="bg-white p-4 sm:p-6 rounded-lg border border-slate-200 shadow-sm flex-1 flex flex-col">
+                </div>
+                <footer id="wizard-footer" class="mt-4 flex justify-between items-center">
+                    <button id="back-btn" class="border border-slate-300 bg-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">Back</button>
+                    <button id="next-btn" class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-blue-700">Next Step</button>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- The Modal for Editing/Adding Items -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <!-- Modal content is generated dynamically by utils.js -->
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <div class="custom-footer">
+        Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only
+    </div>
+</body>
+</html>

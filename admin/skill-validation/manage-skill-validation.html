@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Skill Validation & Endorsements - Admin Dashboard</title>
+    <link rel="stylesheet" href="../../css/admin-styles.css"> <!-- Common admin styles -->
+    <link rel="stylesheet" href="manage-skill-validation.css"> <!-- Specific styles for this page -->
+    <script src="../../js/admin-auth.js" defer></script>
+</head>
+<body class="admin-page">
+<nav class="admin-navbar">
+    <div class="admin-navbar-container">
+        <a href="../../admin-dashboard.html" class="admin-navbar-brand">Admin Panel</a>
+        <ul class="admin-navbar-links">
+            <li><a href="../../admin-dashboard.html">Dashboard</a></li>
+        </ul>
+        <button id="admin-logout-button" class="admin-navbar-logout">Logout</button>
+    </div>
+</nav>
+
+    <div class="container">
+        <header>
+            <h1>Skill Validation & Endorsement Oversight</h1>
+        </header>
+        <main>
+            <section id="validation-oversight-content">
+                <p>This section allows administrators to monitor and manage the process of skill validation and endorsements across the platform.</p>
+                
+                <div class="table-container">
+                    <h2>Pending Validations</h2>
+                    <table id="pending-validations-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Skill</th>
+                                <th>Submitted By</th>
+                                <th>Date Submitted</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Pending validations will be populated here by JS -->
+                            <tr>
+                                <td>John Doe</td>
+                                <td>Python Programming</td>
+                                <td>Self-Assessed</td>
+                                <td>2025-06-10</td>
+                                <td>Pending Review</td>
+                                <td><button class="approve-btn">Approve</button> <button class="reject-btn">Reject</button> <button class="view-details-btn">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>Agile Methodologies</td>
+                                <td>Manager: Bob Johnson</td>
+                                <td>2025-06-09</td>
+                                <td>Pending Review</td>
+                                <td><button class="approve-btn">Approve</button> <button class="reject-btn">Reject</button> <button class="view-details-btn">Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <h2>Recent Endorsements</h2>
+                    <table id="recent-endorsements-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Skill</th>
+                                <th>Endorsed By</th>
+                                <th>Date Endorsed</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Recent endorsements will be populated here by JS -->
+                            <tr>
+                                <td>Alice Brown</td>
+                                <td>Cloud Computing (AWS)</td>
+                                <td>Peer: Charlie Green</td>
+                                <td>2025-06-08</td>
+                                <td>Approved</td>
+                                <td><button class="view-details-btn">Details</button> <button class="flag-btn">Flag</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Talent Marketplace</p>
+        </footer>
+    </div>
+    <script src="manage-skill-validation.js"></script>
+    <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

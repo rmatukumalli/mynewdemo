@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Personalized Learning Recommendations
+  </title>
+  <link href="recommendations.css" rel="stylesheet"/>
+  <link href="../css/main-layout.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="recommendations-container">
+   <aside class="sidebar">
+    <h2>
+     Search &amp; Filters
+    </h2>
+    <div class="filter-group">
+     <label for="search-bar">
+      Search
+     </label>
+     <input id="search-bar" placeholder="Search by title, keyword..." type="text"/>
+    </div>
+    <div class="filter-group">
+     <h4>
+      Content Type
+     </h4>
+     <label>
+      <input name="content-type" type="checkbox" value="course"/>
+      Course
+     </label>
+     <br/>
+     <label>
+      <input name="content-type" type="checkbox" value="article"/>
+      Article
+     </label>
+     <br/>
+     <label>
+      <input name="content-type" type="checkbox" value="video"/>
+      Video
+     </label>
+     <br/>
+     <label>
+      <input name="content-type" type="checkbox" value="book"/>
+      Book
+     </label>
+     <br/>
+    </div>
+    <div class="filter-group">
+     <h4>
+      Duration
+     </h4>
+     <label>
+      <input name="duration" type="radio" value="short"/>
+      &lt; 1 Hour
+     </label>
+     <br/>
+     <label>
+      <input name="duration" type="radio" value="medium"/>
+      1-5 Hours
+     </label>
+     <br/>
+     <label>
+      <input name="duration" type="radio" value="long"/>
+      5+ Hours
+     </label>
+     <br/>
+     <label>
+      <input checked="" name="duration" type="radio" value="all"/>
+      All
+     </label>
+     <br/>
+    </div>
+    <div class="filter-group">
+     <h4>
+      Platform/Source
+     </h4>
+     <label>
+      <input name="platform" type="checkbox" value="internal"/>
+      Internal LMS
+     </label>
+     <br/>
+     <label>
+      <input name="platform" type="checkbox" value="coursera"/>
+      Coursera
+     </label>
+     <br/>
+     <label>
+      <input name="platform" type="checkbox" value="udemy"/>
+      Udemy
+     </label>
+     <br/>
+     <label>
+      <input name="platform" type="checkbox" value="youtube"/>
+      YouTube
+     </label>
+     <br/>
+    </div>
+    <div class="filter-group">
+     <h4>
+      Aspirational Job Role
+     </h4>
+     <select id="job-role-filter" multiple="">
+      <option value="data-scientist">
+       Data Scientist
+      </option>
+      <option value="product-manager">
+       Product Manager
+      </option>
+      <option value="ux-designer">
+       UX Designer
+      </option>
+      <option value="software-engineer">
+       Software Engineer
+      </option>
+     </select>
+    </div>
+   </aside>
+   <main class="content-area">
+    <header class="recommendations-header">
+     <h1>
+      Your Personalized Learning Path
+     </h1>
+     <p>
+      Discover courses, articles, and resources tailored to your career goals.
+     </p>
+    </header>
+    <div id="learning-content-display">
+     <!-- Learning content will be dynamically inserted here by recommendations.js -->
+     <p class="loading-message">
+      Loading recommendations...
+     </p>
+    </div>
+   </main>
+  </div>
+  <script defer="" src="recommendations.js">
+  </script>
+  
+ </body>
+</html>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Akara Job Scraper - Skills Intelligence Configuration
+  </title>
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <style>
+   /* Delta Color Variables */
+        :root {
+            --delta-blue: #003366;
+            --delta-blue-rgb: 0, 51, 102;
+            --delta-red: #DA291C;
+            --delta-red-rgb: 218, 41, 28;
+            --delta-blue-light: #005288;
+            --delta-red-light: #E55B50; 
+            --delta-accent-gold: #FFC72C;
+            --delta-accent-gold-darker: #E6B427; 
+            --delta-gray-bg: #f0f2f5;
+            --delta-gray-border: #d1d5db;
+            --delta-gray-text-light: #6b7280;
+            --delta-gray-text-medium: #4b5563; 
+            --delta-text-primary: #111827;
+            --delta-text-on-dark-bg: #ffffff;
+            --delta-text-on-red-bg: #ffffff;
+            --delta-text-on-gold-bg: #003366; 
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--delta-gray-bg);
+            color: var(--delta-text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: var(--delta-blue);
+            color: var(--delta-text-on-dark-bg);
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .nav-logo i { /* Airplane Icon in Navbar */
+            margin-right: 0.5rem;
+            color: var(--delta-text-on-dark-bg); /* Changed from gold to white */
+        }
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-link {
+            color: var(--delta-text-on-dark-bg);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover, .dropdown-item.nav-link:hover {
+            background-color: var(--delta-blue-light);
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            color: var(--delta-text-primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 0.375rem;
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+        .dropdown-menu .dropdown-item.nav-link {
+            color: var(--delta-text-primary);
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+        }
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            border: 2px solid var(--delta-accent-gold); /* Gold for avatar border - small accent */
+        }
+        .user-name {
+            font-weight: 500;
+        }
+
+        .container {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--delta-blue);
+            margin-bottom: 0.5rem;
+        }
+        .header h1 i { 
+            color: var(--delta-blue-light); 
+        }
+        .header p {
+            font-size: 1.125rem;
+            color: var(--delta-gray-text-medium);
+        }
+
+        .panel {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        .panel h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--delta-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .panel h2 .icon { 
+            margin-right: 0.75rem;
+            color: var(--delta-blue-light); 
+        }
+        .panel h3 { 
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--delta-blue-light);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .panel h3 i { 
+             margin-right: 0.5rem; 
+        }
+
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--delta-gray-text-medium);
+        }
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--delta-gray-border);
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--delta-blue);
+            box-shadow: 0 0 0 3px rgba(var(--delta-blue-rgb), 0.2);
+        }
+        .integration-badge { /* Gold for badge - accent */
+            background-color: var(--delta-accent-gold);
+            color: var(--delta-text-on-gold-bg);
+            font-size: 0.75rem;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .btn { 
+            background-color: var(--delta-red);
+            color: var(--delta-text-on-red-bg);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .btn:hover {
+            background-color: var(--delta-red-light);
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+        .btn-secondary { 
+            background-color: var(--delta-blue-light);
+            color: var(--delta-text-on-dark-bg);
+        }
+        .btn-secondary:hover {
+            background-color: var(--delta-blue);
+        }
+        .btn-danger { 
+            background-color: var(--delta-gray-text-medium); 
+            color: var(--delta-text-on-dark-bg);
+        }
+        .btn-danger:hover {
+            background-color: var(--delta-gray-text-light);
+        }
+        
+        .log-container {
+            background-color: #f9fafb;
+            border: 1px solid var(--delta-gray-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.875rem;
+        }
+        .log-entry {
+            margin-bottom: 0.5rem;
+            color: var(--delta-gray-text-medium);
+        }
+        .log-timestamp {
+            font-weight: 500;
+            color: var(--delta-blue);
+            margin-right: 0.5rem;
+        }
+        .log-info { color: var(--delta-gray-text-medium); }
+        .log-success { color: var(--delta-blue); } 
+        .log-error { color: var(--delta-red); } 
+        .log-warning { color: var(--delta-accent-gold); } /* Gold for warnings - semantic */
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            display: inline-block;
+        }
+        .status-active { background-color: var(--delta-blue); } 
+        .status-inactive { background-color: var(--delta-red); } 
+        .status-pending { background-color: var(--delta-accent-gold); } /* Gold for pending - semantic */
+
+        .progress-bar {
+            width: 100%;
+            background-color: var(--delta-gray-border);
+            border-radius: 0.5rem;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--delta-blue); 
+            border-radius: 0.5rem;
+            transition: width 0.5s ease;
+            text-align: center;
+            color: white;
+            font-size: 0.75rem;
+            line-height: 20px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .metric {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            border: 1px solid var(--delta-gray-border);
+        }
+        .metric-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--delta-blue);
+        }
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--delta-gray-text-medium);
+        }
+
+        #active-sources .source-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--delta-gray-border);
+        }
+        #active-sources .source-item:last-child {
+            border-bottom: none;
+        }
+        .source-url {
+            font-size: 0.875rem;
+            color: var(--delta-gray-text-light);
+        }
+
+        .job-queue {
+            margin-top: 1rem;
+        }
+        .job-item {
+            background-color: #f9fafb;
+            padding: 1rem;
+            border: 1px solid var(--delta-gray-border);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .job-item h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--delta-blue-light);
+            margin-bottom: 0.25rem;
+        }
+        .job-meta {
+            font-size: 0.875rem;
+            color: var(--delta-gray-text-medium);
+            margin-bottom: 0.75rem;
+        }
+        .job-meta span { margin-right: 1rem; }
+        .job-actions button { 
+            margin-right: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .job-actions .btn-approve { /* Approve button now Delta Blue Light */
+            background-color: var(--delta-blue-light); 
+            color: var(--delta-text-on-dark-bg);
+        }
+        .job-actions .btn-approve:hover { background-color: var(--delta-blue); }
+        
+        .job-actions .btn-reject { 
+            background-color: var(--delta-red);
+            color: var(--delta-text-on-red-bg);
+        }
+        .job-actions .btn-reject:hover { background-color: var(--delta-red-light); }
+        
+        .job-actions .btn-view { /* View button also Delta Blue Light */
+            background-color: var(--delta-blue-light); 
+            color: var(--delta-text-on-dark-bg);
+        }
+        .job-actions .btn-view:hover { background-color: var(--delta-blue); }
+        
+        .site-footer {
+            background-color: var(--delta-blue);
+            color: var(--delta-text-on-dark-bg);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            font-size: 0.875rem;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .demo-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .skills-intelligence-panel ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .skills-intelligence-panel li {
+            background-color: #f9fafb;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--delta-gray-border);
+            font-size: 0.9rem;
+        }
+        .skills-intelligence-panel li i.fa-tag { 
+            margin-right: 0.5rem;
+            color: var(--delta-blue-light); 
+        }
+        .skills-intelligence-panel .panel-h3-icon.fa-star { color: var(--delta-accent-gold) !important; } /* Gold for star icon - highlight */
+        .skills-intelligence-panel .panel-h3-icon.fa-chart-line { color: var(--delta-blue) !important; } 
+        .skills-intelligence-panel .panel-h3-icon.fa-exclamation-triangle { color: var(--delta-red) !important; }
+
+        .info-box-delta {
+            background-color: #eef3f8; 
+            border: 1px solid var(--delta-blue-light);
+            border-left-width: 4px; 
+            border-left-color: var(--delta-blue); 
+            color: var(--delta-text-primary); 
+            padding: 1rem;
+            border-radius: 0.375rem; 
+        }
+        .info-box-delta i {
+            color: var(--delta-blue); 
+            margin-right: 0.5rem;
+        }
+        .info-box-delta strong {
+            color: var(--delta-blue); 
+        }
+  </style>
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css'; 
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null; 
+            }
+        }
+  </script>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="main-container">
+  </div>
+  <!-- Main Content Area -->
+  <div class="container">
+   <div class="header">
+    <h1>
+     <i class="fas fa-cogs">
+     </i>
+     Akara Job Scraper Configuration
+    </h1>
+    <p>
+     Configure and manage automated job scraping from Akara Airlines' career portals and external job boards to power Skills Intelligence.
+    </p>
+   </div>
+   <div class="demo-container">
+    <!-- Scraper Configuration Panel -->
+    <div class="panel">
+     <h2>
+      <span class="icon">
+       <i class="fas fa-sliders-h">
+       </i>
+      </span>
+      Scraper Configuration
+     </h2>
+     <p class="text-sm text-gray-600 mb-6">
+      Set up job sources and scraping parameters. This data feeds into Akara's Skills Intelligence platform to identify hiring trends and skill demands across the organization.
+     </p>
+     <div class="form-group">
+      <label for="integration-source">
+       Primary Integration Source
+      </label>
+      <select class="form-control" id="integration-source">
+       <option value="akara_career_portal">
+        Akara Airlines Career Portal
+        <span class="integration-badge">
+         Internal
+        </span>
+       </option>
+       <option value="icims">
+        iCIMS ATS
+        <span class="integration-badge">
+         Premium
+        </span>
+       </option>
+       <option value="workday">
+        Workday
+       </option>
+       <option value="greenhouse">
+        Greenhouse
+       </option>
+       <option value="custom">
+        Other External Job Board
+       </option>
+      </select>
+     </div>
+     <div class="form-group">
+      <label for="source-urls">
+       Source URLs/Endpoints (Akara & External)
+      </label>
+      <textarea class="form-control" id="source-urls" placeholder="Enter job board URLs or API endpoints (one per line). e.g., https://careers.akaraair.com/jobs, https://www.linkedin.com/company/akara-airlines/jobs, https://www.indeed.com/q-Akara-Airlines-jobs.html" rows="4">https://careers.akaraair.com/jobs
+https://api.icims.com/akara-ats/jobs/feed
+https://jobs.akaraair.com/internal/postings
+https://www.linkedin.com/company/akara-airlines/jobs</textarea>
+     </div>
+     <div class="form-group">
+      <label for="frequency">
+       Scraping Frequency
+      </label>
+      <select class="form-control" id="frequency">
+       <option value="realtime">
+        Real-time (via API, if available)
+       </option>
+       <option value="hourly">
+        Every Hour
+       </option>
+       <option selected value="daily">
+        Daily (Recommended)
+       </option>
+       <option value="weekly">
+        Weekly
+       </option>
+      </select>
+     </div>
+     <div class="form-group">
+      <label for="keywords">
+       Keywords/Filters (Optional for External Boards)
+      </label>
+      <input class="form-control" id="keywords" placeholder="e.g., Software Engineer, Pilot, Customer Service" type="text" value="Pilot, Flight Attendant, Aircraft Mechanic">
+     </div>
+     <div class="form-group">
+      <label for="location">
+       Location Filter (Optional)
+      </label>
+      <input class="form-control" id="location" placeholder="e.g., Atlanta, GA, Remote, Global" type="text" value="Atlanta, GA; Dallas, TX; Remote">
+     </div>
+     <div class="form-group">
+      <label for="duplicate-handling">
+       Duplicate Handling
+      </label>
+      <select class="form-control" id="duplicate-handling">
+       <option value="skip">
+        Skip Duplicates
+       </option>
+       <option selected value="update">
+        Update Existing (if changed)
+       </option>
+       <option value="create-version">
+        Flag for Review
+       </option>
+      </select>
+     </div>
+     <div class="mt-6">
+      <button class="btn" onclick="startScraping()">
+       <i class="fas fa-play-circle mr-2">
+       </i>
+       Start Scraping
+      </button>
+      <button class="btn btn-secondary" onclick="testConnection()">
+       <i class="fas fa-plug mr-2">
+       </i>
+       Test Connections
+      </button>
+      <button class="btn btn-danger" onclick="stopScraping()">
+       <i class="fas fa-stop-circle mr-2">
+       </i>
+       Stop Scraping
+      </button>
+     </div>
+     <div class="log-container" id="log-container">
+      <div class="log-entry">
+       <span class="log-timestamp">
+        [10:15:32]
+       </span>
+       <span class="log-info">
+        Job scraper initialized for Akara Airlines.
+       </span>
+      </div>
+      <div class="log-entry">
+       <span class="log-timestamp">
+        [10:15:33]
+       </span>
+       <span class="log-success">
+        <i class="fas fa-check-circle">
+        </i>
+        Connected to Akara Career Portal API.
+       </span>
+      </div>
+      <div class="log-entry">
+       <span class="log-timestamp">
+        [10:15:34]
+       </span>
+       <span class="log-info">
+        Ready to begin scraping...
+       </span>
+      </div>
+     </div>
+    </div>
+    <!-- Scraping Status & Metrics Panel -->
+    <div class="panel">
+     <h2>
+      <span class="icon">
+       <i class="fas fa-chart-line">
+       </i>
+      </span>
+      Scraping Status & Metrics
+     </h2>
+     <div class="flex items-center mb-4">
+      <span class="status-indicator status-active" id="status-dot">
+      </span>
+      <strong>
+       Status:
+       <span id="scraper-status">
+        Ready
+       </span>
+      </strong>
+     </div>
+     <div class="progress-bar mb-6">
+      <div class="progress-fill" id="progress-fill" style="width: 10%;">
+       10%
+      </div>
+     </div>
+     <div class="metrics mb-6">
+      <div class="metric">
+       <div class="metric-value" id="jobs-found">
+        0
+       </div>
+       <div class="metric-label">
+        Jobs Found Today
+       </div>
+      </div>
+      <div class="metric">
+       <div class="metric-value" id="jobs-processed">
+        0
+       </div>
+       <div class="metric-label">
+        Skills Extracted
+       </div>
+      </div>
+      <div class="metric">
+       <div class="metric-value" id="jobs-pending">
+        0
+       </div>
+       <div class="metric-label">
+        Pending Review
+       </div>
+      </div>
+      <div class="metric">
+       <div class="metric-value" id="jobs-published-to-skills-db">
+        0
+       </div>
+       <div class="metric-label">
+        Insights to Skills DB
+       </div>
+      </div>
+     </div>
+     <h3>
+      <i class="fas fa-link">
+      </i>
+      Active Sources
+     </h3>
+     <div class="text-sm" id="active-sources">
+      <div class="source-item">
+       <div>
+        <div>
+         <strong>
+          Akara Careers (Main Portal)
+         </strong>
+        </div>
+        <div class="source-url">
+         careers.akaraair.com/jobs
+        </div>
+       </div>
+       <span class="status-indicator status-active">
+       </span>
+      </div>
+      <div class="source-item">
+       <div>
+        <div>
+         <strong>
+          Akara iCIMS ATS Feed
+         </strong>
+        </div>
+        <div class="source-url">
+         api.icims.com/akara-ats/jobs/feed
+        </div>
+       </div>
+       <span class="status-indicator status-active">
+       </span>
+      </div>
+      <div class="source-item">
+       <div>
+        <div>
+         <strong>
+          Akara Internal Postings
+         </strong>
+        </div>
+        <div class="source-url">
+         jobs.akaraair.com/internal/postings
+        </div>
+       </div>
+       <span class="status-indicator status-pending" title="Connection issue, retrying">
+       </span>
+      </div>
+      <div class="source-item">
+       <div>
+        <div>
+         <strong>
+          LinkedIn (Akara Postings)
+         </strong>
+        </div>
+        <div class="source-url">
+         linkedin.com/company/akara-airlines/jobs
+        </div>
+       </div>
+       <span class="status-indicator status-active">
+       </span>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- NEW PANEL: Skills Intelligence Insights -->
+   <div class="panel skills-intelligence-panel">
+    <h2>
+     <span class="icon">
+      <i class="fas fa-brain">
+      </i>
+     </span>
+     Skills Intelligence Insights (from Akara's Postings)
+    </h2>
+    <p class="text-sm text-gray-600 mb-4">
+     The job scraper automatically extracts skill requirements from Akara Airlines' job postings across all configured sources. This data is analyzed by our AI to provide actionable insights for strategic workforce planning.
+    </p>
+    <div class="grid md:grid-cols-3 gap-4 mb-4">
+     <div>
+      <h3>
+       <i class="fas fa-star panel-h3-icon">
+       </i>
+       Top In-Demand Skills
+      </h3>
+      <ul id="top-skills-list">
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Aviation Safety Management
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Customer Relationship Management (CRM)
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Data Analysis (for operations)
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        FAA Regulations
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h3>
+       <i class="fas fa-chart-line panel-h3-icon">
+       </i>
+       Emerging Skill Trends
+      </h3>
+      <ul id="emerging-skills-list">
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Sustainable Aviation Fuels (SAF) Expertise
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        AI in Predictive Maintenance
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Advanced Air Mobility (AAM) Piloting
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h3>
+       <i class="fas fa-exclamation-triangle panel-h3-icon">
+       </i>
+       Identified Skill Gaps
+      </h3>
+      <ul id="skill-gaps-list">
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Cybersecurity for Avionics
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Specialized Drone Operations
+       </li>
+       <li>
+        <i class="fas fa-tag">
+        </i>
+        Bilingual Customer Support (Spanish)
+       </li>
+      </ul>
+     </div>
+    </div>
+    <p class="text-sm mt-4 info-box-delta">
+     <i class="fas fa-info-circle">
+     </i>
+     These insights are continuously updated and feed directly into the
+     <strong>
+      Akara Employer Skills Dashboard
+     </strong>
+     and the broader
+     <strong>
+      Skills Intelligence Platform
+     </strong>
+     . This helps leadership in strategic workforce planning, L&D program development, and refining Akara's overall talent strategy. Sarah's 'Senior Marketing Manager' role, once scraped, will contribute to this analysis.
+    </p>
+   </div>
+   <!-- Job Review Queue Panel -->
+   <div class="panel">
+    <h2>
+     <span class="icon">
+      <i class="fas fa-tasks">
+      </i>
+     </span>
+     Job Review Queue
+    </h2>
+    <p class="text-sm text-gray-600 mb-4">
+     Review and approve newly scraped jobs before their skill data is finalized in the Skills Intelligence platform and jobs are published (if applicable).
+    </p>
+    <div class="job-queue" id="job-queue">
+     <!-- Sample Job Item 1 -->
+     <div class="job-item" id="job-item-1">
+      <h4>
+       Senior Marketing Manager (New)
+      </h4>
+      <div class="job-meta">
+       <span>
+        <i class="fas fa-map-marker-alt">
+        </i>
+        Atlanta, GA (Hybrid)
+       </span>
+       <span>
+        <i class="fas fa-building">
+        </i>
+        Akara Career Portal
+       </span>
+       <span>
+        <i class="fas fa-calendar-alt">
+        </i>
+        Scraped: 2024-08-15 10:30 AM
+       </span>
+      </div>
+      <p class="text-xs text-gray-500 mb-2">
+       Skills identified: Digital Marketing, SEO/SEM, Campaign Management, Social Media Strategy, Market Analysis...
+      </p>
+      <div class="job-actions">
+       <button class="btn btn-approve text-xs" onclick="approveJob(1, this.closest('.job-item'))">
+        <i class="fas fa-check mr-1">
+        </i>
+        Approve & Process Skills
+       </button>
+       <button class="btn btn-reject text-xs" onclick="rejectJob(1, this.closest('.job-item'))">
+        <i class="fas fa-times mr-1">
+        </i>
+        Reject
+       </button>
+       <button class="btn btn-view text-xs" onclick="viewJobDetails(1)">
+        <i class="fas fa-eye mr-1">
+        </i>
+        View Details
+       </button>
+      </div>
+     </div>
+     <!-- Sample Job Item 2 -->
+     <div class="job-item" id="job-item-2">
+      <h4>
+       Lead Pilot - Boeing 777
+      </h4>
+      <div class="job-meta">
+       <span>
+        <i class="fas fa-map-marker-alt">
+        </i>
+        Dallas, TX
+       </span>
+       <span>
+        <i class="fas fa-external-link-alt">
+        </i>
+        LinkedIn
+       </span>
+       <span>
+        <i class="fas fa-calendar-alt">
+        </i>
+        Scraped: 2024-08-15 09:15 AM
+       </span>
+      </div>
+      <p class="text-xs text-gray-500 mb-2">
+       Skills identified: Flight Operations, Boeing 777 Type Rating, Crew Resource Management, Safety Protocols...
+      </p>
+      <div class="job-actions">
+       <button class="btn btn-approve text-xs" onclick="approveJob(2, this.closest('.job-item'))">
+        <i class="fas fa-check mr-1">
+        </i>
+        Approve & Process Skills
+       </button>
+       <button class="btn btn-reject text-xs" onclick="rejectJob(2, this.closest('.job-item'))">
+        <i class="fas fa-times mr-1">
+        </i>
+        Reject
+       </button>
+       <button class="btn btn-view text-xs" onclick="viewJobDetails(2)">
+        <i class="fas fa-eye mr-1">
+        </i>
+        View Details
+       </button>
+      </div>
+     </div>
+     <div class="text-center py-10 text-gray-500 hidden" id="no-jobs-message">
+      No jobs currently in the review queue.
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Footer -->
+  <script>
+   let jobCounter = 0;
+        let skillsExtractedCounter = 0; 
+        let pendingReviewCounter = 0; 
+        let insightsToDbCounter = 0;
+        let progress = 10; // Initial progress for progress bar
+
+        function updateMetrics() {
+            document.getElementById('jobs-found').innerText = jobCounter;
+            document.getElementById('jobs-processed').innerText = skillsExtractedCounter;
+            document.getElementById('jobs-pending').innerText = pendingReviewCounter;
+            document.getElementById('jobs-published-to-skills-db').innerText = insightsToDbCounter;
+        }
+        
+        function updateProgressBar() {
+            const progressFill = document.getElementById('progress-fill');
+            progressFill.style.width = progress + '%';
+            progressFill.innerText = progress + '%';
+            if (progress >= 100) { 
+                 progress = 100; 
+                 progressFill.style.width = '100%';
+                 progressFill.innerText = '100%';
+                 setTimeout(() => {
+                    document.getElementById('scraper-status').innerText = 'Completed';
+                    document.getElementById('status-dot').classList.remove('status-pending'); 
+                    document.getElementById('status-dot').classList.add('status-active'); 
+                    addLogEntry('Scraping cycle completed. All sources processed.', 'success');
+                }, 500);
+            }
+        }
+
+        function addLogEntry(message, type = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const entry = document.createElement('div');
+            entry.classList.add('log-entry');
+            const timestamp = new Date().toLocaleTimeString();
+            let iconHtml = '';
+            let typeClass = 'log-info'; 
+
+            switch(type) {
+                case 'success':
+                    iconHtml = '<i class="fas fa-check-circle mr-1"></i>';
+                    typeClass = 'log-success';
+                    break;
+                case 'error':
+                    iconHtml = '<i class="fas fa-exclamation-circle mr-1"></i>';
+                    typeClass = 'log-error';
+                    break;
+                case 'warning':
+                    iconHtml = '<i class="fas fa-exclamation-triangle mr-1"></i>';
+                    typeClass = 'log-warning';
+                    break;
+            }
+
+            entry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> <span class="${typeClass}">${iconHtml}${message}</span>`;
+            logContainer.appendChild(entry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function startScraping() {
+            addLogEntry('Scraping process initiated by admin...', 'info');
+            document.getElementById('scraper-status').innerText = 'Scraping...';
+            document.getElementById('status-dot').classList.remove('status-inactive', 'status-pending');
+            document.getElementById('status-dot').classList.add('status-active');
+            progress = 0;
+            updateProgressBar();
+
+            let interval = setInterval(() => {
+                progress += 10;
+                if (progress <= 100) {
+                    updateProgressBar();
+                    if (progress % 30 === 0 && progress < 91) { 
+                        const newJobs = Math.floor(Math.random() * 2) + 1; 
+                        addLogEntry(`Found ${newJobs} new job(s) from various sources.`, 'info');
+                        for(let i=0; i<newJobs; i++) addDemoJobToQueue();
+                        updateMetrics(); 
+                    }
+                } else {
+                    clearInterval(interval);
+                     if (progress > 100) updateProgressBar(); 
+                }
+            }, 500);
+        }
+        
+        function addDemoJobToQueue() {
+            const jobQueue = document.getElementById('job-queue');
+            const noJobsMessage = document.getElementById('no-jobs-message');
+            if (noJobsMessage) noJobsMessage.classList.add('hidden');
+
+            const jobItem = document.createElement('div');
+            jobItem.className = 'job-item';
+            const jobId = Date.now() + Math.random(); 
+            jobItem.id = `job-item-${jobId}`;
+            jobItem.innerHTML = `
+                <h4>Sample Scraped Job ${jobId.toString().slice(-5,-1)}</h4>
+                <div class="job-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> Location Varies</span>
+                    <span><i class="fas fa-building"></i> Mixed Sources</span>
+                    <span><i class="fas fa-calendar-alt"></i> Scraped: ${new Date().toLocaleDateString()}</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">Skills identified: Skill X, Skill Y, Skill Z...</p>
+                <div class="job-actions">
+                    <button class="btn btn-approve text-xs" onclick="approveJob(${jobId}, this.closest('.job-item'))"><i class="fas fa-check mr-1"></i> Approve</button>
+                    <button class="btn btn-reject text-xs" onclick="rejectJob(${jobId}, this.closest('.job-item'))"><i class="fas fa-times mr-1"></i> Reject</button>
+                    <button class="btn btn-view text-xs" onclick="viewJobDetails(${jobId})"><i class="fas fa-eye mr-1"></i> View</button>
+                </div>
+            `;
+            jobQueue.insertBefore(jobItem, jobQueue.firstChild);
+            jobCounter++; 
+            pendingReviewCounter++; 
+        }
+
+
+        function stopScraping() {
+            addLogEntry('Scraping process stopped by admin.', 'warning');
+            document.getElementById('scraper-status').innerText = 'Stopped';
+            document.getElementById('status-dot').classList.remove('status-active', 'status-pending');
+            document.getElementById('status-dot').classList.add('status-inactive'); 
+        }
+
+        function testConnection() {
+            addLogEntry('Testing connections to all configured sources...', 'info');
+            setTimeout(() => {
+                addLogEntry('Akara Career Portal: Connection successful.', 'success');
+            }, 500);
+            setTimeout(() => {
+                addLogEntry('iCIMS ATS Feed: Connection successful.', 'success');
+            }, 1000);
+            setTimeout(() => {
+                addLogEntry('Akara Internal Postings: Connection failed (timeout). Please check URL or network.', 'error');
+                const internalPostingSource = Array.from(document.querySelectorAll('#active-sources .source-item strong'))
+                                              .find(el => el.textContent.includes('Akara Internal Postings'));
+                if(internalPostingSource) {
+                    const indicator = internalPostingSource.closest('.source-item').querySelector('.status-indicator');
+                    indicator.classList.remove('status-active', 'status-pending');
+                    indicator.classList.add('status-inactive'); 
+                    indicator.title = "Connection Failed";
+                }
+            }, 1500);
+             setTimeout(() => {
+                addLogEntry('LinkedIn (Akara Postings): Connection successful.', 'success');
+            }, 2000);
+        }
+
+        function approveJob(jobId, jobElement) {
+            if (!jobElement || jobElement.classList.contains('opacity-50')) return; 
+
+            addLogEntry(`Job ID ${jobId.toString().slice(-5,-1)} approved. Skills being processed.`, 'success');
+            skillsExtractedCounter += Math.floor(Math.random() * 5) + 3; // Add 3-7 skills
+            // Ensure skillsExtractedCounter stays above 25 if it was initialized higher
+            if (skillsExtractedCounter < 26 && initialSkillsExtracted > 25) { // initialSkillsExtracted would be the value from DOMContentLoaded
+                 skillsExtractedCounter = initialSkillsExtracted + Math.floor(Math.random() * 5) + 3;
+            }
+
+
+            insightsToDbCounter++;
+             // Ensure insightsToDbCounter stays above 25 if it was initialized higher
+            if (insightsToDbCounter < 26 && initialInsightsToDb > 25) { // initialInsightsToDb would be the value from DOMContentLoaded
+                insightsToDbCounter = initialInsightsToDb + 1;
+            }
+
+            pendingReviewCounter--;
+            updateMetrics();
+            if (jobElement) {
+                jobElement.classList.add('opacity-50', 'pointer-events-none'); 
+                jobElement.querySelector('.job-actions').innerHTML = '<span class="font-semibold" style="color: var(--delta-blue);">Approved & Processed</span>';
+            }
+            updateNoJobsMessage();
+        }
+
+        function rejectJob(jobId, jobElement) {
+             if (!jobElement || jobElement.classList.contains('opacity-50')) return; 
+
+            addLogEntry(`Job ID ${jobId.toString().slice(-5,-1)} rejected.`, 'warning');
+            pendingReviewCounter--;
+            updateMetrics();
+            if (jobElement) {
+                 jobElement.classList.add('opacity-50', 'pointer-events-none');
+                 jobElement.querySelector('.job-actions').innerHTML = '<span class="font-semibold" style="color: var(--delta-red);">Rejected</span>';
+            }
+             updateNoJobsMessage();
+        }
+        
+        function updateNoJobsMessage() {
+            const jobQueue = document.getElementById('job-queue');
+            const noJobsMessage = document.getElementById('no-jobs-message');
+            const items = jobQueue.querySelectorAll('.job-item:not(.opacity-50)'); 
+            if (items.length === 0 && noJobsMessage) {
+                noJobsMessage.classList.remove('hidden');
+            } else if (noJobsMessage) {
+                noJobsMessage.classList.add('hidden');
+            }
+        }
+
+        function viewJobDetails(jobId) {
+            addLogEntry(`Viewing details for Job ID ${jobId.toString().slice(-5,-1)}. (Demo only)`, 'info');
+            const jobElement = document.getElementById(`job-item-${jobId}`);
+            const jobTitle = jobElement ? jobElement.querySelector('h4').innerText : `Job ID ${jobId.toString().slice(-5,-1)}`;
+            const modalMessage = `Displaying details for: ${jobTitle}\n(This would be a modal or new view in a full application)`;
+            console.log(modalMessage); 
+            addLogEntry(`DEMO: ${modalMessage}`, 'info');
+        }
+        
+        // Store initial baseline values to ensure they don't drop below after approval if starting high
+        let initialSkillsExtracted = 0;
+        let initialInsightsToDb = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialJobItems = document.querySelectorAll('#job-queue .job-item:not(.opacity-50)');
+            pendingReviewCounter = initialJobItems.length;
+            jobCounter = initialJobItems.length; 
+            
+            // Initialize Skills Extracted and Insights to DB to be above 25
+            skillsExtractedCounter = 25 + Math.floor(Math.random() * 11); // Random number between 25 and 35
+            insightsToDbCounter = 25 + Math.floor(Math.random() * 11); // Random number between 25 and 35
+            
+            initialSkillsExtracted = skillsExtractedCounter;
+            initialInsightsToDb = insightsToDbCounter;
+            
+            updateMetrics();
+            updateProgressBar(); 
+            updateNoJobsMessage(); 
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

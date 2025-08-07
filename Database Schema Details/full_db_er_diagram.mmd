@@ -1,0 +1,186 @@
+erDiagram
+    ASSESSMENT ||--o{ SKILL : "relates to"
+    BEHAVIOR ||--o{ COMPETENCY : "relates to"
+    BEHAVIOR ||--o{ JOB_LEVEL : "relates to"
+    BUSINESS_UNIT ||--o{ ORGANIZATION : "relates to"
+    CAPABILITY_COMPETENCIES }o--o{ CAPABILITY : "relates to"
+    CAPABILITY_COMPETENCIES }o--o{ COMPETENCY : "relates to"
+    CERTIFICATION ||--o{ ORGANIZATION : "relates to"
+    CERTIFICATION ||--o{ SKILL : "relates to"
+    CERTIFICATION ||--o{ USER : "relates to"
+    COMPETENCY_SKILLS }o--o{ COMPETENCY : "relates to"
+    COMPETENCY_SKILLS }o--o{ SKILL : "relates to"
+    JOB_PROFILE ||--o{ JOB_LEVEL : "relates to"
+    JOB_PROFILE ||--o{ ROLE_GROUP : "relates to"
+    LEARNING_RESOURCE ||--o{ SKILL : "relates to"
+    PROFICIENCY ||--o{ SKILL : "relates to"
+    SKILL_GAP ||--o{ SKILL : "relates to"
+    SKILL_GAP ||--o{ USER : "relates to"
+    SKILL_RELATIONSHIP ||--o{ RELATIONSHIP_TYPE : "relates to"
+    SKILL_RELATIONSHIP ||--o{ SKILL : "relates to"
+    SKILL_RELATIONSHIP ||--o{ SKILL : "relates to"
+    SKILL_TAG_MAP }o--o{ SKILL : "relates to"
+    SKILL_TAG_MAP }o--o{ SKILL_TAG : "relates to"
+    DEPARTMENT ||--o{ BUSINESS_UNIT : "relates to"
+    JOB_PROFILE_REQUIRED_SKILLS }o--o{ JOB_PROFILE : "relates to"
+    JOB_PROFILE_REQUIRED_SKILLS }o--o{ SKILL : "relates to"
+    USER_SKILL ||--o{ PROFICIENCY : "relates to"
+    USER_SKILL ||--o{ SKILL : "relates to"
+    USER_SKILL ||--o{ USER : "relates to"
+    BUSINESS_UNIT_DEPARTMENTS }o--o{ BUSINESS_UNIT : "relates to"
+    BUSINESS_UNIT_DEPARTMENTS }o--o{ DEPARTMENT : "relates to"
+    ROLE ||--o{ DEPARTMENT : "relates to"
+    ROLE ||--o{ JOB_LEVEL : "relates to"
+    CAREER_PATH ||--o{ ROLE : "relates to"
+    CAREER_PATH ||--o{ ROLE : "relates to"
+    FEEDBACK ||--o{ ROLE : "relates to"
+    FEEDBACK ||--o{ COMPETENCY : "relates to"
+    FEEDBACK ||--o{ USER : "relates to"
+    FEEDBACK ||--o{ USER : "relates to"
+    FEEDBACK ||--o{ SKILL : "relates to"
+    LEARNING_PATH ||--o{ ROLE : "relates to"
+    PROJECT_OR_ASSIGNMENT ||--o{ ROLE : "relates to"
+    PROJECT_OR_ASSIGNMENT ||--o{ USER : "relates to"
+    PROJECT_OR_ASSIGNMENT ||--o{ ORGANIZATION : "relates to"
+    ROLE_COMPETENCIES }o--o{ COMPETENCY : "relates to"
+    ROLE_COMPETENCIES }o--o{ ROLE : "relates to"
+    USER_CAREER_HISTORY ||--o{ ROLE : "relates to"
+    USER_CAREER_HISTORY ||--o{ USER : "relates to"
+    LEARNING_PATH_RESOURCES }o--o{ LEARNING_PATH : "relates to"
+    LEARNING_PATH_RESOURCES }o--o{ LEARNING_RESOURCE : "relates to"
+
+    ALEMBIC_VERSION {
+        VARCHAR version_num PK
+    }
+
+    CAPABILITY {
+        VARCHAR id PK
+    }
+
+    COMPETENCY {
+        VARCHAR id PK
+    }
+
+    JOB_LEVEL {
+        VARCHAR id PK
+    }
+
+    ORGANIZATION {
+        VARCHAR id PK
+    }
+
+    RELATIONSHIP_TYPE {
+        VARCHAR id PK
+    }
+
+    ROLE_GROUP {
+        VARCHAR id PK
+    }
+
+    SKILL {
+        VARCHAR id PK
+    }
+
+    SKILL_TAG {
+        VARCHAR id PK
+    }
+
+    USER {
+        VARCHAR id PK
+    }
+
+    ASSESSMENT {
+        INTEGER id PK
+    }
+
+    BEHAVIOR {
+        VARCHAR id PK
+    }
+
+    BUSINESS_UNIT {
+        VARCHAR id PK
+    }
+
+    CAPABILITY_COMPETENCIES {
+        VARCHAR capability_id PK, FK
+    }
+
+    CERTIFICATION {
+        VARCHAR id PK
+    }
+
+    COMPETENCY_SKILLS {
+        VARCHAR competency_id PK, FK
+    }
+
+    JOB_PROFILE {
+        VARCHAR id PK
+    }
+
+    LEARNING_RESOURCE {
+        INTEGER id PK
+    }
+
+    PROFICIENCY {
+        INTEGER id PK
+    }
+
+    SKILL_GAP {
+        VARCHAR id PK
+    }
+
+    SKILL_RELATIONSHIP {
+        INTEGER id PK
+    }
+
+    SKILL_TAG_MAP {
+        VARCHAR skill_id PK, FK
+    }
+
+    DEPARTMENT {
+        VARCHAR id PK
+    }
+
+    JOB_PROFILE_REQUIRED_SKILLS {
+        VARCHAR job_profile_id PK, FK
+    }
+
+    USER_SKILL {
+        INTEGER id PK
+    }
+
+    BUSINESS_UNIT_DEPARTMENTS {
+        VARCHAR business_unit_id PK, FK
+    }
+
+    ROLE {
+        VARCHAR id PK
+    }
+
+    CAREER_PATH {
+        VARCHAR id PK
+    }
+
+    FEEDBACK {
+        VARCHAR id PK
+    }
+
+    LEARNING_PATH {
+        VARCHAR id PK
+    }
+
+    PROJECT_OR_ASSIGNMENT {
+        VARCHAR id PK
+    }
+
+    ROLE_COMPETENCIES {
+        VARCHAR role_id PK, FK
+    }
+
+    USER_CAREER_HISTORY {
+        INTEGER id PK
+    }
+
+    LEARNING_PATH_RESOURCES {
+        VARCHAR learning_path_id PK, FK
+    }

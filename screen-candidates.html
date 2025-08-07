@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Screen Candidates
+  </title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="css/screen-candidates.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+  <!-- Assuming theme.css might be useful -->
+  <!-- Assuming styles.css might be useful -->
+  <style>
+   /* Basic styles for modal if not covered by theme.css or screen-candidates.css */
+        .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
+        .modal-header { padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .modal-title { font-size: 1.5rem; font-weight: bold; }
+        .modal-close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-close-btn:hover, .modal-close-btn:focus { color: black; text-decoration: none; }
+        body {
+            --delta-blue: #003366;
+            --delta-blue-rgb: 0, 51, 102;
+            --delta-red: #DA291C;
+            --delta-red-rgb: 218, 41, 28;
+            --delta-blue-light: #005288;
+            --delta-red-light: #e74c3c;
+            --delta-accent-gold: #FFC72C;
+            --delta-gray-bg: #f0f2f5;
+            --delta-gray-bg-light: #f8f9fa; /* Added for table header */
+            --delta-gray-bg-extralight: #fafbfc; /* Added for filter background */
+            --delta-gray-border: #d1d5db;
+            --delta-gray-text-light: #6b7280;
+            --delta-gray-text-medium: #4b5563;
+            --delta-text-primary: #111827;
+            --delta-text-secondary: #374151; /* Added for labels and darker text */
+            --delta-text-on-dark-bg: #ffffff;
+
+            /* Additional colors for charts */
+            --chart-color-1: #007bff; /* Blue */
+            --chart-color-2: #28a745; /* Green */
+            --chart-color-3: #ffc107; /* Yellow/Gold */
+            --chart-color-4: #dc3545; /* Red */
+            --chart-color-5: #6f42c1; /* Purple */
+            --chart-color-6: #fd7e14; /* Orange */
+            --chart-color-7: #17a2b8; /* Teal */
+        }
+        /* Styles for tab content visibility */
+        .main-content-section {
+            display: none;
+        }
+        .main-content-section.active {
+            display: block;
+        }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div id="custom-alert-box" style="display: none;">
+   <!-- Initially hidden -->
+   <span id="custom-alert-message">
+   </span>
+  </div>
+  <!-- Main content area for the Screen Candidates module -->
+  <!-- Note: The outer div class="flex" and the main-content-area div structure is now part of the fragment -->
+  <!-- The parent page (index.html) will need to ensure this fits its layout -->
+  <div id="screen-candidates-module-wrapper" class="container">
+   <!-- Added a wrapper for easier targeting if needed -->
+   <header class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-[var(--delta-gray-border)]">
+     <h1 class="text-3xl md:text-4xl font-bold text-[var(--delta-blue)] mb-4 sm:mb-0" id="main-page-title">
+      Screen Candidates
+     </h1>
+     <div>
+      <label class="sr-only" for="job-selector">
+       Select Job Requisition
+      </label>
+      <select class="p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="job-selector">
+       <option value>
+        -- Select a Job Requisition --
+       </option>
+       <option value="sr-software-engineer">
+        Sr. Software Engineer (REQ-101)
+       </option>
+       <option value="product-manager">
+        Product Manager (REQ-102)
+       </option>
+       <option value="data-scientist">
+        Data Scientist (REQ-103)
+       </option>
+      </select>
+     </div>
+    </div>
+    <p class="text-sm text-[var(--delta-gray-text-medium)] italic mt-2" id="job-context-message" style="display: none;">
+     Currently viewing data for:
+     <span class="font-semibold" id="selected-job-name">
+     </span>
+    </p>
+   </header>
+   <!-- Sub-navigation Tabs -->
+   <nav class="mb-8">
+    <ul class="flex border-b border-[var(--delta-gray-border)]" id="sub-nav-tabs">
+     <li class="sub-nav-item -mb-px mr-1">
+      <a class="sub-nav-link active bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-[var(--delta-blue)] font-semibold" data-section="job-applicants" href="#job-applicants">
+       Job Applicants
+      </a>
+     </li>
+     <li class="sub-nav-item mr-1">
+      <a class="sub-nav-link bg-white inline-block py-2 px-4 text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] font-semibold" data-section="find-filter-candidates" href="#find-filter-candidates">
+       Find & Filter
+      </a>
+     </li>
+     <li class="sub-nav-item mr-1">
+      <a class="sub-nav-link bg-white inline-block py-2 px-4 text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] font-semibold" data-section="smart-skill-suggestions" href="#smart-skill-suggestions">
+       Smart Suggestions
+      </a>
+     </li>
+     <li class="sub-nav-item mr-1">
+      <a class="sub-nav-link bg-white inline-block py-2 px-4 text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] font-semibold" data-section="my-lists" href="#my-lists">
+       My Lists
+      </a>
+     </li>
+     <li class="sub-nav-item mr-1">
+      <a class="sub-nav-link bg-white inline-block py-2 px-4 text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] font-semibold" data-section="job-analytics" href="#job-analytics">
+       Job Analytics
+      </a>
+     </li>
+     <li class="sub-nav-item">
+      <a class="sub-nav-link bg-white inline-block py-2 px-4 text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] font-semibold" data-section="engage-candidates" href="#engage-candidates">
+       Engage Candidates
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <main class="space-y-8" id="sub-tab-content-area">
+    <section class="main-content-section active bg-white p-6 rounded-lg shadow-lg text-center" id="initial-message">
+     <h2 class="text-xl font-semibold text-[var(--delta-text-secondary)]" id="main-content-title">
+      Welcome, Recruiter!
+     </h2>
+     <p class="text-[var(--delta-gray-text-light)] mt-2">
+      Please select a job requisition from the dropdown above to begin.
+     </p>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg" id="job-applicants">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      Applicants for
+      <span class="job-title-placeholder">
+       [Selected Job]
+      </span>
+     </h2>
+     <!-- Filter Controls -->
+     <div class="mb-6 p-4 border border-[var(--delta-gray-border)] rounded-md bg-[var(--delta-gray-bg-extralight)] space-y-6" id="job-applicants-filters">
+      <!-- Basic Filters -->
+      <div class="basic-filters space-y-4">
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-baseline">
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-basic-keyword">
+          Keyword Search (Name, Skills, etc.):
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-basic-keyword" name="filter-basic-keyword" placeholder="Enter keyword..." type="text">
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-applicant-status-main">
+          Filter by Status:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-applicant-status-main" name="filter-applicant-status-main">
+          <option value>
+           All Statuses
+          </option>
+          <option value="new">
+           New Applicant
+          </option>
+          <option value="screening">
+           Screening
+          </option>
+          <option value="assessment-pending">
+           Assessment Pending
+          </option>
+          <option value="assessment-cleared">
+           Assessment Cleared
+          </option>
+          <option value="interview-scheduled">
+           Interview Scheduled
+          </option>
+          <option value="offer-stage">
+           Offer Stage
+          </option>
+          <option value="hired">
+           Hired
+          </option>
+          <option value="rejected">
+           Rejected
+          </option>
+          <option value="on-hold">
+           On Hold
+          </option>
+          <option value="withdrawn">
+           Withdrawn
+          </option>
+          <option value="archived">
+           Archived
+          </option>
+          <!-- More status options can be populated by JS -->
+         </select>
+        </div>
+       </div>
+      </div>
+      <!-- Advanced Filters Toggle -->
+      <div class="pt-2">
+       <button class="text-sm text-[var(--delta-blue)] hover:underline focus:outline-none" id="toggle-advanced-filters-btn">
+        Show Advanced Filters
+        <span id="advanced-filter-arrow">
+         &amp;dtrif;
+        </span>
+       </button>
+      </div>
+      <!-- Advanced Filters Container (Initially Hidden) -->
+      <div class="hidden space-y-6 pt-4 border-t border-[var(--delta-gray-border)]" id="advanced-filters-container">
+       <!-- I. Core Technical & Experiential Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         I. Core Technical & Experiential Filters
+        </h3>
+        <!-- Skills -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-skills">
+           Skills (e.g., Java, React):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-skills" name="filter-skills" placeholder="Enter skills (comma-separated)" type="text">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-skills-logic">
+           Skills Logic:
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-skills-logic" name="filter-skills-logic">
+           <option value="AND">
+            Must have ALL listed skills (AND)
+           </option>
+           <option value="OR">
+            Must have AT LEAST ONE listed skill (OR)
+           </option>
+          </select>
+         </div>
+         <!-- Skill Level (Example - could be more complex if per skill) -->
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-skill-level">
+           Overall Skill Level (Optional):
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-skill-level" name="filter-skill-level">
+           <option value>
+            Any Level
+           </option>
+           <option value="Basic">
+            Basic
+           </option>
+           <option value="Intermediate">
+            Intermediate
+           </option>
+           <option value="Expert">
+            Expert
+           </option>
+          </select>
+         </div>
+        </div>
+        <!-- Years of Experience -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-experience-min">
+           Min Years of Experience:
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-experience-min" name="filter-experience-min" placeholder="e.g., 3" type="number">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-experience-max">
+           Max Years of Experience:
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-experience-max" name="filter-experience-max" placeholder="e.g., 7" type="number">
+         </div>
+        </div>
+        <!-- Or predefined ranges for experience -->
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-experience-range">
+          Or Select Experience Range:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-experience-range" name="filter-experience-range">
+          <option value>
+           Any Experience
+          </option>
+          <option value="0-2">
+           0-2 years
+          </option>
+          <option value="3-5">
+           3-5 years
+          </option>
+          <option value="5-7">
+           5-7 years
+          </option>
+          <option value="8-10">
+           8-10 years
+          </option>
+          <option value="10+">
+           10+ years
+          </option>
+         </select>
+        </div>
+        <!-- Job Titles -->
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-job-titles">
+          Job Titles (Current or Past):
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-job-titles" name="filter-job-titles" placeholder="e.g., Software Engineer, Tech Lead" type="text">
+        </div>
+        <!-- Certifications -->
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-certifications">
+          Certifications:
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-certifications" name="filter-certifications" placeholder="e.g., AWS Certified, PMP" type="text">
+        </div>
+        <!-- Education -->
+        <div class="space-y-3">
+         <h4 class="text-md font-medium text-[var(--delta-text-secondary)]">
+          Education:
+         </h4>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+           <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-education-degree">
+            Degree:
+           </label>
+           <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-education-degree" multiple name="filter-education-degree">
+            <option value="Bachelor's">
+             Bachelor's
+            </option>
+            <option value="Master's">
+             Master's
+            </option>
+            <option value="PhD">
+             PhD
+            </option>
+            <option value="Associate">
+             Associate
+            </option>
+            <option value="Diploma">
+             Diploma
+            </option>
+           </select>
+          </div>
+          <div>
+           <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-education-major">
+            Major/Field of Study:
+           </label>
+           <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-education-major" name="filter-education-major" placeholder="e.g., Computer Science" type="text">
+          </div>
+          <div>
+           <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-education-institution">
+            Institution Name:
+           </label>
+           <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-education-institution" name="filter-education-institution" placeholder="e.g., MIT" type="text">
+          </div>
+          <div>
+           <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-education-grad-year-start">
+            Graduation Year (Start):
+           </label>
+           <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-education-grad-year-start" name="filter-education-grad-year-start" placeholder="e.g., 2015" type="number">
+          </div>
+          <div>
+           <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-education-grad-year-end">
+            Graduation Year (End):
+           </label>
+           <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-education-grad-year-end" name="filter-education-grad-year-end" placeholder="e.g., 2020" type="number">
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- II. Work Preferences & Availability Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         II. Work Preferences & Availability
+        </h3>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1">
+          Work Arrangement:
+         </label>
+         <div class="flex flex-wrap gap-x-4 gap-y-2">
+          <label class="inline-flex items-center">
+           <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:ring-[var(--delta-blue-light)]" name="filter-work-arrangement" type="checkbox" value="remote">
+           <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+            Remote
+           </span>
+          </label>
+          <label class="inline-flex items-center">
+           <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:ring-[var(--delta-blue-light)]" name="filter-work-arrangement" type="checkbox" value="hybrid">
+           <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+            Hybrid
+           </span>
+          </label>
+          <label class="inline-flex items-center">
+           <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:ring-[var(--delta-blue-light)]" name="filter-work-arrangement" type="checkbox" value="on-site">
+           <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+            On-site
+           </span>
+          </label>
+         </div>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-availability">
+          Availability / Notice Period:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-32" id="filter-availability" multiple name="filter-availability">
+          <option value="immediate">
+           Immediate Joiner
+          </option>
+          <option value="lt-15d">
+           Less than 15 Days
+          </option>
+          <option value="15d">
+           15 Days
+          </option>
+          <option value="1m">
+           1 Month (30 Days)
+          </option>
+          <option value="45d">
+           45 Days
+          </option>
+          <option value="2m">
+           2 Months (60 Days)
+          </option>
+          <option value="3m">
+           3 Months (90 Days)
+          </option>
+          <option value="gt-3m">
+           More than 3 Months
+          </option>
+          <option value="serving-notice">
+           Currently Serving Notice
+          </option>
+          <option value="negotiable">
+           Negotiable
+          </option>
+         </select>
+        </div>
+       </div>
+       <!-- III. Location Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         III. Location Filters
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-country">
+           Country:
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-location-country" multiple name="filter-location-country">
+           <!-- Options to be populated by JS or predefined -->
+           <option value="USA">
+            United States
+           </option>
+           <option value="CAN">
+            Canada
+           </option>
+           <option value="IND">
+            India
+           </option>
+           <option value="GBR">
+            United Kingdom
+           </option>
+          </select>
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-state">
+           State/Province:
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-location-state" name="filter-location-state" placeholder="e.g., California, Ontario" type="text">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-city">
+           City:
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-location-city" name="filter-location-city" placeholder="e.g., San Francisco, Toronto" type="text">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-postal">
+           Postal/ZIP Code:
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-location-postal" name="filter-location-postal" placeholder="e.g., 94107" type="text">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-radius">
+           Search Radius (miles/km):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-location-radius" name="filter-location-radius" placeholder="e.g., 25" type="number">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-location-region">
+           Region (Predefined):
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-location-region" multiple name="filter-location-region">
+           <option value="NA">
+            North America
+           </option>
+           <option value="EMEA">
+            EMEA
+           </option>
+           <option value="APAC">
+            APAC
+           </option>
+           <option value="LATAM">
+            LATAM
+           </option>
+          </select>
+         </div>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-relocate">
+          Willingness to Relocate:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-relocate" name="filter-relocate">
+          <option value>
+           Any
+          </option>
+          <option value="yes">
+           Yes
+          </option>
+          <option value="no">
+           No
+          </option>
+          <option value="discuss">
+           Open to Discussion
+          </option>
+         </select>
+        </div>
+       </div>
+       <!-- IV. General & Keyword Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         IV. General & Keyword Filters
+        </h3>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-keywords">
+          Keywords (Resume, Profile, Notes):
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-keywords" name="filter-keywords" placeholder="Use AND, OR, NOT, () for advanced search" type="text">
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-custom-tags">
+          Custom Tags / Labels:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-custom-tags" multiple name="filter-custom-tags">
+          <!-- Options populated by JS, e.g., "high-potential", "internal-referral-Q3" -->
+          <option value="high-potential">
+           High-Potential
+          </option>
+          <option value="fintech-exp">
+           Fintech Experience
+          </option>
+         </select>
+        </div>
+       </div>
+       <!-- V. Candidate Status & Source Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         V. Candidate Status & Source
+        </h3>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-candidate-status">
+          Candidate Status / Recruitment Stage:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-32" id="filter-candidate-status" multiple name="filter-candidate-status">
+          <option value="new">
+           New Applicant
+          </option>
+          <option value="screening">
+           Screening
+          </option>
+          <option value="assessment-pending">
+           Assessment Pending
+          </option>
+          <option value="assessment-cleared">
+           Assessment Cleared
+          </option>
+          <option value="interview-scheduled">
+           Interview Scheduled
+          </option>
+          <option value="offer-stage">
+           Offer Stage
+          </option>
+          <option value="hired">
+           Hired
+          </option>
+          <option value="rejected">
+           Rejected
+          </option>
+          <option value="on-hold">
+           On Hold
+          </option>
+          <option value="withdrawn">
+           Withdrawn
+          </option>
+          <option value="archived">
+           Archived
+          </option>
+         </select>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-source">
+          Source:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-source" multiple name="filter-source">
+          <option value="careers-page">
+           Company Careers Page
+          </option>
+          <option value="linkedin">
+           LinkedIn
+          </option>
+          <option value="indeed">
+           Indeed
+          </option>
+          <option value="referral">
+           Employee Referral
+          </option>
+          <option value="agency">
+           Agency Sourced
+          </option>
+          <option value="recruiter">
+           Recruiter Sourced
+          </option>
+          <option value="job-fair">
+           Job Fair
+          </option>
+         </select>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-date-applied-start">
+           Date Applied (Start):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-date-applied-start" name="filter-date-applied-start" type="date">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-date-applied-end">
+           Date Applied (End):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-date-applied-end" name="filter-date-applied-end" type="date">
+         </div>
+        </div>
+       </div>
+       <!-- VI. System & Profile Specific Filters -->
+       <div class="filter-group space-y-4">
+        <h3 class="text-lg font-semibold text-[var(--delta-text-primary)] border-b pb-2">
+         VI. System & Profile Specific
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-match-score-min">
+           Overall Match Score (Min %):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-match-score-min" max="100" min="0" name="filter-match-score-min" placeholder="e.g., 70" type="number">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-match-score-max">
+           Overall Match Score (Max %):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-match-score-max" max="100" min="0" name="filter-match-score-max" placeholder="e.g., 100" type="number">
+         </div>
+        </div>
+        <!-- Assessment Scores (Simplified) -->
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-assessment-name">
+          Assessment Name:
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-assessment-name" name="filter-assessment-name" placeholder="e.g., Coding Test" type="text">
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-assessment-score-min">
+           Assessment Score (Min):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-assessment-score-min" name="filter-assessment-score-min" placeholder="e.g., 80" type="number">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-assessment-score-max">
+           Assessment Score (Max):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-assessment-score-max" name="filter-assessment-score-max" placeholder="e.g., 100" type="number">
+         </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-language">
+           Language Proficiency:
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-language" multiple name="filter-language">
+           <option value="en">
+            English
+           </option>
+           <option value="es">
+            Spanish
+           </option>
+           <option value="fr">
+            French
+           </option>
+           <option value="de">
+            German
+           </option>
+          </select>
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-language-level">
+           Proficiency Level (for selected):
+          </label>
+          <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-language-level" name="filter-language-level">
+           <option value>
+            Any
+           </option>
+           <option value="basic">
+            Basic
+           </option>
+           <option value="conversational">
+            Conversational
+           </option>
+           <option value="fluent">
+            Fluent
+           </option>
+           <option value="native">
+            Native
+           </option>
+          </select>
+         </div>
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-industry-experience">
+          Industry Experience:
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-industry-experience" name="filter-industry-experience" placeholder="e.g., Fintech, Healthcare" type="text">
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-past-companies">
+          Past Companies:
+         </label>
+         <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-past-companies" name="filter-past-companies" placeholder="e.g., Google, Microsoft (comma-separated)" type="text">
+        </div>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-candidate-pools">
+          Candidate Pool(s):
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm h-24" id="filter-candidate-pools" multiple name="filter-candidate-pools">
+          <!-- Options populated by JS -->
+          <option value="java-architects-q4">
+           Java Architects Q4
+          </option>
+          <option value="future-tech-leaders">
+           Future Tech Leaders
+          </option>
+         </select>
+        </div>
+       </div>
+       <!-- VII. Sensitive Filters -->
+       <div class="filter-group space-y-4 p-4 border border-red-300 rounded-md bg-red-50">
+        <h3 class="text-lg font-semibold text-red-700 border-b border-red-300 pb-2">
+         VII. Sensitive Filters (Handle with Care)
+        </h3>
+        <p class="text-xs text-red-600">
+         Ensure legal and ethical compliance when using these filters. Misuse can lead to discrimination.
+        </p>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-work-authorization">
+          Work Authorization / Visa Status:
+         </label>
+         <select class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-work-authorization" name="filter-work-authorization">
+          <option value>
+           Not Specified
+          </option>
+          <option value="auth-no-sponsorship">
+           Authorized (no sponsorship)
+          </option>
+          <!-- Add specific visa types if legally permissible and critical -->
+         </select>
+         <p class="text-xs text-[var(--delta-gray-text-medium)] mt-1">
+          Caveat: Use is highly dependent on regional laws and company policy.
+         </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-salary-min">
+           Salary Expectation (Min):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-salary-min" name="filter-salary-min" placeholder="e.g., 80000" type="number">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="filter-salary-max">
+           Salary Expectation (Max):
+          </label>
+          <input class="w-full p-2 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)] text-sm" id="filter-salary-max" name="filter-salary-max" placeholder="e.g., 120000" type="number">
+         </div>
+        </div>
+        <p class="text-xs text-[var(--delta-gray-text-medium)] mt-1">
+         Caveat: Salary history bans and pay transparency laws affect usage. Often better for discussion.
+        </p>
+        <div>
+         <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1">
+          Diversity & Inclusion Data:
+         </label>
+         <p class="text-sm text-[var(--delta-gray-text-light)] p-2 border border-dashed border-[var(--delta-gray-border)] rounded-md">
+          Filters for D&I data (e.g., Veteran Status, Disability) are typically for aggregated, anonymized reporting to ensure equitable processes, not for individual candidate selection. Direct filtering on these attributes for selection is highly sensitive and must strictly adhere to all legal/ethical guidelines.
+         </p>
+        </div>
+       </div>
+       <!-- Apply Filters Button -->
+       <div class="pt-4 border-t border-[var(--delta-gray-border)]">
+        <button class="w-full md:w-auto px-6 py-3 bg-[var(--delta-blue)] text-white font-semibold rounded-md shadow-md hover:bg-[var(--delta-blue-light)] focus:outline-none focus:ring-2 focus:ring-[var(--delta-blue)] focus:ring-opacity-50 transition duration-150 ease-in-out text-sm" id="apply-job-applicants-filters-btn">
+         Apply All Filters
+        </button>
+       </div>
+      </div>
+      <div class="overflow-x-auto">
+       <table class="min-w-full divide-y divide-[var(--delta-gray-border)]" id="job-applicants-table">
+        <thead class="bg-[var(--delta-gray-bg-light)]">
+         <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-[var(--delta-text-secondary)] uppercase tracking-wider cursor-pointer hover:bg-[var(--delta-gray-bg)]" data-sort="name" scope="col">
+           Candidate Name
+           <span class="sort-indicator">
+           </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-[var(--delta-text-secondary)] uppercase tracking-wider cursor-pointer hover:bg-[var(--delta-gray-bg)]" data-sort="applicationDate" scope="col">
+           Application Date
+           <span class="sort-indicator">
+           </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-[var(--delta-text-secondary)] uppercase tracking-wider cursor-pointer hover:bg-[var(--delta-gray-bg)]" data-sort="matchScore" scope="col">
+           Match %
+           <span class="sort-indicator">
+           </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-[var(--delta-text-secondary)] uppercase tracking-wider cursor-pointer hover:bg-[var(--delta-gray-bg)]" data-sort="status" scope="col">
+           Status
+           <span class="sort-indicator">
+           </span>
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-[var(--delta-text-secondary)] uppercase tracking-wider" scope="col">
+           Actions
+          </th>
+         </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-[var(--delta-gray-border)]" id="job-applicants-list">
+         <!-- 
+                                Applicant rows are dynamically populated by js/screen-candidates.js.
+                                Each row will include:
+                                - Candidate Name
+                                - Application Date
+                                - Match %
+                                - Status
+                                - Actions column with:
+                                    - A "View Match Summary" icon button (e.g., magnifying glass).
+                                    - A "Take Action" dropdown button with relevant candidate actions.
+                            -->
+        </tbody>
+       </table>
+      </div>
+      <div class="mt-6 flex justify-center items-center space-x-2" id="job-applicants-pagination">
+       <!-- Pagination controls will be rendered here by JS -->
+      </div>
+      <div class="p-6 bg-white rounded-md border border-dashed border-[var(--delta-gray-border)] text-center text-[var(--delta-gray-text-medium)]" id="no-applicants-message" style="display:none;">
+       <p>
+        No applicants found for the selected job, or data is not yet loaded.
+       </p>
+      </div>
+     </div>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg" id="find-filter-candidates">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      Find & Filter Candidates (for
+      <span class="job-title-placeholder">
+       [Selected Job]
+      </span>
+      / Pool)
+     </h2>
+     <p class="text-sm text-[var(--delta-gray-text-medium)] mb-4">
+      Use these filters to refine the list of applicants for the current job or candidates within a selected pool.
+     </p>
+     <form class="space-y-6" id="skills-search-form">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div>
+        <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="search-skills">
+         Skills (e.g., Java, React)
+        </label>
+        <input class="w-full p-3 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="search-skills" name="skills" placeholder="Enter skills (comma-separated)" type="text">
+       </div>
+       <div>
+        <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="search-experience">
+         Years of Experience
+        </label>
+        <input class="w-full p-3 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="search-experience" name="experience" placeholder="e.g., 5+ years" type="text">
+       </div>
+       <div>
+        <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="search-job-titles">
+         Job Titles
+        </label>
+        <input class="w-full p-3 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="search-job-titles" name="job_titles" placeholder="e.g., Software Engineer" type="text">
+       </div>
+       <div>
+        <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="search-certifications">
+         Certifications
+        </label>
+        <input class="w-full p-3 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="search-certifications" name="certifications" placeholder="e.g., PMP, AWS Certified" type="text">
+       </div>
+       <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-[var(--delta-text-secondary)] mb-1" for="search-education">
+         Education or Institutions
+        </label>
+        <input class="w-full p-3 border border-[var(--delta-gray-border)] rounded-md shadow-sm focus:ring-[var(--delta-blue)] focus:border-[var(--delta-blue)]" id="search-education" name="education" placeholder="e.g., Stanford University, MBA" type="text">
+       </div>
+      </div>
+      <div>
+       <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+        Multi-select Filters:
+       </h4>
+       <div class="flex flex-wrap gap-x-6 gap-y-3">
+        <label class="inline-flex items-center">
+         <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:border-[var(--delta-blue-light)] focus:ring focus:ring-[var(--delta-blue-light)] focus:ring-opacity-50" name="filter-location" type="checkbox" value="remote">
+         <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+          Remote
+         </span>
+        </label>
+        <label class="inline-flex items-center">
+         <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:border-[var(--delta-blue-light)] focus:ring focus:ring-[var(--delta-blue-light)] focus:ring-opacity-50" name="filter-location" type="checkbox" value="hybrid">
+         <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+          Hybrid
+         </span>
+        </label>
+        <label class="inline-flex items-center">
+         <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:border-[var(--delta-blue-light)] focus:ring focus:ring-[var(--delta-blue-light)] focus:ring-opacity-50" name="filter-location" type="checkbox" value="onsite">
+         <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+          On-site
+         </span>
+        </label>
+       </div>
+       <div class="flex flex-wrap gap-x-6 gap-y-3 mt-3">
+        <label class="inline-flex items-center">
+         <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:border-[var(--delta-blue-light)] focus:ring focus:ring-[var(--delta-blue-light)] focus:ring-opacity-50" name="filter-availability" type="checkbox" value="immediate">
+         <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+          Immediate Joiner
+         </span>
+        </label>
+        <label class="inline-flex items-center">
+         <input class="rounded border-[var(--delta-gray-border)] text-[var(--delta-blue)] shadow-sm focus:border-[var(--delta-blue-light)] focus:ring focus:ring-[var(--delta-blue-light)] focus:ring-opacity-50" name="filter-availability" type="checkbox" value="1-month">
+         <span class="ml-2 text-sm text-[var(--delta-gray-text-light)]">
+          Notice Period: 1 Month
+         </span>
+        </label>
+       </div>
+      </div>
+      <button class="px-6 py-3 bg-[var(--delta-blue)] text-[var(--delta-text-on-dark-bg)] font-semibold rounded-md shadow-md hover:bg-[var(--delta-blue-light)] focus:outline-none focus:ring-2 focus:ring-[var(--delta-blue)] focus:ring-opacity-50 transition duration-150 ease-in-out" type="submit">
+       Apply Filters
+      </button>
+     </form>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg" id="smart-skill-suggestions">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      Smart Skill Suggestions for
+      <span class="job-title-placeholder">
+       [Selected Job]
+      </span>
+     </h2>
+     <div class="smart-assistant-panel bg-[rgba(var(--delta-blue-rgb),0.05)] p-6 rounded-md border border-[rgba(var(--delta-blue-rgb),0.2)]">
+      <p class="text-sm text-[var(--delta-blue)] mb-4">
+       <strong>
+        Based on the job description for
+        <span class="job-title-placeholder">
+         [Selected Job]
+        </span>
+        , consider these skills:
+       </strong>
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Must-Have Skills (Job: Sr. Software Engineer)
+        </h4>
+        <ul class="space-y-2 mb-3" id="must-have-skills-list-swe">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-must-have-skills-swe">
+         Copy SWE Must-Haves
+        </button>
+       </div>
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Nice-to-Have Skills (Job: Sr. Software Engineer)
+        </h4>
+        <ul class="space-y-2 mb-3" id="nice-to-have-skills-list-swe">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-nice-to-have-skills-swe">
+         Copy SWE Nice-to-Haves
+        </button>
+       </div>
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Must-Have Skills (Job: Product Manager)
+        </h4>
+        <ul class="space-y-2 mb-3" id="must-have-skills-list-pm">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-must-have-skills-pm">
+         Copy PM Must-Haves
+        </button>
+       </div>
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Nice-to-Have Skills (Job: Product Manager)
+        </h4>
+        <ul class="space-y-2 mb-3" id="nice-to-have-skills-list-pm">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-nice-to-have-skills-pm">
+         Copy PM Nice-to-Haves
+        </button>
+       </div>
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Must-Have Skills (Job: Data Scientist)
+        </h4>
+        <ul class="space-y-2 mb-3" id="must-have-skills-list-ds">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-must-have-skills-ds">
+         Copy DS Must-Haves
+        </button>
+       </div>
+       <div>
+        <h4 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2">
+         Nice-to-Have Skills (Job: Data Scientist)
+        </h4>
+        <ul class="space-y-2 mb-3" id="nice-to-have-skills-list-ds">
+        </ul>
+        <button class="text-sm bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] hover:bg-[var(--delta-gray-border)] px-3 py-1.5 rounded-md" id="copy-nice-to-have-skills-ds">
+         Copy DS Nice-to-Haves
+        </button>
+       </div>
+      </div>
+      <p class="mt-6 text-xs text-[var(--delta-gray-text-medium)]">
+       <em>
+        These skills are dynamically suggested based on the active job description. Use the "Add" button to include them in your current search filters. (Demo shows examples for different roles)
+       </em>
+      </p>
+     </div>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg" id="my-lists">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      My Lists (Broader Talent Search)
+     </h2>
+     <p class="text-sm text-[var(--delta-gray-text-medium)] mb-4">
+      Explore candidates from your curated talent pools if applicants for the current job are insufficient.
+     </p>
+     <div class="tabs-container">
+      <ul class="tabs-nav screening-main-tabs-nav flex border-b border-[var(--delta-gray-border)] mb-0 overflow-x-auto">
+       <li class="tab-item screening-main-tab-btn active whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="all-talent-pool">
+        All Talent Pools
+       </li>
+       <li class="tab-item screening-main-tab-btn whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="past-applicants">
+        Past Applicants (Other Roles)
+       </li>
+       <li class="tab-item screening-main-tab-btn whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="gold-medalists">
+        Gold Medalists
+       </li>
+       <li class="tab-item screening-main-tab-btn whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="recruited-talent">
+        Previously Recruited Talent
+       </li>
+       <li class="tab-item screening-main-tab-btn whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="employees">
+        Internal Employees
+       </li>
+       <li class="tab-item screening-main-tab-btn whitespace-nowrap px-4 py-3 cursor-pointer text-sm font-medium text-[var(--delta-gray-text-medium)] hover:text-[var(--delta-blue)] border-b-2 border-transparent hover:border-[var(--delta-blue)]" data-tab="alumni">
+        Alumni Network
+       </li>
+      </ul>
+      <div class="tab-content screening-main-tab-content active pt-6" id="all-talent-pool-content">
+       <!-- Populated by JS -->
+      </div>
+      <div class="tab-content screening-main-tab-content pt-6" id="past-applicants-content">
+       <!-- Populated by JS -->
+      </div>
+      <div class="tab-content screening-main-tab-content pt-6" id="gold-medalists-content">
+       <!-- Populated by JS -->
+      </div>
+      <div class="tab-content screening-main-tab-content pt-6" id="recruited-talent-content">
+       <!-- Populated by JS -->
+      </div>
+      <div class="tab-content screening-main-tab-content pt-6" id="employees-content">
+       <!-- Populated by JS -->
+      </div>
+      <div class="tab-content screening-main-tab-content pt-6" id="alumni-content">
+       <!-- Populated by JS -->
+      </div>
+     </div>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg" id="job-analytics">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      Analytics for
+      <span class="job-title-placeholder">
+       [Selected Job]
+      </span>
+     </h2>
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-1 bg-[var(--delta-gray-bg)] p-6 rounded-md">
+       <h4 class="text-lg font-medium text-[var(--delta-text-secondary)] mb-4">
+        Key Metrics for
+        <span class="job-title-placeholder">
+         [Selected Job]
+        </span>
+       </h4>
+       <table class="w-full text-sm">
+        <tbody class="divide-y divide-[var(--delta-gray-border)]">
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Total Applicants
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-total-applicants">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Avg. Match Score
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-avg-match">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Shortlisted
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-shortlisted">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Interviews Conducted
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-interviews">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Offers Extended
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-offers">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Time to Fill (Avg.)
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-time-to-fill">
+           N/A
+          </td>
+         </tr>
+         <tr>
+          <td class="py-2 text-[var(--delta-gray-text-light)]">
+           Top Source of Hire
+          </td>
+          <td class="py-2 text-[var(--delta-text-primary)] text-right font-semibold" id="metric-job-source">
+           N/A
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div class="bg-[var(--delta-gray-bg)] p-6 rounded-md flex flex-col items-center justify-center min-h-[300px]">
+        <h5 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2 text-center">
+         Applicant Funnel for
+         <span class="job-title-placeholder">
+          [Selected Job]
+         </span>
+        </h5>
+        <div class="relative w-full h-56">
+         <canvas id="applicantFunnelChart">
+         </canvas>
+        </div>
+        <p class="text-xs text-[var(--delta-gray-text-medium)] mt-2">
+         <em>
+          Data dynamically updates based on selected job.
+         </em>
+        </p>
+       </div>
+       <div class="bg-[var(--delta-gray-bg)] p-6 rounded-md flex flex-col items-center justify-center min-h-[300px]">
+        <h5 class="text-md font-medium text-[var(--delta-text-secondary)] mb-2 text-center">
+         Diversity Breakdown for
+         <span class="job-title-placeholder">
+          [Selected Job]
+         </span>
+        </h5>
+        <div class="relative w-full h-56">
+         <canvas id="jobDiversityChart">
+         </canvas>
+        </div>
+        <p class="text-xs text-[var(--delta-gray-text-medium)] mt-2">
+         <em>
+          Data dynamically updates based on selected job.
+         </em>
+        </p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section class="main-content-section bg-white p-6 rounded-lg shadow-lg text-center" id="engage-candidates">
+     <h2 class="text-2xl font-semibold text-[var(--delta-text-primary)] mb-6">
+      Engage Selected Candidates
+     </h2>
+     <p class="text-[var(--delta-gray-text-light)] mb-6">
+      After selecting candidates from 'Job Applicants' or 'My Lists', use these options to reach out.
+     </p>
+     <button class="px-8 py-4 bg-[var(--delta-red)] text-[var(--delta-text-on-dark-bg)] font-semibold rounded-md shadow-md hover:bg-[var(--delta-red-light)] focus:outline-none focus:ring-2 focus:ring-[var(--delta-red)] focus:ring-opacity-50 transition duration-150 ease-in-out text-lg" id="engage-candidates-btn">
+      Open Engagement Options
+     </button>
+    </section>
+   </main>
+  </div>
+  <!-- End of screen-candidates-module-wrapper -->
+  <!-- Modals and Co-pilot container, to be appended at a higher level in index.html if needed, or kept here if scoped -->
+  <div class="modal" id="engage-candidates-modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h3 class="modal-title">
+      Select Campaign Objective
+     </h3>
+     <button class="modal-close-btn" id="close-engage-modal-btn">
+      &times;
+     </button>
+    </div>
+    <div class="modal-body max-h-[60vh] overflow-y-auto pr-2">
+     <ul class="space-y-3">
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="invite">
+       Invite to Event or Webinar
+      </li>
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="share">
+       Share Blog or Project Page
+      </li>
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="referral">
+       Referral Outreach
+      </li>
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="alumni">
+       Alumni Connect
+      </li>
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="awareness">
+       General Awareness
+      </li>
+      <li class="p-3 border border-[var(--delta-gray-border)] rounded-md hover:bg-[var(--delta-gray-bg)] cursor-pointer transition-colors duration-150" data-action="position">
+       Position-Specific Message
+      </li>
+     </ul>
+    </div>
+    <div class="mt-6 flex justify-end space-x-3">
+     <button class="px-4 py-2 bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] font-medium rounded-md hover:bg-[var(--delta-gray-border)] transition-colors" id="cancel-engage-action-btn">
+      Cancel
+     </button>
+     <button class="px-4 py-2 bg-[var(--delta-blue)] text-[var(--delta-text-on-dark-bg)] font-medium rounded-md hover:bg-[var(--delta-blue-light)] transition-colors" id="proceed-engage-action-btn">
+      Proceed
+     </button>
+    </div>
+   </div>
+  </div>
+  <div class="modal" id="match-breakdown-panel">
+   <div class="modal-content max-w-2xl">
+    <div class="modal-header">
+     <h3 class="modal-title">
+      Candidate Match Summary
+     </h3>
+     <button class="modal-close-btn" id="close-match-panel-btn">
+      &times;
+     </button>
+    </div>
+    <div class="modal-body max-h-[70vh] overflow-y-auto pr-2">
+     <div class="mb-4 p-3 bg-[rgba(var(--delta-blue-rgb),0.05)] border border-[rgba(var(--delta-blue-rgb),0.2)] rounded-md">
+      <strong class="text-[var(--delta-blue)]">
+       Overall Ideal Candidate % Match:
+      </strong>
+      <span class="font-semibold text-[var(--delta-blue)]" id="overall-match-score">
+       N/A
+      </span>
+      <span class="ml-2 text-[var(--delta-gray-text-medium)] cursor-help inline-block" title="This score is calculated based on a weighted average of skills match, title relevance, work relevance, and experience relevance.">
+       ⓘ
+      </span>
+     </div>
+     <table class="w-full text-sm">
+      <thead class="bg-[var(--delta-gray-bg)]">
+       <tr>
+        <th class="p-3 border border-[var(--delta-gray-border)] text-left font-semibold text-[var(--delta-text-secondary)]">
+         Attribute
+        </th>
+        <th class="p-3 border border-[var(--delta-gray-border)] text-left font-semibold text-[var(--delta-text-secondary)]">
+         Relevance
+        </th>
+        <th class="p-3 border border-[var(--delta-gray-border)] text-left font-semibold text-[var(--delta-text-secondary)]">
+         Star Rating
+        </th>
+        <th class="p-3 border border-[var(--delta-gray-border)] text-left font-semibold text-[var(--delta-text-secondary)]">
+         Notes
+        </th>
+       </tr>
+      </thead>
+      <tbody class="divide-y divide-[var(--delta-gray-border)]">
+       <tr>
+        <td class="p-3 border border-[var(--delta-gray-border)]">
+         Skills Match
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="skills-match-relevance">
+         N/A
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)] text-[var(--delta-accent-gold)]" id="skills-match-stars">
+         &amp;star;&amp;star;&amp;star;&amp;star;&amp;star;
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="skills-match-notes">
+         N/A
+        </td>
+       </tr>
+       <tr>
+        <td class="p-3 border border-[var(--delta-gray-border)]">
+         Title Relevance
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="title-relevance-relevance">
+         N/A
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)] text-[var(--delta-accent-gold)]" id="title-relevance-stars">
+         &amp;star;&amp;star;&amp;star;&amp;star;&amp;star;
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="title-relevance-notes">
+         N/A
+        </td>
+       </tr>
+       <tr>
+        <td class="p-3 border border-[var(--delta-gray-border)]">
+         Work Relevance
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="work-relevance-relevance">
+         N/A
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)] text-[var(--delta-accent-gold)]" id="work-relevance-stars">
+         &amp;star;&amp;star;&amp;star;&amp;star;&amp;star;
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="work-relevance-notes">
+         N/A
+        </td>
+       </tr>
+       <tr>
+        <td class="p-3 border border-[var(--delta-gray-border)]">
+         Experience Relevance
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="experience-relevance-relevance">
+         N/A
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)] text-[var(--delta-accent-gold)]" id="experience-relevance-stars">
+         &amp;star;&amp;star;&amp;star;&amp;star;&amp;star;
+        </td>
+        <td class="p-3 border border-[var(--delta-gray-border)]" id="experience-relevance-notes">
+         N/A
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <div class="mt-6 flex justify-end">
+     <button class="px-4 py-2 bg-[var(--delta-gray-bg)] text-[var(--delta-text-secondary)] font-medium rounded-md hover:bg-[var(--delta-gray-border)] transition-colors" id="close-match-panel-btn-secondary">
+      Close
+     </button>
+    </div>
+   </div>
+  </div>
+  <!-- Hiring Co-Pilot Container Removed -->
+  <script defer src="js/screen-candidates.js">
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+            // Ensure Chart.js is loaded before initializing the module if it's a dependency for charts
+            if (typeof Chart !== 'undefined') {
+                initializeScreenCandidatesModule('#screen-candidates-module-wrapper');
+            } else {
+                console.warn('Chart.js not loaded, some analytics features might not work. Attempting to initialize module anyway.');
+                // Optionally, you could try to load Chart.js dynamically here or just proceed
+                initializeScreenCandidatesModule('#screen-candidates-module-wrapper');
+            }
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+ <script>
+  if (window.self !== window.top) {
+    // Page is in an iframe
+    const footer = document.querySelector('.custom-footer');
+    if (footer) {
+      footer.style.display = 'none';
+    }
+    const topNav = document.querySelector('.top-nav');
+    if (topNav) {
+      topNav.style.display = 'none';
+    }
+    // Adjust body padding if it was added for these fixed elements
+    document.body.style.paddingTop = '0';
+    document.body.style.paddingBottom = '0';
+  }
+ </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import/Export Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-700">
+    <div class="container mx-auto mt-8 p-4">
+        <header class="bg-white p-4 rounded-lg border border-slate-200 mb-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-slate-800">Import/Export Data</h1>
+            <a href="/job-architecture/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600 border border-slate-300 px-4 py-2 rounded-md">Back to Job Architecture</a>
+        </header>
+        <main class="bg-white p-6 rounded-lg border border-slate-200">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-slate-800 mb-2">Import Data</h2>
+                <p class="mb-4">Upload a CSV file to import data into the Job Architecture Wizard.</p>
+                <input type="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-blue-700">Import Data</button>
+            </div>
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold text-slate-800 mb-2">Imported Data Preview</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="py-2 px-4 border-b">Job Family</th>
+                                <th class="py-2 px-4 border-b">Job Profile</th>
+                                <th class="py-2 px-4 border-b">Job Level</th>
+                                <th class="py-2 px-4 border-b">Role Group</th>
+                                <th class="py-2 px-4 border-b">Role Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4 border-b">Flight Operations</td>
+                                <td class="py-2 px-4 border-b">Pilot</td>
+                                <td class="py-2 px-4 border-b">L5</td>
+                                <td class="py-2 px-4 border-b">Captains</td>
+                                <td class="py-2 px-4 border-b">Captain</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">Flight Operations</td>
+                                <td class="py-2 px-4 border-b">Pilot</td>
+                                <td class="py-2 px-4 border-b">L4</td>
+                                <td class="py-2 px-4 border-b">First Officers</td>
+                                <td class="py-2 px-4 border-b">Senior First Officer</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">In-Flight Services</td>
+                                <td class="py-2 px-4 border-b">Cabin Crew</td>
+                                <td class="py-2 px-4 border-b">L3</td>
+                                <td class="py-2 px-4 border-b">Flight Attendants</td>
+                                <td class="py-2 px-4 border-b">Purser</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">Maintenance</td>
+                                <td class="py-2 px-4 border-b">Aircraft Maintenance Engineer</td>
+                                <td class="py-2 px-4 border-b">L4</td>
+                                <td class="py-2 px-4 border-b">Avionics</td>
+                                <td class="py-2 px-4 border-b">Lead Technician</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold text-slate-800 mb-2">Export Data</h2>
+                <p class="mb-4">Export the current job architecture data as a CSV file.</p>
+                <button class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-green-700">Export Data</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

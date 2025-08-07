@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akara Airlines Job Architecture: User Training Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-blue': {
+                            '50': '#f0f8ff',
+                            '100': '#e0f0fe',
+                            '200': '#c2e3fd',
+                            '300': '#93d2fc',
+                            '400': '#5cbaf8',
+                            '500': '#369ff4',
+                            '600': '#1c83e1',
+                            '700': '#166ab9',
+                            '800': '#165795',
+                            '900': '#174978',
+                            '950': '#102e4c',
+                        },
+                        'brand-slate': {
+                            '50': '#f7f8fa',
+                            '100': '#eff1f5',
+                            '200': '#e2e7ef',
+                            '300': '#cfd7e5',
+                            '400': '#b8c3d5',
+                            '500': '#a0aec2',
+                            '600': '#7d8da7',
+                            '700': '#5f6f89',
+                            '800': '#48556a',
+                            '900': '#384354',
+                            '950': '#232a35',
+                        },
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        /* Add a subtle animation on load */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        /* Staggered animation for list items */
+        .stagger-in > * {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Modern scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cfd7e5; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b8c3d5; }
+
+        /* Sidebar active link style */
+        .sidebar-link.active {
+            background-image: linear-gradient(to right, #e0f0fe, transparent);
+            color: #1c83e1; /* brand-blue-600 */
+            font-weight: 600;
+            border-right: 3px solid #1c83e1; /* brand-blue-600 */
+        }
+        .sidebar-link:not(.active):hover {
+             background-image: linear-gradient(to right, #eff1f5, transparent);
+        }
+        
+        /* Prose styling overrides for modern look */
+        .prose h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #174978; /* brand-blue-900 */
+            margin-bottom: 0.5rem;
+        }
+        .prose p, .prose ul li {
+            color: #48556a; /* brand-slate-800 */
+        }
+         .prose strong {
+            color: #165795; /* brand-blue-800 */
+        }
+        .prose code {
+            background-color: #e0f0fe;
+            color: #1c83e1;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-brand-slate-50 font-sans text-brand-slate-700">
+
+    <!-- Background Gradient -->
+    <div class="absolute top-0 left-0 -z-10 h-96 w-full bg-gradient-to-br from-brand-blue-100 via-white to-white"></div>
+
+    <!-- Main Container -->
+    <div class="relative min-h-screen lg:flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-white/80 backdrop-blur-lg lg:bg-transparent lg:backdrop-blur-none w-72 lg:w-72 lg:border-r lg:border-brand-slate-200 p-4 lg:p-6 fixed lg:sticky top-0 h-screen z-20 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col">
+            <div class="flex items-center gap-3 mb-10 px-2">
+                 <div class="bg-brand-blue-600 text-white w-10 h-10 rounded-lg flex items-center justify-center shadow-md shadow-brand-blue-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-navigation"><path d="m12 2 7 19-7-4-7 4 7-19z"/></svg>
+                 </div>
+                <h2 class="font-bold text-xl text-brand-slate-900">Akara Airlines</h2>
+            </div>
+            
+            <!-- Navigation -->
+            <nav id="nav-menu" class="space-y-1 flex-grow overflow-y-auto pr-2 -mr-2">
+                <a href="#introduction" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    <span>Introduction</span>
+                </a>
+                <a href="#step1" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+                    <span>Step 1: Organization</span>
+                </a>
+                <a href="#step2" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+                    <span>Step 2: Business Units</span>
+                </a>
+                <a href="#step3" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><path d="M8 10v4"/><path d="M12 10v2"/><path d="M16 10v6"/></svg>
+                    <span>Step 3: Departments</span>
+                </a>
+                 <a href="#step4" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-12 0"/><circle cx="12" cy="11" r="3"/><path d="M12 3a8 8 0 0 1 8 8 3 3 0 0 1-3 3H7a3 3 0 0 1-3-3 8 8 0 0 1 8-8Z"/></svg>
+                    <span>Step 4: Role Groups</span>
+                </a>
+                <a href="#step5" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.84l8.57 3.91a2 2 0 0 0 1.66 0l8.57-3.91a1 1 0 0 0 0-1.84Z"/><path d="m22 17.92-8.57-3.91a2 2 0 0 0-1.66 0L3.2 17.92a1 1 0 0 0 0 1.84l8.57 3.91a2 2 0 0 0 1.66 0l8.57-3.91a1 1 0 0 0 0-1.84Z"/><path d="m22 12-8.57-3.91a2 2 0 0 0-1.66 0L3.2 12a1 1 0 0 0 0 1.84l8.57 3.91a2 2 0 0 0 1.66 0l8.57-3.91a1 1 0 0 0 0-1.84Z"/></svg>
+                    <span>Step 5: Job Levels</span>
+                </a>
+                <a href="#step6" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.993.291 3 3 0 0 0 5.993-.291Zm0 0V2m0 3a3 3 0 1 1 5.993.291 3 3 0 0 1-5.993-.291Zm0 0v5"/><path d="M15 14a3 3 0 1 0-5.993.291 3 3 0 0 0 5.993-.291Zm0 0V9m0 5a3 3 0 1 1 5.993.291 3 3 0 0 1-5.993-.291Zm0 0v5m-6 3a3 3 0 1 0-5.993.291 3 3 0 0 0 5.993-.291Zm0 0v-5"/><path d="M12 14a3 3 0 1 1-5.993.291 3 3 0 0 1 5.993-.291Zm0 0V9"/><path d="M3.41 11.21a3 3 0 1 0 .29-5.993 3 3 0 0 0-.29 5.993Z"/><path d="M14.8 20.8a3 3 0 1 0 .29-5.993 3 3 0 0 0-.29 5.993Z"/><path d="M20.59 11.21a3 3 0 1 1-.29-5.993 3 3 0 0 1 .29 5.993Z"/><path d="M9.2 20.8a3 3 0 1 1-.29-5.993 3 3 0 0 1 .29 5.993Z"/><path d="m12 9-2.5 2.5"/><path d="m9.5 11.5 2.5 2.5"/><path d="m12 9 2.5 2.5"/><path d="m14.5 11.5-2.5 2.5"/><path d="m12 14 2.5 2.5"/><path d="M14.5 16.5 12 19"/><path d="m12 14-2.5 2.5"/><path d="m9.5 16.5 2.5 2.5"/><path d="m9.5 6.5 2.5 2.5"/><path d="m12 9 2.5-2.5"/><path d="m14.5 6.5-2.5 2.5"/><path d="M9.5 6.5 7 4"/><path d="m7 4 2.5-2.5"/><path d="m14.5 6.5 2.5-2.5"/><path d="M17 4l-2.5-2.5"/></svg>
+                    <span>Step 6: Add Jobs & Skills</span>
+                </a>
+                <a href="#step7" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                    <span>Step 7: Skill Gaps</span>
+                </a>
+                 <a href="#step8" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 1 9 9"/></svg>
+                    <span>Step 8: Career Paths</span>
+                </a>
+                <a href="#step9" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+                    <span>Step 9: Review & AI</span>
+                </a>
+                <a href="#import-export-data" class="sidebar-link flex items-center gap-3 pl-4 pr-2 py-2.5 rounded-lg text-brand-slate-700 transition-all duration-200 border-r-3 border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                    <span>Import/Export Data</span>
+                </a>
+            </nav>
+
+             <div class="mt-8 pt-6 border-t border-brand-slate-200">
+                <a href="/aviation-wizard/index.html" class="group flex w-full justify-center items-center gap-2 bg-brand-blue-600 text-white font-semibold px-4 py-3 rounded-lg shadow-lg shadow-brand-blue-500/30 hover:bg-brand-blue-700 hover:scale-105 transition-all duration-300">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left transition-transform duration-300 group-hover:-translate-x-1"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    Back to Wizard
+                </a>
+            </div>
+        </aside>
+
+        <!-- Mobile Header -->
+        <header class="lg:hidden sticky top-0 bg-white/80 backdrop-blur-lg z-10 border-b border-brand-slate-200">
+            <div class="flex items-center justify-between p-4">
+                <div class="flex items-center gap-3">
+                     <div class="bg-brand-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 7 19-7-4-7 4 7-19z"/></svg>
+                     </div>
+                    <h2 class="font-bold text-lg text-brand-slate-900">Akara Airlines</h2>
+                </div>
+                 <button id="menu-toggle" class="p-2 rounded-lg hover:bg-brand-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-12">
+            <div class="max-w-5xl mx-auto">
+                
+                <!-- Page Title -->
+                <header class="mb-12 fade-in">
+                    <h1 class="text-5xl font-black text-brand-slate-900 tracking-tight leading-tight">Job Architecture Training Guide</h1>
+                    <p class="mt-3 text-lg text-brand-slate-600 max-w-3xl">A comprehensive guide to Akara Airlines' Job Architecture Wizard, explaining each step, user flows, and AI functionalities.</p>
+                </header>
+
+                <!-- Search Bar -->
+                 <div class="relative mb-12 fade-in" style="animation-delay: 0.1s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-brand-slate-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input id="search-input" type="text" placeholder="Search for any step or keyword..." class="w-full pl-12 pr-4 py-4 bg-white border border-brand-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-400 focus:border-brand-blue-400 transition-all duration-300">
+                </div>
+
+                <!-- Content Sections -->
+                <div id="content-container" class="space-y-12">
+                    <!-- Content will be loaded here dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 bg-brand-blue-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 scale-90 transition-all duration-300 hover:bg-brand-blue-700 hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+    </button>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = [
+                { id: 'introduction', path: 'help-guide/introduction.html' },
+                { id: 'step1', path: 'help-guide/step1.html' },
+                { id: 'step2', path: 'help-guide/step2.html' },
+                { id: 'step3', path: 'help-guide/step3.html' },
+                { id: 'step4', path: 'help-guide/step4.html' },
+                { id: 'step5', path: 'help-guide/step5.html' },
+                { id: 'step6', path: 'help-guide/step6.html' },
+                { id: 'step7', path: 'help-guide/step7.html' },
+                { id: 'step8', path: 'help-guide/step8.html' },
+                { id: 'step9', path: 'help-guide/step9.html' },
+                { id: 'import-export-data', path: 'help-guide/import-export-data.html' }
+            ];
+
+            const contentContainer = document.getElementById('content-container');
+
+            Promise.all(sections.map(section =>
+                fetch(section.path)
+                    .then(response => response.text())
+                    .then(html => {
+                        const sectionEl = document.createElement('section');
+                        sectionEl.id = section.id;
+                        sectionEl.className = 'content-section fade-in';
+                        sectionEl.innerHTML = html;
+                        contentContainer.appendChild(sectionEl);
+                    })
+            )).then(() => {
+                // All content is loaded, now set up observers and listeners
+                setupPage();
+            });
+
+            function setupPage() {
+                const navLinks = document.querySelectorAll('.sidebar-link');
+                const searchInput = document.getElementById('search-input');
+                const menuToggle = document.getElementById('menu-toggle');
+                const sidebar = document.getElementById('sidebar');
+                const scrollToTopBtn = document.getElementById('scroll-to-top');
+                const allSections = document.querySelectorAll('.content-section');
+
+                // --- Mobile Menu Toggle ---
+                menuToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('-translate-x-full');
+                });
+                
+                // --- Smooth scrolling & close sidebar on mobile ---
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        if (window.innerWidth < 1024 && !sidebar.classList.contains('-translate-x-full')) {
+                           sidebar.classList.add('-translate-x-full');
+                        }
+                    });
+                });
+
+                // --- Active Nav Link on Scroll ---
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.getAttribute('id');
+                            navLinks.forEach(link => {
+                                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                            });
+                        }
+                    });
+                }, { rootMargin: '-40% 0px -60% 0px', threshold: 0 });
+
+                allSections.forEach(section => {
+                    observer.observe(section);
+                });
+                
+                // --- Live Search Functionality ---
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase().trim();
+                    
+                    allSections.forEach(section => {
+                        const sectionText = section.textContent.toLowerCase();
+                        if (sectionText.includes(query)) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                });
+
+                // --- Scroll to Top Button ---
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        scrollToTopBtn.classList.remove('opacity-0', 'scale-90');
+                    } else {
+                        scrollToTopBtn.classList.add('opacity-0', 'scale-90');
+                    }
+                });
+
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

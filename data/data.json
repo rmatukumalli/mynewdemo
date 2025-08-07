@@ -1,0 +1,633 @@
+{
+  "platformCandidates": [
+    {
+        "id": "jane.smith", "name": "Jane Smith", "email": "jane.smith@example.com", "role": "Product Director", "department": "Product Management", "tenure": "7 years", "hiringManager": "Satya Nadella",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1guTEatfyWNpQY0pORIThPr8c-XguyuwuoQ&s",
+        "matchSummary": "Matches 8 of 10 key Product Director skills", "matchPercent": 80,
+        "matchedSkills": ["Product Strategy", "Roadmap Planning", "Agile Leadership", "Market Research", "User Experience (UX)", "Data Analysis", "Stakeholder Management", "Go-to-Market Strategy"],
+        "skills": [
+            {"name": "Product Strategy", "level": "Expert", "category": "Strategic Planning"},
+            {"name": "Roadmap Planning", "level": "Expert", "category": "Strategic Planning"},
+            {"name": "Agile Leadership", "level": "Advanced", "category": "Leadership & Management"},
+            {"name": "Team Motivation", "level": "Advanced", "category": "Leadership & Management"},
+            {"name": "Market Research", "level": "Advanced", "category": "Product Discovery"},
+            {"name": "User Experience (UX) Design Principles", "level": "Intermediate", "category": "Product Discovery"},
+            {"name": "Data Analysis & Interpretation", "level": "Advanced", "category": "Analytical Skills"},
+            {"name": "A/B Testing", "level": "Intermediate", "category": "Analytical Skills"},
+            {"name": "Stakeholder Management", "level": "Expert", "category": "Communication & Collaboration"},
+            {"name": "Cross-functional Collaboration", "level": "Advanced", "category": "Communication & Collaboration"},
+            {"name": "Go-to-Market Strategy", "level": "Advanced", "category": "Product Marketing"},
+            {"name": "Competitive Analysis", "level": "Advanced", "category": "Product Discovery"},
+            {"name": "Pricing & Monetization", "level": "Intermediate", "category": "Product Marketing"},
+            {"name": "Technical Acumen (APIs, System Design)", "level": "Intermediate", "category": "Technical Understanding"},
+            {"name": "SQL", "level": "Beginner", "category": "Technical Understanding"}
+        ],
+        "resumeSkills": [
+            {"name": "Product Lifecycle Management", "inferred": false},
+            {"name": "User Story Mapping", "inferred": true},
+            {"name": "JIRA & Confluence", "inferred": false},
+            {"name": "Presentation Skills", "inferred": false}
+        ],
+        "certifications": [
+            {"title": "Certified Scrum Product Owner (CSPO)", "validity": "2025-08-01", "expiryDate": "2025-08-01", "description": "Certification for Product Owners in Scrum."},
+            {"title": "Pragmatic Marketing Certified - Level III", "validity": "2024-02-15", "expiryDate": "2024-02-15", "description": "Product management and marketing certification."}
+        ],
+        "developmentPlan": [
+            {"title": "Deepen AI/ML understanding for Product Innovation", "targetDate": "2025-12-31", "status": "In Progress", "linkedSkills": ["AI/ML Fundamentals"]},
+            {"title": "Advanced Negotiation Skills Workshop", "targetDate": "2025-07-30", "status": "Not Started", "linkedSkills": ["Negotiation"]}
+        ],
+        "skillHistory": [
+            {"date": "2023-01-15", "action": "Added", "skillName": "Product Strategy", "level": "Advanced"},
+            {"date": "2023-06-20", "action": "Proficiency Update", "skillName": "Product Strategy", "fromLevel": "Advanced", "toLevel": "Expert"},
+            {"date": "2023-09-01", "action": "Added", "skillName": "Agile Leadership", "level": "Intermediate"},
+            {"date": "2024-02-10", "action": "Proficiency Update", "skillName": "Agile Leadership", "fromLevel": "Intermediate", "toLevel": "Advanced"}
+        ],
+        "skillGapAnalysis": {
+            "currentRole": "Product Director",
+            "requiredSkills": [
+                {"name": "Product Strategy", "level": "Expert"},
+                {"name": "AI/ML in Product Development", "level": "Intermediate"},
+                {"name": "Advanced Data Visualization", "level": "Intermediate"},
+                {"name": "Global Market Expansion", "level": "Advanced"}
+            ]
+        },
+        "missingSkills": [
+            { "name": "AI/ML in Product Development", "severity": "critical" },
+            { "name": "Advanced Data Visualization", "severity": "high" },
+            { "name": "Global Market Expansion", "severity": "medium" }
+        ],
+        "upskillPotential": "3 gaps – upskilling recommended for AI/ML and Data Viz.",
+        "learningPathCTA": "Explore learning paths for AI/ML & Data Visualization?",
+        "internalSignals": { "interest": "VP of Product roles", "pastApplications": "Director of Product (2 years ago)" },
+        "readyToApply": true,
+        "applications": [
+            {
+                "opportunityId": 1, "opportunityTitle": "Senior Boeing 777 Captain", "offerStage": "Interview Complete", "onboardingStage": null, "statusDate": "2025-05-15"
+            },
+            {
+                "opportunityId": 8, "opportunityTitle": "Digital Experience Designer", "offerStage": "Applied", "onboardingStage": null, "statusDate": "2025-05-28"
+            },
+            {
+                "opportunityId": 3, "opportunityTitle": "Revenue Management Analyst", "offerStage": "sent", "onboardingStage": null, "statusDate": "2025-06-03"
+            },
+            {
+                "opportunityId": 12, "opportunityTitle": "Maintenance Planning Analyst", "offerStage": "drafted", "onboardingStage": null, "statusDate": "2025-06-06"
+            }
+        ]
+    },
+    {
+        "id": "john.allen", "name": "John Allen", "email": "john.allen@example.com", "role": "UX Designer", "department": "Product", "tenure": "2 years", "hiringManager": "Meredith Grey",
+        "imageUrl": "https://images.media.io/images2023/ai-portrait-generator/portrait-pic1.png",
+        "matchSummary": "Matches 3 of 5 skills", "matchPercent": 60,
+        "matchedSkills": ["User Research", "Wireframing"],
+        "skills": [{"name": "User Research", "level": 7}, {"name": "Wireframing", "level": 8}, {"name": "Figma", "level": 5}, {"name": "Prototyping", "level": 6}],
+        "missingSkills": [{ "name": "Prototyping", "severity": "nice-to-have" }, { "name": "Figma", "severity": "critical"}],
+        "upskillPotential": "2 gaps – upskilling recommended",
+        "learningPathCTA": "Send learning path for Prototyping & Figma?",
+        "internalSignals": { "interest": "Senior UX roles", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 2, "opportunityTitle": "Aircraft Maintenance Engineer - A350", "offerStage": "accepted", "onboardingStage": null, "statusDate": "2025-05-18"
+            },
+            {
+                "opportunityId": 14, "opportunityTitle": "Flight Dispatcher", "offerStage": "Screening", "onboardingStage": null, "statusDate": "2025-05-27"
+            },
+            {
+                "opportunityId": 7, "opportunityTitle": "Network Planning Specialist", "offerStage": "accepted", "onboardingStage": "orientation", "statusDate": "2025-06-04", "startDate": "2025-06-10", "assignedBuddyManager": "Cristina Yang", "notesComments": "Orientation scheduled for next week."
+            }
+        ],
+        "skillTrends": {
+            "disappearing": [
+                { "name": "Manual Ticketing Systems", "change": "-65%" },
+                { "name": "Legacy Avionics Operation", "change": "-50%" },
+                { "name": "Basic Ground Crew Coordination", "change": "-40%" }
+            ],
+            "constant": [
+                { "name": "Customer Service Excellence", "change": "↔" },
+                { "name": "Aircraft Safety Procedures", "change": "↔" },
+                { "name": "Crew Resource Management (CRM)", "change": "↔" }
+            ],
+            "emerging": [
+                { "name": "Unmanned Aerial Vehicle (UAV) Operations", "change": "+95%" },
+                { "name": "Sustainable Aviation Fuel (SAF) Management", "change": "+85%" },
+                { "name": "AI in Flight Operations & MRO", "change": "+70%" }
+            ]
+        }
+    },
+    {
+        "id": "john.doe", "name": "John Doe", "email": "john.doe@example.com", "role": "Software Engineer", "department": "IT", "tenure": "4 years", "hiringManager": "Meredith Grey",
+        "imageUrl": "https://static-alter1.vidnoz.com/system/asset/202408/66beeabb5fa40.jpg",
+        "matchSummary": "Matches 3 of 5 skills", "matchPercent": 70,
+        "matchedSkills": ["User Research", "Wireframing", "Agile"],
+        "skills": [{"name": "User Research", "level": 7}, {"name": "Wireframing", "level": 8}, {"name": "Figma", "level": 5}, {"name": "Prototyping", "level": 6}, {"name": "Agile", "level": 9}],
+        "missingSkills": [{ "name": "Prototyping", "severity": "nice-to-have" }, { "name": "Figma", "severity": "critical"}],
+        "upskillPotential": "2 gaps – upskilling recommended",
+        "learningPathCTA": "Send learning path for Prototyping & Figma?",
+        "internalSignals": { "interest": "Senior UX roles", "pastApplications": null },
+        "readyToApply": true,
+        "applications": [
+            {
+                "opportunityId": 2, "opportunityTitle": "Aircraft Maintenance Engineer - A350", "offerStage": "applied", "onboardingStage": null, "statusDate": "2025-05-18"
+            }
+        ],
+        "skillTrends": {
+            "disappearing": [
+                { "name": "Manual Ticketing Systems", "change": "-65%" },
+                { "name": "Legacy Avionics Operation", "change": "-50%" },
+                { "name": "Basic Ground Crew Coordination", "change": "-40%" }
+            ],
+            "constant": [
+                { "name": "Customer Service Excellence", "change": "↔" },
+                { "name": "Aircraft Safety Procedures", "change": "↔" },
+                { "name": "Crew Resource Management (CRM)", "change": "↔" }
+            ],
+            "emerging": [
+                { "name": "Unmanned Aerial Vehicle (UAV) Operations", "change": "+95%" },
+                { "name": "Sustainable Aviation Fuel (SAF) Management", "change": "+85%" },
+                { "name": "AI in Flight Operations & MRO", "change": "+70%" }
+            ]
+        }
+    },
+    {
+        "id": "sarah.miller", "name": "Sarah Miller", "email": "sarah.miller@example.com", "role": "Data Analyst", "department": "Analytics", "tenure": "5 years", "hiringManager": "Richard Webber",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ1s7H-wFUsSmdQOVsmTGvGt8DuvCR8Yu5PQ&s",
+        "matchSummary": "Matches 5 of 5 skills", "matchPercent": 100,
+        "matchedSkills": ["SQL", "Tableau", "Statistics", "Python", "Communication"],
+        "skills": [{"name": "SQL", "level": 9}, {"name": "Tableau", "level": 8}, {"name": "Statistics", "level": 7}, {"name": "Python", "level": 8}, {"name": "Communication", "level": 9}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Data Science roles", "pastApplications": "Lead Analyst (1 year ago)" },
+        "readyToApply": true,
+        "applications": [
+            {
+                "opportunityId": 3, "opportunityTitle": "Revenue Management Analyst", "offerStage": "accepted", "onboardingStage": "documentation", "statusDate": "2025-05-20", "startDate": "2025-06-01", "assignedBuddyManager": "Miranda Bailey", "notesComments": "All documents received."
+            },
+            {
+                "opportunityId": 7, "opportunityTitle": "Network Planning Specialist", "offerStage": "Interview Scheduled", "onboardingStage": null, "statusDate": "2025-05-29"
+            },
+            {
+                "opportunityId": 26, "opportunityTitle": "Senior Software Engineer", "offerStage": "Offer Declined", "onboardingStage": null, "statusDate": "2025-05-15"
+            }
+        ]
+    },
+    {
+        "id": "mike.brown", "name": "Mike Brown", "email": "mike.brown@example.com", "role": "Junior Developer", "department": "IT", "tenure": "1 year", "hiringManager": "Alex Karev",
+        "imageUrl": "https://pastorinmouseears.wordpress.com/wp-content/uploads/2017/03/flynn-rider.jpg",
+        "matchSummary": "Matches 2 of 5 skills", "matchPercent": 40,
+        "matchedSkills": ["JavaScript", "HTML/CSS"],
+        "skills": [{"name": "JavaScript", "level": 6}, {"name": "HTML/CSS", "level": 7}, {"name": "React", "level": 4}],
+        "missingSkills": [{ "name": "React", "severity": "critical" }, {"name": "Node.js", "severity": "critical"}, {"name": "Testing", "severity": "nice-to-have"}],
+        "upskillPotential": "3 gaps - extensive upskilling needed",
+        "learningPathCTA": "Suggest comprehensive learning plan?",
+        "internalSignals": { "interest": "Full-stack Development", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 8, "opportunityTitle": "Digital Experience Designer", "offerStage": "Applied", "onboardingStage": null, "statusDate": "2025-05-22"
+            },
+            {
+                "opportunityId": 1, "opportunityTitle": "Senior Boeing 777 Captain", "offerStage": "Interview Complete", "onboardingStage": null, "statusDate": "2025-06-05"
+            },
+            {
+                "opportunityId": 11, "title": "First Officer - A320", "offerStage": "accepted", "onboardingStage": "complete", "statusDate": "2025-03-01", "startDate": "2025-03-15", "assignedBuddyManager": "Izzie Stevens", "notesComments": "Successfully completed all onboarding tasks."
+            }
+        ]
+    },
+    {
+        "id": "david.lee", "name": "David Lee", "email": "david.lee@example.com", "role": "Cloud Architect", "department": "IT", "tenure": "4 years", "hiringManager": "Owen Hunt",
+        "imageUrl": "https://static-alter1.vidnoz.com/system/asset/202408/66beeabb5fa40.jpg",
+        "matchSummary": "Matches 3 of 5 skills", "matchPercent": 60,
+        "matchedSkills": ["AWS", "Kubernetes", "DevOps"],
+        "skills": [{"name": "AWS", "level": 9}, {"name": "Kubernetes", "level": 8}, {"name": "DevOps", "level": 7}, {"name": "Azure", "level": 5}, {"name": "Terraform", "level": 6}],
+        "missingSkills": [{ "name": "Azure", "severity": "nice-to-have" }, { "name": "Terraform", "severity": "critical"}],
+        "upskillPotential": "2 gaps – upskilling recommended",
+        "learningPathCTA": "Send learning path for Azure & Terraform?",
+        "internalSignals": { "interest": "Senior Cloud Architect roles", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 5, "title": "Airport Operations Supervisor", "offerStage": "Screening", "onboardingStage": null, "statusDate": "2025-05-24"
+            },
+            {
+                "opportunityId": 26, "title": "Senior Software Engineer", "offerStage": "Not Selected", "onboardingStage": null, "statusDate": "2025-05-10"
+            },
+            {
+                "opportunityId": 9, "title": "Aircraft Interior Engineer", "offerStage": "accepted", "onboardingStage": "training", "statusDate": "2025-05-06", "startDate": "2025-05-15", "assignedBuddyManager": "Teddy Altman", "notesComments": "Currently in role-specific training."
+            }
+        ]
+    },
+    {
+        "id": "emily.white", "name": "Emily White", "email": "emily.white@example.com", "role": "Prospective In-Flight Service Manager", "department": "In-Flight Services", "tenure": "New Hire", "hiringManager": "Arizona Robbins",
+        "imageUrl": "https://randomuser.me/api/portraits/women/60.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Customer Service", "level": 8}, {"name": "Team Communication", "level": 7}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "In-Flight Service Manager", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 4, "title": "In-Flight Service Manager", "offerStage": "accepted", "onboardingStage": "it-setup", "statusDate": "2025-05-26", "startDate": "2025-06-02", "assignedBuddyManager": "Callie Torres", "notesComments": "IT equipment provisioned."
+            }
+        ]
+    },
+    {
+        "id": "alex.green", "name": "Alex Green", "email": "alex.green@example.com", "role": "Prospective Flight Safety Investigator", "department": "Corporate Safety", "tenure": "New Hire", "hiringManager": "Mark Sloan",
+        "imageUrl": "https://randomuser.me/api/portraits/men/60.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Investigation", "level": 7}, {"name": "Report Writing", "level": 8}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Flight Safety Investigator", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 6, "title": "Flight Safety Investigator", "offerStage": "bg-check", "onboardingStage": null, "statusDate": "2025-04-26"
+            }
+        ]
+    },
+    {
+        "id": "olivia.blue", "name": "Olivia Blue", "email": "olivia.blue@example.com", "role": "Network Analyst", "department": "Network Planning", "tenure": "2 years", "hiringManager": "Lexie Grey",
+        "imageUrl": "https://randomuser.me/api/portraits/women/61.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Route Analysis", "level": 7}, {"name": "Market Research", "level": 6}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Network Planning Specialist", "pastApplications": null },
+        "readyToApply": true,
+        "applications": [
+            {
+                "opportunityId": 7, "title": "Network Planning Specialist", "offerStage": "rescinded", "onboardingStage": null, "statusDate": "2025-05-10"
+            }
+        ]
+    },
+    {
+        "id": "chris.red", "name": "Chris Red", "email": "chris.red@example.com", "role": "Cargo Operations Lead", "department": "Akara Cargo", "tenure": "New Hire", "hiringManager": "Jackson Avery",
+        "imageUrl": "https://randomuser.me/api/portraits/men/61.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Logistics Management", "level": 9}, {"name": "Team Leadership", "level": 8}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Cargo Operations Manager", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 10, "title": "Cargo Operations Manager", "offerStage": "accepted", "onboardingStage": "complete", "statusDate": "2025-02-15", "startDate": "2025-03-01", "assignedBuddyManager": "April Kepner", "notesComments": "Fully onboarded and integrated."
+            }
+        ]
+    },
+    {
+        "id": "laura.purple", "name": "Laura Purple", "email": "laura.purple@example.com", "role": "Maintenance Technician", "department": "Technical Operations", "tenure": "3 years", "hiringManager": "Ben Warren",
+        "imageUrl": "https://randomuser.me/api/portraits/women/62.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Aircraft Maintenance", "level": 7}, {"name": "Analytics", "level": 5}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Maintenance Planning Analyst", "pastApplications": null },
+        "readyToApply": true,
+        "applications": [
+            {
+                "opportunityId": 12, "title": "Maintenance Planning Analyst", "offerStage": "Not Selected", "onboardingStage": null, "statusDate": "2025-05-01"
+            }
+        ]
+    },
+    {
+        "id": "kevin.harris", "name": "Kevin Harris", "email": "kevin.harris@example.com", "role": "Operations Coordinator", "department": "Airport Customer Service", "tenure": "New Hire", "hiringManager": "Jo Wilson",
+        "imageUrl": "https://randomuser.me/api/portraits/men/62.jpg",
+        "matchSummary": null, "matchPercent": null, "matchedSkills": [],
+        "skills": [{"name": "Logistics", "level": 7}, {"name": "Customer Support", "level": 8}],
+        "missingSkills": [], "upskillPotential": null, "learningPathCTA": null,
+        "internalSignals": { "interest": "Airport Operations Supervisor", "pastApplications": null },
+        "readyToApply": false,
+        "applications": [
+            {
+                "opportunityId": 5, "title": "Airport Operations Supervisor", "offerStage": "ready", "onboardingStage": null, "statusDate": "2025-06-01"
+            }
+        ]
+    }
+  ],
+  "opportunities": [
+    {
+      "id": 1, "title": "Senior Boeing 777 Captain", "department": "Flight Operations", "location": "Atlanta Hub", "type": "Full-Time",
+      "description": "Lead pilot position for international long-haul operations on Boeing 777 fleet.",
+      "requirements": ["ATP License", "Boeing 777 Type Rating", "Minimum 5,000 hours PIC time", "International operations experience"],
+      "requiredSkills": ["B777 Operations", "Crew Resource Management", "International Flight Planning"]
+    },
+    {
+      "id": 2, "title": "Aircraft Maintenance Engineer - A350", "department": "Technical Operations", "location": "Detroit Hub", "type": "Full-Time",
+      "description": "Perform maintenance on A350 aircraft fleet.",
+      "requirements": ["A&P License", "A350 Type Training", "5+ years experience with wide-body aircraft"],
+      "requiredSkills": ["Airbus Systems", "Avionics", "Troubleshooting"]
+    },
+    {
+      "id": 3, "title": "Revenue Management Analyst", "department": "Commercial", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Optimize revenue through pricing and inventory management.",
+      "requirements": ["Bachelor's degree in Business/Analytics", "2+ years airline revenue management experience"],
+      "requiredSkills": ["Revenue Optimization", "Data Analysis", "Market Research"]
+    },
+    {
+      "id": 4, "title": "In-Flight Service Manager", "department": "In-Flight Services", "location": "Los Angeles Hub", "type": "Full-Time",
+      "description": "Lead cabin crew operations and ensure service excellence.",
+      "requirements": ["5+ years cabin crew experience", "Leadership experience", "Service excellence background"],
+      "requiredSkills": ["Team Leadership", "Customer Service", "Safety Management"]
+    },
+    {
+      "id": 5, "title": "Airport Operations Supervisor", "department": "Airport Customer Service", "location": "New York-JFK", "type": "Full-Time",
+      "description": "Oversee daily terminal operations and customer service.",
+      "requirements": ["3+ years airport operations experience", "Strong leadership skills"],
+      "requiredSkills": ["Operations Management", "Customer Service", "Team Leadership"]
+    },
+    {
+      "id": 6, "title": "Flight Safety Investigator", "department": "Corporate Safety", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Conduct safety investigations and implement preventive measures.",
+      "requirements": ["Aviation safety background", "Investigation experience", "Relevant certifications"],
+      "requiredSkills": ["Safety Management", "Investigation", "Report Writing"]
+    },
+    {
+      "id": 7, "title": "Network Planning Specialist", "department": "Network Planning", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Develop and optimize route networks.",
+      "requirements": ["Experience in airline network planning", "Strong analytical skills"],
+      "requiredSkills": ["Route Analysis", "Market Research", "Network Optimization"]
+    },
+    {
+      "id": 8, "title": "Digital Experience Designer", "department": "Digital & Technology", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Design digital experiences for Akara's platforms.",
+      "requirements": ["UX/UI design experience", "Portfolio of digital projects"],
+      "requiredSkills": ["UX Design", "UI Design", "User Research"]
+    },
+    {
+      "id": 9, "title": "Aircraft Interior Engineer", "department": "Technical Operations", "location": "Minneapolis Hub", "type": "Full-Time",
+      "description": "Manage aircraft interior modifications and upgrades.",
+      "requirements": ["Engineering degree", "Aircraft interiors experience"],
+      "requiredSkills": ["CAD Design", "Project Management", "FAA Compliance"]
+    },
+    {
+      "id": 10, "title": "Cargo Operations Manager", "department": "Akara Cargo", "location": "Chicago Hub", "type": "Full-Time",
+      "description": "Manage cargo operations and logistics.",
+      "requirements": ["Cargo operations experience", "Leadership background"],
+      "requiredSkills": ["Logistics Management", "Team Leadership", "Operations Planning"]
+    },
+    {
+      "id": 11, "title": "First Officer - A320", "department": "Flight Operations", "location": "Salt Lake City Hub", "type": "Full-Time",
+      "description": "First Officer position for domestic operations.",
+      "requirements": ["Commercial Pilot License", "A320 Type Rating preferred"],
+      "requiredSkills": ["A320 Operations", "CRM", "Navigation"]
+    },
+    {
+      "id": 12, "title": "Maintenance Planning Analyst", "department": "Technical Operations", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Optimize aircraft maintenance scheduling.",
+      "requirements": ["Aviation maintenance background", "Planning experience"],
+      "requiredSkills": ["Maintenance Planning", "Analytics", "Project Management"]
+    },
+    {
+      "id": 13, "title": "Customer Experience Manager", "department": "Customer Experience", "location": "Seattle Hub", "type": "Full-Time",
+      "description": "Lead customer experience initiatives.",
+      "requirements": ["Customer experience background", "Project management skills"],
+      "requiredSkills": ["Customer Journey Mapping", "Project Management", "Analytics"]
+    },
+    {
+      "id": 14, "title": "Flight Dispatcher", "department": "Flight Operations", "location": "Atlanta OCC", "type": "Full-Time",
+      "description": "Plan and dispatch flights.",
+      "requirements": ["FAA Dispatcher License", "2+ years experience"],
+      "requiredSkills": ["Flight Planning", "Weather Analysis", "Operations Control"]
+    },
+    {
+      "id": 15, "title": "Sustainability Program Manager", "department": "Corporate Sustainability", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Lead environmental initiatives.",
+      "requirements": ["Sustainability background", "Program management experience"],
+      "requiredSkills": ["Project Management", "Environmental Science", "Stakeholder Management"]
+    },
+    {
+      "id": 16, "title": "Avionics Technician", "department": "Technical Operations", "location": "Los Angeles Hub", "type": "Full-Time",
+      "description": "Maintain aircraft avionics systems.",
+      "requirements": ["A&P License", "Avionics experience"],
+      "requiredSkills": ["Avionics", "Troubleshooting", "Documentation"]
+    },
+    {
+      "id": 17, "title": "Route Planning Analyst", "department": "Network Planning", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Analyze and optimize route profitability.",
+      "requirements": ["Analytics background", "Aviation industry experience"],
+      "requiredSkills": ["Data Analysis", "Market Research", "Financial Modeling"]
+    },
+    {
+      "id": 18, "title": "Ground Safety Manager", "department": "Airport Operations", "location": "Detroit Hub", "type": "Full-Time",
+      "description": "Manage ground safety programs.",
+      "requirements": ["Safety management experience", "Ground operations background"],
+      "requiredSkills": ["Safety Management", "Training", "Compliance"]
+    },
+    {
+      "id": 19, "title": "Crew Resource Planner", "department": "Flight Operations", "location": "Minneapolis Hub", "type": "Full-Time",
+      "description": "Optimize crew scheduling and utilization.",
+      "requirements": ["Crew planning experience", "Analytics background"],
+      "requiredSkills": ["Crew Planning", "Analytics", "Optimization"]
+    },
+    {
+      "id": 20, "title": "Aircraft Performance Engineer", "department": "Flight Operations", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Analyze and optimize aircraft performance.",
+      "requirements": ["Aerospace Engineering degree", "Performance analysis experience"],
+      "requiredSkills": ["Performance Analysis", "Data Modeling", "Documentation"]
+    },
+    {
+      "id": 21, "title": "Cabin Interior Specialist", "department": "Technical Operations", "location": "Salt Lake City Hub", "type": "Full-Time",
+      "description": "Maintain and repair cabin interiors.",
+      "requirements": ["Interior maintenance experience", "FAA certification"],
+      "requiredSkills": ["Interior Maintenance", "Safety Standards", "Quality Control"]
+    },
+    {
+      "id": 22, "title": "Digital Marketing Manager", "department": "Marketing", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Lead digital marketing initiatives.",
+      "requirements": ["Digital marketing experience", "Aviation industry background preferred"],
+      "requiredSkills": ["Digital Marketing", "Analytics", "Campaign Management"]
+    },
+    {
+      "id": 23, "title": "Quality Assurance Inspector", "department": "Technical Operations", "location": "New York-JFK", "type": "Full-Time",
+      "description": "Ensure maintenance quality standards.",
+      "requirements": ["Quality control experience", "A&P License"],
+      "requiredSkills": ["Quality Control", "Documentation", "Regulatory Compliance"]
+    },
+    {
+      "id": 24, "title": "Fuel Efficiency Analyst", "department": "Flight Operations", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Optimize fuel consumption and efficiency.",
+      "requirements": ["Data analysis background", "Aviation experience"],
+      "requiredSkills": ["Data Analysis", "Fuel Management", "Project Management"]
+    },
+    {
+      "id": 25, "title": "Airport Station Manager", "department": "Airport Operations", "location": "Seattle Hub", "type": "Full-Time",
+      "description": "Manage airport station operations.",
+      "requirements": ["Airport operations experience", "Leadership background"],
+      "requiredSkills": ["Operations Management", "Leadership", "Customer Service"]
+    },
+    {
+      "id": 26, "title": "Senior Software Engineer", "department": "Technology", "location": "Atlanta HQ", "type": "Full-Time",
+      "description": "Develop and maintain critical software applications for the talent marketplace.",
+      "requirements": ["5+ years of experience in software development", "Proficiency in Java or Python", "Experience with microservices architecture", "Strong understanding of RESTful APIs", "Familiarity with cloud platforms (AWS, Azure, or GCP)", "Experience with Agile development methodologies"],
+          "requiredSkills": ["Java", "Python", "Spring Boot", "Microservices", "REST APIs", "AWS", "Agile"]
+        },
+        {
+          "id": 27, "title": "Lead Frontend Developer", "department": "Technology", "location": "Remote / Atlanta HQ", "type": "Full-Time",
+          "description": "Lead a team of frontend developers, drive technical excellence, and mentor junior engineers. Define frontend strategy and best practices.",
+          "requirements": ["7+ years of frontend development", "Proven leadership experience", "Expertise in React/Angular/Vue", "Strong understanding of web performance and accessibility"],
+          "requiredSkills": ["React", "JavaScript", "HTML5", "CSS3", "Leadership", "Mentoring", "Web Performance", "TypeScript"]
+        },
+        {
+          "id": 28, "title": "Frontend Architect", "department": "Technology", "location": "Atlanta HQ", "type": "Full-Time",
+          "description": "Design and oversee the implementation of scalable and maintainable frontend architecture. Evaluate new technologies and set technical direction.",
+          "requirements": ["10+ years of frontend development", "Experience in designing large-scale frontend systems", "Deep knowledge of frontend frameworks and patterns", "Excellent communication skills"],
+          "requiredSkills": ["System Design", "Micro-frontends", "JavaScript", "React", "Angular", "Vue", "Performance Optimization", "Scalability"]
+        },
+        {
+          "id": 29, "title": "Senior Full-Stack Developer", "department": "Technology", "location": "Remote", "type": "Full-Time",
+          "description": "Develop both client-side and server-side components for web applications. Work across the full technology stack.",
+          "requirements": ["6+ years of software development", "Proficiency in frontend (React/Angular/Vue) and backend (Node.js/Python/Java) technologies", "Experience with databases and APIs"],
+          "requiredSkills": ["React", "Node.js", "JavaScript", "Python", "REST APIs", "Databases", "DevOps"]
+        },
+        {
+          "id": 30, "title": "Principal Frontend Engineer", "department": "Technology", "location": "Atlanta HQ / Remote", "type": "Full-Time",
+          "description": "Drives technical vision and provides expert guidance for complex frontend projects. Mentors senior engineers and influences frontend architecture across the organization.",
+          "requirements": ["10+ years of frontend development", "Expertise in multiple frontend frameworks (React, Angular, Vue)", "Proven track record of leading large-scale frontend projects", "Deep understanding of web performance, security, and accessibility", "Excellent system design and communication skills"],
+          "requiredSkills": ["React", "Angular", "Vue.js", "JavaScript", "TypeScript", "HTML5", "CSS3", "Web Performance", "Accessibility", "System Design", "Leadership", "Mentoring"]
+        },
+        {
+          "id": 31, "title": "Engineering Manager (EM) – Frontend", "department": "Technology", "location": "Atlanta HQ", "type": "Full-Time",
+          "description": "Leads and mentors a team of frontend engineers, responsible for project delivery, technical excellence, and career growth of team members. Collaborates with product and design teams.",
+          "requirements": ["8+ years of software development experience with significant frontend focus", "2+ years of engineering management or tech lead experience", "Strong understanding of agile methodologies", "Excellent people management and communication skills"],
+          "requiredSkills": ["Leadership", "Team Management", "Project Management", "Agile Methodologies", "React", "JavaScript", "TypeScript", "CI/CD", "Communication"]
+        },
+        {
+          "id": 32, "title": "Director of Engineering – UI/UX Platforms", "department": "Technology", "location": "Atlanta HQ", "type": "Full-Time",
+          "description": "Sets strategic direction for UI/UX platforms and foundational frontend technologies. Leads multiple engineering teams, drives innovation, and ensures alignment with business goals.",
+          "requirements": ["12+ years of engineering experience, with at least 5 years in a leadership role", "Extensive experience in building and scaling UI platforms and design systems", "Strong technical background in frontend technologies and architecture", "Proven ability to lead and inspire large engineering teams"],
+          "requiredSkills": ["Strategic Planning", "Technical Leadership", "Team Building", "UI/UX Strategy", "Platform Development", "Micro-frontends", "Design Systems", "Stakeholder Management"]
+        }
+      ],
+      "learningCourses": [
+    { "id": 1, "title": "Boeing 737 MAX Type Rating", "domain": "Flight Operations", "durationDisplay": "6 weeks", "durationValue": 60480, "format": "Blended", "description": "Complete type rating course for B737 MAX aircraft.", "modules": ["Systems Knowledge", "Procedures Training", "Simulator Sessions", "Line Training"], "learningCategory": "recommended", "goal": "Skill-building", "audience": "Pilots", "level": "Advanced" },
+    { "id": 2, "title": "Advanced Aircraft Systems Troubleshooting", "domain": "Technical Operations", "durationDisplay": "4 weeks", "durationValue": 40320, "format": "Online + Hands-on", "description": "Advanced troubleshooting techniques for modern aircraft systems.", "modules": ["Digital Systems", "Fault Isolation", "Testing Procedures", "Documentation"], "learningCategory": "recommended", "goal": "Skill-building", "audience": "Engineers", "level": "Advanced" },
+    { "id": 3, "title": "Revenue Management Fundamentals", "domain": "Commercial", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Online", "description": "Basic principles of airline revenue management.", "modules": ["Pricing Strategies", "Inventory Control", "Forecasting", "Revenue Optimization"], "learningCategory": "recommended", "goal": "Awareness", "audience": "Commercial Staff", "level": "Beginner" },
+    { "id": 4, "title": "Customer Service Excellence", "domain": "Customer Experience", "durationDisplay": "1 week", "durationValue": 10080, "format": "Classroom", "description": "Enhanced customer service skills for airline professionals.", "modules": ["Service Standards", "Communication", "Conflict Resolution", "Cultural Awareness"], "learningCategory": "my-learning", "goal": "Skill-building", "audience": "All Employees", "level": "Intermediate" },
+    { "id": 5, "title": "Safety Management Systems (SMS) Intro", "domain": "Safety", "durationDisplay": "3 days", "durationValue": 2160, "format": "Classroom", "description": "Implementation of aviation safety management systems.", "modules": ["Safety Policy", "Risk Management", "Assurance", "Promotion"], "learningCategory": "my-learning", "goal": "Compliance", "audience": "Managers", "level": "Intermediate" },
+    { "id": 6, "title": "Ground Operations Management", "domain": "Airport Operations", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Blended", "description": "Comprehensive ground operations management training.", "modules": ["Ramp Safety", "Load Control", "Turnaround Management", "Resource Planning"], "learningCategory": "recommended", "goal": "Skill-building", "audience": "Operations Staff", "level": "Intermediate" },
+    { "id": 7, "title": "Advanced Meteorology for Pilots", "domain": "Flight Operations", "durationDisplay": "1 week", "durationValue": 10080, "format": "Online", "description": "Advanced weather analysis for flight operations.", "modules": ["Weather Systems", "Forecasting", "Weather Radar", "Decision Making"], "learningCategory": "trending", "goal": "Skill-building", "audience": "Pilots", "level": "Advanced" },
+    { "id": 8, "title": "Aircraft Weight and Balance", "domain": "Flight Operations", "durationDisplay": "3 days", "durationValue": 2160, "format": "Classroom", "description": "Principles of aircraft weight and balance calculations.", "modules": ["Basic Principles", "Load Planning", "Calculations", "Documentation"], "goal": "Compliance", "audience": "Pilots, Load Planners", "level": "Intermediate" },
+    { "id": 9, "title": "Cabin Crew Leadership", "domain": "In-Flight Services", "durationDisplay": "1 week", "durationValue": 10080, "format": "Classroom", "description": "Leadership skills for senior cabin crew members.", "modules": ["Team Leadership", "Decision Making", "Conflict Management", "Service Excellence"], "goal": "Skill-building", "audience": "Cabin Crew", "level": "Advanced" },
+    { "id": 10, "title": "Aviation Security Management", "domain": "Security", "durationDisplay": "5 days", "durationValue": 3600, "format": "Classroom", "description": "Comprehensive aviation security management training.", "modules": ["Security Regulations", "Threat Assessment", "Emergency Response", "Security Auditing"], "goal": "Compliance", "audience": "Security Staff, Managers", "level": "Advanced" },
+    { "id": 11, "title": "Aircraft Maintenance Planning", "domain": "Technical Operations", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Blended", "description": "Effective maintenance planning and scheduling.", "modules": ["Planning Principles", "Resource Allocation", "Schedule Optimization", "Compliance"], "goal": "Skill-building", "audience": "Planners, Engineers", "level": "Intermediate" },
+    { "id": 12, "title": "Airline Marketing Strategies", "domain": "Marketing", "durationDisplay": "1 week", "durationValue": 10080, "format": "Online", "description": "Modern airline marketing techniques and strategies.", "modules": ["Digital Marketing", "Brand Management", "Customer Segmentation", "Campaign Planning"], "learningCategory": "recommended", "goal": "Skill-building", "audience": "Marketing Staff", "level": "Intermediate" },
+    { "id": 13, "title": "Emergency Response Management", "domain": "Safety", "durationDisplay": "3 days", "durationValue": 2160, "format": "Classroom", "description": "Emergency response procedures and management.", "modules": ["Response Planning", "Communication", "Crisis Management", "Recovery Operations"], "goal": "Compliance", "audience": "All Employees", "level": "Intermediate" },
+    { "id": 14, "title": "Aviation Law and Regulations", "domain": "Legal", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Online", "description": "Overview of aviation laws and regulations.", "modules": ["Regulatory Framework", "Compliance", "Liability", "Documentation"], "goal": "Awareness", "audience": "Managers, Legal Staff", "level": "Advanced" },
+    { "id": 15, "title": "Aircraft Performance", "domain": "Flight Operations", "durationDisplay": "1 week", "durationValue": 10080, "format": "Blended", "description": "Understanding and optimizing aircraft performance.", "modules": ["Performance Factors", "Calculations", "Optimization", "Documentation"], "goal": "Skill-building", "audience": "Pilots, Engineers", "level": "Advanced" },
+    { "id": 16, "title": "Cargo Operations Management", "domain": "Cargo", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Blended", "description": "Management of airline cargo operations.", "modules": ["Cargo Handling", "Documentation", "Safety Procedures", "Revenue Management"], "goal": "Skill-building", "audience": "Cargo Staff", "level": "Intermediate" },
+    { "id": 17, "title": "Digital Innovation in Aviation", "domain": "Technology", "durationDisplay": "1 week", "durationValue": 10080, "format": "Online", "description": "Digital transformation in airline operations.", "modules": ["Digital Strategy", "Innovation Management", "Implementation", "Change Management"], "learningCategory": "trending", "goal": "Awareness", "audience": "All Employees", "level": "Beginner" },
+    { "id": 18, "title": "Aircraft Systems Engineering", "domain": "Engineering", "durationDisplay": "4 weeks", "durationValue": 40320, "format": "Blended", "description": "Advanced aircraft systems engineering principles.", "modules": ["System Design", "Integration", "Testing", "Certification"], "goal": "Skill-building", "audience": "Engineers", "level": "Advanced" },
+    { "id": 19, "title": "Route Network Planning", "domain": "Network Planning", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Online", "description": "Principles of airline route network planning.", "modules": ["Market Analysis", "Network Design", "Schedule Planning", "Performance Monitoring"], "goal": "Skill-building", "audience": "Planners", "level": "Intermediate" },
+    { "id": 20, "title": "Aviation Environmental Management", "domain": "Environmental", "durationDisplay": "1 week", "durationValue": 10080, "format": "Online", "description": "Environmental management in aviation operations.", "modules": ["Regulations", "Impact Assessment", "Mitigation Strategies", "Reporting"], "learningCategory": "trending", "goal": "Awareness", "audience": "All Employees", "level": "Beginner" },
+    { "id": 21, "title": "Crew Resource Management (CRM)", "domain": "Flight Operations", "durationDisplay": "5 days", "durationValue": 3600, "format": "Classroom", "description": "Advanced CRM principles and application.", "modules": ["Team Dynamics", "Communication", "Decision Making", "Leadership"], "learningCategory": "my-learning", "goal": "Skill-building", "audience": "Pilots, Cabin Crew", "level": "Advanced" },
+    { "id": 22, "title": "Aviation Data Analytics", "domain": "Technology", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Online", "description": "Data analysis techniques for aviation operations.", "modules": ["Data Collection", "Analysis Methods", "Visualization", "Reporting"], "learningCategory": "trending", "goal": "Skill-building", "audience": "Analysts, Managers", "level": "Intermediate" },
+    { "id": 23, "title": "Aircraft Interior Maintenance", "domain": "Technical Operations", "durationDisplay": "1 week", "durationValue": 10080, "format": "Hands-on", "description": "Maintenance of aircraft interior components.", "modules": ["Interior Systems", "Repair Techniques", "Quality Standards", "Documentation"], "goal": "Skill-building", "audience": "Technicians", "level": "Intermediate" },
+    { "id": 24, "title": "Aviation Risk Management", "domain": "Safety", "durationDisplay": "3 days", "durationValue": 2160, "format": "Classroom", "description": "Risk assessment and management in aviation.", "modules": ["Risk Assessment", "Mitigation Strategies", "Monitoring", "Reporting"], "goal": "Compliance", "audience": "Managers, Safety Staff", "level": "Advanced" },
+    { "id": 25, "title": "Airport Terminal Operations", "domain": "Airport Operations", "durationDisplay": "2 weeks", "durationValue": 20160, "format": "Blended", "description": "Management of airport terminal operations.", "modules": ["Terminal Management", "Passenger Flow", "Resource Allocation", "Emergency Procedures"], "goal": "Skill-building", "audience": "Operations Staff", "level": "Intermediate" }
+  ],
+  "interactiveSkillsGraph": {
+    "nodes": [
+      { "id": "passenger_safety_procedures", "name": "Passenger Safety Procedures", "isCurrentUserSkill": true, "description": "Core Resume Skill: Ensuring passenger safety during all flight phases, proficient in standard operating procedures." },
+      { "id": "emergency_response_handling", "name": "Emergency Response & Handling", "isCurrentUserSkill": true, "description": "Critical Skill (Proficient): Managing in-flight emergencies (fire, medical, decompression) effectively." },
+      { "id": "customer_service_excellence", "name": "Customer Service Excellence", "isCurrentUserSkill": true, "description": "Core Resume Skill: Providing outstanding service, addressing passenger needs and concerns with empathy." },
+      { "id": "cabin_team_coordination", "name": "Cabin Team Coordination", "isCurrentUserSkill": true, "description": "Critical Skill (Developing): Leading and coordinating cabin crew for optimal performance and safety." },
+      { "id": "conflict_resolution_basic", "name": "Conflict Resolution (Basic)", "isCurrentUserSkill": true, "description": "Skill to Develop: Handling minor passenger conflicts and service recovery." },
+      { "id": "sustainable_cabin_practices", "name": "Sustainable Cabin Practices", "isCurrentUserSkill": true, "description": "High-Demand Skill (Developing): Implementing and promoting sustainable in-flight practices." },
+      { "id": "advanced_medical_aid", "name": "Advanced In-Flight Medical Aid", "isCurrentUserSkill": false, "description": "Potential Skill: Certified in advanced first aid for complex medical situations. Learning: 'Aviation Medical Responder'." },
+      { "id": "deescalation_mastery", "name": "De-escalation Mastery", "isCurrentUserSkill": false, "description": "Skill to Develop (Advanced): Expert in de-escalating serious passenger conflicts. Learning: 'Advanced De-escalation Strategies'." },
+      { "id": "ai_enhanced_service", "name": "AI-Enhanced Passenger Service", "isCurrentUserSkill": false, "description": "High-Demand Skill (Lacking): Utilizing AI tools to personalize and optimize passenger experience. Learning: 'AI in Customer Experience'." },
+      { "id": "crisis_communication_lead", "name": "Crisis Communication Lead", "isCurrentUserSkill": false, "description": "Potential Skill: Leading communication effectively during major disruptions or crises. Learning: 'Crisis Communications for Aviation Leaders'." },
+      { "id": "cross_cultural_service_strategy", "name": "Cross-Cultural Service Strategy", "isCurrentUserSkill": false, "description": "Skill to Develop (Advanced): Designing service strategies for diverse cultural passenger groups. Learning: 'Global Service Design'." },
+      { "id": "aviation_sms_contributor", "name": "Aviation SMS Contributor", "isCurrentUserSkill": false, "description": "Potential Skill: Actively contributing to and improving Safety Management Systems. Learning: 'SMS for Cabin Professionals'." },
+      { "id": "data_science", "name": "Data Science", "isCurrentUserSkill": false },
+      { "id": "data_engineering", "name": "Data Engineering", "isCurrentUserSkill": false },
+      { "id": "kubernetes", "name": "Kubernetes", "isCurrentUserSkill": false },
+      { "id": "docker_swarm", "name": "Docker Swarm", "isCurrentUserSkill": false },
+      { "id": "tableau", "name": "Tableau", "isCurrentUserSkill": false },
+      { "id": "power_bi", "name": "Power BI", "isCurrentUserSkill": false },
+      { "id": "html", "name": "HTML", "isCurrentUserSkill": false },
+      { "id": "css", "name": "CSS", "isCurrentUserSkill": false },
+      { "id": "data_visualization", "name": "Data Visualization", "isCurrentUserSkill": false },
+      { "id": "basic_statistics", "name": "Basic Statistics", "isCurrentUserSkill": false },
+      { "id": "sql", "name": "SQL", "isCurrentUserSkill": false },
+      { "id": "business_intelligence", "name": "Business Intelligence", "isCurrentUserSkill": false },
+      { "id": "linear_algebra", "name": "Linear Algebra", "isCurrentUserSkill": false },
+      { "id": "machine_learning", "name": "Machine Learning", "isCurrentUserSkill": false },
+      { "id": "deep_learning", "name": "Deep Learning", "isCurrentUserSkill": false },
+      { "id": "neural_networks", "name": "Neural Networks", "isCurrentUserSkill": false },
+      { "id": "python", "name": "Python", "isCurrentUserSkill": false },
+      { "id": "data_analysis", "name": "Data Analysis", "isCurrentUserSkill": false },
+      { "id": "natural_language_processing", "name": "Natural Language Processing", "isCurrentUserSkill": false },
+      { "id": "linguistics", "name": "Linguistics", "isCurrentUserSkill": false },
+      { "id": "cloud_infrastructure", "name": "Cloud Infrastructure", "isCurrentUserSkill": false },
+      { "id": "ai_deployment", "name": "AI Deployment", "isCurrentUserSkill": false },
+      { "id": "data_automation", "name": "Data Automation", "isCurrentUserSkill": false },
+      { "id": "scripting_skills", "name": "Scripting Skills", "isCurrentUserSkill": false },
+      { "id": "basic_programming", "name": "Basic Programming", "isCurrentUserSkill": false },
+      { "id": "software_development", "name": "Software Development", "isCurrentUserSkill": false },
+      { "id": "excel_basics", "name": "Excel Basics", "isCurrentUserSkill": false },
+      { "id": "advanced_excel", "name": "Advanced Excel", "isCurrentUserSkill": false },
+      { "id": "object_oriented_programming", "name": "Object-Oriented Programming", "isCurrentUserSkill": false },
+      { "id": "procedural_programming", "name": "Procedural Programming", "isCurrentUserSkill": false },
+      { "id": "statistics", "name": "Statistics", "isCurrentUserSkill": false },
+      { "id": "predictive_modeling", "name": "Predictive Modeling", "isCurrentUserSkill": false },
+      { "id": "version_control", "name": "Version Control", "isCurrentUserSkill": false },
+      { "id": "software_development_lifecycle", "name": "Software Development Lifecycle", "isCurrentUserSkill": false },
+      { "id": "devops", "name": "DevOps", "isCurrentUserSkill": false },
+      { "id": "ci_cd", "name": "CI/CD", "isCurrentUserSkill": false },
+      { "id": "full_stack_development", "name": "Full-Stack Development", "isCurrentUserSkill": false },
+      { "id": "frontend", "name": "Frontend", "isCurrentUserSkill": false },
+      { "id": "backend", "name": "Backend", "isCurrentUserSkill": false },
+      { "id": "pm", "name": "PM", "isCurrentUserSkill": false },
+      { "id": "project_management", "name": "Project Management", "isCurrentUserSkill": false },
+      { "id": "requirement_gathering", "name": "Requirement Gathering", "isCurrentUserSkill": false },
+      { "id": "system_design", "name": "System Design", "isCurrentUserSkill": false },
+      { "id": "testing", "name": "Testing", "isCurrentUserSkill": false },
+      { "id": "development", "name": "Development", "isCurrentUserSkill": false },
+      { "id": "agile", "name": "Agile", "isCurrentUserSkill": false },
+      { "id": "software_projects", "name": "Software Projects", "isCurrentUserSkill": false },
+      { "id": "jira", "name": "JIRA", "isCurrentUserSkill": false },
+      { "id": "product_innovation", "name": "Product Innovation", "isCurrentUserSkill": false },
+      { "id": "design_thinking", "name": "Design Thinking", "isCurrentUserSkill": false }
+    ],
+    "links": [
+      { "source": "passenger_safety_procedures", "target": "emergency_response_handling", "type": "relatedTo" },
+      { "source": "emergency_response_handling", "target": "advanced_medical_aid", "type": "relatedTo" },
+      { "source": "emergency_response_handling", "target": "crisis_communication_lead", "type": "relatedTo" },
+      { "source": "passenger_safety_procedures", "target": "aviation_sms_contributor", "type": "relatedTo" },
+      { "source": "customer_service_excellence", "target": "conflict_resolution_basic", "type": "relatedTo" },
+      { "source": "conflict_resolution_basic", "target": "deescalation_mastery", "type": "relatedTo" },
+      { "source": "customer_service_excellence", "target": "ai_enhanced_service", "type": "relatedTo" },
+      { "source": "customer_service_excellence", "target": "cross_cultural_service_strategy", "type": "relatedTo" },
+      { "source": "cabin_team_coordination", "target": "passenger_safety_procedures", "type": "relatedTo" },
+      { "source": "cabin_team_coordination", "target": "emergency_response_handling", "type": "relatedTo" },
+      { "source": "cabin_team_coordination", "target": "conflict_resolution_basic", "type": "relatedTo" },
+      { "source": "cabin_team_coordination", "target": "cross_cultural_service_strategy", "type": "relatedTo" },
+      { "source": "sustainable_cabin_practices", "target": "customer_service_excellence", "type": "relatedTo" },
+      { "source": "sustainable_cabin_practices", "target": "ai_enhanced_service", "type": "relatedTo" },
+      { "source": "data_science", "target": "data_engineering", "type": "relatedTo" },
+      { "source": "kubernetes", "target": "docker_swarm", "type": "similarTo" },
+      { "source": "tableau", "target": "power_bi", "type": "alternativeTo" },
+      { "source": "html", "target": "css", "type": "coOccursWith" },
+      { "source": "data_visualization", "target": "basic_statistics", "type": "requires" },
+      { "source": "sql", "target": "business_intelligence", "type": "isRequiredBy" },
+      { "source": "linear_algebra", "target": "machine_learning", "type": "prerequisiteOf" },
+      { "source": "deep_learning", "target": "neural_networks", "type": "hasPrerequisite" },
+      { "source": "python", "target": "data_analysis", "type": "usedFor" },
+      { "source": "natural_language_processing", "target": "linguistics", "type": "uses" },
+      { "source": "cloud_infrastructure", "target": "ai_deployment", "type": "enables" },
+      { "source": "data_automation", "target": "scripting_skills", "type": "isEnabledBy" },
+      { "source": "basic_programming", "target": "software_development", "type": "leadsTo" },
+      { "source": "excel_basics", "target": "advanced_excel", "type": "progressesTo" },
+      { "source": "object_oriented_programming", "target": "procedural_programming", "type": "buildsOn" },
+      { "source": "statistics", "target": "predictive_modeling", "type": "isFoundationalFor" },
+      { "source": "version_control", "target": "software_development_lifecycle", "type": "partOf" },
+      { "source": "devops", "target": "ci_cd", "type": "hasPart" },
+      { "source": "full_stack_development", "target": "frontend", "type": "combinationOf" },
+      { "source": "full_stack_development", "target": "backend", "type": "combinationOf" },
+      { "source": "pm", "target": "project_management", "type": "equivalentTo" },
+      { "source": "requirement_gathering", "target": "system_design", "type": "precedes" },
+      { "source": "testing", "target": "development", "type": "follows" },
+      { "source": "agile", "target": "software_projects", "type": "isApplicableIn" },
+      { "source": "jira", "target": "project_management", "type": "isUsedIn" },
+      { "source": "design_thinking", "target": "product_innovation", "type": "approachWithin" }
+    ]
+  }
+}

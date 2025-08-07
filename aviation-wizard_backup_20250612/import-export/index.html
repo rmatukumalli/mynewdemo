@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Import/Export</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles/custom.css"> <!-- Reusing existing custom styles -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Job Architecture Data Management</h1>
+            <p><a href="../index.html">Back to Wizard</a></p>
+        </header>
+
+        <main>
+            <section id="import-section">
+                <h2>Import Job Architecture Data</h2>
+                <p>Prepare your company’s job data from your HCM (e.g., Workday, SAP SuccessFactors) and export it into a CSV file.</p>
+                
+                <div class="form-group">
+                    <label for="csv-file-input">Upload CSV File:</label>
+                    <input type="file" id="csv-file-input" accept=".csv">
+                </div>
+                <button id="import-button" class="btn btn-primary">Import Data</button>
+                <div id="import-status" class="status-message" style="margin-top: 15px;"></div>
+            </section>
+
+            <div class="tabs-container" style="margin-top: 30px; display: none;">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="summary-tab">Data Summary</button>
+                    <button class="tab-button" data-tab="table-tab">Detailed View</button>
+                </div>
+
+                <div id="summary-tab" class="tab-content active">
+                    <section id="data-summary-section">
+                        <h2>Imported Data Summary</h2>
+                        <p>The following data categories have been processed from your CSV file:</p>
+                        <ul>
+                            <li>Job Families: <span id="job-families-count">0</span></li>
+                            <li>Job Profiles: <span id="job-profiles-count">0</span></li>
+                            <li>Job Levels: <span id="job-levels-count">0</span></li>
+                            <li>Role Groups: <span id="role-groups-count">0</span></li>
+                            <li>Role Levels: <span id="role-levels-count">0</span></li>
+                            <li>Role Group Skills: <span id="role-group-skills-count">0</span></li>
+                            <li>Role Level Skills: <span id="role-level-skills-count">0</span></li>
+                        </ul>
+                        <p><strong>Next Steps:</strong></p>
+                        <ul>
+                            <li>Review the processed data in the "Detailed View" tab.</li>
+                            <li>Link imported data to actual employee profiles.</li>
+                            <li>Utilize this data for skill gap analysis and training recommendations.</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <div id="table-tab" class="tab-content">
+                    <section id="data-table-section">
+                        <h2>Detailed Job Architecture Data</h2>
+                        <div class="filter-controls">
+                            <input type="text" id="global-filter-input" placeholder="Filter all columns..." class="filter-input">
+                        </div>
+                        <div class="table-responsive">
+                            <table id="imported-data-table">
+                                <thead>
+                                    <!-- Table headers will be dynamically generated -->
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will be dynamically generated -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="table-row-count">Showing 0 records</p>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Placeholder for potential export functionality -->
+            <!--
+            <section id="export-section" style="margin-top: 30px;">
+                <h2>Export Job Architecture Data</h2>
+                <button id="export-button" class="btn btn-secondary">Export Data (CSV)</button>
+                <div id="export-status" class="status-message" style="margin-top: 15px;"></div>
+            </section>
+            -->
+        </main>
+
+  <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only
+  </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

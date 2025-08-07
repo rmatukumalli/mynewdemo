@@ -1,0 +1,390 @@
+/* General Reset and Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f3f2ef; /* LinkedIn-like background */
+    color: #000000e6; /* LinkedIn text color */
+    line-height: 1.5;
+    /* padding-top: 60px; REMOVED - to address space above navbar */
+}
+
+/* Ensure profile content flows below any header */
+
+.container {
+    max-width: 1128px; /* Standard LinkedIn content width */
+    margin: 20px auto; /* Added top margin */
+    padding: 0 20px; /* Horizontal padding */
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Main content and sidebar */
+    gap: 20px;
+}
+
+/* Profile Card Styling */
+.profile-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    overflow: hidden; /* Important for cover photo and picture positioning */
+    margin-bottom: 20px;
+}
+
+.cover-photo {
+    height: 198px; /* Adjusted height */
+    background: linear-gradient(135deg, #0073b1 0%, #0077b5 100%); /* LinkedIn blue gradient */
+    /* background-image: url('../images/cover-placeholder.jpg'); placeholder */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.profile-header {
+    padding: 0 24px 24px;
+    position: relative; /* For absolute positioning of profile picture */
+}
+
+.profile-picture {
+    width: 152px;
+    height: 152px;
+    border-radius: 50%;
+    border: 4px solid white;
+    position: absolute;
+    top: -76px; /* Half of its height to overlap cover */
+    left: 24px;
+    /* Default placeholder, can be overridden by inline style in HTML */
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="20" fill="%23ddd"/><path d="M20 80 Q50 60 80 80 L80 100 L20 100 Z" fill="%23ddd"/></svg>') center/cover #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.profile-info {
+    margin-top: 80px; /* Space for the profile picture */
+    margin-left: 180px; /* Space for profile picture + some padding */
+}
+
+.profile-info .name {
+    font-size: 24px; /* Adjusted from 32px */
+    font-weight: 600;
+    color: #000000e6;
+    margin-bottom: 4px;
+}
+
+.profile-info .headline {
+    font-size: 16px; /* Adjusted from 20px */
+    color: #000000e6;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.profile-info .location {
+    color: #00000099;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.profile-info .connections {
+    color: #0a66c2; /* LinkedIn blue for links */
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.btn {
+    padding: 6px 16px; /* Adjusted padding */
+    border-radius: 16px; /* More rounded */
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #0a66c2;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #004182; /* Darker shade for hover */
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #0a66c2;
+    border: 1px solid #0a66c2;
+}
+
+.btn-secondary:hover {
+    background: rgba(10, 102, 194, 0.1); /* Light blue background on hover */
+    border-color: #005e93;
+}
+
+/* General Section Styling */
+.section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    margin-bottom: 20px;
+    padding: 24px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #000000e6;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e9e5df; /* Subtle separator */
+}
+
+.about-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #000000e6;
+}
+
+/* Experience & Education Section Styling */
+.experience-item {
+    display: flex;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9e5df;
+}
+
+.experience-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.company-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px; /* Can be 50% for circular logos */
+    background: #0a66c2; /* Default background */
+    margin-right: 16px; /* Increased margin */
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    overflow: hidden; /* If using img inside */
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.experience-details h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #000000e6;
+}
+
+.experience-details .company-name {
+    font-size: 14px;
+    color: #000000e6;
+    margin-bottom: 2px;
+}
+
+.experience-details .duration {
+    font-size: 14px; /* Slightly larger */
+    color: #00000099;
+    margin-bottom: 8px;
+}
+
+.experience-details .description {
+    font-size: 14px;
+    color: #000000e6;
+    line-height: 1.5;
+}
+
+/* Skills Section Styling */
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: #eef3f8; /* Lighter blue background */
+    border: 1px solid transparent; /* No border by default */
+    border-radius: 4px; /* Less rounded */
+    padding: 6px 12px; /* Adjusted padding */
+    font-size: 14px;
+    color: #000000e6;
+    font-weight: 400; /* Normal weight */
+    transition: all 0.2s;
+}
+
+.skill-tag:hover {
+    background: #dde7f0; /* Slightly darker on hover */
+    transform: translateY(-1px);
+}
+
+/* Sidebar Styling */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .section { /* Sidebar sections might have slightly different padding or margin */
+    padding: 20px;
+}
+
+.sidebar .section-title {
+    font-size: 18px; /* Slightly smaller title for sidebar sections */
+    margin-bottom: 12px;
+}
+
+.contact-info {
+    margin-bottom: 16px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #000000e6;
+}
+
+.contact-icon {
+    width: 16px; /* Standard icon size */
+    height: 16px;
+    margin-right: 10px; /* Increased margin */
+    fill: #00000099; /* Icon color */
+}
+
+/* Analytics Section Styling (in Sidebar) */
+.analytics { /* This class is used for a sidebar section in the example */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.analytics h3 { /* This is effectively a .section-title for analytics */
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #000000e6;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.stat span:first-child {
+    color: #00000099; /* Label color */
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #0a66c2; /* Value color */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) { /* Adjust breakpoint for sidebar stack */
+    .container {
+        grid-template-columns: 1fr; /* Stack main content and sidebar */
+    }
+    .profile-info {
+        margin-left: 0; /* Reset margin when stacked */
+        text-align: center; /* Center info below picture */
+        margin-top: 90px; /* Adjust space for picture */
+    }
+    .profile-picture {
+        left: 50%;
+        transform: translateX(-50%); /* Center the picture */
+    }
+    .action-buttons {
+        justify-content: center; /* Center buttons */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 50px; /* Adjust if navbar height is smaller on mobile */
+    }
+    .container {
+        padding: 0 10px;
+    }
+    .profile-info .name {
+        font-size: 22px;
+    }
+    .profile-info .headline {
+        font-size: 15px;
+    }
+    .section {
+        padding: 16px;
+    }
+    .section-title {
+        font-size: 18px;
+    }
+    .company-logo {
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+        font-size: 16px;
+    }
+    .experience-details h3 {
+        font-size: 15px;
+    }
+    .experience-details .company-name,
+    .experience-details .duration,
+    .experience-details .description,
+    .about-text,
+    .skill-tag,
+    .contact-item,
+    .stat {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+        top: -60px; /* Adjust for smaller picture */
+    }
+    .profile-info {
+        margin-top: 70px; /* Adjust for smaller picture */
+    }
+    .profile-info .name {
+        font-size: 20px;
+    }
+    .profile-info .headline {
+        font-size: 14px;
+    }
+    .action-buttons {
+        flex-direction: column; /* Stack buttons on very small screens */
+        gap: 10px;
+    }
+    .btn {
+        width: 100%;
+    }
+}

@@ -209,14 +209,13 @@
             <li><strong>Fields:</strong>
                 <ul>
                     <li>Role Title (Text Input, Required)</li>
-                    <li>Role ID (Auto-generated/Optional Text Input, Unique)</li>
-                    <li>Role Description (Rich Text Editor, Required)</li>
-                    <li>Role Type (Dropdown: e.g., Full-time, Part-time, Contract)</li>
-                    <li>Department/Function (Dropdown/Searchable, Required)</li>
-                    <li>Location (Text Input/Searchable, Required)</li>
+                    <li>Role Summary (Text Area, Max 300 chars, Optional, AI-generatable)</li>
+                    <li>Job Description (Text Area, Max 3000 chars, Optional, AI-generatable)</li>
+                    <li>Key Responsibilities (Text Area, 4-8 entries recommended, min 3, max 10, Optional, AI-generatable)</li>
+                    <li>Decision Scope (Text Area, Max 500 chars, Optional, AI-generatable)</li>
                 </ul>
             </li>
-            <li><strong>Validation:</strong> All required fields must be populated. Role ID must be unique if manually entered.</li>
+            <li><strong>Validation:</strong> Role Title is required.</li>
         </ul>
 
         <h3>7.2 Step 2: Organization & Position Structure (<code>step-2-organization-position-structure.html</code>)</h3>
@@ -224,14 +223,18 @@
             <li><strong>Purpose:</strong> Define where the role fits within the organizational hierarchy.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>Reporting To (Dropdown/Searchable: existing roles/positions)</li>
-                    <li>Direct Reports (Multi-select/Searchable: existing roles/positions, optional)</li>
-                    <li>Team/Unit (Dropdown/Searchable, Required)</li>
-                    <li>Job Family (Dropdown/Searchable, Required)</li>
-                    <li>Job Level/Grade (Dropdown, Required)</li>
+                    <li>Business Unit / Division (Dropdown, Required)</li>
+                    <li>Department (Dropdown, Required)</li>
+                    <li>Job Family (Dropdown, Required)</li>
+                    <li>Role Group / Team (Dropdown, Required)</li>
+                    <li>Role Code / ID (Text Input, Read-only, Auto-generated)</li>
+                    <li>Created Date (Date Input, Auto-populated)</li>
+                    <li>Team Size (Dropdown)</li>
+                    <li>Reporting Lines (Text Input)</li>
+                    <li>Matrix Relationships (Text Input, AI-generatable)</li>
                 </ul>
             </li>
-            <li><strong>Validation:</strong> Ensures valid reporting structures.</li>
+            <li><strong>Validation:</strong> Business Unit, Department, Job Family, and Role Group are required.</li>
         </ul>
 
         <h3>7.3 Step 3: Classification & Hierarchy (<code>step-3-classification-hierarchy.html</code>)</h3>
@@ -239,31 +242,38 @@
             <li><strong>Purpose:</strong> Categorize the role based on various classification schemes.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>Industry Classification (Dropdown/Searchable)</li>
-                    <li>Functional Area (Dropdown/Searchable)</li>
-                    <li>Business Unit (Dropdown/Searchable)</li>
-                    <li>Cost Center (Text Input/Searchable)</li>
-                    <li>Role Status (Dropdown: e.g., Active, Inactive, Draft)</li>
+                    <li>Career Track (Dropdown, Required)</li>
+                    <li>Level (Dropdown, Required)</li>
+                    <li>Grade / Job Level (Dropdown, Required)</li>
+                    <li>Seniority Label (Dropdown, Required)</li>
+                    <li>Feeder Roles (Multi-select)</li>
+                    <li>Reports To (Reporting Manager) (Dropdown, Required)</li>
+                    <li>Location / Region (Multi-select, Required)</li>
+                    <li>Location Type (Dropdown, Required)</li>
+                    <li>Employment Type (Dropdown, Required)</li>
+                    <li>Contract Type (Dropdown, Required)</li>
                 </ul>
             </li>
-            <li><strong>Validation:</strong> Ensures consistent classification.</li>
+            <li><strong>Validation:</strong> All required fields must be populated.</li>
         </ul>
 
-        <h3>7.4 Step 4: Skills, Capabilities, Competencies & Behaviors (<code>step-4-skills-capabilities-requirements.html</code>)</h3>
+        <h3>7.4 Step 4: Skills, Capabilities & Requirements (<code>step-4-skills-capabilities-requirements.html</code>)</h3>
         <ul>
-            <li><strong>Purpose:</strong> Specify the essential skills, capabilities, competencies, and behaviors required for the role, providing a comprehensive view of role requirements. While skills are directly modeled in the ontology, capabilities, competencies, and behaviors provide crucial context on how skills are applied and a person's readiness for responsibilities within the role profile.</li>
+            <li><strong>Purpose:</strong> Specify the essential skills, capabilities, and requirements for the role.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>Required Skills (Multi-select/Searchable from Skills Ontology, with proficiency levels: e.g., Basic, Intermediate, Advanced, Expert)</li>
-                    <li>Preferred Skills (Multi-select/Searchable from Skills Ontology, with proficiency levels)</li>
-                    <li>Capabilities (Text Area, optional): Describe broader capabilities required, which may encompass multiple skills and their application in specific contexts.</li>
-                    <li>Core Competencies (Text Area, optional): Outline the fundamental competencies expected for the role, reflecting underlying traits and behaviors.</li>
-                    <li>Key Behaviors (Text Area, optional): Detail specific observable behaviors critical for success in the role.</li>
-                    <li>Certifications/Licenses (Text Input/Searchable, optional)</li>
-                    <li>Languages (Multi-select, with proficiency levels)</li>
+                    <li>Technical Skills (Table with Capability, Competency, Skill, Min Proficiency, Target Proficiency, AI-generatable)</li>
+                    <li>Soft Skills (Table with Skill, Min Proficiency, Target Proficiency, AI-generatable)</li>
+                    <li>Education Requirements (Text Input)</li>
+                    <li>Language Requirements (Text Input)</li>
+                    <li>Travel Requirements (Dropdown)</li>
+                    <li>Experience Requirements (Dropdown)</li>
+                    <li>Tools & Technologies (Text Input)</li>
+                    <li>Certifications (Text Input, AI-generatable)</li>
+                    <li>Learning Resources (Dynamic List, AI-generatable)</li>
                 </ul>
             </li>
-            <li><strong>Interactions:</strong> Auto-completion and suggestions for skills from the integrated Skills Ontology. Ability to add custom skills if not found. AI-powered suggestions for Capabilities, Core Competencies, and Key Behaviors based on Role Title and Description.</li>
+            <li><strong>Interactions:</strong> "Add Skill" and "Add Soft Skill" buttons to add rows to tables. AI-powered suggestions for Technical Skills, Soft Skills, Certifications, and Learning Resources.</li>
         </ul>
 
         <h3>7.5 Step 5: Performance, Growth & Mobility (<code>step-5-performance-growth-mobility.html</code>)</h3>
@@ -271,10 +281,18 @@
             <li><strong>Purpose:</strong> Outline performance expectations, career progression, and mobility options.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>Key Performance Indicators (KPIs) (Text Area, optional)</li>
-                    <li>Success Metrics (Text Area, optional)</li>
-                    <li>Career Path/Next Roles (Multi-select/Searchable: existing roles, optional)</li>
-                    <li>Mobility Requirements (Dropdown: e.g., Local, Regional, Global)</li>
+                    <li>KPIs / Outcomes (Text Area, Max 5 entries, AI-generatable)</li>
+                    <li>Performance Review Cycle (Dropdown)</li>
+                    <li>Professional Development Support (Dropdown)</li>
+                    <li>Impact Areas (Text Input, AI-generatable)</li>
+                    <li>Behavioral Competencies (Text Input, AI-generatable)</li>
+                    <li>Career Path – Next Roles (Multi-select)</li>
+                    <li>Feeder Roles (Multi-select)</li>
+                    <li>Mobility Options (Multi-select)</li>
+                    <li>Time Allocation (%) (Text Input)</li>
+                    <li>Succession Plan Ready (Dropdown)</li>
+                    <li>Criticality to Business (Dropdown)</li>
+                    <li>Backup Resource Assigned (Text Input)</li>
                 </ul>
             </li>
         </ul>
@@ -284,10 +302,15 @@
             <li><strong>Purpose:</strong> Capture administrative and regulatory information.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>FLSA Status (Dropdown: Exempt, Non-Exempt)</li>
-                    <li>EEO Category (Dropdown)</li>
-                    <li>Union Affiliation (Checkbox, optional)</li>
-                    <li>Regulatory Compliance Notes (Text Area, optional)</li>
+                    <li>Billable / Non-Billable (Dropdown)</li>
+                    <li>Access Level / Permissions Group (Dropdown)</li>
+                    <li>Start Date / Expected Onboarding Date (Date Input)</li>
+                    <li>Status (Dropdown)</li>
+                    <li>Approval Status (Dropdown)</li>
+                    <li>Security Clearance (Dropdown)</li>
+                    <li>Background Check (Dropdown)</li>
+                    <li>Mandatory Compliance Training (Text Input)</li>
+                    <li>Equipment Provisioning (Text Area)</li>
                 </ul>
             </li>
         </ul>
@@ -297,10 +320,14 @@
             <li><strong>Purpose:</strong> Allow for organization-specific data points not covered by standard fields.</li>
             <li><strong>Fields:</strong>
                 <ul>
-                    <li>Dynamic fields based on administrator configuration (e.g., Text, Number, Date, Dropdown)</li>
+                    <li>Salary Band (Text Input)</li>
+                    <li>Remote Work Policy (Dropdown)</li>
+                    <li>Travel Expectations (Dropdown)</li>
+                    <li>On-call Duties (Dropdown)</li>
+                    <li>Innovation Time (Dropdown)</li>
                 </ul>
             </li>
-            <li><strong>Interactions:</strong> Ability for administrators to define and manage custom fields.</li>
+            <li><strong>Interactions:</strong> "Add Custom Field" button to dynamically add more custom fields.</li>
         </ul>
 
         <h3>7.8 Step 8: Metadata & Activity Log (<code>step-8-metadata-activity-log.html</code>)</h3>
@@ -308,13 +335,11 @@
             <li><strong>Purpose:</strong> Display system-generated metadata and a history of changes.</li>
             <li><strong>Fields (Read-only):</strong>
                 <ul>
-                    <li>Created By (User ID/Name)</li>
-                    <li>Created Date (Timestamp)</li>
-                    <li>Last Modified By (User ID/Name)</li>
-                    <li>Last Modified Date (Timestamp)</li>
-                    <li>Version History (List of changes with timestamps and user)</li>
+                    <li>Created By / Owner (Text Input)</li>
+                    <li>Last Updated (Text Input)</li>
                 </ul>
             </li>
+            <li><strong>Interactions:</strong> Activity Log (Dynamic List)</li>
         </ul>
 
         <h3>7.9 Step 9: Review & Edit (<code>step-9-review-edit.html</code>)</h3>
@@ -322,14 +347,17 @@
             <li><strong>Purpose:</strong> Provide a consolidated view of all entered information for final review and submission.</li>
             <li><strong>Functionality:</strong>
                 <ul>
-                    <li>Display all data from previous steps in a read-only format.</li>
+                    <li>Display all data from previous steps in a read-only, hierarchical summary format.</li>
                     <li>Ability to navigate back to any step for editing.</li>
                     <li>"Submit" button to finalize role creation.</li>
                     <li>"Save Draft" button to save progress without final submission.</li>
                     <li>"Cancel" button to discard changes.</li>
+                    <li>"Print Preview" button to render the complete role definition in a print-friendly format.</li>
+                    <li>"Export to Excel" button to generate a structured Excel file of the role definition.</li>
                 </ul>
             </li>
             <li><strong>Validation:</strong> Final check for completeness and consistency before submission.</li>
+            <li><strong>Interactions:</strong> "View Job Architecture Best Practices" collapsible section for additional guidance.</li>
         </ul>
         <p><strong>Desired Customer Outcomes:</strong> Reduced time-to-define new roles by 50% and improved data quality and consistency across the Role Dictionary.</p>
         <p><strong>High-Risk Assumption:</strong> Users will find the structured, multi-step input process intuitive and efficient, leading to high adoption.</p>
@@ -349,29 +377,64 @@
         <ul>
             <li><strong>Description:</strong> Integrate AI-assisted generation capabilities for key text-based fields. Users will be able to trigger AI generation based on initial inputs like Role Title, Job Family, or a brief set of keywords. The "Generate with AI" button will be applied to the following fields, with the specified minimum requirements for generation:
                 <ul>
-                    <li>Role Description (from Step 1: Role Overview)
+                    <li>Role Summary (from Step 1: Role Overview)
                         <ul>
                             <li>Minimum Requirement: Role Title</li>
                         </ul>
                     </li>
-                    <li>Required Skills (from Step 4: Skills & Capabilities Requirements)
+                    <li>Job Description (from Step 1: Role Overview)
                         <ul>
-                            <li>Minimum Requirement: Role Title and/or Role Description</li>
+                            <li>Minimum Requirement: Role Title</li>
                         </ul>
                     </li>
-                    <li>Preferred Skills (from Step 4: Skills & Capabilities Requirements)
+                    <li>Key Responsibilities (from Step 1: Role Overview)
                         <ul>
-                            <li>Minimum Requirement: Role Title and/or Role Description</li>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
                         </ul>
                     </li>
-                    <li>Key Performance Indicators (KPIs) (from Step 5: Performance, Growth & Mobility)
+                    <li>Decision Scope (from Step 1: Role Overview)
                         <ul>
-                            <li>Minimum Requirement: Role Title and/or Role Description</li>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
                         </ul>
                     </li>
-                    <li>Success Metrics (from Step 5: Performance, Growth & Mobility)
+                    <li>Matrix Relationships (from Step 2: Organization & Position Structure)
                         <ul>
-                            <li>Minimum Requirement: Role Title and/or Role Description</li>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Technical Skills (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Soft Skills (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Certifications (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Learning Resources (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>KPIs / Outcomes (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Impact Areas (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Behavioral Competencies (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
                         </ul>
                     </li>
                 </ul>
@@ -612,88 +675,110 @@
       "step": "7.1 Step 1: Role Overview",
       "fields": [
         {"name": "Role Title", "type": "Text Input", "required": true, "exampleValue": "Senior Frontend Engineer"},
-        {"name": "Role ID", "type": "Auto-generated/Optional Text Input", "required": false, "notes": "Unique", "exampleValue": null},
-        {"name": "Role Description", "type": "Rich Text Editor", "required": true, "exampleValue": "The Senior Frontend Engineer will build and maintain the user interface, collaborating closely with product managers and designers to implement new features, ensure responsive design, and participate in code reviews."},
-        {"name": "Role Type", "type": "Dropdown", "options": ["Full-time", "Part-time", "Contract"], "required": false, "exampleValue": "Full-time"},
-        {"name": "Department/Function", "type": "Dropdown/Searchable", "required": true, "exampleValue": "Engineering"},
-        {"name": "Location", "type": "Text Input/Searchable", "required": true, "exampleValue": "Hyderabad, Remote, EMEA"}
+        {"name": "Role Summary", "type": "Text Area", "required": false, "notes": "Max 300 chars, AI-generatable", "exampleValue": "Designs, develops, and maintains user-facing features for our web applications."},
+        {"name": "Job Description", "type": "Text Area", "required": false, "notes": "Max 3000 chars, AI-generatable", "exampleValue": "The Senior Frontend Engineer will build and maintain the user interface, collaborating closely with product managers and designers to implement new features, ensure responsive design, and participate in code reviews."},
+        {"name": "Key Responsibilities", "type": "Text Area", "required": false, "notes": "4-8 entries recommended, min 3, max 10, AI-generatable", "exampleValue": "- Develop new user-facing features using React.js\n- Build reusable front-end components\n- Translate designs and wireframes into high-quality code\n- Optimize performance across web platforms"},
+        {"name": "Decision Scope", "type": "Text Area", "required": false, "notes": "Max 500 chars, AI-generatable", "exampleValue": "Owns technical implementation decisions for frontend features, including framework and library choices on projects."}
       ]
     },
     {
       "step": "7.2 Step 2: Organization & Position Structure",
       "fields": [
-        {"name": "Reporting To", "type": "Dropdown/Searchable", "notes": "existing roles/positions", "required": false, "exampleValue": "Jane Doe"},
-        {"name": "Direct Reports", "type": "Multi-select/Searchable", "notes": "existing roles/positions", "required": false, "exampleValue": null},
-        {"name": "Team/Unit", "type": "Dropdown/Searchable", "required": true, "exampleValue": "Front-end"},
-        {"name": "Job Family", "type": "Dropdown/Searchable", "required": true, "exampleValue": "Software Engineering"},
-        {"name": "Job Level/Grade", "type": "Dropdown", "required": true, "exampleValue": "IC04"}
+        {"name": "Business Unit / Division", "type": "Dropdown", "required": true, "exampleValue": "Consumer Tech"},
+        {"name": "Department", "type": "Dropdown", "required": true, "exampleValue": "Engineering"},
+        {"name": "Job Family", "type": "Dropdown", "required": true, "exampleValue": "Software Engineering"},
+        {"name": "Role Group / Team", "type": "Dropdown", "required": true, "exampleValue": "Front-end"},
+        {"name": "Role Code / ID", "type": "Text Input", "required": false, "notes": "Read-only, Auto-generated", "exampleValue": "ENG-FE-IC04"},
+        {"name": "Created Date", "type": "Date Input", "required": false, "notes": "Auto-populated", "exampleValue": "2025-07-22"},
+        {"name": "Team Size", "type": "Dropdown", "required": false, "exampleValue": "6-10"},
+        {"name": "Reporting Lines", "type": "Text Input", "required": false, "exampleValue": "Reports to Engineering Manager"},
+        {"name": "Matrix Relationships", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Works closely with Product Managers"}
       ]
     },
     {
       "step": "7.3 Step 3: Classification & Hierarchy",
       "fields": [
-        {"name": "Industry Classification", "type": "Dropdown/Searchable", "required": false, "exampleValue": null},
-        {"name": "Functional Area", "type": "Dropdown/Searchable", "required": false, "exampleValue": "Front-end"},
-        {"name": "Business Unit", "type": "Dropdown/Searchable", "required": false, "exampleValue": "Consumer Tech"},
-        {"name": "Cost Center", "type": "Text Input/Searchable", "required": false, "exampleValue": null},
-        {"name": "Role Status", "type": "Dropdown", "options": ["Active", "Inactive", "Draft"], "required": false, "exampleValue": "Active"}
+        {"name": "Career Track", "type": "Dropdown", "required": true, "exampleValue": "Technical"},
+        {"name": "Level", "type": "Dropdown", "required": true, "exampleValue": "Individual Contributor"},
+        {"name": "Grade / Job Level", "type": "Dropdown", "required": true, "exampleValue": "IC4"},
+        {"name": "Seniority Label", "type": "Dropdown", "required": true, "exampleValue": "Senior"},
+        {"name": "Feeder Roles", "type": "Multi-select", "required": false, "exampleValue": ["Mid-level Frontend Engineer", "Software Engineer II"]},
+        {"name": "Reports To (Reporting Manager)", "type": "Dropdown", "required": true, "exampleValue": "Jane Doe"},
+        {"name": "Location / Region", "type": "Multi-select", "required": true, "exampleValue": ["Hyderabad", "Remote", "EMEA"]},
+        {"name": "Location Type", "type": "Dropdown", "required": true, "exampleValue": "Remote"},
+        {"name": "Employment Type", "type": "Dropdown", "required": true, "exampleValue": "Full-time"},
+        {"name": "Contract Type", "type": "Dropdown", "required": true, "exampleValue": "Permanent"}
       ]
     },
     {
       "step": "7.4 Step 4: Skills, Capabilities, Competencies & Behaviors",
       "fields": [
-        {"name": "Required Skills", "type": "Multi-select/Searchable", "notes": "from Skills Ontology, with proficiency levels", "required": false, "exampleValue": ["React.js (Min: 3, Target: 4)", "JavaScript (Min: 4, Target: 5)", "TypeScript (Min: 3, Target: 4)", "CSS/SCSS (Min: 4, Target: 5)", "HTML5 (Min: 4, Target: 5)", "Jest/React Testing Library (Min: 3, Target: 4)", "Webpack/Vite (Min: 3, Target: 4)"]},
-        {"name": "Preferred Skills", "type": "Multi-select/Searchable", "notes": "from Skills Ontology, with proficiency levels", "required": false, "exampleValue": null},
-        {"name": "Capabilities", "type": "Text Area", "required": false, "exampleValue": null},
-        {"name": "Core Competencies", "type": "Text Area", "required": false, "exampleValue": ["Communication", "Collaboration", "Problem Solving"]},
-        {"name": "Key Behaviors", "type": "Text Area", "required": false, "exampleValue": null},
-        {"name": "Certifications/Licenses", "type": "Text Input/Searchable", "required": false, "exampleValue": "AWS Certified Developer"},
-        {"name": "Languages", "type": "Multi-select", "notes": "with proficiency levels", "required": false, "exampleValue": null}
+        {"name": "Technical Skills", "type": "Table", "required": false, "notes": "Capability, Competency, Skill, Min Proficiency, Target Proficiency, AI-generatable", "exampleValue": []},
+        {"name": "Soft Skills", "type": "Table", "required": false, "notes": "Skill, Min Proficiency, Target Proficiency, AI-generatable", "exampleValue": []},
+        {"name": "Education Requirements", "type": "Text Input", "required": false, "exampleValue": "Bachelor's degree in Computer Science"},
+        {"name": "Language Requirements", "type": "Text Input", "required": false, "exampleValue": "English (Fluent), Spanish (Conversational)"},
+        {"name": "Travel Requirements", "type": "Dropdown", "required": false, "exampleValue": "Occasional (up to 10%)"},
+        {"name": "Experience Requirements", "type": "Dropdown", "required": false, "exampleValue": "5-7 years"},
+        {"name": "Tools & Technologies", "type": "Text Input", "required": false, "exampleValue": "GitHub, Postman, Figma, Jira"},
+        {"name": "Certifications", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "AWS Certified Developer"},
+        {"name": "Learning Resources", "type": "Dynamic List", "required": false, "notes": "AI-generatable", "exampleValue": []}
       ]
     },
     {
       "step": "7.5 Step 5: Performance, Growth & Mobility",
       "fields": [
-        {"name": "Key Performance Indicators (KPIs)", "type": "Text Area", "required": false, "exampleValue": "Deliver 90% of assigned features on time and with less than 5 critical bugs per release., Reduce frontend bug count by 15% quarterly., Achieve a Lighthouse performance score of 90+ for all new features."},
-        {"name": "Success Metrics", "type": "Text Area", "required": false, "exampleValue": null},
-        {"name": "Career Path/Next Roles", "type": "Multi-select/Searchable", "notes": "existing roles", "required": false, "exampleValue": ["Lead Frontend Engineer", "Staff Engineer"]},
-        {"name": "Mobility Requirements", "type": "Dropdown", "options": ["Local", "Regional", "Global"], "required": false, "exampleValue": null}
+        {"name": "KPIs / Outcomes", "type": "Text Area", "required": false, "notes": "Max 5 entries, AI-generatable", "exampleValue": "- Deliver features on time and with high quality.\n- Reduce frontend bug count by 15% quarterly."},
+        {"name": "Performance Review Cycle", "type": "Dropdown", "required": false, "exampleValue": "Quarterly"},
+        {"name": "Professional Development Support", "type": "Dropdown", "required": false, "exampleValue": "Budget up to $1000"},
+        {"name": "Impact Areas", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Customer Experience, Product Delivery"},
+        {"name": "Behavioral Competencies", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Communication, Collaboration, Problem Solving"},
+        {"name": "Career Path – Next Roles", "type": "Multi-select", "required": false, "exampleValue": ["Lead Frontend Engineer", "Staff Engineer"]},
+        {"name": "Feeder Roles", "type": "Multi-select", "required": false, "exampleValue": ["Mid-level Frontend Engineer"]},
+        {"name": "Mobility Options", "type": "Multi-select", "required": false, "exampleValue": ["Backend Engineer", "Full Stack Engineer"]},
+        {"name": "Time Allocation (%)", "type": "Text Input", "required": false, "exampleValue": "60% Development, 40% Meetings"},
+        {"name": "Succession Plan Ready", "type": "Dropdown", "required": false, "exampleValue": "Yes"},
+        {"name": "Criticality to Business", "type": "Dropdown", "required": false, "exampleValue": "High"},
+        {"name": "Backup Resource Assigned", "type": "Text Input", "required": false, "exampleValue": "John Smith"}
       ]
     },
     {
       "step": "7.6 Step 6: Administrative & Compliance Details",
       "fields": [
-        {"name": "FLSA Status", "type": "Dropdown", "options": ["Exempt", "Non-Exempt"], "required": false, "exampleValue": "Exempt"},
-        {"name": "EEO Category", "type": "Dropdown", "required": false, "exampleValue": null},
-        {"name": "Union Affiliation", "type": "Checkbox", "required": false, "exampleValue": false},
-        {"name": "Regulatory Compliance Notes", "type": "Text Area", "required": false, "exampleValue": null}
+        {"name": "Billable / Non-Billable", "type": "Dropdown", "required": false, "exampleValue": "No"},
+        {"name": "Access Level / Permissions Group", "type": "Dropdown", "required": false, "exampleValue": "Contributor"},
+        {"name": "Start Date / Expected Onboarding Date", "type": "Date Input", "required": false, "exampleValue": "2025-08-15"},
+        {"name": "Status", "type": "Dropdown", "required": false, "exampleValue": "Active"},
+        {"name": "Approval Status", "type": "Dropdown", "required": false, "exampleValue": "Approved"},
+        {"name": "Security Clearance", "type": "Dropdown", "required": false, "exampleValue": "Not Required"},
+        {"name": "Background Check", "type": "Dropdown", "required": false, "exampleValue": "Required upon offer"},
+        {"name": "Mandatory Compliance Training", "type": "Text Input", "required": false, "exampleValue": "Annual Security Awareness Training"},
+        {"name": "Equipment Provisioning", "type": "Text Area", "required": false, "exampleValue": "MacBook Pro 16-inch, WebStorm, Microsoft 365, Slack"}
       ]
     },
     {
       "step": "7.7 Step 7: Custom Fields",
       "fields": [
-        {"name": "Dynamic fields", "type": "Dynamic", "notes": "based on administrator configuration (e.g., Text, Number, Date, Dropdown)", "required": false, "exampleValue": {
-            "salary band": "$120,000 - $160,000 USD",
-            "remote work policy": "Fully remote with option to work from office. Core hours are 10am-4pm local time.",
-            "travel expectations": "Less than 5%, for annual team offsite.",
-            "on call duties": "One week per quarter, secondary on-call.",
-            "innovation time": "10% of work time can be allocated to approved innovation projects."
-        }}
+        {"name": "Salary Band", "type": "Text Input", "required": false, "exampleValue": "$120,000 - $160,000 USD"},
+        {"name": "Remote Work Policy", "type": "Dropdown", "required": false, "exampleValue": "Fully Remote"},
+        {"name": "Travel Expectations", "type": "Dropdown", "required": false, "exampleValue": "Less than 10%"},
+        {"name": "On-call Duties", "type": "Dropdown", "required": false, "exampleValue": "Secondary on-call"},
+        {"name": "Innovation Time", "type": "Dropdown", "required": false, "exampleValue": "10%"}
       ]
     },
     {
       "step": "7.8 Step 8: Metadata & Activity Log",
       "fields": [
-        {"name": "Created By", "type": "Read-only (User ID/Name)", "required": false, "exampleValue": "Raj Matukumalli"},
-        {"name": "Created Date", "type": "Read-only (Timestamp)", "required": false, "exampleValue": "2025-07-22"},
-        {"name": "Last Modified By", "type": "Read-only (User ID/Name)", "required": false, "exampleValue": "Raj Matukumalli"},
-        {"name": "Last Modified Date", "type": "Read-only (Timestamp)", "required": false, "exampleValue": "2025-07-22T21:29:05Z"},
-        {"name": "Version History", "type": "Read-only (List of changes)", "required": false, "exampleValue": "as displayed in step 8"}
+        {"name": "Created By / Owner", "type": "Text Input", "required": false, "notes": "Read-only", "exampleValue": "Raj Matukumalli"},
+        {"name": "Last Updated", "type": "Text Input", "required": false, "notes": "Read-only", "exampleValue": "7/22/2025, 9:29:05 PM"},
+        {"name": "Activity Log", "type": "Dynamic List", "required": false, "notes": "Read-only", "exampleValue": []}
       ]
     },
     {
       "step": "7.9 Step 9: Review & Edit",
-      "fields": []
+      "fields": [
+        {"name": "Review Content", "type": "Hierarchical Summary", "required": false, "notes": "Populated by script.js", "exampleValue": "as displayed in step 9"},
+        {"name": "Job Architecture Best Practices", "type": "Collapsible Section", "required": false, "exampleValue": "Standard Job Architecture Hierarchy, Visual Example, Key Insights"}
+      ]
     }
   ]
 }</code></pre>

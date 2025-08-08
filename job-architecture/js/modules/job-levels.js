@@ -4,28 +4,32 @@ const jobLevelsModule = {
         const actionButtonContainer = contentWrapper.querySelector('.action-buttons');
         const panelsContainer = contentWrapper.querySelector('.panels-container');
 
-        // Fetch mock data from JSON files
-        try {
-            const [businessUnitsData, departmentsData, roleGroupsData, jobLevelsData] = await Promise.all([
-                fetch('/job-architecture/data/mock-business-units.json').then(res => res.json()),
-                fetch('/job-architecture/data/mock-departments.json').then(res => res.json()),
-                fetch('/job-architecture/data/mock-role-groups.json').then(res => res.json()),
-                fetch('/job-architecture/data/mock-job-levels.json').then(res => res.json())
-            ]);
+        // Data is now loaded from appData, no need for individual fetches or mock data here
+        // try {
+        //     const [businessUnitsData, departmentsData, roleGroupsData, jobLevelsData] = await Promise.all([
+        //         fetch('/job-architecture/data/mock-business-units.json').then(res => res.json()),
+        //         fetch('/job-architecture/data/mock-departments.json').then(res => res.json()),
+        //         fetch('/job-architecture/data/mock-role-groups.json').then(res => res.json()),
+        //         fetch('/job-architecture/data/mock-job-levels.json').then(res => res.json())
+        //     ]);
 
-            appData.business_units = businessUnitsData;
-            appData.departments = departmentsData;
-            appData.role_groups = roleGroupsData;
-            appData.job_levels = jobLevelsData;
+        //     appData.business_units = businessUnitsData;
+        //     appData.departments = departmentsData;
+        //     appData.role_groups = roleGroupsData;
+        //     appData.job_levels = jobLevelsData.map(jl => ({
+        //         ...jl,
+        //         role_level: jl.role_level || 'Individual Contributor', // Default value if not present
+        //         skill_level: jl.skill_level || 'Intermediate' // Default value if not present
+        //     }));
 
-        } catch (error) {
-            console.error('Error loading mock data:', error);
-            // Fallback to empty arrays if data loading fails
-            appData.business_units = [];
-            appData.departments = [];
-            appData.role_groups = [];
-            appData.job_levels = [];
-        }
+        // } catch (error) {
+        //     console.error('Error loading mock data:', error);
+        //     // Fallback to empty arrays if data loading fails
+        //     appData.business_units = [];
+        //     appData.departments = [];
+        //     appData.role_groups = [];
+        //     appData.job_levels = [];
+        // }
 
         actionButtonContainer.innerHTML = `<button data-action="add-jl" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md text-sm hover:bg-blue-700">Add Job Level</button>`;
         
@@ -42,7 +46,7 @@ const jobLevelsModule = {
 
         let currentPage = 1;
         const rowsPerPage = 10;
-        let currentSortColumn = 'level_number'; // Default sort column
+        let currentSortColumn = 'role_group_id'; // Default sort column
         let currentSortDirection = 'asc'; // Default sort direction
 
         function populateFilters(selectedBu = '', selectedDept = '') {
@@ -88,7 +92,9 @@ const jobLevelsModule = {
                 const businessUnit = appData.business_units.find(bu => bu.id === department?.unit);
 
                 const matchesSearch = jl.level_name.toLowerCase().includes(searchTerm) ||
-                                      jl.key_responsibilities.toLowerCase().includes(searchTerm);
+                                      jl.key_responsibilities.toLowerCase().includes(searchTerm) ||
+                                      jl.role_level.toLowerCase().includes(searchTerm) ||
+                                      jl.skill_level.toLowerCase().includes(searchTerm);
                 const matchesBu = !selectedBu || businessUnit?.id === selectedBu;
                 const matchesDept = !selectedDept || department?.id === selectedDept;
                 const matchesRg = !selectedRg || roleGroup?.id === selectedRg;
@@ -167,52 +173,31 @@ const jobLevelsModule = {
                 return NaN; // Return NaN if no number is found
             };
 
-            // Apply sorting before pagination
+            // Apply custom sorting: "Pilots" first, then by Level Number
             finalFilteredLevels.sort((a, b) => {
-                let valA, valB;
+                const roleGroupA = appData.role_groups.find(rg => rg.id === a.role_group_id)?.group_name || '';
+                const roleGroupB = appData.role_groups.find(rg => rg.id === b.role_group_id)?.group_name || '';
 
-                switch (currentSortColumn) {
-                    case 'level_name':
-                    case 'key_responsibilities':
-                        valA = a[currentSortColumn];
-                        valB = b[currentSortColumn];
-                        return currentSortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-                    case 'level_number':
-                        // Custom alphanumeric sort for level_number (e.g., IC01, IC02, M1, M2)
-                        const extractParts = (s) => {
-                            const match = s.match(/([A-Z]+)(\d+)/);
-                            return match ? [match[1], parseInt(match[2])] : [s, 0];
-                        };
-                        const [prefixA, numA] = extractParts(a.level_number);
-                        const [prefixB, numB] = extractParts(b.level_number);
-
-                        if (prefixA !== prefixB) {
-                            return currentSortDirection === 'asc' ? prefixA.localeCompare(prefixB) : prefixB.localeCompare(prefixA);
-                        }
-                        return currentSortDirection === 'asc' ? numA - numB : numB - numA;
-                    case 'salary_range':
-                    case 'bonus_potential':
-                        valA = extractNumericValue(a[currentSortColumn]);
-                        valB = extractNumericValue(b[currentSortColumn]);
-                        // Handle cases where values might not be numbers (e.g., "N/A")
-                        if (isNaN(valA) && isNaN(valB)) return 0;
-                        if (isNaN(valA)) return currentSortDirection === 'asc' ? 1 : -1;
-                        if (isNaN(valB)) return currentSortDirection === 'asc' ? -1 : 1;
-                        return currentSortDirection === 'asc' ? valA - valB : valB - valA;
-                    case 'role_group_id':
-                        const roleGroupA = appData.role_groups.find(rg => rg.id === a.role_group_id)?.group_name || '';
-                        const roleGroupB = appData.role_groups.find(rg => rg.id === b.role_group_id)?.group_name || '';
-                        return currentSortDirection === 'asc' ? roleGroupA.localeCompare(roleGroupB) : roleGroupB.localeCompare(roleGroupA);
-                    default:
-                        // Fallback for other columns, assuming direct comparison is fine
-                        valA = a[currentSortColumn];
-                        valB = b[currentSortColumn];
-                        if (typeof valA === 'string') {
-                            return currentSortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-                        } else {
-                            return currentSortDirection === 'asc' ? valA - valB : valB - valA;
-                        }
+                // Prioritize "Pilots" role group
+                if (roleGroupA === 'Pilots' && roleGroupB !== 'Pilots') {
+                    return -1;
                 }
+                if (roleGroupA !== 'Pilots' && roleGroupB === 'Pilots') {
+                    return 1;
+                }
+
+                // If both are "Pilots" or neither are "Pilots", sort by Level Number
+                const extractParts = (s) => {
+                    const match = s.match(/([A-Z]+)(\d+)/);
+                    return match ? [match[1], parseInt(match[2])] : [s, 0];
+                };
+                const [prefixA, numA] = extractParts(a.level_number);
+                const [prefixB, numB] = extractParts(b.level_number);
+
+                if (prefixA !== prefixB) {
+                    return prefixA.localeCompare(prefixB);
+                }
+                return numA - numB;
             });
 
             const totalPages = Math.ceil(finalFilteredLevels.length / rowsPerPage); // Recalculate total pages based on the new filtered set
@@ -232,31 +217,35 @@ const jobLevelsModule = {
                     <table class="w-full text-left text-sm">
                         <thead class="border-b border-slate-200 bg-slate-50">
                             <tr class="text-xs">
+                                <th class="p-2 font-semibold" data-sort-by="role_group_id">Role Group ${currentSortColumn === 'role_group_id' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold" data-sort-by="level_name">Level Name ${currentSortColumn === 'level_name' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold" data-sort-by="level_number">Level Number ${currentSortColumn === 'level_number' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
+                                <th class="p-2 font-semibold" data-sort-by="role_level">Role Level ${currentSortColumn === 'role_level' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
+                                <th class="p-2 font-semibold" data-sort-by="skill_level">Skill Level ${currentSortColumn === 'skill_level' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold" data-sort-by="salary_range">Salary Range ${currentSortColumn === 'salary_range' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold" data-sort-by="bonus_potential">Bonus Potential ${currentSortColumn === 'bonus_potential' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold" data-sort-by="key_responsibilities">Key Responsibilities ${currentSortColumn === 'key_responsibilities' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
-                                <th class="p-2 font-semibold" data-sort-by="role_group_id">Role Group ${currentSortColumn === 'role_group_id' ? (currentSortDirection === 'asc' ? '&#9650;' : '&#9660;') : ''}</th>
                                 <th class="p-2 font-semibold text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${paginatedLevels.map(jl => `
                                 <tr class="border-b border-slate-200">
+                                    <td class="p-2">${appData.role_groups.find(rg => rg.id === jl.role_group_id)?.group_name || ''}</td>
                                     <td class="p-2 font-medium text-slate-800">${jl.level_name}</td>
                                     <td class="p-2">${jl.level_number}</td>
+                                    <td class="p-2">${jl.role_level}</td>
+                                    <td class="p-2">${jl.skill_level}</td>
                                     <td class="p-2">${jl.salary_range}</td>
                                     <td class="p-2">${jl.bonus_potential}</td>
                                     <td class="p-2">${jl.key_responsibilities}</td>
-                                    <td class="p-2">${appData.role_groups.find(rg => rg.id === jl.role_group_id)?.group_name || ''}</td>
                                     <td class="p-2 flex gap-3 justify-end">
                                         <button data-action="edit-jl" data-id="${jl.id}" class="text-slate-500 hover:text-blue-600 font-medium">Edit</button>
                                         <button data-action="delete-jl" data-id="${jl.id}" class="text-slate-500 hover:text-red-600 font-medium">Delete</button>
                                         <button data-action="career-path" data-id="${jl.id}" class="text-slate-500 hover:text-green-600 font-medium">Career Path</button>
                                     </td>
                                 </tr>
-                            `).join('') || `<tr><td colspan="7" class="text-center p-4 text-slate-400">No job levels found.</td></tr>`}
+                            `).join('') || `<tr><td colspan="9" class="text-center p-4 text-slate-400">No job levels found.</td></tr>`}
                         </tbody>
                     </table>
                 </div>
@@ -330,6 +319,8 @@ const jobLevelsModule = {
                                 { label: 'Role Group', id: 'role_group_id', type: 'select', options: appData.role_groups.map(rg => ({ value: rg.id, label: rg.group_name })) },
                                 { label: 'Level Name', id: 'level_name' },
                                 { label: 'Level Number', id: 'level_number' },
+                                { label: 'Role Level', id: 'role_level', type: 'select', options: [{value: 'Individual Contributor', label: 'Individual Contributor'}, {value: 'Manager', label: 'Manager'}, {value: 'Executive', label: 'Executive'}, {value: 'Support', label: 'Support'}] },
+                                { label: 'Skill Level', id: 'skill_level', type: 'select', options: [{value: 'Beginner', label: 'Beginner'}, {value: 'Intermediate', label: 'Intermediate'}, {value: 'Advanced', label: 'Advanced'}, {value: 'Expert', label: 'Expert'}] },
                                 { label: 'Salary Range', id: 'salary_range' },
                                 { label: 'Bonus Potential', id: 'bonus_potential' },
                                 { label: 'Key Responsibilities', id: 'key_responsibilities' },
@@ -338,15 +329,22 @@ const jobLevelsModule = {
                     }
                 ],
                 onConfirm: async () => {
+                const role_group_id = document.getElementById('form-role_group_id').value;
                 const level_name = document.getElementById('form-level_name').value;
                 const level_number = document.getElementById('form-level_number').value;
+                const role_level = document.getElementById('form-role_level').value;
+                const skill_level = document.getElementById('form-skill_level').value;
                 const salary_range = document.getElementById('form-salary_range').value;
                 const bonus_potential = document.getElementById('form-bonus_potential').value;
                 const key_responsibilities = document.getElementById('form-key_responsibilities').value;
                 if(!level_name || !level_number) return false;
                 
                 // Mock API call
-                console.log('Adding job level:', { level_name, level_number, salary_range, bonus_potential, key_responsibilities });
+                console.log('Adding job level:', { role_group_id, level_name, level_number, role_level, skill_level, salary_range, bonus_potential, key_responsibilities });
+                appData.job_levels.push({
+                    id: `jl_${Date.now()}`, // Simple unique ID
+                    role_group_id, level_name, level_number, role_level, skill_level, salary_range, bonus_potential, key_responsibilities
+                });
                 updateWizardState();
                 return true;
             }});
@@ -366,6 +364,8 @@ const jobLevelsModule = {
                                     { label: 'Role Group', id: 'role_group_id', type: 'select', options: appData.role_groups.map(rg => ({ value: rg.id, label: rg.group_name })), value: item.role_group_id },
                                     { label: 'Level Name', id: 'level_name', value: item.level_name },
                                     { label: 'Level Number', id: 'level_number', value: item.level_number },
+                                    { label: 'Role Level', id: 'role_level', type: 'select', options: [{value: 'Individual Contributor', label: 'Individual Contributor'}, {value: 'Manager', label: 'Manager'}, {value: 'Executive', label: 'Executive'}, {value: 'Support', label: 'Support'}], value: item.role_level },
+                                    { label: 'Skill Level', id: 'skill_level', type: 'select', options: [{value: 'Beginner', label: 'Beginner'}, {value: 'Intermediate', label: 'Intermediate'}, {value: 'Advanced', label: 'Advanced'}, {value: 'Expert', label: 'Expert'}], value: item.skill_level },
                                     { label: 'Salary Range', id: 'salary_range', value: item.salary_range },
                                     { label: 'Bonus Potential', id: 'bonus_potential', value: item.bonus_potential },
                                     { label: 'Key Responsibilities', id: 'key_responsibilities', value: item.key_responsibilities },
@@ -374,8 +374,11 @@ const jobLevelsModule = {
                         }
                     ],
                     onConfirm: async () => {
+                    item.role_group_id = document.getElementById('form-role_group_id').value;
                     item.level_name = document.getElementById('form-level_name').value;
                     item.level_number = document.getElementById('form-level_number').value;
+                    item.role_level = document.getElementById('form-role_level').value;
+                    item.skill_level = document.getElementById('form-skill_level').value;
                     item.salary_range = document.getElementById('form-salary_range').value;
                     item.bonus_potential = document.getElementById('form-bonus_potential').value;
                     item.key_responsibilities = document.getElementById('form-key_responsibilities').value;

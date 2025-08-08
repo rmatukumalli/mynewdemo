@@ -10,14 +10,14 @@ const reviewAIModule = {
         const checklistContainer = document.getElementById('wizard-progress-checklist');
         if (!checklistContainer) return;
         const checklistData = [
-            { name: 'Organization Setup', description: 'Initial organization structure defined.', status: 'Complete', step: 1 },
-            { name: 'Business Units', description: 'All business units mapped.', status: 'Complete', step: 2 },
-            { name: 'Departments', description: 'Engineering department needs job assignments.', status: 'In Progress', step: 3 },
-            { name: 'Role Groups', description: 'Role groups created and described.', status: 'Complete', step: 4 },
-            { name: 'Job Levels', description: 'Define standardized job levels.', status: 'Not Started', step: 5 },
-            { name: 'Add Jobs', description: '15 of 25 planned jobs added.', status: 'In Progress', step: 6 },
-            { name: 'Skill Gaps', description: 'Initial skill gap analysis performed.', status: 'Complete', step: 7 },
-            { name: 'Career Paths', description: 'Define career progression paths.', status: 'Not Started', step: 8 }
+            { name: 'Organization Setup', description: 'Organization details including industry defined.', status: 'Complete', step: 1 },
+            { name: 'Business Units', description: 'Business units with organizational links and details defined.', status: 'Complete', step: 2 },
+            { name: 'Departments', description: 'Departments with job functions defined.', status: 'Complete', step: 3 },
+            { name: 'Role Groups', description: 'Role groups with job families and categories defined.', status: 'Complete', step: 4 },
+            { name: 'Job Levels', description: 'Standardized job levels with role and skill levels defined.', status: 'Complete', step: 5 },
+            { name: 'Add Jobs & Skills', description: 'Job roles with behavioral anchors, associated skills, and proficiency levels defined.', status: 'Complete', step: 7 }, // Note: Step 6 is AI Wizard, Step 7 is Add Jobs & Skills
+            { name: 'Skill Gaps', description: 'Initial skill gap analysis performed.', status: 'Not Started', step: 8 }, // Assuming this is still 'Not Started'
+            { name: 'Career Paths', description: 'Define career progression paths.', status: 'Not Started', step: 9 } // Assuming this is still 'Not Started'
         ];
 
         const getStatusChip = (status) => {

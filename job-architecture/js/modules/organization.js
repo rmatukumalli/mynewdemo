@@ -3,12 +3,10 @@ const organizationModule = {
         const actionButtonContainer = contentWrapper.querySelector('.action-buttons');
         const panelsContainer = contentWrapper.querySelector('.panels-container');
 
-        const mockOrganizations = [
-            { id: '1', company_name: 'Akara Airlines', industry: 'Aviation', company_size: '10000+', country: 'USA', ceo: 'John Doe', founded_year: '1995', revenue: '$10B' },
-            { id: '2', company_name: 'SkyHigh Charters', industry: 'Aviation', company_size: '500-1000', country: 'USA', ceo: 'Jane Smith', founded_year: '2005', revenue: '$500M' }
-        ];
+        // Data is now loaded from appData, no need for mockOrganizations here
+        // const mockOrganizations = [ ... ];
 
-        appData.organizations = mockOrganizations;
+        // appData.organizations = mockOrganizations; // This line is no longer needed
 
         actionButtonContainer.innerHTML = `<button data-action="add-org" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md text-sm hover:bg-blue-700">Add Organization</button>`;
         
@@ -84,6 +82,10 @@ const organizationModule = {
                 try {
                     // Mock API call
                     console.log('Adding organization:', { company_name, industry, company_size, country, ceo, founded_year, revenue });
+                    appData.organizations.push({
+                        id: `org_${Date.now()}`, // Simple unique ID
+                        company_name, industry, company_size, country, ceo, founded_year, revenue
+                    });
                     updateWizardState();
                     return true;
                 } catch (error) {

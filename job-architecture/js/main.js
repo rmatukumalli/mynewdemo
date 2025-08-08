@@ -4,10 +4,10 @@ const steps = [
     { id: 1, name: 'organization', title: '&nbsp;Organization&nbsp;' },
     { id: 2, name: 'business-units', title: '&nbsp;Business Units&nbsp;' },
     { id: 3, name: 'departments', title: '&nbsp;Departments&nbsp;' },
-    { id: 4, name: 'role-groups', title: '&nbsp;Role Groups&nbsp;' },
+    { id: 4, name: 'job-families', title: '&nbsp;Job Families&nbsp;' },
     { id: 5, name: 'job-levels', title: '&nbsp;Job Levels&nbsp;' },
     { id: 6, name: 'ai-wizard', title: '&nbsp;AI Wizard&nbsp;', isAIPowered: true },
-    { id: 7, name: 'jobs-skills', title: '&nbsp;Add Jobs & Skills&nbsp;', isAIPowered: true },
+    { id: 7, name: 'job-profiles', title: '&nbsp;Job Profiles&nbsp;', isAIPowered: true },
     { id: 8, name: 'skill-gaps', title: '&nbsp;Skill Gaps&nbsp;', isAIPowered: true },
     { id: 9, name: 'career-paths', title: '&nbsp;Career Paths&nbsp;', isAIPowered: true },
     { id: 10, name: 'review-ai', title: '&nbsp;Review & AI&nbsp;', isAIPowered: true },
@@ -30,46 +30,36 @@ function initStepper() {
     `).join('');
 }
 
-const appData = {
-    organizations: [],
-    business_units: [],
-    departments: [
-        { id: 'dept_eng', name: 'Engineering' },
-        { id: 'dept_hr', name: 'Human Resources' },
-        { id: 'dept_mktg', name: 'Marketing' },
-        { id: 'dept_sales', name: 'Sales' },
-        { id: 'dept_ops', name: 'Operations' },
-    ],
-    role_groups: [],
-    job_levels: [
-        { id: 'level_1', name: 'Intern' },
-        { id: 'level_2', name: 'Junior' },
-        { id: 'level_3', name: 'Mid-Level' },
-        { id: 'level_4', name: 'Senior' },
-        { id: 'level_5', name: 'Lead' },
-        { id: 'level_6', name: 'Manager' },
-    ],
-    jobs_skills: [
-        {
-            "id": "js_1",
-            "job_title": "Software Engineer",
-            "soft_skills": ["Teamwork", "Problem Solving"]
-        },
-        {
-            "id": "js_2",
-            "job_title": "Project Manager",
-            "soft_skills": ["Communication", "Leadership", "Time Management"]
-        },
-        {
-            "id": "js_3",
-            "job_title": "Data Analyst",
-            "soft_skills": ["Critical Thinking", "Attention to Detail"]
+const appData = {}; // Initialize as empty, will be populated from JSON
+
+async function loadAppData() {
+    try {
+        const response = await fetch('/job-architecture/data/consolidated-mock-data.json');
+        if (!response.ok) {
+            throw new Error(`Could not load consolidated mock data: ${response.statusText}`);
         }
-    ],
-    ai_wizard: [],
-    skill_gaps: [],
-    career_paths: [],
-};
+        const data = await response.json();
+        Object.assign(appData, data); // Merge loaded data into appData
+
+        // Generate career paths based on the loaded jobs_skills data
+        appData.career_paths = generateCareerPaths(appData);
+
+        console.log("App Data loaded:", appData);
+    } catch (error) {
+        console.error("Failed to load app data:", error);
+        alert("Failed to load initial application data. Please check console for details.");
+        // Fallback to empty arrays or minimal data if loading fails
+        appData.organizations = [];
+        appData.business_units = [];
+        appData.departments = [];
+        appData.role_groups = [];
+        appData.job_levels = [];
+        appData.jobs_skills = [];
+        appData.ai_wizard = [];
+        appData.skill_gaps = [];
+        appData.career_paths = [];
+    }
+}
 
 function generateCareerPaths(data) {
     let careerPaths = [];
@@ -77,15 +67,37 @@ function generateCareerPaths(data) {
 
     // Group jobs by role group
     data.jobs_skills.forEach(job => {
-        if (!roleGroups[job.role_group]) {
-            roleGroups[job.role_group] = [];
+        // Find the corresponding job level to get the role_group_id
+        const jobLevel = data.job_levels.find(jl => jl.level_name === job.job_title);
+        if (jobLevel && jobLevel.role_group_id) {
+            if (!roleGroups[jobLevel.role_group_id]) {
+                roleGroups[jobLevel.role_group_id] = [];
+            }
+            roleGroups[jobLevel.role_group_id].push(job);
         }
-        roleGroups[job.role_group].push(job);
     });
 
     // Create paths within each role group
     for (const groupId in roleGroups) {
         const jobsInGroup = roleGroups[groupId];
+        // Sort jobs by level number to ensure correct progression
+        jobsInGroup.sort((a, b) => {
+            const levelA = data.job_levels.find(jl => jl.level_name === a.job_title)?.level_number || '';
+            const levelB = data.job_levels.find(jl => jl.level_name === b.job_title)?.level_number || '';
+            
+            const extractParts = (s) => {
+                const match = s.match(/([A-Z]+)(\d+)/);
+                return match ? [match[1], parseInt(match[2])] : [s, 0];
+            };
+            const [prefixA, numA] = extractParts(levelA);
+            const [prefixB, numB] = extractParts(levelB);
+
+            if (prefixA !== prefixB) {
+                return prefixA.localeCompare(prefixB);
+            }
+            return numA - numB;
+        });
+
         for (let i = 0; i < jobsInGroup.length - 1; i++) {
             const fromJob = jobsInGroup[i];
             const toJob = jobsInGroup[i + 1];
@@ -101,8 +113,6 @@ function generateCareerPaths(data) {
     }
     return careerPaths;
 }
-
-appData.career_paths = generateCareerPaths(appData);
 
 async function loadStepContent(stepId) {
     const step = steps.find(s => s.id === stepId);
@@ -275,7 +285,8 @@ export function goToFirstStep() {
 }
 
 // Initial Load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadAppData(); // Load data before initializing stepper and state
     initStepper();
     updateWizardState();
 

@@ -1,5 +1,5 @@
-const jobsSkillsModule = (function() {
-    console.log("Jobs & Skills module initialized");
+const jobProfilesModule = (function() {
+    console.log("Job Profiles module initialized");
 
     // --- APPLICATION STATE ---
     const appState = {
@@ -20,9 +20,10 @@ const jobsSkillsModule = (function() {
         qualificationsInput, skillsListContainer, mappingModal, closeModalBtn,
         cancelMappingBtn, saveMappingBtn, modalSkillName, capabilitySelect,
         competencySelect, skillSelect, behaviorSelect, newCapabilityInput,
-        newCompetencyInput, newSkillInput, newBehaviorInput, nextStepBtn,
+        newCompetencyInput, newSkillInput, newBehaviorInput, proficiencySelect, nextStepBtn,
         backBtn, validationModal, goBackBtn, proceedAnywayBtn, modalStepper,
-        extractedSkillsSection, existingSkillsPills, newSkillsPills;
+        extractedSkillsSection, existingSkillsPills, newSkillsPills,
+        coreBehavioralAnchorInput, exceptionOverrideInput;
 
     let callAPI, navigation; // These will be passed in during init
 
@@ -48,6 +49,7 @@ const jobsSkillsModule = (function() {
     }
 
     // Mock data for AI generation (can be replaced with actual AI API calls)
+    // This mock data is now specific to the "Cadet Pilot" example for AI generation demo
     const mockUserInput = {
         title: "Cadet Pilot",
         summary: "Seeking motivated individuals to join our airline as Cadet Pilots. This program provides a structured path to becoming a First Officer on our modern fleet. No prior flying experience is required, but a strong passion for aviation is a must."
@@ -67,11 +69,16 @@ const jobsSkillsModule = (function() {
             "Ability to pass a Class 1 Medical Examination.",
             "Excellent communication and teamwork skills.",
             "Strong problem-solving abilities and the capacity to remain calm under pressure."
-        ]
+        ],
+        core_behavioral_anchor: "Demonstrates unwavering commitment to safety and operational excellence.",
+        exception_override: "Must complete 1500 flight hours within 2 years."
     };
     const mockExtractedSkills = [
-        "Flight Planning", "Navigation", "Aerodynamics", "Meteorology", 
-        "Crew Resource Management", "Emergency Procedures", "Aircraft Systems"
+        { name: "Aerodynamics", proficiency: "Beginner" },
+        { name: "Flight Theory", proficiency: "Beginner" },
+        { name: "Aviation Regulations", proficiency: "Beginner" },
+        { name: "Teamwork", "proficiency_level": "Intermediate" },
+        { name: "Problem Solving", "proficiency_level": "Intermediate" }
     ];
 
     function isMobileView() {
@@ -83,6 +90,8 @@ const jobsSkillsModule = (function() {
     function handleLoadMockData() {
         jobTitleInput.value = mockUserInput.title;
         jobSummaryInput.value = mockUserInput.summary;
+        coreBehavioralAnchorInput.value = mockEnhancements.core_behavioral_anchor;
+        exceptionOverrideInput.value = mockEnhancements.exception_override;
         validateInputs();
     }
 
@@ -138,14 +147,14 @@ const jobsSkillsModule = (function() {
 
         const ontologySkillNames = appState.ontology.skills.map(s => s.name);
 
-        mockExtractedSkills.forEach((skillName, index) => {
-            const isExisting = ontologySkillNames.includes(skillName);
+        mockExtractedSkills.forEach((skill, index) => {
+            const isExisting = ontologySkillNames.includes(skill.name);
             appState.skills.push({
-                id: index + 1, name: skillName, status: 'Unmapped', mapping: null, isNew: !isExisting
+                id: index + 1, name: skill.name, proficiency: skill.proficiency, status: 'Unmapped', mapping: null, isNew: !isExisting
             });
             
             const pill = document.createElement('span');
-            pill.textContent = skillName;
+            pill.textContent = `${skill.name} (${skill.proficiency})`;
             pill.className = 'skill-pill px-3 py-1 rounded-full text-sm whitespace-nowrap'; /* Added whitespace-nowrap */
 
             if (isExisting) {
@@ -164,6 +173,8 @@ const jobsSkillsModule = (function() {
         jobSummaryInput.value += `\n\n(AI Enhanced) ${mockEnhancements.summary}`;
         responsibilitiesInput.value = mockEnhancements.responsibilities.join('\n\n');
         qualificationsInput.value = mockEnhancements.qualifications.join('\n\n');
+        coreBehavioralAnchorInput.value = mockEnhancements.core_behavioral_anchor;
+        exceptionOverrideInput.value = mockEnhancements.exception_override;
         extractAndDisplaySkills();
         tabSkills.classList.remove('tab-disabled');
         generateBtn.disabled = true;
@@ -187,7 +198,9 @@ const jobsSkillsModule = (function() {
                 statusBadge = `<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">Mapped</span>`;
                 const skillName = skill.mapping.skillName || 'N/A';
                 const behaviorName = skill.mapping.behaviorName || 'N/A';
-                mappingInfo = `<p class="text-sm text-gray-500 mt-1">Mapped to: <span class="font-medium">${skill.mapping.capability} > ${skill.mapping.competency} > (Skill: ${skillName}, Behavior: ${behaviorName})</span></p>`;
+                const proficiency = skill.mapping.proficiency || 'N/A';
+                mappingInfo = `<p class="text-sm text-gray-500 mt-1">Mapped to: <span class="font-medium">${skill.mapping.capability} > ${skill.mapping.competency} > (Skill: ${skillName}, Behavior: ${behaviorName})</span></p>
+                               <p class="text-sm text-gray-500 mt-1">Proficiency: <span class="font-medium">${proficiency}</span></p>`;
             } else {
                 statusBadge = `<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">Unmapped</span>`;
             }
@@ -225,6 +238,7 @@ const jobsSkillsModule = (function() {
         populateCompetencies(skill.mapping?.capability_id, skill.mapping?.competency_id);
         populateSkills(skill.mapping?.competency_id, skill.mapping?.skill_id);
         populateBehaviors(skill.mapping?.competency_id, skill.mapping?.behavior_id);
+        populateProficiencyLevels(skill.mapping?.proficiency || skill.proficiency); // Pre-fill with existing or suggested proficiency
 
         newCapabilityInput.value = '';
         newCompetencyInput.value = '';
@@ -296,6 +310,14 @@ const jobsSkillsModule = (function() {
         behaviorSelect.classList.toggle('bg-gray-100', !competencyId);
     }
 
+    function populateProficiencyLevels(selectedValue = '') {
+        const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Expert"];
+        proficiencySelect.innerHTML = `<option value="">-- Select Proficiency --</option>`;
+        proficiencyLevels.forEach(level => {
+            proficiencySelect.innerHTML += `<option value="${level}" ${selectedValue === level ? 'selected' : ''}>${level}</option>`;
+        });
+    }
+
     function updateStepper(step) {
         modalStepper.forEach((stepperItem, index) => {
             const circle = stepperItem.querySelector('.rounded-full');
@@ -319,6 +341,7 @@ const jobsSkillsModule = (function() {
         let competencyId = competencySelect.value;
         let skillId = skillSelect.value;
         let behaviorId = behaviorSelect.value;
+        let proficiency = proficiencySelect.value;
 
         let capabilityName, competencyName, skillName, behaviorName;
 
@@ -372,7 +395,8 @@ const jobsSkillsModule = (function() {
                 capability_id: capabilityId,
                 competency_id: competencyId,
                 skill_id: skillId === '-- Not Applicable --' ? null : skillId, // Handle "Not Applicable"
-                behavior_id: behaviorId === '-- Not Applicable --' ? null : behaviorId // Handle "Not Applicable"
+                behavior_id: behaviorId === '-- Not Applicable --' ? null : behaviorId, // Handle "Not Applicable"
+                proficiency: proficiency
             };
             await callAPI('/api/ai/map_skill', 'POST', mappingPayload);
 
@@ -382,6 +406,7 @@ const jobsSkillsModule = (function() {
                 competency_id: competencyId, competency: competencyName,
                 skill_id: skillId, skillName,
                 behavior_id: behaviorId, behaviorName,
+                proficiency: proficiency
             };
 
             renderSkills();
@@ -505,6 +530,7 @@ const jobsSkillsModule = (function() {
             newCompetencyInput = document.getElementById('new-competency-input');
             newSkillInput = document.getElementById('new-skill-input');
             newBehaviorInput = document.getElementById('new-behavior-input');
+            proficiencySelect = document.getElementById('proficiency-select'); // Added this line
             nextStepBtn = document.getElementById('next-step-btn');
             backBtn = document.getElementById('back-btn');
             validationModal = document.getElementById('validation-modal');
@@ -514,6 +540,8 @@ const jobsSkillsModule = (function() {
             extractedSkillsSection = document.getElementById('extracted-skills-section');
             existingSkillsPills = document.getElementById('existing-skills-pills');
             newSkillsPills = document.getElementById('new-skills-pills');
+            coreBehavioralAnchorInput = document.getElementById('core-behavioral-anchor'); // Added this line
+            exceptionOverrideInput = document.getElementById('exception-override'); // Added this line
 
             addEventListeners(); // Attach event listeners
 
@@ -532,4 +560,4 @@ const jobsSkillsModule = (function() {
     };
 })();
 
-window.jobsSkillsModule = jobsSkillsModule;
+window.jobProfilesModule = jobProfilesModule;

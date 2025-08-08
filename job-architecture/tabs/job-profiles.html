@@ -3,7 +3,7 @@
 
         <!-- Header -->
         <div class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-gray-900">Add Jobs & Skills</h1>
+            <h1 class="text-3xl font-bold text-gray-900">Job Profiles</h1>
             <p class="text-gray-600 mt-2">Use our AI-assisted workflow to quickly define a job role and map its required skills.</p>
         </div>
         
@@ -46,6 +46,14 @@
                      <div class="md:col-span-2">
                         <label for="required-qualifications" class="block text-sm font-medium text-gray-700 mb-1">Required Qualifications (AI Generated)</label>
                         <textarea id="required-qualifications" rows="6" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50" readonly></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="core-behavioral-anchor" class="block text-sm font-medium text-gray-700 mb-1">Core Behavioral Anchor (AI Generated)</label>
+                        <textarea id="core-behavioral-anchor" rows="3" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50" readonly></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="exception-override" class="block text-sm font-medium text-gray-700 mb-1">Exception / Override (AI Generated)</label>
+                        <textarea id="exception-override" rows="3" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50" readonly></textarea>
                     </div>
 
                     <!-- Extracted Skills Section -->
@@ -140,6 +148,10 @@
                             <label for="skill-select" class="block text-sm font-medium text-gray-700 mb-1">Select Existing Skill</label>
                             <select id="skill-select" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100" disabled></select>
                             <input type="text" id="new-skill-input" maxlength="50" class="add-new-input w-full p-2 mt-2 border border-gray-300 rounded-md shadow-sm" placeholder="Enter new skill name (max 50 chars)...">
+                        </div>
+                        <div>
+                            <label for="proficiency-select" class="block text-sm font-medium text-gray-700 mb-1">Proficiency Level</label>
+                            <select id="proficiency-select" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></select>
                         </div>
                     </div>
                     <div>

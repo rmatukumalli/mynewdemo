@@ -3,16 +3,17 @@ const businessUnitsModule = {
         const actionButtonContainer = contentWrapper.querySelector('.action-buttons');
         const panelsContainer = contentWrapper.querySelector('.panels-container');
 
-        const mockBusinessUnits = [
-            { id: 'bu1', unit_name: 'Flight Operations', unit_head: 'Capt. John Smith', budget: '$2.5B', employees: '6000', strategic_goals: 'Achieve 95% on-time performance and expand routes to Southeast Asia.', organization_id: '1' },
-            { id: 'bu2', unit_name: 'Maintenance, Repair, and Overhaul (MRO)', unit_head: 'Jane Doe', budget: '$1.2B', employees: '3000', strategic_goals: 'Implement predictive maintenance to reduce aircraft downtime by 15%.', organization_id: '1' },
-            { id: 'bu3', unit_name: 'Cargo & Logistics', unit_head: 'Peter Jones', budget: '$750M', employees: '1500', strategic_goals: 'Grow cargo market share by 10% through strategic partnerships.', organization_id: '1' },
-            { id: 'bu4', unit_name: 'Customer Experience & Services', unit_head: 'Mary Johnson', budget: '$800M', employees: '4000', strategic_goals: 'Enhance passenger satisfaction score (NPS) by 20 points.', organization_id: '1' },
-            { id: 'bu5', unit_name: 'Corporate Functions', unit_head: 'David Williams', budget: '$300M', employees: '800', strategic_goals: 'Digitalize HR and Finance processes to improve efficiency by 25%.', organization_id: '1' },
-            { id: 'bu6', unit_name: 'Technology & Innovation', unit_head: 'Dr. Susan Brown', budget: '$450M', employees: '1200', strategic_goals: 'Develop a new passenger mobile app with personalized services.', organization_id: '1' }
-        ];
+        // Data is now loaded from appData, no need for mockBusinessUnits here
+        // const mockBusinessUnits = [
+        //     { id: 'bu1', unit_name: 'Flight Operations', unit_head: 'Capt. John Smith', budget: '$2.5B', employees: '6000', strategic_goals: 'Achieve 95% on-time performance and expand routes to Southeast Asia.', organization_id: '1' },
+        //     { id: 'bu2', unit_name: 'Maintenance, Repair, and Overhaul (MRO)', unit_head: 'Jane Doe', budget: '$1.2B', employees: '3000', strategic_goals: 'Implement predictive maintenance to reduce aircraft downtime by 15%.', organization_id: '1' },
+        //     { id: 'bu3', unit_name: 'Cargo & Logistics', unit_head: 'Peter Jones', budget: '$750M', employees: '1500', strategic_goals: 'Grow cargo market share by 10% through strategic partnerships.', organization_id: '1' },
+        //     { id: 'bu4', unit_name: 'Customer Experience & Services', unit_head: 'Mary Johnson', budget: '$800M', employees: '4000', strategic_goals: 'Enhance passenger satisfaction score (NPS) by 20 points.', organization_id: '1' },
+        //     { id: 'bu5', unit_name: 'Corporate Functions', unit_head: 'David Williams', budget: '$300M', employees: '800', strategic_goals: 'Digitalize HR and Finance processes to improve efficiency by 25%.', organization_id: '1' },
+        //     { id: 'bu6', unit_name: 'Technology & Innovation', unit_head: 'Dr. Susan Brown', budget: '$450M', employees: '1200', strategic_goals: 'Develop a new passenger mobile app with personalized services.', organization_id: '1' }
+        // ];
 
-        appData.business_units = mockBusinessUnits;
+        // appData.business_units = mockBusinessUnits; // This line is no longer needed
 
         actionButtonContainer.innerHTML = `<button data-action="add-bu" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md text-sm hover:bg-blue-700">Add Business Unit</button>`;
         
@@ -77,10 +78,15 @@ const businessUnitsModule = {
                 const budget = document.getElementById('form-budget').value;
                 const employees = document.getElementById('form-employees').value;
                 const strategic_goals = document.getElementById('form-strategic_goals').value;
-                if(!unit_name) return false;
+                const organization_id = document.getElementById('form-organization_id').value; // Get organization_id
+                if(!unit_name || !organization_id) return false; // Ensure organization_id is captured
                 
                 // Mock API call
-                console.log('Adding business unit:', { unit_name, unit_head, budget, employees, strategic_goals });
+                console.log('Adding business unit:', { unit_name, unit_head, budget, employees, strategic_goals, organization_id });
+                appData.business_units.push({
+                    id: `bu_${Date.now()}`, // Simple unique ID
+                    unit_name, unit_head, budget, employees, strategic_goals, organization_id
+                });
                 updateWizardState();
                 return true;
             }});
@@ -108,6 +114,7 @@ const businessUnitsModule = {
                         }
                     ],
                     onConfirm: async () => {
+                    item.organization_id = document.getElementById('form-organization_id').value; // Capture organization_id
                     item.unit_name = document.getElementById('form-unit_name').value;
                     item.unit_head = document.getElementById('form-unit_head').value;
                     item.budget = document.getElementById('form-budget').value;

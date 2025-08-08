@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skill Ontology & Role Architecture - Industry Samples for HR Tech SaaS</title>
+  <style>
+    body { 
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+      padding: 24px; 
+      background: #f4f6fb; 
+      color: #0b1220; 
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+    .container { 
+      max-width: 1400px; /* Max width for main content */
+      margin: 0 auto; 
+      padding-right: 24px; /* Space for the button */
+    }
+    h1 { 
+      font-size: 20px; 
+      margin-bottom: 16px; 
+      color: #1a73e8; /* Google Blue */
+    }
+    .table-wrapper {
+      overflow-x: auto; /* Enable horizontal scrolling for the table */
+      margin-bottom: 20px; /* Space below the table */
+    }
+    table { 
+      width: 100%; 
+      min-width: 1000px; /* Ensure table is wide enough for content */
+      border-collapse: collapse; 
+      background: #ffffff; 
+      box-shadow: 0 1px 2px rgba(16,24,40,0.04); 
+    }
+    th, td { 
+      padding: 12px 14px; 
+      border: 1px solid #e6e9ef; 
+      vertical-align: top; 
+      text-align: left; 
+      font-size: 13px; 
+    }
+    th { 
+      background: #eef2ff; 
+      font-weight: 700; 
+    }
+    tr:nth-child(even) td { 
+      background: #fbfdff; 
+    }
+
+    /* Slide-out Panel Styles */
+    #slideOutPanel {
+      position: fixed;
+      top: 0;
+      right: -350px; /* Hidden by default */
+      width: 350px;
+      height: 100%;
+      background-color: #ffffff;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      transition: right 0.3s ease-in-out;
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+      box-sizing: border-box; /* Include padding in width */
+    }
+    #slideOutPanel.open {
+      right: 0; /* Visible when open */
+    }
+    #closePanelBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #64748b;
+    }
+    .info-box-content h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      color: #1a73e8; /* Google Blue */
+      border-bottom: 1px solid #e6e9ef;
+      padding-bottom: 12px;
+    }
+    .info-box-content h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 16px 0 8px 0;
+      color: #1a73e8; /* Google Blue */
+    }
+    .info-box-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+    }
+    .info-box-content li {
+      margin-bottom: 6px;
+      padding-left: 1em;
+      text-indent: -.7em;
+    }
+    .info-box-content li::before {
+      content: "• ";
+      color: #64748b;
+    }
+    .info-box-content .description {
+        font-size: 13px;
+        color: #475569;
+        line-height: 1.6;
+        margin-top: 4px;
+    }
+
+    /* View Guide Button */
+    #viewGuideBtn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #4285F4;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1001; /* Ensure button is above panel when closed */
+    }
+
+    /* Responsive behavior */
+    @media (max-width: 1024px) {
+      .container {
+        padding-right: 24px; /* Reset padding for smaller screens */
+      }
+      #slideOutPanel {
+        width: 100%; /* Full width on smaller screens */
+        right: -100%;
+      }
+      #slideOutPanel.open {
+        right: 0;
+      }
+      #closePanelBtn {
+        right: 20px; /* Adjust close button position */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="homeBtn" style="position: fixed; top: 24px; right: 24px; background-color: #6c757d; color: white; padding: 8px 16px; border-radius: 5px; border: none; cursor: pointer; z-index: 1002;">Back to Home</button>
+    <h1>Industry Role Architecture Samples</h1>
+    <p style="margin-bottom: 20px; color: #475569; font-size: 14px;">This page provides industry-specific examples of skill ontology and role architecture. This structured approach is vital for our HR tech SaaS application, helping to organize roles and skills clearly, enabling precise talent management, skill gap analysis, and personalized career pathing within the app.</p>
+
+    <div class="filters" style="margin-bottom: 20px; display: flex; gap: 10px;">
+      <input type="text" id="industryFilter" placeholder="Filter by Industry" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <input type="text" id="jobCategoryFilter" placeholder="Filter by Job Category" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+
+    <div class="table-wrapper">
+        <table id="jobArchitectureTable">
+          <thead>
+            <tr>
+              <th data-sort-col="0">Industry &#x25B2;&#x25BC;</th>
+              <th data-sort-col="1">Job Category &#x25B2;&#x25BC;</th>
+              <th data-sort-col="2">Job Function &#x25B2;&#x25BC;</th>
+              <th data-sort-col="3">Job Family &#x25B2;&#x25BC;</th>
+              <th data-sort-col="4">Role Level &#x25B2;&#x25BC;</th>
+              <th data-sort-col="5">Skill Level &#x25B2;&#x25BC;</th>
+              <th data-sort-col="6">Core Behavioral Anchor &#x25B2;&#x25BC;</th>
+              <th data-sort-col="7">Proficiency Level &#x25B2;&#x25BC;</th>
+              <th data-sort-col="8">Associated Skills &#x25B2;&#x25BC;</th>
+              <th data-sort-col="9">Specific Job Titles &#x25B2;&#x25BC;</th>
+              <th data-sort-col="10">Exception / Override &#x25B2;&#x25BC;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Technology Services -->
+            <tr><td>Technology Services</td><td>Professional</td><td>Technology</td><td>Data Science</td><td>Junior IC</td><td>Entry-Level</td><td>Writes Python scripts for data cleaning and analysis under supervision.</td><td>Intermediate</td><td>Python (Pandas, NumPy), SQL, Jupyter, Git</td><td>Data Scientist I, Junior Data Scientist</td><td>None.</td></tr>
+            <tr><td>Technology Services</td><td>Professional</td><td>Technology</td><td>Data Science</td><td>Senior IC</td><td>Senior</td><td>Develops and deploys production-ready ML models using Python.</td><td>Advanced</td><td>Python (Scikit-learn, TensorFlow), MLOps, Docker, Cloud (AWS/GCP)</td><td>Senior Data Scientist, ML Engineer</td><td>For ML Engineer: add CI/CD deployment KPIs.</td></tr>
+            <tr><td>Technology Services</td><td>Professional</td><td>Technology</td><td>Data Science</td><td>Principal IC</td><td>Expert</td><td>Architects scalable ML systems and sets Python best practices.</td><td>Expert</td><td>Advanced Python, System Design, Kubernetes, Research Leadership</td><td>Principal Data Scientist, Staff ML Engineer</td><td>Influences cross-team technical strategy.</td></tr>
+            <tr><td>Technology Services</td><td>Professional</td><td>Software Engineering</td><td>Backend Development</td><td>Junior IC</td><td>Entry-Level</td><td>Implements APIs under supervision using Java/Spring.</td><td>Beginner–Intermediate</td><td>Java, Spring Boot, REST APIs, SQL, Git</td><td>Backend Developer I</td><td>None.</td></tr>
+            <tr><td>Technology Services</td><td>Management</td><td>Product</td><td>Platform Product Management</td><td>Manager</td><td>Managerial</td><td>Leads roadmap for core platform services.</td><td>Advanced</td><td>Roadmapping, Agile/Scrum, User Research, JIRA</td><td>Product Manager, Platform Lead</td><td>None.</td></tr>
+            <tr><td>Technology Services</td><td>Professional</td><td>Quality Assurance</td><td>Automation Testing</td><td>Senior IC</td><td>Senior</td><td>Designs automated test suites using Selenium.</td><td>Advanced</td><td>Selenium, Java/Python, CI/CD, API Testing</td><td>QA Automation Engineer</td><td>Include load testing for enterprise clients.</td></tr>
+            <tr><td>Technology Services</td><td>Executive</td><td>Technology</td><td>CTO Office</td><td>Executive Leader</td><td>Executive</td><td>Sets technology vision and architecture standards.</td><td>Expert</td><td>Technology Strategy, Leadership, Budgeting, System Architecture</td><td>Chief Technology Officer</td><td>None.</td></tr>
+            <!-- Healthcare -->
+            <tr><td>Healthcare</td><td>Professional</td><td>Technology</td><td>Clinical Data Science</td><td>Senior IC</td><td>Senior</td><td>Ensures HIPAA/GDPR compliance in AI models.</td><td>Advanced</td><td>Python/R, SQL, HIPAA, GDPR, Statistical Modeling</td><td>Clinical Data Scientist</td><td>Must follow clinical audit standards.</td></tr>
+            <tr><td>Healthcare</td><td>Professional</td><td>Medical Operations</td><td>Patient Services</td><td>Junior IC</td><td>Entry-Level</td><td>Supports patient intake and data entry.</td><td>Beginner</td><td>Data Entry, EMR/EHR Systems, Medical Terminology</td><td>Patient Services Coordinator</td><td>None.</td></tr>
+            <tr><td>Healthcare</td><td>Management</td><td>Clinical Research</td><td>Trial Management</td><td>Manager</td><td>Managerial</td><td>Oversees multi-site clinical trials.</td><td>Advanced</td><td>Project Management, GCP, Regulatory Affairs, Budgeting</td><td>Clinical Trial Manager</td><td>Include regulatory submissions.</td></tr>
+            <tr><td>Healthcare</td><td>Professional</td><td>Public Health</td><td>Epidemiology</td><td>Senior IC</td><td>Senior</td><td>Designs epidemiological studies and data analysis.</td><td>Expert</td><td>SAS/Stata/R, Biostatistics, Study Design, Data Visualization</td><td>Epidemiologist</td><td>May require fieldwork certification.</td></tr>
+            <tr><td>Healthcare</td><td>Executive</td><td>Medical Leadership</td><td>Hospital Administration</td><td>Executive Leader</td><td>Executive</td><td>Directs hospital operations strategy.</td><td>Expert</td><td>Medical Leadership, Healthcare Administration, Quality Improvement</td><td>Chief Medical Officer</td><td>None.</td></tr>
+            <!-- Retail & E-commerce -->
+            <tr><td>Retail & E-commerce</td><td>Professional</td><td>Product & Analytics</td><td>Consumer Analytics</td><td>Manager</td><td>Managerial</td><td>Converts insights into experiments and revenue.</td><td>Advanced</td><td>SQL, Tableau/Power BI, Google Analytics, A/B Testing</td><td>Analytics Manager</td><td>Include marketing attribution models.</td></tr>
+            <tr><td>Retail & E-commerce</td><td>Professional</td><td>Supply Chain</td><td>Inventory Management</td><td>Junior IC</td><td>Entry-Level</td><td>Monitors stock levels and reorder points.</td><td>Intermediate</td><td>Excel, Demand Forecasting, Supply Chain Principles</td><td>Inventory Analyst</td><td>None.</td></tr>
+            <tr><td>Retail & E-commerce</td><td>Management</td><td>Sales</td><td>Regional Sales Management</td><td>Manager</td><td>Managerial</td><td>Leads regional sales targets and promotions.</td><td>Advanced</td><td>Sales Strategy, Team Leadership, CRM (Salesforce)</td><td>Regional Sales Manager</td><td>Adjust targets for seasonal trends.</td></tr>
+            <tr><td>Retail & E-commerce</td><td>Professional</td><td>Customer Experience</td><td>Support Operations</td><td>Senior IC</td><td>Senior</td><td>Designs omni-channel support processes.</td><td>Advanced</td><td>Zendesk, Process Improvement, KPI Analysis</td><td>Customer Support Lead</td><td>Include chatbot workflow optimization.</td></tr>
+            <tr><td>Retail & E-commerce</td><td>Executive</td><td>Business</td><td>E-commerce Strategy</td><td>Executive Leader</td><td>Executive</td><td>Sets online growth strategy.</td><td>Expert</td><td>Digital Marketing, SEO/SEM, P&L Management</td><td>Chief E-commerce Officer</td><td>None.</td></tr>
+            <!-- Manufacturing -->
+            <tr><td>Manufacturing</td><td>Professional</td><td>Engineering & Ops</td><td>Industrial AI</td><td>Junior IC</td><td>Entry-Level</td><td>Cleans sensor data for predictive maintenance.</td><td>Beginner–Intermediate</td><td>Python, SQL, Time-Series Analysis, Data.</td><td>IoT Data Analyst</td><td>Safety verification required.</td></tr>
+            <tr><td>Manufacturing</td><td>Professional</td><td>Production</td><td>Assembly Operations</td><td>Junior IC</td><td>Entry-Level</td><td>Operates machinery and follows SOPs.</td><td>Beginner</td><td>Machine Operation, Quality Control, Safety Procedures</td><td>Assembly Line Operator</td><td>None.</td></tr>
+            <tr><td>Manufacturing</td><td>Management</td><td>Quality Control</td><td>Inspection Management</td><td>Manager</td><td>Managerial</td><td>Oversees QC processes across plants.</td><td>Advanced</td><td>Six Sigma, ISO 9001, Quality Auditing, Root Cause Analysis</td><td>Quality Manager</td><td>Include ISO certification compliance.</td></tr>
+            <tr><td>Manufacturing</td><td>Professional</td><td>Maintenance</td><td>Equipment Maintenance</td><td>Senior IC</td><td>Senior</td><td>Performs predictive and preventive maintenance.</td><td>Advanced</td><td>Mechanical/Electrical Repair, CMMS, Troubleshooting</td><td>Maintenance Engineer</td><td>None.</td></tr>
+            <tr><td>Manufacturing</td><td>Executive</td><td>Operations</td><td>Plant Management</td><td>Executive Leader</td><td>Executive</td><td>Directs plant production strategy.</td><td>Expert</td><td>Operations Management, Lean Manufacturing, Budgeting</td><td>Plant Director</td><td>None.</td></tr>
+            <!-- Financial Services -->
+            <tr><td>Financial Services</td><td>Professional</td><td>Risk & Analytics</td><td>Quantitative Research</td><td>Senior IC</td><td>Senior</td><td>Builds and validates risk models.</td><td>Expert</td><td>Python/R, Quantitative Analysis, Financial Modeling</td><td>Risk Modeler</td><td>Follow model governance standards.</td></tr>
+            <tr><td>Financial Services</td><td>Professional</td><td>Retail Banking</td><td>Branch Operations</td><td>Junior IC</td><td>Entry-Level</td><td>Supports daily branch operations.</td><td>Beginner–Intermediate</td><td>Cash Handling, Customer Service, Banking Software</td><td>Bank Teller</td><td>None.</td></tr>
+            <tr><td>Financial Services</td><td>Management</td><td>Investment</td><td>Portfolio Management</td><td>Manager</td><td>Managerial</td><td>Manages client investment portfolios.</td><td>Advanced</td><td>Asset Allocation, Financial Analysis, Risk Management</td><td>Portfolio Manager</td><td>Align with client risk appetite.</td></tr>
+            <tr><td>Financial Services</td><td>Professional</td><td>Compliance</td><td>AML Monitoring</td><td>Senior IC</td><td>Senior</td><td>Leads anti-money laundering investigations.</td><td>Advanced</td><td>AML Regulations, Transaction Monitoring, SAR Filing</td><td>AML Analyst</td><td>None.</td></tr>
+            <tr><td>Financial Services</td><td>Executive</td><td>Corporate Leadership</td><td>Finance Strategy</td><td>Executive Leader</td><td>Executive</td><td>Oversees corporate financial planning.</td><td>Expert</td><td>FP&A, Corporate Finance, GAAP/IFRS, M&A</td><td>Chief Financial Officer</td><td>None.</td></tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <button id="viewGuideBtn">
+    View Guide
+  </button>
+
+  <div id="slideOutPanel">
+    <button id="closePanelBtn">&times;</button>
+    <div class="info-box-content">
+        <h2>Column Guide</h2>
+        <p class="description">This guide explains the purpose of each column in the job architecture framework.</p>
+        
+        <h3>Core Columns</h3>
+        <p class="description">These form the essential structure of the architecture.</p>
+        <ul>
+            <li><b>Industry:</b> The business sector.</li>
+            <li><b>Job Category:</b> High-level grouping (e.g., Professional).</li>
+            <li><b>Job Function:</b> Primary area (e.g., Technology).</li>
+            <li><b>Job Family:</b> Specific discipline (e.g., Data Science).</li>
+            <li><b>Role Level:</b> Defines the seniority and scope of a position within the organizational hierarchy (e.g., Junior IC, Senior IC, Manager, Executive Leader).</li>
+            <li>For example, a "Junior Software Engineer" (Role Level: Junior IC) vs. a "Lead Software Engineer" (Role Level: Senior IC) or a "Chief Pilot" (Role Level: Executive Leader).</li>
+            <li>It helps structure career progression and compensation bands.</li>
+            <li><b>Core Behavioral Anchor:</b> The role's main purpose.</li>
+        </ul>
+
+        <h3>Optional / Supporting Columns</h3>
+        <p class="description">These add valuable detail but are not always essential.</p>
+        <ul>
+            <li><b>Skill Level:</b> Often linked to the Role Level, this broadly categorizes the required expertise for skills associated with that role (e.g., Entry-Level, Senior).</li>
+            <li>For instance, a "Junior Software Engineer" might require "Entry-Level" in Python, while a "Senior Software Engineer" would need "Advanced" in Python.</li>
+            <li>Similarly, a "First Officer" might need "Intermediate" in Aircraft Systems, while a "Captain" requires "Expert."</li>
+            <li>It provides a general benchmark for skill expectations at different career stages.</li>
+            <li><b>Proficiency Level:</b> Provides granular detail on the degree of mastery for a specific skill (e.g., Beginner, Intermediate, Advanced, Expert).</li>
+            <li>This is crucial for precise skill gap analysis, personalized learning recommendations, and identifying subject matter experts.</li>
+            <li>For example, a "Pilot" might have a "Proficiency Level: Advanced" in "Boeing 737 Operations," while a "Data Analyst" might have "Proficiency Level: Intermediate" in "SQL Query Optimization."</li>
+            <li><b>Associated Skills:</b> Specific technical or soft skills.</li>
+            <li><b>Specific Job Titles:</b> Market-facing titles.</li>
+            <li><b>Exception / Override:</b> Notes for special cases.</li>
+        </ul>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const viewGuideBtn = document.getElementById('viewGuideBtn');
+      const closePanelBtn = document.getElementById('closePanelBtn');
+      const slideOutPanel = document.getElementById('slideOutPanel');
+      const table = document.getElementById('jobArchitectureTable');
+      const headers = table.querySelectorAll('th');
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+      const industryFilter = document.getElementById('industryFilter');
+      const jobCategoryFilter = document.getElementById('jobCategoryFilter');
+
+      let sortDirection = {}; // To keep track of sort direction for each column
+
+      viewGuideBtn.addEventListener('click', function() {
+        slideOutPanel.classList.add('open');
+      });
+
+      closePanelBtn.addEventListener('click', function() {
+        slideOutPanel.classList.remove('open');
+      });
+
+      // Filter function
+      function applyFilters() {
+        const industryVal = industryFilter.value.toLowerCase();
+        const jobCategoryVal = jobCategoryFilter.value.toLowerCase();
+
+        rows.forEach(row => {
+          const industryText = row.cells[0].textContent.toLowerCase();
+          const jobCategoryText = row.cells[1].textContent.toLowerCase();
+
+          const industryMatch = industryVal === '' || industryText.includes(industryVal);
+          const jobCategoryMatch = jobCategoryVal === '' || jobCategoryText.includes(jobCategoryVal);
+
+          if (industryMatch && jobCategoryMatch) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      industryFilter.addEventListener('keyup', applyFilters);
+      jobCategoryFilter.addEventListener('keyup', applyFilters);
+
+      // Sort function
+      headers.forEach(header => {
+        header.addEventListener('click', function() {
+          const column = parseInt(this.dataset.sortCol);
+          const isNumeric = [4, 5, 7].includes(column); // Example: Role Level, Skill Level, Proficiency Level might be numeric/ordered
+          
+          // Toggle sort direction
+          if (sortDirection[column] === 'asc') {
+            sortDirection[column] = 'desc';
+          } else {
+            sortDirection[column] = 'asc';
+          }
+
+          rows.sort((a, b) => {
+            let valA = a.cells[column].textContent.trim();
+            let valB = b.cells[column].textContent.trim();
+
+            if (isNumeric) {
+              valA = parseFloat(valA) || 0; // Convert to number, default to 0 if not a valid number
+              valB = parseFloat(valB) || 0;
+            } else {
+              valA = valA.toLowerCase();
+              valB = valB.toLowerCase();
+            }
+
+            if (valA < valB) {
+              return sortDirection[column] === 'asc' ? -1 : 1;
+            }
+            if (valA > valB) {
+              return sortDirection[column] === 'asc' ? 1 : -1;
+            }
+            return 0;
+          });
+
+          // Re-append sorted rows
+          const tbody = table.querySelector('tbody');
+          rows.forEach(row => tbody.appendChild(row));
+        });
+      });
+
+      // Home button functionality
+      const homeBtn = document.getElementById('homeBtn');
+      if (homeBtn) {
+        homeBtn.addEventListener('click', function() {
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

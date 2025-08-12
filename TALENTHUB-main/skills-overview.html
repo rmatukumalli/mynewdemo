@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Skills Overview Dashboard
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts">
+  </script>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+   /* Custom styles for an enterprise look and feel */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Use a light gray from Tailwind's palette */
+        }
+        /* Custom scrollbar for modals */
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .modal-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Fade-in animation for the modal */
+        #details-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        /* Custom styling for ApexCharts tooltips to match the theme */
+        .apexcharts-tooltip {
+            background: #ffffff;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-radius: 0.75rem;
+            padding: 8px 12px;
+        }
+        .apexcharts-tooltip-title {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 600;
+        }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="min-h-screen" id="app">
+   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <header class="mb-8">
+     <h1 class="text-4xl font-bold text-gray-900 tracking-tight">
+      Skills Overview
+     </h1>
+    </header>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+     <div class="lg:col-span-3 space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm p-6" id="profile-card">
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+       <div class="stat-card" id="stat-card-confirmed">
+       </div>
+       <div class="stat-card" id="stat-card-inferred">
+       </div>
+       <div class="stat-card" id="stat-card-certs">
+       </div>
+       <div class="stat-card" id="stat-card-learningActivity">
+       </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm p-6">
+       <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+        <i class="mr-2 text-indigo-600" data-lucide="line-chart">
+        </i>
+        Skill Growth Over Time
+       </h3>
+       <div id="skill-growth-chart">
+       </div>
+      </div>
+     </div>
+     <div class="lg:col-span-1">
+      <div>
+       <h2 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-6">
+        Guidance & Planning
+       </h2>
+       <div class="grid grid-cols-1 gap-6">
+        <div id="insight-card-career">
+        </div>
+        <div id="insight-card-development">
+        </div>
+        <div id="insight-card-learning">
+        </div>
+        <div id="insight-card-paths">
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center p-4" id="details-modal">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl transform transition-all scale-95 opacity-0" id="modal-content-wrapper">
+     <div class="p-6 relative">
+      <div class="flex justify-between items-center mb-4 border-b pb-3">
+       <h3 class="text-2xl font-bold text-gray-900" id="modal-title">
+       </h3>
+       <button class="text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-full p-2" id="modal-close-button">
+        <i class="w-6 h-6" data-lucide="x">
+        </i>
+       </button>
+      </div>
+      <div class="modal-body max-h-[70vh] overflow-y-auto pr-4 -mr-4" id="modal-body">
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+            // --- MOCK DATA ---
+            const initialPilotData = {
+                id: '11235',
+                name: 'John Doe',
+                role: 'Pilot',
+                hub: 'USA',
+                nextAssessment: 'Instrument Proficiency Check (Dec 2025)',
+                avatarUrl: "https://static-alter1.vidnoz.com/system/asset/202408/66beeabb5fa40.jpg",
+                inferredSkills: [
+                    'Flight Planning', 'Aerodynamics', 'Avionics Systems',
+                    'Emergency Procedures', 'Weather Analysis'
+                ],
+                confirmedSkills: {
+                    Expert: [
+                        { name: 'Air Traffic Control', status: 'Certified' },
+                        { name: 'Instrument Flight Rules (IFR)', status: '' }
+                    ],
+                    Advanced: [],
+                    Intermediate: [
+                        { name: 'FAA Regulations', status: '' },
+                        { name: 'Doppler Radar Interpretation', status: '' }
+                    ]
+                },
+                learningActivity: [
+                    { title: 'Initial Flight Training', type: 'Certification Prep', completionDate: 'Jul 19, 2024', skillsGained: [{ name: 'Basic Aerodynamics'}, { name: 'VFR Navigation'}] },
+                    { title: 'Safety Management Systems', type: 'Course', completionDate: 'Sep 05, 2024', skillsGained: [{ name: 'Risk Assessment'}] },
+                    { title: 'Advanced Weather Systems', type: 'Course', completionDate: 'Feb 15, 2025', skillsGained: [{ name: 'Weather Analysis', endorsedByManager: true }, { name: 'Doppler Radar Interpretation' }] },
+                    { title: 'Annual Security Compliance', type: 'Compliance Training', completionDate: 'Mar 01, 2025', skillsGained: [{ name: 'Security Protocols', endorsedByManager: true }] },
+                    { title: 'Crew Resource Management', type: 'Workshop', completionDate: 'May 21, 2025', skillsGained: [{ name: 'Team Communication'}] },
+                ],
+                certifications: [
+                    { name: 'FAA Airframe & Powerplant (A&P)', status: 'Verified', issuer: 'FAA', validatedSkills: ['Aircraft Maintenance', 'Avionics'], issueDate: 'Jan 10, 2022', expiryDate: 'N/A' },
+                    { name: 'Airline Transport Pilot (ATP)', status: 'Verified', issuer: 'FAA', validatedSkills: ['Flight Operations', 'Crew Resource Management'], issueDate: 'May 20, 2021', expiryDate: 'N/A' },
+                    { name: 'Certified Aviation Manager (CAM)', status: 'Expiring Soon', issuer: 'NBAA', validatedSkills: ['Aviation Safety', 'Business Management'], issueDate: 'Mar 15, 2024', expiryDate: 'Mar 15, 2027' }
+                ],
+                careerHighlights: [
+                    { role: 'Pilot', startDate: 'Jan 2023', endDate: 'Present', achievements: ['Completed 500+ flight hours', 'Mentored two junior first officers.'] },
+                    { role: 'First Officer', startDate: 'May 2021', endDate: 'Jan 2023', achievements: ['Received type rating for Boeing 737.', 'Perfect safety record.'] },
+                    { role: 'Cadet Pilot', startDate: 'Jun 2020', endDate: 'May 2021', achievements: ['Graduated top of class from flight academy.'] }
+                ],
+                developmentHistory: [
+                    { date: 'May 20, 2025', title: 'Passenger Safety Validated', description: 'Completed Annual Recurrent Safety Training with a score of 98%.'},
+                    { date: 'March 15, 2025', title: 'Project Management Development', description: 'Enrolled in "Project Management Fundamentals for Aviation Professionals".'},
+                    { date: 'February 28, 2025', title: '360-Degree Feedback', description: 'Praised for exceptional teamwork and communication during flight operations.'}
+                ],
+                recommendedLearning: [
+                    { title: 'Aviation Leadership and Management', type: 'Course', reason: 'To prepare for Captain or managerial roles.' },
+                    { title: 'Advanced Avionics Systems', type: 'Certification', reason: 'Builds on your existing avionics skill.' },
+                    { title: 'Fuel Efficiency Best Practices', type: 'Workshop', reason: 'High-demand skill for cost-saving operations.' }
+                ],
+                careerPaths: [
+                    { title: 'Captain', description: 'Leads the flight crew and is responsible for the safety and operation of the aircraft. This is the next logical step in an airline career.', requiredSkills: ['Advanced Crew Resource Management', 'Leadership', 'Mentorship', 'Complex Decision Making'] },
+                    { title: 'Fleet Manager / Chief Pilot', description: 'Manages a specific aircraft fleet or group of pilots, focusing on operational efficiency, training standards, and staffing.', requiredSkills: ['Operations Management', 'Budgeting', 'Regulatory Compliance', 'Logistics'] },
+                    { title: 'Safety Auditor / Designated Examiner (DE)', description: 'A senior role focusing on maintaining and improving safety standards, or a federally appointed role to examine and certify pilots.', requiredSkills: ['Safety Management Systems (SMS)', 'Auditing Techniques', 'Incident Investigation', 'FAA Regulations'] }
+                ]
+            };
+
+            // --- STATE MANAGEMENT ---
+            let appState = {};
+            let skillChart;
+            
+            // --- DATA PROCESSING LOGIC ---
+            function processData(initialData) {
+                let processedData = JSON.parse(JSON.stringify(initialData));
+                let allConfirmedSkillNames = new Set();
+                
+                Object.values(processedData.confirmedSkills).forEach(level => level.forEach(skill => allConfirmedSkillNames.add(skill.name)));
+
+                processedData.certifications.forEach(cert => {
+                    cert.validatedSkills.forEach(skillName => {
+                        if (!allConfirmedSkillNames.has(skillName)) {
+                            processedData.confirmedSkills.Advanced.push({ name: skillName, status: 'Certified' });
+                            allConfirmedSkillNames.add(skillName);
+                        }
+                    });
+                });
+
+                processedData.learningActivity.forEach(item => {
+                    item.skillsGained.forEach(skillObj => {
+                        if (!allConfirmedSkillNames.has(skillObj.name)) {
+                            const status = skillObj.endorsedByManager ? 'Verified' : '';
+                            processedData.confirmedSkills.Intermediate.push({ name: skillObj.name, status });
+                            allConfirmedSkillNames.add(skillObj.name);
+                        }
+                    });
+                });
+
+                processedData.inferredSkills = processedData.inferredSkills.filter(
+                    skillName => !allConfirmedSkillNames.has(skillName)
+                );
+                return processedData;
+            }
+
+            // --- UI RENDERING FUNCTIONS ---
+            
+            function renderAll() {
+                renderProfileCard();
+                renderStatCards();
+                renderInsightCards();
+                renderOrUpdateChart();
+                lucide.createIcons(); // Re-scan for new icons
+            }
+            
+            function renderProfileCard() {
+                const data = appState.data;
+                const container = document.getElementById('profile-card');
+                container.innerHTML = `
+                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <img class="h-24 w-24 rounded-full object-cover ring-4 ring-indigo-100" src="${data.avatarUrl}" alt="${data.name}" onError="this.onerror=null;this.src='https://placehold.co/100x100/e0e7ff/4338ca?text=${data.name.charAt(0)}';">
+                        <div class="text-center sm:text-left flex-grow">
+                            <h2 class="text-3xl font-bold text-gray-900">${data.name}</h2>
+                            <p class="text-lg text-indigo-600 font-medium flex items-center justify-center sm:justify-start mt-1"><i data-lucide="user" class="w-5 h-5 mr-2"></i>${data.role}</p>
+                            <p class="text-md text-gray-500 flex items-center justify-center sm:justify-start mt-1"><i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>${data.hub}</p>
+                        </div>
+                        <div class="mt-5 sm:mt-0 border-t sm:border-t-0 sm:border-l border-gray-200 pt-4 sm:pt-0 sm:pl-6 text-sm text-center sm:text-left text-gray-700">
+                             <p class="flex items-center justify-center sm:justify-start"><i data-lucide="calendar" class="w-5 h-5 mr-2 text-red-500"></i><span class="flex flex-col"><strong>Next Assessment:</strong> <span class="mt-1">${data.nextAssessment}</span></span></p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderStatCards() {
+                const data = appState.data;
+                const totalConfirmedSkills = Object.values(data.confirmedSkills).reduce((acc, level) => acc + level.length, 0);
+
+                const stats = [
+                    { id: 'confirmed', title: 'Confirmed Skills', value: totalConfirmedSkills, icon: 'check-circle-2' },
+                    { id: 'inferred', title: 'Inferred Skills', value: data.inferredSkills.length, icon: 'lightbulb' },
+                    { id: 'certs', title: 'Certifications', value: data.certifications.length, icon: 'award' },
+                    { id: 'learningActivity', title: 'Learning Activity', value: data.learningActivity.length, icon: 'book-open' }
+                ];
+
+                stats.forEach(stat => {
+                    const container = document.getElementById(`stat-card-${stat.id}`);
+                    if (container) {
+                        container.innerHTML = `
+                            <div class="bg-white rounded-2xl shadow-sm p-6 relative flex flex-col justify-between hover:shadow-lg transition-shadow h-full">
+                                <div>
+                                    <div class="flex items-center text-gray-500 text-lg font-semibold">
+                                        <i data-lucide="${stat.icon}" class="w-6 h-6"></i>
+                                        <h3 class="ml-2">${stat.title}</h3>
+                                    </div>
+                                    <p class="text-5xl font-bold text-gray-800 mt-2">${stat.value}</p>
+                                </div>
+                                <button data-modal-type="${stat.id}" class="info-button absolute top-4 right-4 text-gray-400 hover:text-indigo-600 hover:bg-indigo-100 rounded-full p-2 transition-colors">
+                                    <i data-lucide="info" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                });
+
+                document.querySelectorAll('.info-button').forEach(button => {
+                    button.addEventListener('click', () => openModal(button.dataset.modalType));
+                });
+            }
+
+            function renderInsightCards() {
+                const data = appState.data;
+                const insights = [
+                    { id: 'career', type: 'careerHighlights', title: 'Career Highlights', icon: 'briefcase', text: `Currently ${data.role}. View your career progression and key achievements over time.` },
+                    { id: 'development', type: 'developmentHistory', title: 'Development History', icon: 'history', text: `Latest update: "${data.developmentHistory[0]?.title || 'New Update'}".` },
+                    { id: 'learning', type: 'recommendations', title: 'Recommended Learning', icon: 'graduation-cap', text: `Next step: "${data.recommendedLearning[0]?.title || 'New Course'}".` },
+                    { id: 'paths', type: 'careerPaths', title: 'Potential Career Paths', icon: 'trending-up', text: `Explore future roles like "${data.careerPaths[0]?.title || 'Captain'}" and the skills required.` }
+                ];
+
+                insights.forEach(insight => {
+                     const container = document.getElementById(`insight-card-${insight.id}`);
+                     container.innerHTML = `
+                        <div class="bg-white rounded-2xl shadow-sm p-6 relative flex flex-col justify-between hover:shadow-lg transition-shadow h-full">
+                            <div>
+                                <div class="flex items-center text-gray-500 text-lg font-semibold">
+                                    <i data-lucide="${insight.icon}" class="w-6 h-6"></i>
+                                    <h3 class="ml-2">${insight.title}</h3>
+                                </div>
+                                <p class="text-md text-gray-700 mt-4">${insight.text}</p>
+                            </div>
+                             <button data-modal-type="${insight.type}" class="info-button absolute top-4 right-4 text-gray-400 hover:text-indigo-600 hover:bg-indigo-100 rounded-full p-2 transition-colors">
+                                <i data-lucide="info" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                     `;
+                });
+
+                document.querySelectorAll('.info-button').forEach(button => {
+                    button.addEventListener('click', () => openModal(button.dataset.modalType));
+                });
+            }
+            
+            // --- CHART LOGIC ---
+            function getChartData() {
+                const sortedActivity = [...appState.data.learningActivity].sort((a, b) => new Date(a.completionDate) - new Date(b.completionDate));
+                const monthlySkills = {};
+                sortedActivity.forEach(item => {
+                    const date = new Date(item.completionDate);
+                    const key = date.toLocaleString('default', { year: 'numeric', month: 'short' });
+                    if (!monthlySkills[key]) { monthlySkills[key] = { date, count: 0 }; }
+                    monthlySkills[key].count += item.skillsGained.length;
+                });
+                
+                const sortedMonths = Object.entries(monthlySkills).sort(([, a], [__, b]) => a.date - b.date);
+
+                let cumulativeSkills = 0;
+                const chartData = sortedMonths.map(([key, value]) => {
+                    cumulativeSkills += value.count;
+                    return { x: key, y: cumulativeSkills };
+                });
+                return chartData;
+            }
+
+            function renderOrUpdateChart() {
+                const chartData = getChartData();
+                const options = {
+                    chart: {
+                        type: 'area',
+                        height: 300,
+                        toolbar: { show: false },
+                        zoom: { enabled: false },
+                    },
+                    series: [{
+                        name: 'Cumulative Skills',
+                        data: chartData
+                    }],
+                    dataLabels: { enabled: false },
+                    stroke: { curve: 'smooth', width: 2 },
+                    colors: ["#4f46e5"],
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.7,
+                            opacityTo: 0.1,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    xaxis: {
+                        type: 'category',
+                        labels: {
+                            style: {
+                                colors: '#6b7280',
+                                fontSize: '12px',
+                            },
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                colors: '#6b7280',
+                                fontSize: '12px',
+                            },
+                            formatter: (val) => { return val.toFixed(0) }
+                        }
+                    },
+                    grid: {
+                        borderColor: '#e5e7eb',
+                        strokeDashArray: 4,
+                        yaxis: { lines: { show: true } },
+                        xaxis: { lines: { show: false } }
+                    },
+                    tooltip: {
+                        x: { format: 'MMMM Federer' },
+                    }
+                };
+
+                if (!skillChart) {
+                    skillChart = new ApexCharts(document.querySelector("#skill-growth-chart"), options);
+                    skillChart.render();
+                } else {
+                    skillChart.updateSeries([{ data: chartData }]);
+                }
+            }
+            
+            // --- MODAL LOGIC ---
+            const modal = document.getElementById('details-modal');
+            const modalContentWrapper = document.getElementById('modal-content-wrapper');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            function openModal(type) {
+                const contentInfo = getModalContent(type);
+                if (!contentInfo) return;
+
+                modalTitle.textContent = contentInfo.title;
+                modalBody.innerHTML = contentInfo.content;
+                modal.classList.remove('hidden');
+                setTimeout(() => { // For transition effect
+                     modalContentWrapper.classList.remove('scale-95', 'opacity-0');
+                     modalContentWrapper.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                lucide.createIcons(); // Render icons inside modal
+                attachModalEventListeners();
+            }
+
+            function closeModal() {
+                 modalContentWrapper.classList.add('scale-95', 'opacity-0');
+                 modalContentWrapper.classList.remove('scale-100', 'opacity-100');
+                 setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modalBody.innerHTML = ''; // Clear content
+                 }, 300);
+            }
+
+            document.getElementById('modal-close-button').addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal(); // Close on backdrop click
+            });
+            
+            function attachModalEventListeners() {
+                // Attach listeners for inferred skills buttons if they exist
+                document.querySelectorAll('.add-inferred-skill').forEach(button => {
+                    button.onclick = () => addInferredSkill(button.dataset.skill);
+                });
+                document.querySelectorAll('.remove-inferred-skill').forEach(button => {
+                    button.onclick = () => removeInferredSkill(button.dataset.skill);
+                });
+            }
+
+            // --- SKILL MANAGEMENT ---
+            function addInferredSkill(skillName) {
+                const data = appState.data;
+                data.inferredSkills = data.inferredSkills.filter(s => s !== skillName);
+                data.confirmedSkills.Intermediate.push({ name: skillName, status: '' });
+                renderAll();
+                // Re-render modal content if it's open
+                if (!modal.classList.contains('hidden') && modalTitle.textContent === 'Inferred Skills') {
+                    const contentInfo = getModalContent('inferred');
+                    modalBody.innerHTML = contentInfo.content;
+                    attachModalEventListeners();
+                    lucide.createIcons();
+                }
+            }
+
+            function removeInferredSkill(skillName) {
+                const data = appState.data;
+                data.inferredSkills = data.inferredSkills.filter(s => s !== skillName);
+                renderAll();
+                 // Re-render modal content if it's open
+                if (!modal.classList.contains('hidden') && modalTitle.textContent === 'Inferred Skills') {
+                    const contentInfo = getModalContent('inferred');
+                    modalBody.innerHTML = contentInfo.content;
+                    attachModalEventListeners();
+                    lucide.createIcons();
+                }
+            }
+
+            // --- MODAL CONTENT GENERATORS ---
+            function getModalContent(type) {
+                const data = appState.data;
+                switch (type) {
+                    case 'confirmed': return { title: 'My Confirmed Skills', content: getConfirmedSkillsDetails(data.confirmedSkills) };
+                    case 'inferred': return { title: 'Inferred Skills', content: getInferredSkillsDetails(data.inferredSkills) };
+                    case 'certs': return { title: 'My Certifications', content: getCertificationsDetails(data.certifications) };
+                    case 'learningActivity': return { title: 'Learning Activity', content: getLearningActivityDetails(data.learningActivity) };
+                    case 'careerHighlights': return { title: 'Career Highlights', content: getCareerHighlightsDetails(data.careerHighlights) };
+                    case 'developmentHistory': return { title: 'Development History', content: getDevelopmentHistoryDetails(data.developmentHistory) };
+                    case 'recommendations': return { title: 'Recommended Learning Plan', content: getRecommendedLearningDetails(data.recommendedLearning) };
+                    case 'careerPaths': return { title: 'Potential Career Paths', content: getCareerPathsDetails(data.careerPaths) };
+                    default: return null;
+                }
+            }
+
+            function getConfirmedSkillsDetails(skillData) {
+                const levels = ['Expert', 'Advanced', 'Intermediate'];
+                const getStatusBadge = (status) => {
+                    if (!status) return '';
+                    const iconMap = { Certified: 'badge-check', Verified: 'shield-check', Endorsed: 'star' };
+                    const colorMap = { Certified: 'bg-green-100 text-green-800', Verified: 'bg-blue-100 text-blue-800', Endorsed: 'bg-purple-100 text-purple-800' };
+                    return `<span class="text-xs font-bold uppercase px-2.5 py-1 ${colorMap[status]} rounded-full flex items-center gap-1 shrink-0"><i data-lucide="${iconMap[status]}" class="w-4 h-4"></i> ${status}</span>`;
+                };
+                const legend = `
+                    <div class="mt-6 border-t pt-4">
+                        <h5 class="text-sm font-bold text-gray-600 mb-3">Legend</h5>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-3"><span class="bg-green-100 text-green-800 text-xs font-bold uppercase px-2.5 py-1 rounded-full flex items-center gap-1"><i data-lucide="badge-check" class="w-4 h-4"></i> Certified</span><span class="text-gray-600">- Skill validated by formal certification body.</span></div>
+                            <div class="flex items-center gap-3"><span class="bg-blue-100 text-blue-800 text-xs font-bold uppercase px-2.5 py-1 rounded-full flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4"></i> Verified</span><span class="text-gray-600">- Proficiency validated by a manager or assessor.</span></div>
+                            <div class="flex items-center gap-3"><span class="bg-purple-100 text-purple-800 text-xs font-bold uppercase px-2.5 py-1 rounded-full flex items-center gap-1"><i data-lucide="star" class="w-4 h-4"></i> Endorsed</span><span class="text-gray-600">- Skill recognized or endorsed by peers.</span></div>
+                        </div>
+                    </div>`;
+
+                let html = '<div class="space-y-4">';
+                levels.forEach(level => {
+                    if (skillData[level] && skillData[level].length > 0) {
+                        html += `
+                            <div>
+                                <h4 class="text-md font-bold text-gray-500 border-b pb-2 mb-3">${level}</h4>
+                                <div class="space-y-2">
+                                    ${skillData[level].map(skill => `<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg"><span class="font-medium text-gray-800">${skill.name}</span>${getStatusBadge(skill.status)}</div>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                html += '</div>' + legend;
+                return html;
+            }
+
+            function getInferredSkillsDetails(skills) {
+                let listHtml = skills.length > 0 ? skills.map(skill => `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg">
+                        <span class="font-medium text-gray-800">${skill}</span>
+                        <div class="flex items-center gap-2">
+                            <button data-skill="${skill}" class="add-inferred-skill bg-green-500 text-white font-bold p-2 rounded-lg hover:bg-green-600 transition flex items-center"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                            <button data-skill="${skill}" class="remove-inferred-skill bg-red-500 text-white font-bold p-2 rounded-lg hover:bg-red-600 transition flex items-center"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-center text-gray-500 py-4">No inferred skills to review.</p>';
+
+                return `
+                    <div class="space-y-2">
+                        <p class="text-sm text-gray-600 mb-4">Confirm skills to add them to your profile, or remove them if they are not relevant.</p>
+                        ${listHtml}
+                    </div>
+                `;
+            }
+
+            function getCareerHighlightsDetails(items) {
+                 return `
+                    <div class="relative border-l-2 border-indigo-200 pl-6">
+                    ${items.map(item => `
+                        <div class="mb-8 relative">
+                            <div class="absolute -left-[33px] top-1 h-4 w-4 bg-white border-2 border-indigo-500 rounded-full"></div>
+                            <p class="text-sm text-gray-500">${item.startDate} - ${item.endDate}</p>
+                            <h4 class="font-bold text-lg text-indigo-700">${item.role}</h4>
+                            <ul class="list-disc pl-5 text-sm text-gray-600 mt-1">
+                                ${item.achievements.map(ach => `<li>${ach}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                    </div>
+                `;
+            }
+
+            function getLearningActivityDetails(items) {
+                return `
+                    <div class="space-y-3">
+                        ${items.map(item => `
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div><h4 class="font-bold text-gray-900">${item.title}</h4><p class="text-sm text-gray-500">${item.type}</p></div>
+                                    <span class="text-sm text-gray-500">${item.completionDate}</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-700 mb-2">Skills Gained:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${item.skillsGained.map(skill => {
+                                            const isVerified = skill.endorsedByManager;
+                                            const styleClass = isVerified ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800';
+                                            const icon = isVerified ? '<i data-lucide="shield-check" class="w-3 h-3 mr-1"></i>' : '';
+                                            return `<span class="flex items-center ${styleClass} text-xs font-medium px-2.5 py-0.5 rounded-full">${icon}${skill.name}</span>`;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            function getCertificationsDetails(certifications) {
+                const getStatusClass = (status) => status === 'Verified' ? 'bg-green-100 text-green-800' : status === 'Expiring Soon' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800';
+                return `
+                    <div class="space-y-3">
+                    ${certifications.map(cert => `
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-gray-900">${cert.name}</h4>
+                                <span class="text-xs font-bold uppercase px-2 py-1 ${getStatusClass(cert.status)} rounded-full">${cert.status}</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-2">Issued by: ${cert.issuer}</p>
+                            <div class="text-sm text-gray-600 border-t pt-2 mt-2">
+                                <span class="${cert.status === 'Expiring Soon' ? 'text-yellow-700 font-bold' : ''}">Issued: ${cert.issueDate} | Expires: ${cert.expiryDate}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                    </div>
+                `;
+            }
+            
+            function getDevelopmentHistoryDetails(items) {
+                 return `
+                    <div class="relative border-l-2 border-green-200 pl-6">
+                    ${items.map(item => `
+                        <div class="mb-8 relative">
+                            <div class="absolute -left-[33px] top-1 h-4 w-4 bg-white border-2 border-green-500 rounded-full flex items-center justify-center"><i data-lucide="check-circle" class="w-3 h-3 text-green-500"></i></div>
+                            <p class="text-sm text-gray-500">${item.date}</p>
+                            <h4 class="font-bold text-lg text-green-700">${item.title}</h4>
+                            <p class="text-sm text-gray-600 mt-1">${item.description}</p>
+                        </div>
+                    `).join('')}
+                    </div>
+                `;
+            }
+
+            function getRecommendedLearningDetails(items) {
+                return `
+                    <div class="space-y-3">
+                    ${items.map(item => `
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <p class="text-xs text-indigo-500 font-semibold uppercase">${item.type}</p>
+                            <h4 class="font-bold text-gray-900 mt-1">${item.title}</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-3">${item.reason}</p>
+                            <button class="w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition">View & Enroll</button>
+                        </div>
+                    `).join('')}
+                    </div>
+                `;
+            }
+
+            function getCareerPathsDetails(items) {
+                return `
+                    <div class="space-y-4">
+                    ${items.map(item => `
+                        <div class="border border-gray-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-indigo-200">
+                            <h4 class="font-bold text-lg text-gray-900">${item.title}</h4>
+                            <p class="text-sm text-gray-600 mt-1 mb-3">${item.description}</p>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700 mb-2">Key Skills to Develop:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${item.requiredSkills.map(skill => `<span class="inline-block bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">${skill}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    </div>
+                `;
+            }
+
+
+            // --- INITIALIZATION ---
+            function initializeApp() {
+                appState.data = processData(initialPilotData);
+                renderAll();
+            }
+
+            // Logic to hide home button and footer if in iframe of skills-passport.html
+            if (window.self !== window.top) { // Check if inside an iframe
+                try {
+                    const parentUrl = window.parent.location.href;
+                    if (parentUrl.endsWith('skills-passport.html')) {
+                        const homeButton = document.querySelector('a.home-button[href="index.html"]');
+                        if (homeButton) {
+                            homeButton.style.display = 'none';
+                        }
+                        const footer = document.querySelector('div.custom-footer');
+                        if (footer) {
+                            footer.style.display = 'none';
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not access parent window's location, possibly due to cross-origin restrictions. Elements visibility not changed.", e);
+                }
+            }
+
+            initializeApp();
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

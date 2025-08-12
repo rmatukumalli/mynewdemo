@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Akara Talent Hub - Pathfinder
+  </title>
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/pathfinder.css" rel="stylesheet">
+  <link href="css/main-layout.css" rel="stylesheet">
+  <script src="js/pathfinder/config.js"></script>
+  <script src="js/pathfinder/utils.js"></script>
+  <script src="js/pathfinder/navigation.js"></script>
+  <script src="js/pathfinder/roles.js"></script>
+  <script src="js/pathfinder/modals.js"></script>
+  <script src="js/pathfinder/main.js"></script>
+ </head>
+ <body class="bg-gray-100">
+  <div class="top-nav">
+   <a class="home-button" href="index.html"> 
+    Akara Talent Hub
+   </a>
+  </div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+            </svg>
+            <span class="sidebar-title">Pathfinder</span> 
+        </div>
+        <p id="sidebarUserName" class="sidebar-username">Welcome, John Doe!</p>
+        <nav class="sidebar-nav"> 
+            <a class="nav-link" href="#" onclick="navigateTo('dashboardContent')"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen7')"><i class="fas fa-calendar-check"></i>Schedule Check-in</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen8')"><i class="fas fa-users"></i>Explore Groups & Learning</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen9')"><i class="fas fa-briefcase"></i>Find Projects</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen4')"><i class="fas fa-route"></i>Career Navigator</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen10')"><i class="fas fa-tasks"></i>My Skills & Assessments</a>
+            <a class="nav-link" href="#" onclick="navigateTo('screen11')"><i class="fas fa-comments"></i>Performance & Feedback</a>
+            <a class="nav-link" href="#" onclick="navigateTo('pathfinderIntroContent')"><i class="fas fa-info-circle"></i>About Pathfinder</a>
+        </nav>
+        <div class="mt-auto pt-4 border-t border-gray-300">
+             <button class="btn btn-secondary w-full text-sm py-2" onclick="logout()">Logout (Simulated)</button>
+        </div>
+    </aside>
+
+    <main class="main-panel">
+        <div id="journeyTimeline">
+            <button class="timeline-button" id="timelineIntro" onclick="navigateTo('pathfinderIntroContent')">Intro</button>
+            <button class="timeline-button" id="timelineWelcome" onclick="navigateTo('screen1')">Welcome</button>
+            <button class="timeline-button" id="timelineSkills" onclick="navigateTo('screen2')">Skills</button>
+            <button class="timeline-button" id="timelineGoal" onclick="navigateTo('screen3')">Goal</button>
+            <button class="timeline-button" id="timelinePlan" onclick="navigateTo('screen5')">Plan</button>
+            <button class="timeline-button" id="timelineSkillsAssessments" onclick="navigateTo('screen10')">Skills & Assessments</button>
+            <button class="timeline-button" id="timelineGroupsLearning" onclick="navigateTo('screen8')">Groups & Learning</button>
+            <button class="timeline-button" id="timelineProjects" onclick="navigateTo('screen9')">Projects</button>
+            <button class="timeline-button" id="timelinePerformanceFeedback" onclick="navigateTo('screen11')">Performance & Feedback</button>
+            <button class="timeline-button" id="timelineDashboard" onclick="navigateTo('dashboardContent')">Dashboard</button>
+        </div>
+
+        <div id="pathfinderIntroContent" class="main-panel-content-item">
+            <div class="content-container">
+                <div class="text-xs text-gray-500 mb-6 text-right" id="dateTime"></div>
+                <h1 class="text-4xl font-semibold mb-4 text-gray-700" style="font-family: 'Georgia', serif;">Akara Talent Pathfinder</h1>
+                <p class="text-lg italic text-gray-400 my-6">"Your career is a journey of discovery. Let's navigate it together."</p>
+                <p class="text-xl text-gray-600 mb-8 mt-12">Embark on your next adventure. Explore personalized paths to growth.</p>
+                <div class="flex flex-col items-center space-y-4">
+                    <button class="btn btn-primary text-xl py-3 px-8" onclick="navigateTo('screen1')">Begin Exploration</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen1" class="main-panel-content-item"> 
+            <div class="content-container">
+             <h1 class="text-2xl font-semibold mb-2 text-gray-800">Welcome to Your Talent Journey!</h1>
+             <p class="text-gray-600 mb-6">Let's get you onboarded in 3 easy steps to personalize your experience.</p>
+             <button class="btn btn-primary" onclick="navigateTo('screen2')">Get Started</button>
+             <p class="mood-indicator">Mood: Intrigued</p>
+             <p class="text-xs text-gray-500 mt-4">Opportunity: Custom onboarding templates to match organizational goals.</p>
+            </div>
+        </div>
+        
+        <div id="screen2" class="main-panel-content-item"> 
+            <div class="content-container">
+             <h2 class="text-xl font-semibold mb-3 text-gray-700">Onboarding Step 1: Validate Your Skills</h2>
+             <p class="text-gray-600 mb-4">We've inferred some skills based on your profile. Please review and confirm them.</p>
+             <div class="space-y-2 text-left mb-4">
+              <div class="skill-item flex justify-between items-center"><span>Java</span><input checked class="form-checkbox h-5 w-5 text-blue-600" type="checkbox"></div>
+              <div class="skill-item flex justify-between items-center"><span>Python</span><input checked class="form-checkbox h-5 w-5 text-blue-600" type="checkbox"></div>
+              <div class="skill-item flex justify-between items-center"><span>Agile Methodologies</span><input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox"></div>
+              <div class="skill-item flex justify-between items-center"><span>Cloud Computing (AWS)</span><input checked class="form-checkbox h-5 w-5 text-blue-600" type="checkbox"></div>
+             </div>
+             <button class="btn btn-primary" onclick="navigateTo('screen3')">Next: Aspirations</button>
+             <p class="text-xs text-gray-500 mt-4">Feature: Inferred skills validation, Unified skills terminology.</p>
+            </div>
+        </div>
+
+        <div id="screen3" class="main-panel-content-item">
+            <div class="content-container">
+             <h2 class="text-xl font-semibold mb-3 text-gray-700">Onboarding Step 2: What's Your Next Career Goal?</h2>
+             <p class="text-gray-600 mb-4">Here are some personalized aspirational job role recommendations. You can also explore our Career Pathways.</p>
+             <div class="space-y-3 mb-4">
+              <div class="role-card" onclick="selectAspirationalRole('Senior Software Engineer')"><h3 class="font-medium text-blue-700">Senior Software Engineer</h3><p class="text-sm text-gray-500">Deepen your technical expertise and lead complex projects.</p></div>
+              <div class="role-card" onclick="selectAspirationalRole('Tech Lead')"><h3 class="font-medium text-blue-700">Tech Lead</h3><p class="text-sm text-gray-500">Mentor a team and guide technical direction.</p></div>
+              <div class="role-card" onclick="selectAspirationalRole('Product Manager')"><h3 class="font-medium text-blue-700">Product Manager</h3><p class="text-sm text-gray-500">Define product vision and strategy.</p></div>
+             </div>
+             <button class="btn btn-secondary" onclick="navigateTo('screen4')">Explore Career Navigator</button> 
+             <p class="text-xs text-gray-500 mt-4">Feature: Personalized aspirational job role recommendations.</p>
+             <p class="text-xs text-gray-500 mt-1">Opportunity: Define external jobs that interest you as aspirations.</p>
+            </div>
+        </div>
+
+        <div id="screen5" class="main-panel-content-item"> 
+            <div class="content-container">
+             <h2 class="text-xl font-semibold mb-1 text-gray-700">Your Development Plan</h2>
+             <p class="text-blue-600 font-medium mb-3" id="aspirationalRoleTitle">for [Aspirational Role]</p>
+             <p class="text-gray-600 mb-4">Here&rsquo;s an AI-powered plan tailored for you. This plan will evolve with your progress and manager's input.</p>
+             <div class="text-left space-y-3">
+              <div><h3 class="font-medium text-gray-700">Skills to Develop:</h3><ul class="list-disc list-inside text-sm text-gray-600"><li id="skillDev1">Advanced System Design</li><li id="skillDev2">Team Leadership</li><li id="skillDev3">Conflict Resolution</li></ul></div>
+              <div><h3 class="font-medium text-gray-700">Recommended Learning:</h3><ul class="list-disc list-inside text-sm text-gray-600"><li>Course: "Architecting Scalable Systems" <button class="text-xs text-blue-500 hover:underline" onclick="showModal('bookmarkModal')">(Bookmark)</button></li><li>Article: "Modern Leadership Techniques"</li></ul></div>
+              <div><h3 class="font-medium text-gray-700">Suggested Projects:</h3><ul class="list-disc list-inside text-sm text-gray-600"><li>Project: "Lead a feature development team for 'Phoenix Initiative'." <button class="text-xs text-blue-500 hover:underline" onclick="navigateTo('screen9')">(View Projects)</button></li></ul></div>
+              <div><h3 class="font-medium text-gray-700">Mentor Suggestions:</h3><ul class="list-disc list-inside text-sm text-gray-600"><li>Jane Doe (Principal Engineer) <button class="text-xs text-blue-500 hover:underline" onclick="showModal('mentorRequestModal')">(Request Mentorship)</button></li></ul></div>
+             </div>
+             <button class="btn btn-primary mt-6" onclick="navigateTo('screen10')">Next: My Skills & Assessments</button>
+             <p class="text-xs text-gray-500 mt-4">Feature: AI-Powered Development Plan, Unified Development Plan.</p>
+            </div>
+        </div>
+        
+        <div id="dashboardContent" class="main-panel-content-item">
+            <div class="content-container max-w-2xl"> 
+                 <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl font-semibold text-gray-800">Welcome Back, John Doe!</h1> 
+                    <div class="relative">
+                       <svg class="h-6 w-6 text-gray-600 cursor-pointer" fill="none" onclick="showModal('notificationsModal')" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                       <span class="notification-dot absolute top-0 right-0"></span>
+                    </div>
+                 </div>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="widget">
+                       <h3 class="font-medium text-gray-700">Assignments</h3>
+                       <p class="text-sm text-gray-600">Complete Compliance Training (Due: July 15th)</p>
+                       <button class="text-xs text-blue-500 hover:underline mt-1">View Details</button>
+                    </div>
+                    <div class="widget">
+                       <h3 class="font-medium text-gray-700">Aspirational Role: <span class="text-blue-600" id="homeAspirationalRole">Engineering Manager</span></h3>
+                       <p class="text-sm text-gray-600">Progress: <span id="roleProgress">15%</span></p>
+                       <button class="text-xs text-blue-500 hover:underline mt-1" onclick="navigateTo('screen5FromDashboard')">View Plan</button> 
+                    </div>
+                    <div class="widget col-span-1 md:col-span-2">
+                       <h3 class="font-medium text-gray-700">Profile Progress</h3>
+                       <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-1"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 70%"></div></div>
+                       <p class="text-sm text-gray-600 mt-1">70% Complete</p>
+                       <button class="text-xs text-blue-500 hover:underline mt-1" onclick="navigateTo('screen10')">Complete Your Profile</button>
+                    </div>
+                 </div>
+                 <p class="mood-indicator">Mood: Productive / Supported</p>
+                 <p class="text-xs text-gray-500 mt-4">Features: Universal landing page, Widgets, Check-ins integration.</p>
+                 <button class="btn btn-secondary mt-6" onclick="navigateTo('pathfinderIntroContent')">Return to Pathfinder Intro</button>
+            </div>
+        </div>
+
+        <div id="screen4" class="main-panel-content-item">
+            <div class="content-container">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Career Navigator</h2>
+                <p class="text-gray-600 mb-4">Discover roles and potential career paths within the organization. Click a role to consider it.</p>
+                <div class="border border-gray-300 p-4 rounded-md mb-4 bg-gray-50">
+                    <p class="text-sm text-gray-500 mb-2">Visual of interconnected roles (mock)</p>
+                    <div class="space-y-2">
+                        <div class="role-card p-2" onclick="selectAspirationalRole('Solutions Architect')">Solutions Architect</div>
+                        <div class="role-card p-2" onclick="selectAspirationalRole('Engineering Manager')">Engineering Manager</div>
+                        <div class="role-card p-2" onclick="selectAspirationalRole('Data Scientist')">Data Scientist</div>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="navigateTo('screen3')">Back to Recommendations</button> 
+                <p class="text-xs text-gray-500 mt-4">Feature: Career Pathways for career exploration.</p>
+            </div>
+        </div>
+
+        <div id="screen7" class="main-panel-content-item">
+            <div class="content-container">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Schedule a Check-in</h2>
+                <p class="text-gray-600 mb-4">Schedule a check-in with your manager, Adam.</p>
+                <div class="text-left space-y-3 mb-4">
+                    <div><label class="block text-sm font-medium text-gray-700" for="checkinDate">Date:</label><input class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" id="checkinDate" type="date"></div>
+                    <div><label class="block text-sm font-medium text-gray-700" for="checkinAgenda">Agenda Items (optional):</label><textarea class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" id="checkinAgenda" placeholder="e.g., Discuss skills I want to develop, Developmental progress on 'Engineering Manager' role..." rows="3"></textarea></div>
+                </div>
+                <button class="btn btn-primary" onclick="showModal('checkinSentModal');">Send Request</button>
+                <button class="btn btn-secondary" onclick="navigateTo('dashboardContent')">Back to Dashboard</button>
+            </div>
+        </div>
+
+        <div id="screen8" class="main-panel-content-item">
+            <div class="content-container">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Explore Groups & Learning</h2>
+                <div class="text-left space-y-4">
+                    <div><h3 class="font-medium text-gray-700 mb-2">Skills-Based Groups:</h3><div class="group-item">Agile Practitioners Community <button class="text-xs text-blue-500 hover:underline ml-2">Join</button></div><div class="group-item">Cloud Innovators Forum <button class="text-xs text-blue-500 hover:underline ml-2">View</button></div><button class="btn btn-secondary btn-sm mt-2" onclick="showModal('smartCardModal')">Create SmartCard in 'Cloud Innovators'</button></div>
+                    <div><h3 class="font-medium text-gray-700 mb-2">Recommended Learning:</h3><div class="learning-item">Course: Advanced Java Programming <button class="text-xs text-blue-500 hover:underline ml-2" onclick="showModal('bookmarkModal')">Bookmark</button></div><div class="learning-item">Article: Microservices Best Practices <button class="text-xs text-blue-500 hover:underline ml-2" onclick="showModal('bookmarkModal')">Bookmark</button></div><p class="text-xs text-gray-500 mt-2">Opportunity: Show trending content with social data. Showcase curated suggestions based on recent activity.</p></div>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <a class="btn btn-primary" href="personalized-learning-path/index.html" style="text-decoration: none;">Discover Skill Development</a>
+                    <button class="btn btn-primary" onclick="navigateTo('screen9')">Next: Find Projects</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen9" class="main-panel-content-item">
+            <div class="content-container">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Find Projects & Opportunities</h2>
+                <p class="text-gray-600 mb-4">Apply for a project to gain experience in your areas of interest.</p>
+                <div class="text-left space-y-3">
+                    <div class="project-item"><h3 class="font-medium">Project Phoenix: Develop New Microservice</h3><p class="text-sm text-gray-500">Skills: Java, Spring Boot, Microservices. Duration: 3 months.</p><button class="btn btn-primary btn-sm mt-2" onclick="showModal('applyProjectModal')">Apply</button></div>
+                    <div class="project-item"><h3 class="font-medium">Project Titan: Cloud Migration Strategy</h3><p class="text-sm text-gray-500">Skills: AWS, DevOps, Strategic Planning. Duration: 6 months.</p><button class="btn btn-primary btn-sm mt-2" onclick="showModal('applyProjectModal')">Apply</button></div>
+                </div>
+                <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;"><a class="btn btn-primary" href="internal-opportunities.html" style="text-decoration: none;">Explore Opportunities</a><button class="btn btn-primary mt-2" onclick="navigateTo('screen11')">Next: Performance & Feedback</button></div>
+            </div>
+        </div>
+
+        <div id="screen10" class="main-panel-content-item">
+            <div class="content-container">
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">My Profile, Skills & Assessments</h2>
+                <div class="text-left space-y-4">
+                    <div><h3 class="font-medium text-gray-700">Profile Setup</h3><p class="text-sm text-gray-600">Set career preferences to tailor suggestions. <button class="text-xs text-blue-500 hover:underline" onclick="showModal('preferencesModal')">Edit Preferences</button></p><p class="text-sm text-gray-600 mt-1">Authorize auto-sync with LinkedIn. <button class="text-xs text-blue-500 hover:underline" onclick="showModal('linkedinSyncModal')">Sync with LinkedIn</button></p></div>
+                    <div><h3 class="font-medium text-gray-700">Skills Assessment</h3><p class="text-sm text-gray-600">Complete your annual skills self-assessment. <button class="btn btn-secondary btn-sm mt-1" onclick="showModal('assessmentModal')">Start Self-Assessment</button></p><p class="text-sm text-gray-600 mt-2">Request peer feedback for 'Leadership Skills'. <button class="btn btn-secondary btn-sm mt-1" onclick="showModal('peerFeedbackModal')">Request Peer Feedback</button></p></div>
+                    <div><h3 class="font-medium text-gray-700">Skills Matrix (Growth Over Time)</h3><div class="bg-gray-100 p-3 rounded text-sm text-gray-500">[Simplified visual representation of skills growth: e.g., Leadership: Beginner -> Intermediate]</div><p class="text-xs text-gray-500 mt-1">Opportunity: Skills matrix to showcase skills growth overtime.</p></div>
+                    <div><h3 class="font-medium text-gray-700">My Career Journey</h3><div class="bg-gray-100 p-3 rounded text-sm text-gray-500">[Visual timeline: e.g., Software Engineer -> Sr. Software Engineer -> (Aspiring) Engineering Manager]</div><p class="text-xs text-gray-500 mt-1">Opportunity: Visual timeline to showcase employee's career path progression.</p></div>
+                </div>
+                <button class="btn btn-primary mt-6" onclick="navigateTo('screen8')">Next: Explore Groups & Learning</button>
+                <p class="text-xs text-gray-500 mt-4">Features: Universal profile setup, Common skills assessment component.</p>
+            </div>
+        </div>
+
+        <div id="screen11" class="main-panel-content-item">
+            <div class="content-container">
+                 <h2 class="text-xl font-semibold mb-3 text-gray-700">Review & Assess: Performance & Feedback</h2>
+                 <div class="text-left space-y-4">
+                    <div class="widget"><h3 class="font-medium text-gray-700">Mid-Year Development Conversation</h3><p class="text-sm text-gray-600">Shared advancements on development plan for 'Engineering Manager', completion of 'Project Phoenix', and new skills in 'Team Motivation'.</p></div>
+                    <div class="widget"><h3 class="font-medium text-gray-700">Manager Feedback (Adam)</h3><p class="text-sm text-gray-600">"Alex, your progress on leadership skills is commendable! Keep focusing on strategic delegation."</p></div>
+                    <div class="widget"><h3 class="font-medium text-gray-700">Peer Kudos <span class="text-xs text-blue-500 hover:underline cursor-pointer" onclick="showModal('kudosModal')">(View All)</span></h3><p class="text-sm text-gray-600">Sarah L. gave you kudos for: "Excellent collaboration on the microservice architecture design!"</p><p class="text-xs text-gray-500 mt-1">Opportunity: Ability to showcase kudos from peers on employee profile.</p></div>
+                    <div class="widget"><h3 class="font-medium text-gray-700">Annual Performance Review</h3><p class="text-sm text-gray-600">Review scheduled for Dec 10th. Goals for next year will be set collaboratively.</p><p class="text-xs text-gray-500 mt-1">Opportunity: Generate goal suggestions based on employee profile.</p></div>
+                 </div>
+                 <div class="flex justify-between items-center mt-6">
+                    <button class="btn btn-primary btn-sm" onclick="simulatePromotion()">Simulate Promotion Discussion with CAISY™</button>
+                    <button class="btn btn-primary" onclick="navigateTo('dashboardContent')">Go to My Dashboard</button>
+                 </div>
+            </div>
+        </div>
+        
+        <div id="screen12" class="main-panel-content-item">
+            <div class="content-container">
+                <img alt="Celebration" class="mx-auto mb-4 rounded-full" onerror="this.src='https://placehold.co/80x80/cccccc/333333?text=Congrats'" src="https://placehold.co/80x80/10B981/FFFFFF?text=🎉">
+                <h1 class="text-2xl font-bold mb-3 text-green-600">Congratulations, John Doe!</h1>
+                <p class="text-lg text-gray-700 mb-4">You've been promoted to <strong class="text-blue-700">Engineering Manager</strong>!</p>
+                <p class="text-gray-600 mb-6">Review your new tailored development plan, learning resources, and mentor suggestions for your new role and responsibilities.</p>
+                <button class="btn btn-primary" onclick="prepareNewRolePlan('Engineering Manager'); navigateTo('screen5FromPromotion');">View New Development Plan</button> 
+                <button class="btn btn-secondary" onclick="navigateTo('dashboardContent')">Back to Dashboard</button>
+                <p class="mood-indicator">Mood: Proud / Empowered</p>
+            </div>
+        </div>
+    </main>
+  </div>
+
+  <div class="modal" id="bookmarkModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('bookmarkModal')">&times;</span><h3 class="text-lg font-medium mb-2">Content Bookmarked!</h3><p class="text-sm text-gray-600">This item has been added to your learning list.</p><button class="btn btn-primary mt-4" onclick="closeModal('bookmarkModal')">OK</button></div></div>
+  <div class="modal" id="mentorRequestModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('mentorRequestModal')">&times;</span><h3 class="text-lg font-medium mb-2">Mentorship Request</h3><p class="text-sm text-gray-600">Send a mentorship request to Jane Doe?</p><button class="btn btn-primary mt-4" onclick="closeModal('mentorRequestModal'); showModal('confirmationModal', 'Mentorship request sent!')">Send Request</button><button class="btn btn-secondary mt-4" onclick="closeModal('mentorRequestModal')">Cancel</button></div></div>
+  <div class="modal" id="checkinSentModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('checkinSentModal'); navigateTo('dashboardContent');">&times;</span><h3 class="text-lg font-medium mb-2">Check-in Request Sent!</h3><p class="text-sm text-gray-600">Your manager, Adam, has been notified.</p><button class="btn btn-primary mt-4" onclick="closeModal('checkinSentModal'); navigateTo('dashboardContent');">OK</button></div></div>
+  <div class="modal" id="smartCardModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('smartCardModal')">&times;</span><h3 class="text-lg font-medium mb-2">Create SmartCard</h3><p class="text-sm text-gray-600 mb-2">Share an interesting piece of content with the 'Cloud Innovators' group.</p><textarea class="w-full p-2 border rounded" placeholder="Enter content or link..." rows="3"></textarea><button class="btn btn-primary mt-4" onclick="closeModal('smartCardModal'); showModal('confirmationModal', 'SmartCard shared!')">Share</button></div></div>
+  <div class="modal" id="applyProjectModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('applyProjectModal')">&times;</span><h3 class="text-lg font-medium mb-2">Project Application</h3><p class="text-sm text-gray-600">You are about to apply for this project. Your manager will be notified.</p><button class="btn btn-primary mt-4" onclick="closeModal('applyProjectModal'); showModal('confirmationModal', 'Application submitted!')">Confirm Application</button><button class="btn btn-secondary mt-4" onclick="closeModal('applyProjectModal')">Cancel</button></div></div>
+  <div class="modal" id="preferencesModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('preferencesModal')">&times;</span><h3 class="text-lg font-medium mb-2">Career Preferences</h3><p class="text-sm text-gray-600 mb-2">Help us tailor suggestions for you.</p><label class="block text-left text-sm font-medium text-gray-700">Preferred work style:</label><select class="w-full p-2 border rounded mt-1 mb-2"><option>Hybrid</option><option>Remote</option><option>On-site</option></select><label class="block text-left text-sm font-medium text-gray-700">Interests:</label><input class="w-full p-2 border rounded mt-1" placeholder="e.g., AI, Team Leadership, Public Speaking" type="text"><button class="btn btn-primary mt-4" onclick="closeModal('preferencesModal'); showModal('confirmationModal', 'Preferences saved!')">Save Preferences</button></div></div>
+  <div class="modal" id="linkedinSyncModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('linkedinSyncModal')">&times;</span><h3 class="text-lg font-medium mb-2">LinkedIn Sync</h3><p class="text-sm text-gray-600">Authorize the platform to sync your skills and certifications with your LinkedIn profile?</p><button class="btn btn-primary mt-4" onclick="closeModal('linkedinSyncModal'); showModal('confirmationModal', 'LinkedIn sync authorized (simulated).')">Authorize</button><button class="btn btn-secondary mt-4" onclick="closeModal('linkedinSyncModal')">Cancel</button></div></div>
+  <div class="modal" id="assessmentModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('assessmentModal')">&times;</span><h3 class="text-lg font-medium mb-2">Skills Self-Assessment</h3><p class="text-sm text-gray-600">Rate your proficiency in the following skills:</p><div class="text-left my-2">Leadership: <select class="p-1 border rounded"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><div class="text-left my-2">Java: <select class="p-1 border rounded"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><button class="btn btn-primary mt-4" onclick="closeModal('assessmentModal'); showModal('confirmationModal', 'Self-assessment submitted!')">Submit Assessment</button></div></div>
+  <div class="modal" id="peerFeedbackModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('peerFeedbackModal')">&times;</span><h3 class="text-lg font-medium mb-2">Request Peer Feedback</h3><p class="text-sm text-gray-600">Select peers to request feedback on 'Leadership Skills'.</p><input class="w-full p-2 border rounded mt-1" placeholder="Enter peer names or emails..." type="text"><button class="btn btn-primary mt-4" onclick="closeModal('peerFeedbackModal'); showModal('confirmationModal', 'Peer feedback requests sent!')">Send Requests</button></div></div>
+  <div class="modal" id="kudosModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('kudosModal')">&times;</span><h3 class="text-lg font-medium mb-2">All Peer Kudos</h3><div class="text-left text-sm text-gray-600 space-y-1"><p><strong>Sarah L.:</strong> "Excellent collaboration on the microservice architecture design!"</p><p><strong>Mike B.:</strong> "Great presentation on the new feature."</p><p><strong>Chen W.:</strong> "Always helpful and supportive to the team."</p></div><button class="btn btn-primary mt-4" onclick="closeModal('kudosModal')">Close</button></div></div>
+  <div class="modal" id="notificationsModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('notificationsModal')">&times;</span><h3 class="text-lg font-medium mb-2">Notifications</h3><div class="text-left text-sm text-gray-600 space-y-2"><p class="p-2 bg-blue-50 rounded"><strong>New:</strong> Manager Adam suggested 'Leadership Skills' for your development plan.</p><p class="p-2 bg-yellow-50 rounded"><strong>Reminder:</strong> Compliance Training is due July 15th.</p><p class="p-2 bg-green-50 rounded"><strong>Update:</strong> Your peer feedback request for 'Java' has 2 new responses.</p></div><button class="btn btn-primary mt-4" onclick="closeModal('notificationsModal')">Close</button></div></div>
+  <div class="modal" id="confirmationModal"><div class="modal-content"><span class="close-modal" onclick="closeModal('confirmationModal')">&times;</span><h3 class="text-lg font-medium mb-2" id="confirmationModalTitle">Confirmation</h3><p class="text-sm text-gray-600" id="confirmationModalMessage"></p><button class="btn btn-primary mt-4" onclick="closeModal('confirmationModal')">OK</button></div></div>
+
+  <i class="fas fa-plane flying-plane-fixed"></i>
+  <div class="custom-footer">Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop</div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

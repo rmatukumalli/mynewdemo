@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   John Doe - Profile
+  </title>
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon">
+  <!-- Styles for Navbar -->
+  <link href="css/theme.css" rel="stylesheet">
+  <!-- Styles for Profile Page -->
+  <link href="css/profile.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css'; // Assuming you have a local copy
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <!-- INCLUDE _shared_navbar_css.html -->
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <!-- INCLUDE _shared_navbar_body.html -->
+  <div class="container">
+   <div class="main-content">
+    <!-- Profile Header Card -->
+    <div class="profile-card">
+     <div class="cover-photo">
+     </div>
+     <div class="profile-header">
+      <!-- Placeholder for profile picture, or use a generic one -->
+      <div class="profile-picture" style="background-image: url('https://static-alter1.vidnoz.com/system/asset/202408/66beeabb5fa40.jpg'); background-size: cover; background-position: center;">
+      </div>
+      <div class="profile-info">
+       <h1 class="name">
+        John Doe
+       </h1>
+       <p class="headline">
+        Software Engineer | Web Developer | Tech Enthusiast
+       </p>
+       <p class="location">
+        San Francisco, CA, United States
+       </p>
+       <p class="connections">
+        150+ connections
+       </p>
+       <div class="action-buttons">
+        <button class="btn btn-primary">
+         View Activity
+        </button>
+        <button class="btn btn-secondary">
+         Share Profile
+        </button>
+        <button class="btn btn-secondary">
+         More
+        </button>
+       </div>
+      </div>
+     </div>
+    </div>
+    <!-- About Section -->
+    <div class="section" style="display: block !important; opacity: 1 !important;">
+     <h2 class="section-title">
+      About
+     </h2>
+     <p class="about-text">
+      Highly skilled and motivated software engineer with 5+ years of experience in developing and implementing innovative software solutions.
+                    Passionate about creating efficient, scalable, and user-friendly applications. Proven ability to work in fast-paced environments and collaborate effectively with cross-functional teams.
+      <br>
+      <br>
+      Dedicated to continuous learning and staying updated with the latest industry trends. Eager to contribute technical expertise to challenging projects and drive impactful results.
+     </p>
+    </div>
+    <!-- Skills at a Glance Section -->
+    <div class="section">
+     <h2 class="section-title">
+      Skills at a Glance
+     </h2>
+     <div class="skills-container">
+      <div class="skill-tag">
+       JavaScript
+      </div>
+      <div class="skill-tag">
+       React
+      </div>
+      <div class="skill-tag">
+       Node.js
+      </div>
+      <div class="skill-tag">
+       Vue.js
+      </div>
+      <div class="skill-tag">
+       Python
+      </div>
+      <div class="skill-tag">
+       Django
+      </div>
+      <div class="skill-tag">
+       Flask
+      </div>
+      <div class="skill-tag">
+       Java
+      </div>
+      <div class="skill-tag">
+       SQL
+      </div>
+      <div class="skill-tag">
+       NoSQL Databases
+      </div>
+      <div class="skill-tag">
+       AWS
+      </div>
+      <div class="skill-tag">
+       Azure
+      </div>
+      <div class="skill-tag">
+       Agile Methodologies
+      </div>
+      <div class="skill-tag">
+       Problem Solving
+      </div>
+      <div class="skill-tag">
+       Team Leadership
+      </div>
+     </div>
+    </div>
+    <!-- Experience Section -->
+    <div class="section">
+     <h2 class="section-title">
+      Experience
+     </h2>
+     <div class="experience-item">
+      <div class="company-logo">
+       TS
+      </div>
+      <div class="experience-details">
+       <h3>
+        Senior Software Engineer
+       </h3>
+       <p class="company-name">
+        Tech Solutions Inc.
+       </p>
+       <p class="duration">
+        Jan 2022 - Present
+       </p>
+       <p class="description">
+        Led the development of key features for the company's flagship product. Mentored junior engineers and contributed to code reviews. Improved application performance by 20% through optimization techniques.
+       </p>
+      </div>
+     </div>
+     <div class="experience-item">
+      <div class="company-logo">
+       IL
+      </div>
+      <div class="experience-details">
+       <h3>
+        Software Engineer
+       </h3>
+       <p class="company-name">
+        Innovatech Ltd.
+       </p>
+       <p class="duration">
+        Jun 2019 - Dec 2021
+       </p>
+       <p class="description">
+        Developed and maintained web applications using modern JavaScript frameworks. Collaborated with product managers to define project requirements. Participated in the full software development lifecycle.
+       </p>
+      </div>
+     </div>
+    </div>
+    <!-- Education Section -->
+    <div class="section">
+     <h2 class="section-title">
+      Education
+     </h2>
+     <div class="experience-item">
+      <!-- Reusing experience-item style for education for consistency -->
+      <div class="company-logo">
+       SU
+      </div>
+      <div class="experience-details">
+       <h3>
+        Master of Science in Computer Science
+       </h3>
+       <p class="company-name">
+        Stanford University
+       </p>
+       <p class="duration">
+        2017 - 2019
+       </p>
+       <p class="description">
+        Focused on distributed systems and machine learning. Thesis on "Scalable Architectures for Real-time Data Processing."
+       </p>
+      </div>
+     </div>
+     <div class="experience-item">
+      <div class="company-logo">
+       UCB
+      </div>
+      <div class="experience-details">
+       <h3>
+        Bachelor of Science in Software Engineering
+       </h3>
+       <p class="company-name">
+        University of California, Berkeley
+       </p>
+       <p class="duration">
+        2013 - 2017
+       </p>
+       <p class="description">
+        Graduated with honors. Active member of the ACM chapter and participated in multiple hackathons.
+       </p>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- Sidebar -->
+   <div class="sidebar">
+    <!-- Contact Info -->
+    <div class="section" style="display: block !important; opacity: 1 !important;">
+     <h3 class="section-title">
+      Contact Info
+     </h3>
+     <div class="contact-info">
+      <div class="contact-item">
+       <svg class="contact-icon" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z">
+        </path>
+       </svg>
+       john.doe@example.com
+      </div>
+      <div class="contact-item">
+       <svg class="contact-icon" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z">
+        </path>
+       </svg>
+       +1 (555) 000-0000
+      </div>
+      <div class="contact-item">
+       <svg class="contact-icon" fill="currentColor" viewbox="0 0 24 24">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+        </path>
+       </svg>
+       San Francisco, CA
+      </div>
+      <div class="contact-item">
+       <svg class="contact-icon" fill="currentColor" style="width: 18px; height: 18px;" viewbox="0 0 24 24">
+        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.16v7.39h2.16v-3.6c0-.92.68-1.62 1.56-1.62.88 0 1.56.7 1.56 1.62v3.6h2.16zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69.75 1.64 1.64 0 0 0-.01 2.94 1.68 1.68 0 0 0 1.7 1.68zm-1.1 2.13h2.16v7.39H5.78v-7.39z">
+        </path>
+       </svg>
+       linkedin.com/in/johndoe
+      </div>
+     </div>
+    </div>
+    <!-- Profile Analytics -->
+    <div class="section analytics">
+     <h3>
+      Profile Analytics (Internal)
+     </h3>
+     <div class="stat">
+      <span>
+       Profile views by recruiters
+      </span>
+      <span class="stat-value">
+       38
+      </span>
+     </div>
+     <div class="stat">
+      <span>
+       Appeared in searches
+      </span>
+      <span class="stat-value">
+       72
+      </span>
+     </div>
+     <div class="stat">
+      <span>
+       Projects Contributed
+      </span>
+      <span class="stat-value">
+       12
+      </span>
+     </div>
+    </div>
+    <!-- People Also Viewed (Internal Context) -->
+    <div class="section">
+     <h3 class="section-title">
+      Colleagues You May Know
+     </h3>
+     <div style="font-size: 14px; color: #00000099;">
+      <p style="margin-bottom: 8px;">
+       &bull; Jane Smith - Senior Developer
+      </p>
+      <p style="margin-bottom: 8px;">
+       &bull; Robert Brown - Engineering Manager
+      </p>
+      <p style="margin-bottom: 8px;">
+       &bull; Emily White - QA Lead
+      </p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script src="js/profile.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

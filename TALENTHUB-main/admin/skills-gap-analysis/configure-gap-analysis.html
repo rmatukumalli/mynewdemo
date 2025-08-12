@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Skills Gap Analysis - Admin Dashboard</title>
+    <link rel="stylesheet" href="../../css/admin-styles.css"> <!-- Common admin styles -->
+    <link rel="stylesheet" href="configure-gap-analysis.css"> <!-- Specific styles for this page -->
+    <script src="../../js/admin-auth.js" defer></script>
+</head>
+<body class="admin-page">
+<nav class="admin-navbar">
+    <div class="admin-navbar-container">
+        <a href="../../admin-dashboard.html" class="admin-navbar-brand">Admin Panel</a>
+        <ul class="admin-navbar-links">
+            <li><a href="../../admin-dashboard.html">Dashboard</a></li>
+        </ul>
+        <button id="admin-logout-button" class="admin-navbar-logout">Logout</button>
+    </div>
+</nav>
+
+    <div class="container">
+        <header>
+            <h1>Configure Skills Gap Analysis</h1>
+        </header>
+        <main>
+            <section id="gap-analysis-config-content">
+                <p>This section allows administrators to set parameters for organization-wide or team-specific skill gap analyses.</p>
+                
+                <div class="form-container">
+                    <h2>Global Configuration</h2>
+                    <form id="global-config-form">
+                        <div>
+                            <label for="default-proficiency-scale">Default Proficiency Scale for Analysis:</label>
+                            <select id="default-proficiency-scale" name="default-proficiency-scale">
+                                <!-- Options populated by JS, e.g., Standard 5-Level -->
+                                <option value="1">Standard 5-Level</option>
+                                <option value="2">Leadership 3-Level</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="minimum-gap-threshold">Minimum Gap Threshold to Highlight (e.g., 1 level):</label>
+                            <input type="number" id="minimum-gap-threshold" name="minimum-gap-threshold" value="1" min="0">
+                        </div>
+                        <div>
+                            <label for="analysis-frequency">Recommended Analysis Frequency:</label>
+                            <select id="analysis-frequency" name="analysis-frequency">
+                                <option value="quarterly">Quarterly</option>
+                                <option value="biannually">Bi-Annually</option>
+                                <option value="annually">Annually</option>
+                                <option value="adhoc">Ad-hoc Only</option>
+                            </select>
+                        </div>
+                        <button type="submit">Save Global Settings</button>
+                    </form>
+                </div>
+
+                <div class="config-list-container">
+                    <h2>Team-Specific Configurations</h2>
+                    <button id="add-team-config-button">Add New Team Configuration</button>
+                    <table id="team-configs-table">
+                        <thead>
+                            <tr>
+                                <th>Team/Department</th>
+                                <th>Proficiency Scale</th>
+                                <th>Gap Threshold</th>
+                                <th>Key Skills Focus (Optional)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Team-specific configs populated by JS -->
+                            <tr>
+                                <td>Engineering</td>
+                                <td>Standard 5-Level</td>
+                                <td>2</td>
+                                <td>Java, Kubernetes, AWS</td>
+                                <td><button class="edit-btn">Edit</button> <button class="delete-btn">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>Marketing</td>
+                                <td>Standard 5-Level</td>
+                                <td>1</td>
+                                <td>SEO, Content Creation, Social Media Marketing</td>
+                                <td><button class="edit-btn">Edit</button> <button class="delete-btn">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Talent Marketplace</p>
+        </footer>
+    </div>
+    <!-- Modal for adding/editing team configuration -->
+    <div id="team-config-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title">Add/Edit Team Configuration</h2>
+            <form id="team-config-form">
+                <input type="hidden" id="config-id" name="config-id">
+                <div>
+                    <label for="team-name">Team/Department Name:</label>
+                    <input type="text" id="team-name" name="team-name" required>
+                </div>
+                <div>
+                    <label for="team-proficiency-scale">Proficiency Scale:</label>
+                    <select id="team-proficiency-scale" name="team-proficiency-scale">
+                         <option value="1">Standard 5-Level</option>
+                         <option value="2">Leadership 3-Level</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="team-gap-threshold">Gap Threshold:</label>
+                    <input type="number" id="team-gap-threshold" name="team-gap-threshold" value="1" min="0">
+                </div>
+                <div>
+                    <label for="key-skills-focus">Key Skills Focus (comma-separated):</label>
+                    <input type="text" id="key-skills-focus" name="key-skills-focus" placeholder="e.g., Python, Data Analysis">
+                </div>
+                <button type="submit" id="save-team-config-button">Save Team Configuration</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="configure-gap-analysis.js"></script>
+    <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

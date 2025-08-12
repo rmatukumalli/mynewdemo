@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Training Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .prose h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+        .prose h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div class="container mx-auto px-4 py-8">
+        <header class="bg-white p-4 rounded-lg border border-slate-200 mb-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-slate-800">Job Architecture Training Guide</h1>
+            <a href="/job-architecture/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600 border border-slate-300 px-4 py-2 rounded-md">Back to Job Architecture</a>
+        </header>
+
+        <main class="prose max-w-none bg-white p-8 rounded-lg shadow-md">
+            <h2>Introduction</h2>
+            <p>Akara Airlines leverages a robust Job Architecture framework to strategically define, organize, and manage its talent. This framework is supported by the Job Architecture Wizard, an interactive, multi-step tool designed to guide users through the process of defining the organizational structure, roles, skills, and career paths from the ground up.</p>
+            <p>The wizard is structured into nine sequential steps, accessible via the navigation on the left. Each step must be logically completed to build a coherent and integrated architecture.</p>
+
+            <h2>Step 1: Define Organization</h2>
+            <h3>Purpose</h3>
+            <p>This initial step establishes the highest level of the hierarchy: the organization itself. It serves as the root container for all subsequent structures.</p>
+            <h3>Functionality</h3>
+            <ul>
+                <li>Click the <strong>+ Add Organization</strong> button to create a new entry.</li>
+                <li>The main screen displays a table of existing organizations with columns for ID, NAME, and DESCRIPTION.</li>
+                <li>You can edit or delete existing entries using the icons on the right side of the table.</li>
+            </ul>
+            <h3>Outcome</h3>
+            <p>A successfully defined organization (e.g., "Akara Airlines") that acts as the foundation for the entire job architecture.</p>
+
+            <h2>Step 2: Define Business Units</h2>
+            <h3>Purpose</h3>
+            <p>After defining the organization, this step breaks it down into its major operational or strategic divisions, known as Business Units.</p>
+            <h3>Functionality</h3>
+            <ul>
+                <li>Click the <strong>+ Add Business Unit</strong> button to create a new division.</li>
+                <li>The main screen displays a table of existing business units with columns for ID, NAME, DESCRIPTION, and PARENT ORGANIZATION.</li>
+            </ul>
+            <h3>Examples of Business Units:</h3>
+            <ul>
+                <li>Passenger Operations</li>
+                <li>Cargo Operations</li>
+            </ul>
+            <h3>Outcome</h3>
+            <p>A complete map of all primary business units, each linked back to the parent Akara Airlines organization.</p>
+
+            <h2>Step 3: Define Departments</h2>
+            <h3>Purpose</h3>
+            <p>This step involves further subdividing the Business Units into more specific operational Departments.</p>
+            <h3>Functionality</h3>
+            <ul>
+                <li>First, select the parent Business Unit you wish to add a department to.</li>
+                <li>Click the <strong>+ Add Department</strong> button.</li>
+            </ul>
+            <h3>Outcome</h3>
+            <p>A detailed organizational chart showing how departments are nested within business units.</p>
+
+            <h2>Step 4: Define Role Groups (Job Families)</h2>
+            <h3>Purpose</h3>
+            <p>This step focuses on creating logical groupings of similar roles, often referred to as Role Groups or Job Families, which are based on the nature of the work performed.</p>
+            <h3>Examples of Role Groups:</h3>
+            <ul>
+                <li>Pilots</li>
+                <li>Cabin Crew</li>
+                <li>Aircraft Maintenance Engineers</li>
+            </ul>
+            <h3>Outcome</h3>
+            <p>A well-defined set of Role Groups that will be used to categorize jobs in Step 6.</p>
+
+            <h2>Step 5: Define Job Levels</h2>
+            <h3>Purpose</h3>
+            <p>This critical step establishes the standardized vertical hierarchy for the entire organization, ensuring consistency in seniority and responsibility.</p>
+            <h3>Functionality</h3>
+            <ul>
+                <li>Click the <strong>+ Add Level</strong> button to define a new step in your career ladder.</li>
+                <li>The main screen displays a list of defined levels (e.g., L1, L2, L3) with their corresponding titles (e.g., Trainee, Junior, Senior).</li>
+            </ul>
+            <h3>Outcome</h3>
+            <p>A clear, standardized framework of job levels that underpins career progression. The "Data Validation Issues" in Step 9 will flag any job that is later created without being assigned one of these defined levels.</p>
+
+            <h2>Step 6: Add Jobs & Map Skills</h2>
+            <h3>Purpose</h3>
+            <p>This step is a central hub for defining all aspects of a specific job, consolidating job creation, description, and skill mapping. It features a powerful AI workflow to streamline the creation of job descriptions and ensure alignment with the organization's skill taxonomy.</p>
+            <h3>Core Functionality:</h3>
+            <p>First, select a Role Group (e.g., "Flight Operations") and either select an existing job or click "+ Add Job".</p>
+            <p>The main content area presents three tabs:</p>
+            <ul>
+                <li><strong>[Tab 1] Basic Information:</strong> Define the job's core details (Job Title, Job Level, Department, etc.).</li>
+                <li><strong>[Tab 2] Job Description:</strong> House the detailed narrative of the role. This tab includes the "Generate/Update with AI" button to launch the AI workflow.</li>
+                <li><strong>[Tab 3] Skills Mapping:</strong> View, add, or edit the skills required for the job and set their proficiency levels.</li>
+            </ul>
+            <h3>AI-Powered Job Generation Workflow</h3>
+            <ol>
+                <li><strong>Initiating AI Generation:</strong> From the Job Description tab, click “Generate/Update with AI”. This redirects you to the AI page (<code>/create_with_ai.html</code>), passing a <code>?source=job-architecture</code> parameter in the URL to track your origin.</li>
+                <li><strong>Conditional AI Page:</strong> On the AI page, the system detects the source parameter. The main call-to-action button is dynamically labeled “Save & Return to Job Architecture”.</li>
+                <li><strong>Return and Overwrite:</strong> Clicking this button routes you back to the exact spot in the Step 6 Job Description tab. When you return, the wizard is automatically updated with the AI-generated content. This includes Job Title, Requisition ID, Department, Business Unit, Job Level, Salary Range, Hiring Manager, Job Summary (mapped to Role Summary), and other available content like Responsibilities and Qualifications.</li>
+            </ol>
+            <h3>Skills Categorization and Display:</h3>
+            <p>In the Skills Mapping tab, skills from the AI tool are automatically categorized:</p>
+            <ul>
+                <li><strong>Existing Skills:</strong> Skills already in the internal taxonomy appear in the standard "Skills for..." list.</li>
+                <li><strong>AI Suggested Skills:</strong> New skills not found in the taxonomy appear in a separate “AI Suggested Skills” section, prompting you for review. Each suggested skill includes a proficiency level, a description, and a “Map to Ontology” button.</li>
+            </ul>
+            <h3>Mapping to Ontology and Competencies:</h3>
+            <p>Clicking “Map to Ontology” for a suggested skill opens a tool where you can:</p>
+            <ul>
+                <li>Link the new skill to an existing one in the official ontology.</li>
+                <li>Or, create a new entry for the skill in the taxonomy.</li>
+                <li>You can also map the skill to broader competencies and capabilities to ensure alignment with talent and performance frameworks.</li>
+            </ul>
+
+            <h2>Step 7: Analyze Skill Gaps</h2>
+            <h3>Purpose</h3>
+            <p>This analytics step allows you to compare the required skills for a specific job against the organization's current skill inventory to identify critical gaps.</p>
+            <h3>Functionality</h3>
+            <p>Select a job title from the "Select Job for Analysis" dropdown (e.g., "Senior Marketing Manager"). The "Skill Gap Analysis Details" card will automatically populate with three key sections:</p>
+            <ul>
+                <li><strong>Required Skills for Job:</strong> A list of skills and proficiency levels defined for the selected role.</li>
+                <li><strong>Identified Skill Gaps:</strong> Highlights any required skills for the job that are not currently present in the organization's talent pool.</li>
+                <li><strong>Skills Present in Organization:</strong> Shows which skills the organization possesses that meet or exceed the job's requirements, confirming existing capabilities.</li>
+            </ul>
+
+            <h2>Step 8: Visualize Career Paths</h2>
+            <h3>Purpose</h3>
+            <p>This step enables you to map and illustrate potential career progression routes for different roles, providing clarity for employees and managers.</p>
+            <h3>Functionality</h3>
+            <p>Select a starting job title from the "Select Job to View Paths" dropdown (e.g., "Captain (A320 Type Rated)"). The interface dynamically displays the potential career moves for the selected role, categorized into:</p>
+            <ul>
+                <li><strong>Vertical Progression:</strong> Shows direct promotional paths to more senior roles (e.g., from Captain to "Chief Pilot").</li>
+                <li><strong>Lateral Moves:</strong> Displays opportunities for cross-functional or similar-level roles that allow for skill diversification (e.g., from an A320 Captain to "Captain (A350)," "Simulator Instructor," or "Flight Safety Officer").</li>
+            </ul>
+
+            <h2>Step 9: Review & AI - Strategic Dashboard</h2>
+            <h3>Purpose</h3>
+            <p>This final step provides a comprehensive overview of your entire job architecture, offering a central place for validation, strategic review, and AI-driven recommendations.</p>
+            <h3>Wizard Progress Checklist</h3>
+            <p>On the left, this section displays the completion status (e.g., "Complete," "In Progress," "Not Started") of each of the previous eight steps, allowing you to quickly see what work remains.</p>
+            <h3>AI-Powered Insights & Suggestions</h3>
+            <p>On the right, the AI engine analyzes your architecture and provides strategic recommendations, such as:</p>
+            <h3>Data Validation Issues</h3>
+            <p>Located below the main dashboard, this section lists specific errors or omissions that need correction, categorized by priority. Each issue includes an actionable link to the relevant step for correction (e.g., Fix Issue (Step 5)).</p>
+
+            <h2>Managing Job Architecture Data: Import/Export</h2>
+            <p>The Import/Export Data feature allows you to manage your job architecture data by importing it from external sources (like HCM systems) and potentially exporting it for other uses.</p>
+            <h3>Import Job Architecture Data</h3>
+            <h4>Purpose</h4>
+            <p>To efficiently bring your company’s job data (e.g., from Workday, SAP SuccessFactors) into the Job Architecture Wizard by uploading a CSV file.</p>
+            <h4>Functionality</h4>
+            <ul>
+                <li><strong>Upload CSV File:</strong> Use the "Upload CSV File" input to select your prepared CSV file.</li>
+                <li><strong>Import Data:</strong> Click the "Import Data" button to initiate the import process.</li>
+                <li><strong>Import Status:</strong> A status message will appear, indicating the progress or outcome of the import.</li>
+            </ul>
+            <h3>Post-Import Data Review</h3>
+            <p>After a successful import, the system provides two tabs for reviewing the processed data:</p>
+            <ul>
+                <li><strong>Data Summary:</strong> This tab provides a high-level overview, showing counts for processed categories such as:
+                    <ul>
+                        <li>Job Families</li>
+                        <li>Job Profiles</li>
+                        <li>Job Levels</li>
+                        <li>Role Groups</li>
+                        <li>Role Levels</li>
+                        <li>Role Group Skills</li>
+                        <li>Role Level Skills</li>
+                    </ul>
+                </li>
+                <li><strong>Detailed View:</strong> This tab presents the full imported data in a filterable table, allowing for a granular review.</li>
+            </ul>
+            <h3>Next Steps After Import</h3>
+            <ul>
+                <li>Review the processed data in the "Detailed View" tab for accuracy.</li>
+                <li>Link imported data to actual employee profiles within the system.</li>
+                <li>Utilize this comprehensive data for advanced skill gap analysis and to generate targeted training recommendations.</li>
+            </ul>
+            <h3>Export Job Architecture Data (Future Feature)</h3>
+            <p>While currently a placeholder, future functionality will allow you to export your meticulously structured job architecture data (e.g., as a CSV file) for use in other HRIS or talent management systems, or for reporting purposes.</p>
+        </main>
+    </div>
+</body>
+</html>

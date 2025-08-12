@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Workforce Insights Dashboard - Akara Airlines
+  </title>
+  <!-- External CSS files - Assuming these contain base styles and navbar styles -->
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css'; // Ensure this path is correct
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null; // Prevent further error triggers
+            }
+        }
+  </script>
+  <style>
+   :root {
+            --delta-light-gray: #f3f4f6;
+            --delta-white: #ffffff;
+            --delta-primary-blue: #1f2937;      /* Darkest: Main headings, primary text */
+            --delta-secondary-blue: #374151;    /* Medium: Subheadings, secondary text */
+            --delta-accent-blue: #0073C4;       /* Bright: Highlights, interactive elements, links */
+            --delta-primary-red: #DA291C;        /* Critical alerts, negative trends */
+            --delta-text-color: #6b7280;         /* Standard body copy */
+            --delta-muted-text-color: #4b5563;   /* Less important text, e.g., gray pills */
+            --delta-medium-gray: #e5e7eb;        /* Borders, dividers, light UI backgrounds */
+            --delta-dark-gray: #A0A0A0;          /* Disabled states, subtle elements */
+            --delta-success-green: #2E7D32;      /* Positive trends, success messages */
+            --delta-warning-orange: #ED6C02;     /* Warnings, attention needed */
+            --delta-info-teal: #17a2b8;          /* Informational icons, distinct highlights */
+
+            /* Lighter shades for backgrounds like pills/tags */
+            --delta-accent-blue-light: rgba(0, 115, 196, 0.1);
+            --delta-primary-red-light: rgba(218, 41, 28, 0.1);
+            --delta-success-green-light: rgba(46, 125, 50, 0.1);
+            --delta-warning-orange-light: rgba(237, 108, 2, 0.1);
+            --delta-info-teal-light: rgba(23, 162, 184, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--delta-light-gray, #f3f4f6);
+            color: var(--delta-text-color, #6b7280);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main { /* Assuming main is the direct child that should grow */
+            flex-grow: 1;
+        }
+
+        /* Navigation Bar Enhancements (Example - assuming base styles in external CSS) */
+        /*
+        .navbar { 
+            background-color: var(--delta-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        */
+        .nav-logo i {
+            color: var(--delta-accent-blue, #0073C4); /* Theme color for logo icon */
+        }
+        .nav-logo span {
+            /* color: var(--delta-primary-blue, #1f2937); */ /* Theme color for logo text */
+        }
+        .nav-link {
+            color: var(--delta-secondary-blue, #374151);
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active { /* Assuming an 'active' class for current page */
+            color: var(--delta-accent-blue, #0073C4);
+        }
+        .dropdown-menu {
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--delta-medium-gray, #e5e7eb);
+        }
+        .dropdown-item:hover {
+            background-color: var(--delta-accent-blue-light, rgba(0, 115, 196, 0.1));
+            color: var(--delta-accent-blue, #0073C4);
+        }
+        .user-profile .user-name {
+             color: var(--delta-secondary-blue, #374151);
+        }
+
+
+        /* Metric Card Base Styling */
+        .metric-card {
+            background-color: var(--delta-white, white);
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex; /* Added for flexbox layout within cards */
+            flex-direction: column; /* Stack items vertically */
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Card Title (used in multiple sections) */
+        .card-title { /* This is a general class, specific overrides might exist */
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: var(--delta-primary-blue, #1f2937); 
+            margin-bottom: 1rem; /* 16px */
+        }
+
+        /* Metric Value & Label (used in multiple sections) */
+        .metric-value { /* General metric value */
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            color: var(--delta-accent-blue, #0073C4); /* Changed to accent blue for pop */
+        }
+        .metric-label {
+            font-size: 0.875rem; /* 14px */
+            color: var(--delta-text-color, #6b7280); 
+            margin-top: 0.25rem; /* 4px */
+        }
+
+        .progress-bar-bg {
+            background-color: var(--delta-medium-gray, #e5e7eb); 
+            border-radius: 0.375rem; /* 6px */
+            height: 0.75rem; /* 12px */
+            overflow: hidden;
+        }
+        .progress-bar {
+            background-color: var(--delta-accent-blue, #0073C4); 
+            height: 100%;
+            border-radius: 0.375rem; /* 6px */
+            transition: width 0.5s ease-in-out;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0; /* Increased padding for better spacing */
+            border-bottom: 1px solid var(--delta-medium-gray, #e5e7eb); 
+        }
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        .list-item span:first-child { /* Text for the item name */
+            color: var(--delta-secondary-blue, #374151);
+        }
+        .list-item span:last-child:not(.skill-tag):not(.pill) { /* Value part of list item */
+             font-weight: 500;
+             color: var(--delta-primary-blue, #1f2937);
+        }
+
+
+        .skill-tag {
+            background-color: var(--delta-accent-blue-light, rgba(0, 115, 196, 0.1));
+            color: var(--delta-accent-blue, #0073C4);
+            padding: 0.25rem 0.75rem; /* 4px 12px */
+            border-radius: 9999px; /* Full pill shape */
+            font-size: 0.875rem; /* 14px */
+            font-weight: 500;
+        }
+
+        .section-header {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 700;
+            color: var(--delta-primary-blue, #1f2937); 
+            margin-bottom: 1.5rem; /* 24px */
+            padding-bottom: 0.75rem; /* 12px */
+            border-bottom: 2px solid var(--delta-accent-blue, #0073C4); /* Changed border to accent blue */
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 0.3rem 0.8rem; /* Slightly increased padding */
+            border-radius: 9999px;
+            font-size: 0.75rem; /* 12px */
+            font-weight: 500;
+            margin-left: 0.5rem;
+            line-height: 1.2; /* Ensure text is centered well */
+        }
+        .pill-red { background-color: var(--delta-primary-red-light); color: var(--delta-primary-red); }
+        .pill-green { background-color: var(--delta-success-green-light); color: var(--delta-success-green); }
+        .pill-blue { background-color: var(--delta-accent-blue-light); color: var(--delta-accent-blue); }
+        .pill-gray { background-color: var(--delta-medium-gray); color: var(--delta-muted-text-color); }
+        .pill-orange { background-color: var(--delta-warning-orange-light); color: var(--delta-warning-orange); }
+        .pill-teal { background-color: var(--delta-info-teal-light); color: var(--delta-info-teal); }
+
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Styles for new tabbed dashboards */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--delta-medium-gray, #e0e0e0);
+            margin-bottom: 1.5rem; /* 24px */
+        }
+
+        .tab-button {
+            padding: 0.6rem 1.2rem; /* Reduced padding */
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            font-size: 0.9rem; /* Reduced font size */
+            font-weight: 500;
+            color: var(--delta-text-color, #6b7280);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem; /* Spacing between tabs */
+        }
+        .tab-button:hover {
+            color: var(--delta-primary-blue, #1f2937);
+        }
+        .tab-button.active {
+            color: var(--delta-accent-blue, #0073C4);
+            border-bottom-color: var(--delta-accent-blue, #0073C4);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            padding-top: 1.5rem; /* 24px, Added some padding for content separation */
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h1, .tab-content h2 {
+            color: var(--delta-primary-blue, #1f2937);
+        }
+        .tab-content h1 { /* Page title within tab */
+            font-size: 1.75rem; /* 28px */
+            margin-bottom: 1.5rem; /* 24px */
+            font-weight: 700;
+        }
+        .tab-content h2 { /* Section title within tab */
+            font-size: 1.25rem; /* 20px */
+            margin-bottom: 1rem; /* 16px */
+            padding-bottom: 0.5rem; /* 8px */
+            border-bottom: 1px solid var(--delta-medium-gray, #e5e7eb);
+            font-weight: 600;
+        }
+
+        .tab-content .card-grid, .tab-content .highlighted-reports-grid, .tab-content .metrics-grid {
+            display: grid;
+            gap: 1.5rem; /* 24px */
+            margin-bottom: 2rem; /* 32px */
+        }
+        .tab-content .card-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .tab-content .highlighted-reports-grid {
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Unified card styling within tabs */
+        .tab-content .card, .tab-content .metric-card, .tab-content .enhanced-card {
+            background-color: var(--delta-white, #fff);
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex; /* Added for flexbox layout within cards */
+            flex-direction: column; /* Stack items vertically */
+        }
+        .tab-content .card:hover, .tab-content .metric-card:hover, .tab-content .enhanced-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+         .card-content { /* New class for content area in cards */
+            flex-grow: 1; /* Allows content to take available space */
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--delta-secondary-blue);
+        }
+        .card-content ul {
+            list-style-position: inside;
+            padding-left: 0; /* Reset padding for ul inside card-content */
+            margin: 0; /* Reset margin for ul */
+        }
+         .card-content ul li { /* Styling for li elements within card-content */
+            margin-bottom: 0.5rem; /* Space between list items */
+            font-size: 1.25rem; /* Larger font for numbers */
+            font-weight: 600; /* Bolder numbers */
+            color: var(--delta-primary-blue); /* Themed color for numbers */
+        }
+        .card-content ul li span { /* Styling for the text label next to the number */
+            font-size: 0.875rem; /* Smaller font for the label */
+            font-weight: 400; /* Normal weight for the label */
+            color: var(--delta-text-color); /* Standard text color for label */
+            margin-left: 0.5rem; /* Space between number and label */
+            display: block; /* Make label appear below number or adjust as needed */
+        }
+        .card-content p.data-point { /* Specific styling for data points if not in a list */
+            font-size: 1.5rem; /* Larger font for numbers */
+            font-weight: 600; /* Bolder numbers */
+            color: var(--delta-primary-blue); /* Themed color for numbers */
+            margin-bottom: 0.25rem; /* Small space below number */
+        }
+        .card-content p.data-label { /* Styling for the label of a data point */
+            font-size: 0.875rem; /* Smaller font for the label */
+            color: var(--delta-text-color); /* Standard text color for label */
+            margin-bottom: 0.75rem; /* Space below label */
+        }
+
+
+        .tab-content .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem; /* 16px */
+            min-height: 30px; 
+        }
+        .tab-content .card-header i { /* Icon in card header */
+            font-size: 1.5rem; /* 24px */
+            margin-right: 0.75rem; /* 12px */
+            color: var(--delta-accent-blue, #0073C4); /* Default icon color */
+        }
+        .tab-content .card-title { /* Card title within tab context */
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: var(--delta-primary-blue, #1f2937);
+            margin: 0;
+        }
+        .card-subtitle { 
+            font-size: 0.75rem; /* 12px */
+            color: var(--delta-white, #fff);
+            padding: 0.25rem 0.6rem; /* 4px 8px */
+            border-radius: 0.25rem; /* 4px */
+            margin-left: auto; /* Pushes to the right */
+            font-weight: 500;
+        }
+        .people-manager-subtitle { background-color: var(--delta-secondary-blue, #374151); }
+        .ld-leader-subtitle { background-color: var(--delta-info-teal, #17a2b8); }
+
+        .card-content-placeholder { /* This class is now effectively replaced by .card-content for these specific cards */
+            display: none; /* Hide if not explicitly used elsewhere */
+        }
+
+
+        .tab-content .card-button {
+            display: inline-block;
+            padding: 0.45rem 0.9rem; /* Reduced padding */
+            background-color: var(--delta-accent-blue, #0073C4);
+            color: var(--delta-white, white);
+            text-decoration: none;
+            border-radius: 0.375rem; /* 6px */
+            font-size: 0.8125rem; /* Slightly reduced font size (13px) */
+            font-weight: 500;
+            text-align: center;
+            transition: background-color 0.2s ease, filter 0.2s ease;
+            margin-top: auto; /* Pushes button to the bottom of the card */
+        }
+        .tab-content .card-button:hover {
+            background-color: var(--delta-accent-blue, #0073C4); /* Keep same color, use filter for depth */
+            filter: brightness(0.9);
+        }
+        .tab-content .card-header .card-button { 
+            margin-left: 1rem; /* 16px */
+            margin-top: 0; /* Reset margin-top for buttons in header */
+        }
+        .tab-content .highlighted-reports-grid .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space for title, (optional number), and button */
+            align-items: center; /* Center items horizontally */
+            text-align: center; /* Center text */
+        }
+         .tab-content .highlighted-reports-grid .card .card-header {
+            justify-content: center; /* Center icon and title in header */
+            margin-bottom: 0.5rem; /* Less space below header */
+        }
+        .tab-content .highlighted-reports-grid .card .card-header i {
+            margin-right: 0.5rem; /* Space between icon and title */
+        }
+        .tab-content .highlighted-reports-grid .card .highlight-metric {
+            font-size: 1.75rem; /* Large number for highlight */
+            font-weight: 700;
+            color: var(--delta-accent-blue);
+            margin: 0.5rem 0; /* Space around the metric */
+        }
+        .tab-content .highlighted-reports-grid .card .card-button.view-button {
+            align-self: center; /* Center button */
+            margin-top: 1rem; /* Space above button */
+        }
+
+
+        .filters {
+            display: flex;
+            gap: 1rem; /* 16px */
+            margin-bottom: 1.5rem; /* 24px */
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filters label {
+            font-size: 0.875rem; /* 14px */
+            margin-right: 0.375rem; /* 6px */
+            color: var(--delta-secondary-blue, #374151);
+            font-weight: 500;
+        }
+        .filters select, .filters input[type="text"] {
+            padding: 0.6rem; /* ~10px */
+            border: 1px solid var(--delta-medium-gray, #ccc);
+            border-radius: 0.375rem; /* 6px */
+            font-size: 0.875rem; /* 14px */
+            background-color: var(--delta-white, #fff);
+            color: var(--delta-primary-blue, #1f2937);
+        }
+        .comparison-text {
+            font-size: 0.8125rem; /* 13px */
+            color: var(--delta-text-color, #777);
+            margin-bottom: 1.5rem; /* 24px */
+        }
+
+        .tab-content .metrics-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        .tab-content .metric-card h3 { /* Title within metric card in tabs */
+            font-size: 1rem; /* 16px */
+            color: var(--delta-secondary-blue, #374151);
+            margin-bottom: 0.5rem; /* 8px */
+            font-weight: 500;
+        }
+        .tab-content .metric-value { /* Metric value specifically in tabs */
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            color: var(--delta-accent-blue, #0073C4); /* Themed color */
+            margin-bottom: 0.25rem; /* 4px */
+        }
+        .tab-content .metric-value.large { font-size: 2.75rem; /* 44px, was 48px */}
+        .metric-sub-value {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600; /* was bold */
+            margin: 0 0.25rem; /* 4px */
+        }
+        .metric-period, .metric-change-label {
+            font-size: 0.75rem; /* 12px */
+            color: var(--delta-text-color, #777);
+        }
+        .metric-trend {
+            font-size: 0.875rem; /* 14px */
+            margin-left: 0.5rem; /* 8px */
+        }
+        .trend-up { color: var(--delta-success-green, #28a745); }
+        .trend-down { color: var(--delta-primary-red, #dc3545); }
+
+        .learning-overview-values {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem; /* 16px */
+            margin-bottom: 0.75rem; /* 12px */
+        }
+        .learning-overview-values div {
+            text-align: center;
+        }
+        .learning-overview-bar {
+            height: 10px;
+            background-color: var(--delta-medium-gray, #e9ecef);
+            border-radius: 5px;
+            position: relative;
+            margin-top: 5px;
+        }
+        .learning-overview-bar-filled {
+            height: 100%;
+            background-color: var(--delta-accent-blue, #0073C4);
+            border-radius: 5px;
+            width: 60%; /* Example fill */
+        }
+        .metric-change {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 700; /* was bold */
+        }
+
+        .tab-content .enhanced-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0.75rem; /* 12px */
+        }
+        .tab-content .enhanced-card li {
+            padding: 0.5rem 0; /* 8px 0 */
+            border-bottom: 1px solid var(--delta-light-gray, #f0f0f0); /* Lighter border */
+            font-size: 0.875rem; /* 14px */
+            color: var(--delta-secondary-blue, #374151);
+        }
+        .tab-content .enhanced-card li:last-child {
+            border-bottom: none;
+        }
+        .tab-content .enhanced-card li strong { /* Highlighted part of list item */
+            color: var(--delta-accent-blue, #0073C4);
+            font-weight: 600;
+        }
+        /* Specific icon colors for enhanced cards */
+        .enhanced-card .card-header i.fa-lightbulb { color: var(--delta-warning-orange); }
+        .enhanced-card .card-header i.fa-users-cog { color: var(--delta-primary-red); }
+        .enhanced-card .card-header i.fa-chart-pie { color: var(--delta-info-teal); }
+        .enhanced-card .card-header i.fa-tasks { color: var(--delta-success-green); }
+        
+        .skill-gap-details p {
+            margin-bottom: 0.5rem; /* 8px */
+            line-height: 1.5;
+            color: var(--delta-secondary-blue, #374151);
+        }
+        .skill-gap-details span {
+            display: block;
+            margin-top: 0.25rem; /* 4px */
+            font-size: 0.8125rem; /* 13px */
+        }
+        .risk-level-high { color: var(--delta-primary-red, #dc3545); font-weight: 600; }
+        .risk-level-medium { color: var(--delta-warning-orange, #ffc107); font-weight: 600; }
+        .opportunity { color: var(--delta-success-green, #28a745); font-weight: 500; }
+        .opportunity i { margin-right: 0.375rem; /* 6px */ }
+
+        /* Footer Styling */
+        .site-footer {
+            background-color: var(--delta-secondary-blue, #374151);
+            color: var(--delta-light-gray, #f3f4f6);
+            text-align: center;
+            padding: 1.5rem 1rem; /* 24px 16px */
+            font-size: 0.875rem; /* 14px */
+            margin-top: 2rem; /* 32px */
+        }
+
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                align-items: stretch; /* Make filter items full width */
+            }
+            .filters select, .filters input[type="text"] {
+                width: 100%;
+            }
+            .tab-content .card-grid, .tab-content .highlighted-reports-grid, .tab-content .metrics-grid {
+                grid-template-columns: 1fr; /* Single column on smaller screens */
+            }
+            .tabs {
+                overflow-x: auto; /* Allow horizontal scrolling for tabs if they overflow */
+                white-space: nowrap;
+            }
+            .tab-button {
+                flex-shrink: 0; /* Prevent tabs from shrinking too much */
+            }
+            .tab-content h1 { font-size: 1.5rem; } /* 24px */
+            .tab-content h2 { font-size: 1.125rem; } /* 18px */
+        }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="bg-gray-100">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <!-- Using a generic Tailwind class for body, can be overridden by var(--delta-light-gray) -->
+  <div class="main-container">
+  </div>
+  <header class="mt-8 mb-8 text-center px-4 md:px-8">
+   <h1 class="text-3xl md:text-4xl font-bold" style="color: var(--delta-primary-blue);">
+    Workforce Insights Dashboard
+   </h1>
+   <!-- Reverted -->
+  </header>
+  <main class="space-y-8 px-4 md:px-8 pb-4 md:pb-8 container mx-auto">
+   <div class="tabs mb-6">
+    <button class="tab-button active" onclick="openTab(event, 'workforceIntelligence')">
+     Workforce Intelligence
+    </button>
+    <button class="tab-button" onclick="openTab(event, 'skillsOverview')">
+     Skills Overview
+    </button>
+    <button class="tab-button" onclick="openTab(event, 'enhancedInsights')">
+     Enhanced Insights
+    </button>
+   </div>
+   <div class="tab-content active" id="workforceIntelligence">
+    <h1>
+     Workforce Intelligence
+    </h1>
+    <div class="card-grid">
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-plane-departure">
+       </i>
+       <h3 class="card-title">
+        Operational Skills
+       </h3>
+       <span class="card-subtitle ld-leader-subtitle">
+        L&D / OPS
+       </span>
+      </div>
+      <div class="card-content">
+       <ul>
+        <li>
+         250
+         <span>
+          A320 Pilots
+         </span>
+        </li>
+        <li>
+         45
+         <span>
+          Recurrent Trainings Due (90d)
+         </span>
+        </li>
+       </ul>
+      </div>
+      <a class="card-button" href="#">
+       Explore Reports
+      </a>
+     </div>
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-user-tie">
+       </i>
+       <h3 class="card-title">
+        Leadership Metrics
+       </h3>
+       <span class="card-subtitle ld-leader-subtitle">
+        L&D / HR
+       </span>
+      </div>
+      <div class="card-content">
+       <ul>
+        <li>
+         4.5/5
+         <span>
+          Avg. CRM Score
+         </span>
+        </li>
+        <li>
+         +15%
+         <span>
+          Service Commendations
+         </span>
+        </li>
+       </ul>
+      </div>
+      <a class="card-button" href="#">
+       Explore Reports
+      </a>
+     </div>
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-users-cog">
+       </i>
+       <h3 class="card-title">
+        My Team Stats
+       </h3>
+       <span class="card-subtitle people-manager-subtitle">
+        TEAM LEADS
+       </span>
+      </div>
+      <div class="card-content">
+       <ul>
+        <li>
+         92%
+         <span>
+          Avg. On-Time Performance
+         </span>
+        </li>
+        <li>
+         3
+         <span>
+          Pending E-Learnings
+         </span>
+        </li>
+       </ul>
+      </div>
+      <a class="card-button" href="#">
+       Explore Reports
+      </a>
+     </div>
+    </div>
+    <h2>
+     Highlighted Reports
+    </h2>
+    <div class="highlighted-reports-grid">
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-clipboard-list">
+       </i>
+       <h3 class="card-title">
+        Pilot Certifications
+       </h3>
+      </div>
+      <div class="highlight-metric">
+       1,150
+      </div>
+      <a class="card-button view-button" href="#">
+       View
+      </a>
+     </div>
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-wrench">
+       </i>
+       <h3 class="card-title">
+        Maintenance Skills
+       </h3>
+      </div>
+      <div class="highlight-metric">
+       850+
+      </div>
+      <a class="card-button view-button" href="#">
+       View
+      </a>
+     </div>
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-chart-bar">
+       </i>
+       <h3 class="card-title">
+        Safety Compliance
+       </h3>
+      </div>
+      <div class="highlight-metric">
+       99.2%
+      </div>
+      <a class="card-button view-button" href="#">
+       View
+      </a>
+     </div>
+     <div class="card">
+      <div class="card-header">
+       <i class="fas fa-user-graduate">
+       </i>
+       <h3 class="card-title">
+        Training Impact
+       </h3>
+      </div>
+      <div class="highlight-metric">
+       +8% Skill
+      </div>
+      <a class="card-button view-button" href="#">
+       View
+      </a>
+     </div>
+    </div>
+   </div>
+   <div class="tab-content" id="skillsOverview">
+    <h1>
+     Skills Overview for Akara Airlines
+    </h1>
+    <div class="filters">
+     <div>
+      <label for="report-date-range">
+       Report date range:
+      </label>
+      <select id="report-date-range">
+       <option>
+        Last 90 days
+       </option>
+       <option>
+        Last 30 days
+       </option>
+       <option>
+        Last 6 months
+       </option>
+       <option>
+        Custom range
+       </option>
+      </select>
+     </div>
+     <div>
+      <label for="department">
+       Department:
+      </label>
+      <select id="department">
+       <option>
+        All Departments
+       </option>
+       <option>
+        Flight Operations
+       </option>
+       <option>
+        In-Flight Services
+       </option>
+       <option>
+        Maintenance & Engineering
+       </option>
+       <option>
+        Ground Operations
+       </option>
+       <option>
+        Cargo
+       </option>
+       <option>
+        Customer Experience
+       </option>
+       <option>
+        Safety & Compliance
+       </option>
+      </select>
+     </div>
+     <div>
+      <label for="job-family">
+       Job family:
+      </label>
+      <select id="job-family">
+       <option>
+        All Job Families
+       </option>
+       <option>
+        Pilot (Captain, First Officer)
+       </option>
+       <option>
+        Cabin Crew (Purser, Flight Attendant)
+       </option>
+       <option>
+        Aircraft Maintenance Technician
+       </option>
+       <option>
+        Flight Dispatcher
+       </option>
+       <option>
+        Ground Handling Agent
+       </option>
+       <option>
+        Ramp Agent
+       </option>
+       <option>
+        Safety Officer
+       </option>
+      </select>
+     </div>
+     <div>
+      <label for="location">
+       Base/Hub:
+      </label>
+      <select id="location">
+       <option>
+        All Bases
+       </option>
+       <option>
+        JFK (New York)
+       </option>
+       <option>
+        LHR (London)
+       </option>
+       <option>
+        DXB (Dubai)
+       </option>
+       <option>
+        SIN (Singapore)
+       </option>
+       <option>
+        LAX (Los Angeles)
+       </option>
+      </select>
+     </div>
+    </div>
+    <p class="comparison-text">
+     Compared to Q1 2024 (Jan - Mar 2024)
+    </p>
+    <div class="metrics-grid">
+     <div class="metric-card">
+      <h3>
+       Total Certified Aviation Skills
+      </h3>
+      <div class="metric-value">
+       1,250
+      </div>
+      <p class="metric-period">
+       Q2 2024 (Apr - Jun 2024)
+      </p>
+     </div>
+     <div class="metric-card">
+      <h3>
+       Skill Upgrades & New Certs
+      </h3>
+      <div>
+       <span class="metric-sub-value trend-up">
+        +120
+        <i class="fas fa-arrow-up">
+        </i>
+       </span>
+       <span class="metric-sub-value trend-down">
+        -5
+        <i class="fas fa-arrow-down text-xs">
+         (expirations)
+        </i>
+       </span>
+      </div>
+      <p class="metric-period">
+       Q2 2024
+      </p>
+     </div>
+     <div class="metric-card">
+      <h3>
+       Avg. Qualifications per Crew Member
+      </h3>
+      <div class="metric-value">
+       5.8
+       <span class="metric-trend trend-up">
+        <i class="fas fa-arrow-up">
+        </i>
+        0.3
+       </span>
+      </div>
+      <p class="metric-period">
+       Q2 2024
+      </p>
+     </div>
+     <div class="metric-card">
+      <h3>
+       Critical Role Skill Sufficiency
+      </h3>
+      <div class="metric-value">
+       92.7%
+       <span class="metric-trend trend-up">
+        <i class="fas fa-arrow-up">
+        </i>
+        0.5%
+       </span>
+      </div>
+      <p class="metric-period">
+       Q2 2024
+      </p>
+     </div>
+     <div class="metric-card">
+      <h3>
+       Recurrent Training Hours
+      </h3>
+      <div class="learning-overview-values">
+       <div>
+        <div class="metric-value large">
+         15.2K
+        </div>
+        <p class="metric-period">
+         Jun 2024
+        </p>
+       </div>
+       <div>
+        <div class="metric-value large" style="color:var(--delta-dark-gray)">
+         12.5K
+        </div>
+        <p class="metric-period">
+         Jun 2023
+        </p>
+       </div>
+      </div>
+      <div class="metric-change trend-up">
+       +2.7K hrs
+       <span class="metric-change-label">
+        CHANGE
+       </span>
+      </div>
+      <div class="learning-overview-bar">
+       <div class="learning-overview-bar-filled" style="width: 75%;">
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="tab-content" id="enhancedInsights">
+    <h1>
+     Enhanced Aviation Insights & Recommendations
+    </h1>
+    <div class="card-grid">
+     <div class="enhanced-card">
+      <div class="card-header">
+       <i class="fas fa-plane-up">
+       </i>
+       <h3 class="card-title">
+        Top Emerging Aviation Skills
+       </h3>
+      </div>
+      <ul>
+       <li>
+        <strong>
+         Sustainable Aviation Fuel (SAF) Handling & Logistics:
+        </strong>
+        Demand +30% QoQ.
+       </li>
+       <li>
+        <strong>
+         Advanced Air Mobility (AAM) Systems Ops:
+        </strong>
+        +22% growth in pilot training requests.
+       </li>
+       <li>
+        <strong>
+         AI in Predictive Aircraft Maintenance:
+        </strong>
+        +18% increase, critical for new fleet.
+       </li>
+       <li>
+        <strong>
+         Drone Piloting & Airspace Integration:
+        </strong>
+        New requirement for cargo division.
+       </li>
+       <li>
+        <strong>
+         Cybersecurity for Connected Aircraft:
+        </strong>
+        +25% focus in tech ops.
+       </li>
+      </ul>
+      <a class="card-button view-button mt-4" href="#">
+       Deep Dive into Future Skills
+      </a>
+     </div>
+     <div class="enhanced-card">
+      <div class="card-header">
+       <i class="fas fa-user-shield">
+       </i>
+       <h3 class="card-title">
+        Critical Certification Gap Analysis
+       </h3>
+      </div>
+      <div class="skill-gap-details">
+       <p>
+        <strong>
+         B787 Type Rating:
+        </strong>
+        Current Pilots: 85 / Required for Fleet Expansion: 110
+        <span class="risk-level-high">
+         (High Impact)
+        </span>
+       </p>
+       <p>
+        <strong>
+         Advanced Composite Repair (Level III):
+        </strong>
+        Current Techs: 15 / Target: 25
+        <span class="risk-level-medium">
+         (Medium Impact)
+        </span>
+       </p>
+       <p>
+        <strong>
+         ETOPS Certification (Pilots):
+        </strong>
+        Current: 70% of Long-Haul Pilots / Target: 90%
+        <span class="risk-level-medium">
+         (Medium Impact)
+        </span>
+       </p>
+       <p class="mt-3">
+        <span class="opportunity">
+         <i class="fas fa-graduation-cap">
+         </i>
+         Recommended: Fast-track B787 conversion training & composite repair upskilling.
+        </span>
+       </p>
+      </div>
+     </div>
+     <div class="enhanced-card">
+      <div class="card-header">
+       <i class="fas fa-chalkboard-teacher">
+       </i>
+       <h3 class="card-title">
+        Training Engagement by Department
+       </h3>
+      </div>
+      <ul>
+       <li>
+        <strong>
+         Flight Operations:
+        </strong>
+        92% recurrent training completion, 45 avg. sim hours/pilot.
+       </li>
+       <li>
+        <strong>
+         Maintenance & Engineering:
+        </strong>
+        88% new tech training, 25 avg. OJT hours/tech.
+       </li>
+       <li>
+        <strong>
+         In-Flight Services:
+        </strong>
+        75% service excellence module completion.
+        <span class="pill pill-orange">
+         Needs Attention
+        </span>
+       </li>
+       <li>
+        <strong>
+         Ground Operations:
+        </strong>
+        95% ramp safety certification, 15 avg. procedure review hours.
+       </li>
+      </ul>
+      <a class="card-button view-button mt-4" href="#">
+       View Training Dashboards
+      </a>
+     </div>
+     <div class="enhanced-card">
+      <div class="card-header">
+       <i class="fas fa-tools">
+       </i>
+       <h3 class="card-title">
+        Upcoming Maintenance Skill Demands (Next 12 Months)
+       </h3>
+      </div>
+      <ul>
+       <li>
+        <strong>
+         Electric Aircraft Powertrain Maint.:
+        </strong>
+        Anticipated for new regional fleet.
+       </li>
+       <li>
+        <strong>
+         Advanced Avionics (NextGen Systems):
+        </strong>
+        For B777X & A321XLR.
+       </li>
+       <li>
+        <strong>
+         Hydrogen Fuel Systems Handling:
+        </strong>
+        R&D phase for future ops.
+       </li>
+      </ul>
+      <p class="mt-3">
+       <span class="opportunity">
+        <i class="fas fa-info-circle">
+        </i>
+        Proactive upskilling for MRO teams vital for fleet modernization.
+       </span>
+      </p>
+     </div>
+    </div>
+   </div>
+   <section>
+    <h2 class="section-header">
+     Overall Airline Performance Metrics
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div class="metric-card text-center">
+      <div class="metric-value" style="color: var(--delta-primary-blue);">
+       8,500
+      </div>
+      <div class="metric-label">
+       Total Active Employees
+      </div>
+     </div>
+     <div class="metric-card text-center">
+      <div class="metric-value" style="color: var(--delta-primary-blue);">
+       85%
+      </div>
+      <div class="metric-label">
+       Avg. Role Certification Fit
+      </div>
+     </div>
+     <div class="metric-card text-center">
+      <div class="metric-value" style="color: var(--delta-warning-orange);">
+       35%
+      </div>
+      <div class="metric-label">
+       Cross-Fleet Qualification Readiness
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="metric-card">
+     <h3 class="card-title">
+      Top Critical Skill/Certification Gaps (Airline-wide)
+     </h3>
+     <ul class="space-y-2">
+      <li class="list-item">
+       <span>
+        A350 Type Rating
+       </span>
+       <span class="text-sm font-medium" style="color: var(--delta-warning-orange);">
+        Gap in 12 Pilots
+       </span>
+      </li>
+      <li class="list-item">
+       <span>
+        CAT IIIb Landing Certification
+       </span>
+       <span class="text-sm font-medium" style="color: var(--delta-warning-orange);">
+        Gap in 8 Captains
+       </span>
+      </li>
+      <li class="list-item">
+       <span>
+        Dangerous Goods Instructor Cert.
+       </span>
+       <span class="text-sm font-medium" style="color: var(--delta-warning-orange);">
+        Gap in 3 Trainers
+       </span>
+      </li>
+      <li class="list-item">
+       <span>
+        Rolls-Royce Trent XWB Engine Maint.
+       </span>
+       <span class="text-sm font-medium" style="color: var(--delta-warning-orange);">
+        Gap in 5 Technicians
+       </span>
+      </li>
+      <li class="list-item">
+       <span>
+        Advanced De-icing Procedures
+       </span>
+       <span class="text-sm font-medium" style="color: var(--delta-warning-orange);">
+        Gap in 10 Ground Crew Leads
+       </span>
+      </li>
+     </ul>
+    </div>
+    <div class="metric-card">
+     <h3 class="card-title">
+      Key Competencies (Airline-wide)
+     </h3>
+     <div class="space-y-3">
+      <div>
+       <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium" style="color: var(--delta-secondary-blue);">
+         Safety Management Systems (SMS)
+        </span>
+        <span class="text-sm font-medium" style="color: var(--delta-accent-blue);">
+         98%
+        </span>
+       </div>
+       <div class="progress-bar-bg">
+        <div class="progress-bar" style="width: 98%;">
+        </div>
+       </div>
+      </div>
+      <div>
+       <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium" style="color: var(--delta-secondary-blue);">
+         Crew Resource Management (CRM)
+        </span>
+        <span class="text-sm font-medium" style="color: var(--delta-accent-blue);">
+         95%
+        </span>
+       </div>
+       <div class="progress-bar-bg">
+        <div class="progress-bar" style="width: 95%;">
+        </div>
+       </div>
+      </div>
+      <div>
+       <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium" style="color: var(--delta-secondary-blue);">
+         Customer Service Excellence (Air)
+        </span>
+        <span class="text-sm font-medium" style="color: var(--delta-accent-blue);">
+         88%
+        </span>
+       </div>
+       <div class="progress-bar-bg">
+        <div class="progress-bar" style="width: 88%;">
+        </div>
+       </div>
+      </div>
+      <div>
+       <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium" style="color: var(--delta-secondary-blue);">
+         On-Time Performance Focus
+        </span>
+        <span class="text-sm font-medium" style="color: var(--delta-accent-blue);">
+         90%
+        </span>
+       </div>
+       <div class="progress-bar-bg">
+        <div class="progress-bar" style="width: 90%;">
+        </div>
+       </div>
+      </div>
+      <div>
+       <div class="flex justify-between mb-1">
+        <span class="text-sm font-medium" style="color: var(--delta-secondary-blue);">
+         Emergency Procedures Proficiency
+        </span>
+        <span class="text-sm font-medium" style="color: var(--delta-accent-blue);">
+         97%
+        </span>
+       </div>
+       <div class="progress-bar-bg">
+        <div class="progress-bar" style="width: 97%;">
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section>
+    <h2 class="section-header">
+     Open Aviation Roles Overview
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div class="metric-card md:col-span-1">
+      <h3 class="card-title">
+       Summary
+      </h3>
+      <div class="text-center">
+       <div class="text-4xl font-bold" style="color: var(--delta-accent-blue);">
+        42
+       </div>
+       <div style="color: var(--delta-text-color);">
+        Total Open Roles
+       </div>
+      </div>
+      <h3 class="card-title mt-6">
+       Most In-Demand Skills/Roles
+      </h3>
+      <ul class="space-y-2 text-sm">
+       <li class="list-item">
+        <span>
+         First Officers (A320/B737)
+        </span>
+        <span class="skill-tag">
+         8 Roles
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Licensed Aircraft Engineers (B1/B2)
+        </span>
+        <span class="skill-tag">
+         6 Roles
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Flight Dispatchers
+        </span>
+        <span class="skill-tag">
+         4 Roles
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Cabin Crew (Multi-lingual)
+        </span>
+        <span class="skill-tag">
+         10 Roles
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Data Analysts (Ops/Revenue)
+        </span>
+        <span class="skill-tag">
+         3 Roles
+        </span>
+       </li>
+      </ul>
+     </div>
+     <div class="metric-card md:col-span-2">
+      <h3 class="card-title">
+       Open Roles by Department
+      </h3>
+      <div class="chart-container">
+       <canvas id="openRolesChart">
+       </canvas>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section>
+    <h2 class="section-header">
+     Enterprise Talent Alignment (Aviation Focus)
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div class="metric-card">
+      <h3 class="card-title">
+       Pilot Skill Match Distribution (vs. Fleet Needs)
+      </h3>
+      <div class="chart-container" style="height: 250px;">
+       <canvas id="skillMatchChart">
+       </canvas>
+      </div>
+     </div>
+     <div class="metric-card">
+      <h3 class="card-title">
+       Most Common Strengths (Top 5 Certs/Skills)
+      </h3>
+      <ul class="space-y-2 text-sm">
+       <li class="list-item">
+        <span>
+         B737NG Type Rating
+        </span>
+        <span class="font-medium" style="color: var(--delta-success-green);">
+         150 Pilots
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         CRM Certification
+        </span>
+        <span class="font-medium" style="color: var(--delta-success-green);">
+         All Crew
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Basic Avionics Troubleshooting
+        </span>
+        <span class="font-medium" style="color: var(--delta-success-green);">
+         80 Techs
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         IATA DGR Certification
+        </span>
+        <span class="font-medium" style="color: var(--delta-success-green);">
+         200 Staff
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Passenger Handling Excellence
+        </span>
+        <span class="font-medium" style="color: var(--delta-success-green);">
+         350 Agents
+        </span>
+       </li>
+      </ul>
+     </div>
+     <div class="metric-card">
+      <h3 class="card-title">
+       Most Common Development Areas (Top 5 Needs)
+      </h3>
+      <ul class="space-y-2 text-sm">
+       <li class="list-item">
+        <span>
+         A220 Type Rating
+        </span>
+        <span class="font-medium" style="color: var(--delta-warning-orange);">
+         Needed for 25 Pilots
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Advanced Composite Repair
+        </span>
+        <span class="font-medium" style="color: var(--delta-warning-orange);">
+         Needed for 10 Techs
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Fuel Efficiency Flight Techniques
+        </span>
+        <span class="font-medium" style="color: var(--delta-warning-orange);">
+         Update for all Pilots
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Conflict Resolution (Cabin)
+        </span>
+        <span class="font-medium" style="color: var(--delta-warning-orange);">
+         Refresh for 50 Crew
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Airline Data Analytics Basics
+        </span>
+        <span class="font-medium" style="color: var(--delta-warning-orange);">
+         Needed for 15 Ops Staff
+        </span>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </section>
+   <section>
+    <h2 class="section-header">
+     Internal Mobility & Opportunity Alignment
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+     <div class="metric-card">
+      <h3 class="card-title">
+       Top Roles with Strong Internal Pipelines
+      </h3>
+      <div class="card-content">
+       <p class="data-point">
+        2
+        <span class="text-sm font-normal text-[var(--delta-text-color)]">
+         Key Roles
+        </span>
+       </p>
+       <p class="data-label mb-2">
+        Identified with &gt;75% Internal Match
+       </p>
+       <ul>
+        <li>
+         8
+         <span>
+          Eligible for Purser
+         </span>
+        </li>
+        <li>
+         3
+         <span>
+          Eligible for Maint. Supervisor
+         </span>
+        </li>
+       </ul>
+      </div>
+     </div>
+     <div class="metric-card text-center">
+      <div class="metric-value" style="color: var(--delta-success-green);">
+       15%
+      </div>
+      <div class="metric-label">
+       Overall Internal Fill Potential (Identified)
+      </div>
+     </div>
+    </div>
+   </section>
+   <section>
+    <h2 class="section-header">
+     Airline Industry Skills Landscape
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+     <div class="metric-card text-center">
+      <h3 class="card-title mb-2">
+       Skills Overview
+      </h3>
+      <div class="chart-container" style="height: 200px;">
+       <canvas id="skillsLandscapeChart">
+       </canvas>
+      </div>
+     </div>
+     <div class="metric-card">
+      <h3 class="card-title flex items-center">
+       Disappearing Skills
+       <span class="pill pill-red">
+        -65% to -40%
+       </span>
+      </h3>
+      <ul class="space-y-1 text-sm">
+       <li class="list-item">
+        <span>
+         Manual Load Sheeting
+        </span>
+        <span class="font-semibold" style="color: var(--delta-primary-red);">
+         -65%
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Analog Cockpit Instruments
+        </span>
+        <span class="font-semibold" style="color: var(--delta-primary-red);">
+         -50%
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Paper-Based Navigation
+        </span>
+        <span class="font-semibold" style="color: var(--delta-primary-red);">
+         -40%
+        </span>
+       </li>
+      </ul>
+     </div>
+     <div class="metric-card">
+      <h3 class="card-title flex items-center">
+       Constant Skills
+       <span class="pill pill-gray">
+        &harr;
+       </span>
+      </h3>
+      <ul class="space-y-1 text-sm">
+       <li class="list-item">
+        <span>
+         Passenger Safety Procedures
+        </span>
+        <span class="font-semibold" style="color: var(--delta-muted-text-color);">
+         &harr;
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Standard Radio Telephony
+        </span>
+        <span class="font-semibold" style="color: var(--delta-muted-text-color);">
+         &harr;
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Crew Resource Management (CRM)
+        </span>
+        <span class="font-semibold" style="color: var(--delta-muted-text-color);">
+         &harr;
+        </span>
+       </li>
+      </ul>
+     </div>
+     <div class="metric-card">
+      <h3 class="card-title flex items-center">
+       Top Emerging Skills
+       <span class="pill pill-green">
+        +70% to +95%
+       </span>
+      </h3>
+      <ul class="space-y-1 text-sm">
+       <li class="list-item">
+        <span>
+         Drone Fleet Management
+        </span>
+        <span class="font-semibold" style="color: var(--delta-success-green);">
+         +95%
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         Sustainable Aviation Tech
+        </span>
+        <span class="font-semibold" style="color: var(--delta-success-green);">
+         +85%
+        </span>
+       </li>
+       <li class="list-item">
+        <span>
+         AI in Flight Path Optimization
+        </span>
+        <span class="font-semibold" style="color: var(--delta-success-green);">
+         +70%
+        </span>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </section>
+  </main>
+  <!-- Assuming app.js handles dropdown toggling and other general JS -->
+  <script>
+   // Set current year in footer
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+        
+        // Chart.js Initializations
+        const deltaColors = {
+            accentBlue: '0, 115, 196', 
+            primaryRed: '218, 41, 28',   
+            successGreen: '46, 125, 50', 
+            warningOrange: '237, 108, 2',
+            darkGray: '160, 160, 160',   
+            primaryBlue: '31, 41, 55',
+            infoTeal: '23, 162, 184'   
+        };
+
+        // 1. Open Roles by Department Chart
+        const openRolesCtx = document.getElementById('openRolesChart')?.getContext('2d');
+        if (openRolesCtx) {
+            new Chart(openRolesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Flight Ops', 'Maint. & Eng.', 'In-Flight Svc', 'Ground Ops', 'Customer Exp.', 'Cargo', 'Safety', 'IT & Digital', 'Admin & Corp'],
+                    datasets: [{
+                        label: 'Open Roles',
+                        data: [12, 8, 10, 5, 3, 2, 1, 1, 0], 
+                        backgroundColor: `rgba(${deltaColors.accentBlue}, 0.7)`,
+                        borderColor: `rgb(${deltaColors.accentBlue})`,
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { stepSize: 2 } }, 
+                        x: { ticks: { autoSkip: false, maxRotation: 45, minRotation: 45 } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // 2. Skill Match Distribution Chart (Pilots vs Fleet Needs Example)
+        const skillMatchCtx = document.getElementById('skillMatchChart')?.getContext('2d');
+        if (skillMatchCtx) {
+            new Chart(skillMatchCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['<50% Match (Needs Training)', '50-75% Match (Upskill Req.)', '76-90% Match (Minor Gaps)', '>90% Match (Fleet Ready)', 'Surplus/Other Fleet'],
+                    datasets: [{
+                        label: 'Pilot Skill Match to Current Fleet Needs',
+                        data: [15, 25, 30, 20, 10], 
+                        backgroundColor: [
+                            `rgba(${deltaColors.primaryRed}, 0.7)`,
+                            `rgba(${deltaColors.warningOrange}, 0.7)`,
+                            `rgba(${deltaColors.accentBlue}, 0.5)`,
+                            `rgba(${deltaColors.successGreen}, 0.7)`,
+                            `rgba(${deltaColors.darkGray}, 0.7)`
+                        ],
+                        borderColor: [
+                            `rgb(${deltaColors.primaryRed})`,
+                            `rgb(${deltaColors.warningOrange})`,
+                            `rgb(${deltaColors.accentBlue})`,
+                            `rgb(${deltaColors.successGreen})`,
+                            `rgb(${deltaColors.darkGray})`
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { size: 10 }}},
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) { label += context.parsed.toFixed(1) + '%'; }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 3. Skills Landscape Chart
+        const skillsLandscapeCtx = document.getElementById('skillsLandscapeChart')?.getContext('2d');
+        if (skillsLandscapeCtx) {
+            new Chart(skillsLandscapeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Disappearing (20%)', 'Constant (50%)', 'Emerging (30%)'], 
+                    datasets: [{
+                        label: 'Airline Skills Landscape',
+                        data: [20, 50, 30],
+                        backgroundColor: [
+                            `rgba(${deltaColors.primaryRed}, 0.7)`,
+                            `rgba(${deltaColors.darkGray}, 0.7)`,
+                            `rgba(${deltaColors.successGreen}, 0.7)`
+                        ],
+                        borderColor: [
+                            `rgb(${deltaColors.primaryRed})`,
+                            `rgb(${deltaColors.darkGray})`,
+                            `rgb(${deltaColors.successGreen})`
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 10 }}},
+                        tooltip: {
+                            callbacks: { 
+                                label: function(context) { return context.label || ''; }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove('active');
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            const currentTabContent = document.getElementById(tabName);
+            if(currentTabContent) {
+                currentTabContent.style.display = "block";
+                currentTabContent.classList.add('active');
+            }
+            if(evt && evt.currentTarget) {
+                evt.currentTarget.classList.add("active");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeButton = document.querySelector('.tab-button.active');
+            if (activeButton) {
+                const onclickAttr = activeButton.getAttribute('onclick');
+                const tabNameMatch = onclickAttr ? onclickAttr.match(/'([^']+)'/g) : null;
+                if (tabNameMatch && tabNameMatch.length > 1) {
+                    const activeTabName = tabNameMatch[1].replace(/'/g, '');
+                    const allTabContent = document.getElementsByClassName("tab-content");
+                    for (let i = 0; i < allTabContent.length; i++) {
+                        allTabContent[i].style.display = "none";
+                        allTabContent[i].classList.remove('active');
+                    }
+                    const activeTabContent = document.getElementById(activeTabName);
+                    if (activeTabContent) {
+                        activeTabContent.style.display = "block";
+                        activeTabContent.classList.add('active');
+                    }
+                }
+            } else { 
+                const firstTabButton = document.querySelector('.tab-button');
+                if (firstTabButton) {
+                    firstTabButton.click(); 
+                }
+            }
+
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const navMenu = document.querySelector('.nav-menu'); 
+            if(mobileMenuButton && navMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    navMenu.classList.toggle('hidden'); 
+                });
+            }
+            
+            document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const menu = this.nextElementSibling;
+                    if (menu && menu.classList.contains('dropdown-menu')) {
+                        menu.classList.toggle('hidden');
+                        document.querySelectorAll('.dropdown-menu').forEach(otherMenu => {
+                            if (otherMenu !== menu) {
+                                otherMenu.classList.add('hidden');
+                            }
+                        });
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.dropdown.relative').forEach(dropdown => {
+                    if (!dropdown.contains(event.target)) {
+                        dropdown.querySelector('.dropdown-menu')?.classList.add('hidden');
+                    }
+                });
+            });
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

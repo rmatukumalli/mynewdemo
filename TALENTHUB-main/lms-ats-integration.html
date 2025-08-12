@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   LMS-ATS Integration - Akara Talent Hub
+  </title>
+  <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>" rel="icon">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="css/ats_dashboard.css" rel="stylesheet">
+  <link href="css/skills-intelligence-theme.css" rel="stylesheet">
+  <link href="css/lms-ats-integration.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js">
+  </script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js">
+  </script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js">
+  </script>
+  <link href="css/screen-candidates.css" rel="stylesheet">
+  <style id="screen-candidates-integration-styles">
+   /* Styles previously in index.html for screen candidates, if any specific ones are needed here */
+        /* For now, keeping it minimal as screen-candidates.css should handle most */
+        .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+        #skill-intelligence-view .modal { display: none; } /* Ensure modals within this view are controlled */
+        #skill-intelligence-view .main-content-section { display: none !important; }
+        #skill-intelligence-view .main-content-section.active { display: block !important; }
+        #skill-intelligence-view #sub-nav-tabs .sub-nav-link.active { border-left-color: var(--delta-gray-border) !important; border-right-color: var(--delta-gray-border) !important; border-top-color: var(--delta-gray-border) !important; border-bottom-color: white !important; color: var(--delta-blue) !important; font-weight: 600 !important; }
+        #skill-intelligence-view #sub-nav-tabs .sub-nav-link:not(.active) { border-bottom: 1px solid var(--delta-gray-border); }
+        #skill-intelligence-view #my-lists .tab-item.active { border-color: var(--delta-blue) !important; color: var(--delta-blue) !important; border-bottom-color: transparent !important; background-color: #ffffff !important; }
+        #skill-intelligence-view #my-lists .tab-content { display: none; }
+        #skill-intelligence-view #my-lists .tab-content.active { display: block; }
+  </style>
+  <style>
+   #assessments-root .prose img { margin: 0; }
+  </style>
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css';
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) { cdnLink.onerror = null; }
+        }
+  </script>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="main-container">
+  </div>
+  <main class="container mx-auto px-4 py-8">
+   <section class="section active" id="lms-ats-integration-content">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+     <h2>
+      LMS-ATS Integration Prototype
+     </h2>
+     <div style="display: flex; align-items: center; font-size: 0.9em; color: #28a745;">
+      <span style="width: 10px; height: 10px; background-color: #28a745; border-radius: 50%; margin-right: 8px;">
+      </span>
+      iCIMS Connected
+     </div>
+    </div>
+    <div class="admin-tabs">
+     <button class="tab-btn active" data-tab="post-opportunity">
+      Post Opportunity
+     </button>
+     <button class="tab-btn" data-tab="requisitions">
+      Requisitions
+     </button>
+     <button class="tab-btn" data-tab="skill-intelligence-view">
+      Screen Candidates
+     </button>
+     <button class="tab-btn" data-tab="candidate-pool">
+      Candidate Pool
+     </button>
+     <button class="tab-btn" data-tab="analytics">
+      Analytics
+     </button>
+     <button class="tab-btn" data-tab="assessments">
+      Assessments
+     </button>
+      <button class="tab-btn" data-tab="onboarding">
+       Onboarding
+      </button>
+     </div>
+     <div class="tab-content active container" id="post-opportunity" style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+       Post New Opportunity
+      </h2>
+     <form class="space-y-6" id="postNewOpportunityFormInAdmin">
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="jobTitleAdmin">
+        Job Title
+       </label>
+       <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="jobTitleAdmin" name="jobTitle" type="text" value="Senior First Officer (A320 Type Rated)">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="departmentAdmin">
+        Department
+       </label>
+       <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="departmentAdmin" name="department" type="text" value="Flight Operations">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="locationAdmin">
+        Location
+       </label>
+       <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="locationAdmin" name="location" type="text" value="Dubai, UAE (Base)">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="jobTypeAdmin">
+        Job Type
+       </label>
+       <select class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md" id="jobTypeAdmin" name="jobType">
+        <option>
+         Full-time
+        </option>
+        <option selected>
+         Contract
+        </option>
+        <option>
+         Part-time
+        </option>
+        <option>
+         Gig
+        </option>
+        <option>
+         Project
+        </option>
+        <option>
+         Mentorship
+        </option>
+        <option>
+         Stretch Assignment
+        </option>
+       </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="jobDescriptionAdmin">
+        Job Description
+       </label>
+       <textarea class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="jobDescriptionAdmin" name="jobDescription" rows="4">Akara Airlines is seeking experienced and qualified Senior First Officers, type-rated on the A320 family, to join our expanding fleet operations based in Dubai. The successful candidate will be responsible for ensuring safe and efficient flight operations in accordance with company policies and regulatory requirements. This role involves flying diverse routes and requires a high degree of professionalism and commitment to safety.</textarea>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="keyResponsibilitiesAdmin">
+        Key Responsibilities
+       </label>
+       <textarea class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="keyResponsibilitiesAdmin" name="keyResponsibilities" rows="4">- Assist the Commander in the safe and efficient conduct of the flight.
+- Maintain a high standard of discipline, conduct, and appearance.
+- Perform duties as required by the Commander and company SOPs.
+- Uphold safety standards as the foremost priority.</textarea>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="qualificationsAdmin">
+        Qualifications & Requirements
+       </label>
+       <textarea class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="qualificationsAdmin" name="qualifications" rows="5">- Valid ATPL issued by an ICAO recognized authority.
+- Current A320 Type Rating.
+- Minimum 3000 total flying hours, with at least 1500 hours on A320 family.
+- ELP Level 4 or above.
+- Current Class 1 Medical Certificate.</textarea>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="salaryRangeAdmin">
+        Salary Range (USD per month, indicative)
+       </label>
+       <input class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="salaryRangeAdmin" name="salaryRange" type="text" value="8,000 - 12,000">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700" for="benefitsAdmin">
+        Benefits
+       </label>
+       <textarea class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500" id="benefitsAdmin" name="benefits" rows="3">- Competitive salary package.
+- Accommodation allowance.
+- Medical and life insurance.
+- Annual leave and travel benefits.</textarea>
+      </div>
+      <div class="flex justify-end space-x-3">
+       <button class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" id="clearNewOpportunityFormInAdminButton" type="button">
+        Clear Form
+       </button>
+       <button class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" type="submit">
+        Post Opportunity
+       </button>
+      </div>
+     </form>
+    </div>
+    <div class="tab-content" id="requisitions">
+     <iframe src="requisitions.html" style="width:100%; height:80vh; border:none;" title="Requisitions Management">
+     </iframe>
+    </div>
+    <div class="tab-content container" id="analytics">
+     <div id="recruitment-analytics-dashboard" style="background-color: #f0f4f8; padding: 30px; border-radius: 15px;">
+      <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px; font-size: 2.2em; font-weight: 600; border-bottom: 3px solid #3498db; padding-bottom: 15px;">
+       Recruitment & Talent Acquisition Insights
+      </h2>
+      <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #3498db; padding-bottom: 8px;">
+         <i class="fas fa-briefcase" style="margin-right: 10px; color: #3498db;">
+         </i>
+         Total Active Requisitions
+        </h4>
+        <p style="font-size: 2.5em; font-weight: bold; color: #2980b9; margin: 10px 0; text-align: center;">
+         75
+        </p>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Currently open and seeking candidates.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #2ecc71; padding-bottom: 8px;">
+         <i class="fas fa-users" style="margin-right: 10px; color: #2ecc71;">
+         </i>
+         Total Candidates Engaged
+        </h4>
+        <p style="font-size: 2.5em; font-weight: bold; color: #27ae60; margin: 10px 0; text-align: center;">
+         1,280
+        </p>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Sourced and actively engaged in the pipeline.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #e67e22; padding-bottom: 8px;">
+         <i class="fas fa-filter" style="margin-right: 10px; color: #e67e22;">
+         </i>
+         Candidate Conversion Rate
+        </h4>
+        <div class="chart-container" style="height: 150px; position:relative; margin-bottom:10px;">
+         <canvas id="conversionRateChart">
+         </canvas>
+        </div>
+        <p style="font-size: 0.9em; color: #7f8c8d; text-align:center;">
+         View (100%)
+         <i class="fas fa-arrow-right">
+         </i>
+         Apply (30%)
+         <i class="fas fa-arrow-right">
+         </i>
+         Interview (10%)
+         <i class="fas fa-arrow-right">
+         </i>
+         Hire (3%)
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #9b59b6; padding-bottom: 8px;">
+         <i class="fas fa-clock" style="margin-right: 10px; color: #9b59b6;">
+         </i>
+         Average Time to Fill
+        </h4>
+        <p style="font-size: 2.5em; font-weight: bold; color: #8e44ad; margin: 10px 0; text-align: center;">
+         32 Days
+        </p>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Average across all filled requisitions.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #1abc9c; padding-bottom: 8px;">
+         <i class="fas fa-bullseye" style="margin-right: 10px; color: #1abc9c;">
+         </i>
+         Top Performing Sources
+        </h4>
+        <div class="chart-container" style="height: 150px; position:relative; margin-bottom:10px;">
+         <canvas id="topSourcesChart">
+         </canvas>
+        </div>
+        <ul style="font-size: 0.9em; color: #7f8c8d; padding-left: 20px;">
+         <li>
+          LinkedIn: 40% Hires
+         </li>
+         <li>
+          Internal Referrals: 25% Hires
+         </li>
+         <li>
+          Company Website: 20% Hires
+         </li>
+        </ul>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #f1c40f; padding-bottom: 8px;">
+         <i class="fas fa-user-tie" style="margin-right: 10px; color: #f1c40f;">
+         </i>
+         Recruiter Productivity
+        </h4>
+        <p style="font-size: 1.2em; color: #f39c12; margin:5px 0;">
+         Avg. Hires/Recruiter:
+         <strong>
+          8
+         </strong>
+        </p>
+        <p style="font-size: 1.2em; color: #f39c12; margin:5px 0;">
+         Avg. Time/Req:
+         <strong>
+          25 hours
+         </strong>
+        </p>
+        <div class="chart-container" style="height: 120px; position:relative; margin-top:10px;">
+         <canvas id="recruiterProductivityChart">
+         </canvas>
+        </div>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #e74c3c; padding-bottom: 8px;">
+         <i class="fas fa-chart-line" style="margin-right: 10px; color: #e74c3c;">
+         </i>
+         Talent Pool Growth
+        </h4>
+        <div class="chart-container" style="height: 180px; position:relative;">
+         <canvas id="talentPoolGrowthChart">
+         </canvas>
+        </div>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         New candidates added over the last 12 months.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #7f8c8d; padding-bottom: 8px;">
+         <i class="fas fa-map-marked-alt" style="margin-right: 10px; color: #7f8c8d;">
+         </i>
+         Job Market Heatmap
+        </h4>
+        <div class="chart-container" style="height: 180px; position:relative; background-color: #ecf0f1; display:flex; align-items:center; justify-content:center; border-radius: 8px;">
+         <p style="color: #95a5a6; font-style: italic;">
+          Heatmap Chart Placeholder
+         </p>
+        </div>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Demand vs. Supply for key roles/skills.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #3498db; padding-bottom: 8px;">
+         <i class="fas fa-user-shield" style="margin-right: 10px; color: #3498db;">
+         </i>
+         Retention Forecast
+        </h4>
+        <div class="chart-container" style="height: 180px; position:relative;">
+         <canvas id="retentionForecastChart">
+         </canvas>
+        </div>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Predicted 12-month retention for new hires.
+        </p>
+       </div>
+       <div class="analytics-card" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.07)';" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.1)';" style="background-color: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <h4 style="margin-top:0; margin-bottom:15px; color: #34495e; font-size:1.25em; border-bottom: 2px solid #2ecc71; padding-bottom: 8px;">
+         <i class="fas fa-people-arrows" style="margin-right: 10px; color: #2ecc71;">
+         </i>
+         Internal Mobility Metrics
+        </h4>
+        <p style="font-size: 2.5em; font-weight: bold; color: #27ae60; margin: 10px 0; text-align: center;">
+         22%
+        </p>
+        <p style="font-size: 0.9em; color: #7f8c8d; margin-top:10px; text-align:center;">
+         Percentage of hires from internal talent marketplace.
+        </p>
+       </div>
+      </div>
+      <p style="font-size: 0.9em; color: #5a6268; margin-top: 30px; text-align: center; font-style: italic;">
+       Note: Data shown is for demonstration purposes. Charts require JavaScript (e.g., Chart.js) for full interactivity.
+      </p>
+     </div>
+    </div>
+    <div class="tab-content" id="skill-intelligence-view">
+     <p>
+      Loading Screen Candidates content...
+     </p>
+    </div>
+    <div class="tab-content container" id="assessments">
+     <div id="assessments-root" style="min-height: 80vh;">
+      <p style="padding: 20px; text-align: center;">
+       Loading Assessments Platform...
+      </p>
+     </div>
+    </div>
+    <div class="tab-content container" id="candidate-pool">
+     <h3>
+      <i class="fas fa-users-cog">
+      </i>
+      All Internal Candidates
+     </h3>
+     <div class="search-bar-container" style="margin-bottom: 1rem;">
+      <input id="candidatePoolSearchInput" placeholder="Search candidates (e.g., name, role, skill)..." type="text">
+      <button class="btn-secondary" id="candidatePoolSearchButton">
+       Search
+      </button>
+     </div>
+     <div class="table-responsive">
+      <table class="styled-table" id="candidatePoolTable">
+       <thead>
+        <tr>
+         <th>
+          Name
+         </th>
+         <th>
+          Current Role
+         </th>
+         <th>
+          Department
+         </th>
+         <th>
+          Tenure
+         </th>
+         <th>
+          Key Skills (Top 3)
+         </th>
+         <th>
+          Overall Match (Example)
+         </th>
+         <th>
+          Actions
+         </th>
+        </tr>
+       </thead>
+       <tbody id="candidatePoolTableBody">
+        <tr>
+         <td colspan="7" style="text-align:center;">
+          Loading candidates...
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="pagination-controls" id="candidatePoolPagination" style="margin-top: 1rem; text-align: center;">
+     </div>
+    </div>
+    <!-- Onboarding Tab Content - ID is #onboarding -->
+    <div class="tab-content" id="onboarding">
+     <div class="onboarding-sub-tabs">
+      <button class="sub-tab-btn active" data-sub-tab="offer-stages">
+       Offer Stages
+      </button>
+      <button class="sub-tab-btn" data-sub-tab="onboarding-process">
+       Onboarding Process Stages
+      </button>
+     </div>
+
+     <!-- Offer Stages Sub-Tab -->
+     <div class="sub-tab-content active" id="offer-stages">
+      <div class="offer-stages-header">
+       <h3><i class="fas fa-file-signature" style="margin-right: 10px; color: #3498db;"></i>Offer Lifecycle Management</h3>
+      </div>
+      <div class="filters-container">
+       <div class="filter-group">
+        <label for="filter-offer-role">Role:</label>
+        <select id="filter-offer-role">
+         <option value="">All Roles</option>
+        </select>
+       </div>
+       <div class="filter-group">
+        <label for="filter-offer-hm">Hiring Manager:</label>
+        <select id="filter-offer-hm">
+         <option value="">All Managers</option>
+        </select>
+       </div>
+       <div class="filter-group">
+        <label for="filter-offer-status">Offer Status:</label>
+        <select id="filter-offer-status">
+         <option value="">All Statuses</option>
+         <option value="drafted">Offer Drafted</option>
+         <option value="sent">Offer Sent</option>
+         <option value="accepted">Offer Accepted</option>
+         <option value="bg-check">Background Check</option>
+         <option value="ready">Ready for Onboarding</option>
+         <option value="rescinded">Offer Rescinded</option>
+        </select>
+       </div>
+       <div class="filter-group">
+        <label for="filter-offer-date-start">Offer Date From:</label>
+        <input id="filter-offer-date-start" type="date">
+       </div>
+       <div class="filter-group">
+        <label for="filter-offer-date-end">To:</label>
+        <input id="filter-offer-date-end" type="date">
+       </div>
+       <button class="apply-filters-btn">Apply Filters</button>
+      </div>
+
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Offer Drafted <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Email</th><th>Role</th><th>Hiring Manager</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table-offer-drafted"><tr><td colspan="7" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Offer Sent <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Email</th><th>Role</th><th>Hiring Manager</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table-offer-sent"><tr><td colspan="7" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Offer Accepted <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Email</th><th>Role</th><th>Hiring Manager</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table-offer-accepted"><tr><td colspan="7" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Background Check in Progress <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Email</th><th>Role</th><th>Hiring Manager</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table-bg-check"><tr><td colspan="7" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Ready for Onboarding / Offer Rescinded <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Email</th><th>Role</th><th>Hiring Manager</th><th>Offer Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table-ready-rescinded"><tr><td colspan="7" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+     </div> <!-- END OF OFFER STAGES SUB-TAB CONTENT -->
+
+     <!-- Onboarding Process Sub-Tab -->
+     <div class="sub-tab-content" id="onboarding-process">
+      <div class="onboarding-process-header">
+       <h3><i class="fas fa-tasks" style="margin-right: 10px; color: #3498db;"></i>Candidate Onboarding Journey</h3>
+      </div>
+      <div class="filters-container">
+       <div class="filter-group">
+        <label for="filter-onboarding-start-date-from">Start Date From:</label>
+        <input id="filter-onboarding-start-date-from" type="date">
+       </div>
+       <div class="filter-group">
+        <label for="filter-onboarding-start-date-to">To:</label>
+        <input id="filter-onboarding-start-date-to" type="date">
+       </div>
+       <div class="filter-group">
+        <label for="filter-onboarding-stage">Onboarding Stage:</label>
+        <select id="filter-onboarding-stage">
+         <option value="">All Stages</option>
+         <option value="documentation">Documentation Pending</option>
+         <option value="it-setup">IT Setup</option>
+         <option value="orientation">Orientation Scheduled</option>
+         <option value="training">Training in Progress</option>
+         <option value="complete">Onboarding Complete</option>
+        </select>
+       </div>
+       <div class="filter-group">
+        <label for="filter-onboarding-owner">Assigned Owner:</label>
+        <select id="filter-onboarding-owner">
+         <option value="">All Owners</option>
+        </select>
+       </div>
+       <button class="apply-filters-btn">Apply Filters</button>
+      </div>
+
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Documentation Pending <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Start Date</th><th>Current Stage</th><th>Assigned Buddy/Manager</th><th>Notes/Comments</th><th>Actions</th></tr></thead><tbody id="table-onboarding-documentation"><tr><td colspan="6" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">IT Setup <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Start Date</th><th>Current Stage</th><th>Assigned Buddy/Manager</th><th>Notes/Comments</th><th>Actions</th></tr></thead><tbody id="table-onboarding-it-setup"><tr><td colspan="6" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Orientation Scheduled <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Start Date</th><th>Current Stage</th><th>Assigned Buddy/Manager</th><th>Notes/Comments</th><th>Actions</th></tr></thead><tbody id="table-onboarding-orientation"><tr><td colspan="6" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Training in Progress <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Start Date</th><th>Current Stage</th><th>Assigned Buddy/Manager</th><th>Notes/Comments</th><th>Actions</th></tr></thead><tbody id="table-onboarding-training"><tr><td colspan="6" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+      <div class="collapsible-section">
+       <button class="collapsible-trigger active">Onboarding Complete <span class="candidate-count">(0)</span> <i class="fas fa-caret-down collapsible-icon"></i></button>
+       <div class="collapsible-content active"><div class="table-responsive"><table class="styled-table"><thead><tr><th>Candidate Name</th><th>Start Date</th><th>Current Stage</th><th>Assigned Buddy/Manager</th><th>Notes/Comments</th><th>Actions</th></tr></thead><tbody id="table-onboarding-complete"><tr><td colspan="6" style="text-align:center;">No candidates in this stage.</td></tr></tbody></table></div></div>
+      </div>
+     </div> <!-- END OF ONBOARDING PROCESS SUB-TAB CONTENT -->
+    </div> <!-- END OF ONBOARDING TAB CONTENT -->
+   </section>
+  </main>
+  <script src="js/ats_dashboard.js">
+  </script>
+  <!-- For general ATS dashboard functionalities like tab switching, analytics charts -->
+  <script src="js/lms-ats-integration.js">
+  </script>
+  <!-- Specific JS for this page's form -->
+  <script src="js/skills-hiring.js">
+  </script>
+  <!-- If candidate pool or other hiring features are used -->
+  <script src="js/screen-candidates.js">
+  </script>
+  <!-- For the Screen Candidates tab -->
+  <script src="js/assessments.js" type="text/babel">
+  </script>
+  <!-- For the Assessments tab -->
+  <!-- Loads the global navigation -->
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        // Screen Candidates Module Loader (specific to this page now)
+        const screenCandidatesAdminTabButton = document.querySelector('.admin-tabs .tab-btn[data-tab="skill-intelligence-view"]');
+        const screenCandidatesContainer = document.getElementById('skill-intelligence-view');
+        let screenCandidatesContentLoadedAndInitialized = false;
+
+        async function loadAndInitScreenCandidatesModule(targetSubTabId) {
+            if (screenCandidatesContentLoadedAndInitialized && typeof window.activateScreenCandidatesSubTab === 'function') {
+                window.activateScreenCandidatesSubTab(targetSubTabId);
+                return true;
+            }
+            if (!screenCandidatesContainer) { console.error('Screen Candidates container (#skill-intelligence-view) not found.'); return false; }
+            try {
+                const response = await fetch('screen-candidates.html');
+                if (!response.ok) { throw new Error(`Network response was not ok for screen-candidates.html: ${response.statusText}`); }
+                const htmlFragment = await response.text();
+                screenCandidatesContainer.innerHTML = htmlFragment;
+                
+                // Ensure screen-candidates.js is loaded and initializeScreenCandidatesModule is available
+                if (typeof initializeScreenCandidatesModule === 'function') {
+                    initializeScreenCandidatesModule('#skill-intelligence-view'); // Initialize with the correct container ID
+                    screenCandidatesContentLoadedAndInitialized = true;
+                    console.log('Screen Candidates module loaded and initialized on lms-ats-integration.html.');
+                    if (targetSubTabId && typeof window.activateScreenCandidatesSubTab === 'function') {
+                        window.activateScreenCandidatesSubTab(targetSubTabId);
+                    }
+                    return true;
+                } else {
+                    console.error('initializeScreenCandidatesModule is not defined. Ensure js/screen-candidates.js is loaded before this call.');
+                    screenCandidatesContainer.innerHTML = '<p>Error initializing Screen Candidates module. Script not found or loaded too late.</p>';
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error fetching/initializing screen-candidates.html:', error);
+                if (screenCandidatesContainer) { screenCandidatesContainer.innerHTML = '<p>Error loading Screen Candidates content. Please try again later.</p>'; }
+                screenCandidatesContentLoadedAndInitialized = false;
+                return false;
+            }
+        }
+
+        if (screenCandidatesAdminTabButton) {
+            screenCandidatesAdminTabButton.addEventListener('click', function() {
+                // Only load if not already loaded to prevent re-initialization issues
+                if (!screenCandidatesContentLoadedAndInitialized) {
+                    loadAndInitScreenCandidatesModule('job-applicants'); // Default sub-tab or based on current hash
+                }
+            });
+        }
+
+        async function handleScreenCandidatesHashRouting() {
+            const hash = window.location.hash;
+            const validScreenCandidateHashes = ["#job-applicants", "#find-filter-candidates", "#smart-skill-suggestions", "#my-lists", "#job-analytics", "#engage-candidates"];
+            
+            if (validScreenCandidateHashes.includes(hash)) {
+                const targetSubTabId = hash.substring(1);
+                
+                // Ensure the "Screen Candidates" tab is active
+                if (screenCandidatesAdminTabButton && typeof screenCandidatesAdminTabButton.click === 'function') {
+                    if (!screenCandidatesAdminTabButton.classList.contains('active')) {
+                         screenCandidatesAdminTabButton.click(); // This will also trigger the load if not already loaded
+                    }
+                }
+                
+                // Wait for potential loading and initialization
+                setTimeout(async () => {
+                    // Check if module is loaded, if not, load it.
+                    if (!screenCandidatesContentLoadedAndInitialized) {
+                        const loaded = await loadAndInitScreenCandidatesModule(targetSubTabId);
+                        if (!loaded) return; // Stop if loading failed
+                    }
+                    // If loaded and function exists, activate sub-tab
+                    if (screenCandidatesContentLoadedAndInitialized && typeof window.activateScreenCandidatesSubTab === 'function') {
+                       window.activateScreenCandidatesSubTab(targetSubTabId);
+                    } else if (screenCandidatesContentLoadedAndInitialized) {
+                        console.warn("activateScreenCandidatesSubTab function not found after module initialization.");
+                    }
+                }, 150); // Adjusted timeout to allow tab click and load
+            }
+        }
+        window.addEventListener('hashchange', handleScreenCandidatesHashRouting);
+        // Initial check on page load for hash
+        setTimeout(handleScreenCandidatesHashRouting, 250); // Adjusted for initial load sequence
+
+        // Initialize other modules if necessary, e.g., assessments
+        const assessmentsTab = document.querySelector('.admin-tabs .tab-btn[data-tab="assessments"]');
+        const assessmentsRoot = document.getElementById('assessments-root');
+        if (assessmentsTab && assessmentsRoot) {
+            assessmentsTab.addEventListener('click', function() {
+                if (assessmentsRoot.innerHTML.includes("Loading Assessments Platform...")) { // Basic check to avoid re-init
+                    if (typeof initializeAssessmentsPlatform === 'function') {
+                        initializeAssessmentsPlatform('assessments-root');
+                    } else {
+                        console.error("initializeAssessmentsPlatform is not defined. Ensure assessments.js (babel) is loaded.");
+                        assessmentsRoot.innerHTML = "<p>Error loading assessments. Script not found.</p>";
+                    }
+                }
+            });
+        }
+    });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

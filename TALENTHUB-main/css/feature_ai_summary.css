@@ -1,0 +1,194 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #1877f2; /* Facebook blue */
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.tab-navigation {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab-navigation button {
+    background-color: transparent;
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #606770;
+    transition: color 0.2s ease, border-bottom 0.2s ease;
+    border-bottom: 3px solid transparent;
+    margin-right: 10px; /* Spacing between tab buttons */
+}
+
+.tab-navigation button:hover {
+    background-color: #f0f2f5;
+    color: #1877f2;
+}
+
+.tab-navigation button.active {
+    color: #1877f2;
+    border-bottom: 3px solid #1877f2;
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    padding: 15px;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#features ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+#features li {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    color: #333;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fdfdfd;
+}
+
+tbody tr:hover {
+    background-color: #f0f8ff; /* Light blue on hover */
+}
+
+em {
+    color: #555;
+    font-style: italic;
+}
+
+/* Sub-tab navigation styling */
+.sub-tab-navigation {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0; /* Lighter separator */
+}
+
+.sub-tab-navigation button { /* Targets .sub-tab-link in the HTML */
+    background-color: #f8f9fa; /* Very light grey, almost white */
+    border: 1px solid #dee2e6; /* Light border */
+    border-radius: 20px; /* Pill-shaped buttons */
+    padding: 8px 18px; /* Adjusted padding for pill shape */
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #495057; /* Standard text color */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.15s ease-in-out;
+    margin-right: 10px;
+    margin-bottom: 10px; /* Spacing for wrapped buttons */
+    text-align: center;
+    font-weight: 500;
+}
+
+.sub-tab-navigation button:hover {
+    background-color: #e9ecef; /* Slightly darker on hover */
+    border-color: #ced4da;
+    color: #007bff; /* Primary blue for hover text */
+}
+
+.sub-tab-navigation button.active {
+    background-color: #007bff; /* Primary blue */
+    color: #ffffff; /* White text for active */
+    border-color: #007bff; /* Border matches background */
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(0, 123, 255, 0.25); /* Subtle shadow for active state */
+}
+
+/* Sub-tab content styling */
+.sub-tab-content {
+    display: none;
+    padding: 20px 5px; /* More vertical, less horizontal padding */
+    animation: fadeIn 0.5s;
+}
+
+.sub-tab-content h3 {
+    color: #212529; /* Darker heading color */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.25em; /* Slightly smaller than H2 */
+}
+
+.sub-tab-content p, 
+.sub-tab-content ol,
+.sub-tab-content ul {
+    font-size: 1em; /* Standardize font size */
+    color: #343a40; /* Slightly darker text for content */
+    margin-bottom: 1em;
+}
+
+.sub-tab-content ol,
+.sub-tab-content ul {
+    padding-left: 25px; /* Consistent padding for lists */
+}
+
+.sub-tab-content ul {
+    list-style-type: disc;
+}
+
+.sub-tab-content li {
+    margin-bottom: 0.5em;
+}
+
+.sub-tab-content strong {
+    color: #0056b3; /* Emphasize strong text with a darker blue */
+}

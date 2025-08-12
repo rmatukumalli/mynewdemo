@@ -1,0 +1,296 @@
+{
+  "organizations": [
+    {
+      "id": "org_akara",
+      "company_name": "Akara Airlines",
+      "industry": "Aviation",
+      "company_size": "10000+",
+      "country": "USA",
+      "ceo": "John Doe",
+      "founded_year": "1995",
+      "revenue": "$10B"
+    }
+  ],
+  "business_units": [
+    { "id": "bu_flight_ops", "unit_name": "Flight Operations", "unit_head": "Capt. Amelia Earhart", "organization_id": "org_akara", "budget": "$2.5B", "employees": "6000", "strategic_goals": "Achieve 95% on-time performance and expand routes to Southeast Asia." },
+    { "id": "bu_mro", "unit_name": "Maintenance, Repair, & Overhaul (MRO)", "unit_head": "Dr. Sarah Connor", "organization_id": "org_akara", "budget": "$1.2B", "employees": "3000", "strategic_goals": "Implement predictive maintenance to reduce aircraft downtime by 15%." },
+    { "id": "bu_customer_exp", "unit_name": "Customer Experience", "unit_head": "Mr. David Lee", "organization_id": "org_akara", "budget": "$800M", "employees": "4000", "strategic_goals": "Enhance passenger satisfaction score (NPS) by 20 points." },
+    { "id": "bu_cargo", "unit_name": "Cargo & Logistics", "unit_head": "Ms. Emily White", "organization_id": "org_akara", "budget": "$750M", "employees": "1500", "strategic_goals": "Grow cargo market share by 10% through strategic partnerships." },
+    { "id": "bu_corporate", "unit_name": "Corporate Functions", "unit_head": "Mr. Robert Green", "organization_id": "org_akara", "budget": "$300M", "employees": "800", "strategic_goals": "Digitalize HR and Finance processes to improve efficiency by 25%." },
+    { "id": "bu_tech_innovation", "unit_name": "Technology & Innovation", "unit_head": "Dr. Alex Kim", "organization_id": "org_akara", "budget": "$450M", "employees": "1200", "strategic_goals": "Develop a new passenger mobile app with personalized services." }
+  ],
+  "departments": [
+    { "id": "dept_flight_crew_ops", "department_name": "Flight Crew Operations", "unit": "bu_flight_ops", "department_head": "Capt. Alex Turner", "job_function": "Aircraft Operation", "cost_center": "FO101", "employee_count": "3500" },
+    { "id": "dept_in_flight_services", "department_name": "In-Flight Services", "unit": "bu_flight_ops", "department_head": "Ms. Lisa Chen", "job_function": "In-Flight Service", "cost_center": "FO102", "employee_count": "4000" },
+    { "id": "dept_airframe_maint", "department_name": "Airframe Maintenance", "unit": "bu_mro", "department_head": "Mr. Mark Davis", "job_function": "Aircraft Maintenance", "cost_center": "MRO201", "employee_count": "1500" },
+    { "id": "dept_avionics_maint", "department_name": "Avionics Maintenance", "unit": "bu_mro", "department_head": "Ms. Chloe Lee", "job_function": "Aircraft Electronics", "cost_center": "MRO202", "employee_count": "800" },
+    { "id": "dept_aviation_software_dev", "department_name": "Aviation Software Development", "unit": "bu_tech_innovation", "department_head": "Mr. Ben Carter", "job_function": "Software Engineering", "cost_center": "TI601", "employee_count": "600" },
+    { "id": "dept_it_ops", "department_name": "IT Operations", "unit": "bu_tech_innovation", "department_head": "Ms. Sarah Jones", "job_function": "IT Infrastructure", "cost_center": "TI602", "employee_count": "400" }
+  ],
+  "role_groups": [
+    { "id": "rg_pilot", "group_name": "Pilots", "department": "dept_flight_crew_ops", "job_family": "Flight Crew", "job_category": "Aircrew", "grade": "Senior", "compensation_range": "$100k-$300k", "competencies": "Flight Operations, Navigation, CRM" },
+    { "id": "rg_flight_instructor", "group_name": "Flight Instructors", "department": "dept_flight_crew_ops", "job_family": "Flight Crew", "job_category": "Training", "grade": "Expert", "compensation_range": "$90k-$180k", "competencies": "Flight Instruction, Curriculum Development, Pilot Mentorship" },
+    { "id": "rg_simulator_tech", "group_name": "Simulator Technicians", "department": "dept_flight_crew_ops", "job_family": "Flight Crew Support", "job_category": "Technical Support", "grade": "Mid-Level", "compensation_range": "$60k-$90k", "competencies": "Simulator Maintenance, Troubleshooting, Avionics Systems" },
+    { "id": "rg_flight_dispatcher", "group_name": "Flight Dispatchers", "department": "dept_flight_crew_ops", "job_family": "Flight Crew Support", "job_category": "Operations Support", "grade": "Mid-Level", "compensation_range": "$55k-$85k", "competencies": "Flight Planning, Meteorology, Aviation Regulations, Communication" },
+    { "id": "rg_mechanic", "group_name": "Aircraft Mechanics", "department": "dept_airframe_maint", "job_family": "Aircraft Maintenance", "job_category": "Technical", "grade": "Mid-Level", "compensation_range": "$60k-$120k", "competencies": "Aircraft Systems, Troubleshooting, Safety Protocols" },
+    { "id": "rg_flight_attendant", "group_name": "Flight Attendants", "department": "dept_in_flight_services", "job_family": "Cabin Services", "job_category": "Customer Service", "grade": "Junior", "compensation_range": "$40k-$70k", "competencies": "Customer Service, Emergency Procedures, First Aid" },
+    { "id": "rg_software_engineer", "group_name": "Aviation Software Engineers", "department": "dept_aviation_software_dev", "job_family": "Aviation Software Development", "job_category": "Software Engineering", "grade": "Mid-Level", "compensation_range": "$80k-$160k", "competencies": "Software Design, Coding, Testing, System Architecture" }
+  ],
+  "job_levels": [
+    { "id": "jl_cadet_pilot", "role_group_id": "rg_pilot", "level_name": "Cadet Pilot", "level_number": "IC01", "role_level": "Individual Contributor", "skill_level": "Beginner", "salary_range": "$30k-$50k", "bonus_potential": "5%", "key_responsibilities": "Complete flight training, ground school, simulator sessions." },
+    { "id": "jl_jr_first_officer", "role_group_id": "rg_pilot", "level_name": "Junior First Officer", "level_number": "IC02", "role_level": "Individual Contributor", "skill_level": "Intermediate", "salary_range": "$80k-$120k", "bonus_potential": "8%", "key_responsibilities": "Assist Captain, co-pilot duties, initial flight segments." },
+    { "id": "jl_first_officer", "role_group_id": "rg_pilot", "level_name": "First Officer", "level_number": "IC03", "role_level": "Individual Contributor", "skill_level": "Advanced", "salary_range": "$120k-$180k", "bonus_potential": "12%", "key_responsibilities": "Perform co-pilot duties, manage flight systems, handle diverse routes." },
+    { "id": "jl_sr_first_officer", "role_group_id": "rg_pilot", "level_name": "Senior First Officer", "level_number": "IC04", "role_level": "Individual Contributor", "skill_level": "Expert", "salary_range": "$160k-$220k", "bonus_potential": "15%", "key_responsibilities": "Mentor junior first officers, manage complex flight scenarios, act as relief pilot." },
+    { "id": "jl_captain", "role_group_id": "rg_pilot", "level_name": "Captain", "level_number": "M01", "role_level": "Manager", "skill_level": "Expert", "salary_range": "$180k-$300k", "bonus_potential": "20%", "key_responsibilities": "Command aircraft, ensure safety, lead crew." },
+    { "id": "jl_check_airman", "role_group_id": "rg_pilot", "level_name": "Check Airman", "level_number": "M02", "role_level": "Manager", "skill_level": "Expert", "salary_range": "$200k-$350k", "bonus_potential": "25%", "key_responsibilities": "Conduct pilot evaluations, provide advanced training, ensure regulatory compliance." },
+
+    { "id": "jl_jr_flight_instructor", "role_group_id": "rg_flight_instructor", "level_name": "Junior Flight Instructor", "level_number": "IC01", "role_level": "Individual Contributor", "skill_level": "Intermediate", "salary_range": "$70k-$100k", "bonus_potential": "8%", "key_responsibilities": "Conduct basic flight training, evaluate student progress." },
+    { "id": "jl_flight_instructor", "role_group_id": "rg_flight_instructor", "level_name": "Flight Instructor", "level_number": "IC02", "role_level": "Individual Contributor", "skill_level": "Advanced", "salary_range": "$90k-$150k", "bonus_potential": "12%", "key_responsibilities": "Provide advanced flight instruction, develop training modules." },
+    { "id": "jl_chief_flight_instructor", "role_group_id": "rg_flight_instructor", "level_name": "Chief Flight Instructor", "level_number": "M01", "role_level": "Manager", "skill_level": "Expert", "salary_range": "$130k-$180k", "bonus_potential": "15%", "key_responsibilities": "Oversee flight training programs, manage instructor team." },
+
+    { "id": "jl_jr_mechanic", "role_group_id": "rg_mechanic", "level_name": "Junior Aircraft Mechanic", "level_number": "IC01", "role_level": "Individual Contributor", "skill_level": "Beginner", "salary_range": "$45k-$65k", "bonus_potential": "5%", "key_responsibilities": "Perform routine inspections, assist senior mechanics." },
+    { "id": "jl_mechanic", "role_group_id": "rg_mechanic", "level_name": "Aircraft Mechanic", "level_number": "IC02", "role_level": "Individual Contributor", "skill_level": "Intermediate", "salary_range": "$60k-$90k", "bonus_potential": "8%", "key_responsibilities": "Diagnose and repair aircraft systems, perform scheduled maintenance." },
+    { "id": "jl_sr_mechanic", "role_group_id": "rg_mechanic", "level_name": "Senior Aircraft Mechanic", "level_number": "IC03", "role_level": "Individual Contributor", "skill_level": "Advanced", "salary_range": "$85k-$120k", "bonus_potential": "12%", "key_responsibilities": "Lead complex repairs, mentor junior staff, ensure compliance." },
+
+    { "id": "jl_jr_flight_attendant", "role_group_id": "rg_flight_attendant", "level_name": "Junior Flight Attendant", "level_number": "IC01", "role_level": "Individual Contributor", "skill_level": "Beginner", "salary_range": "$40k-$55k", "bonus_potential": "3%", "key_responsibilities": "Assist passengers, serve meals, ensure cabin safety." },
+    { "id": "jl_flight_attendant", "role_group_id": "rg_flight_attendant", "level_name": "Flight Attendant", "level_number": "IC02", "role_level": "Individual Contributor", "skill_level": "Intermediate", "salary_range": "$50k-$70k", "bonus_potential": "5%", "key_responsibilities": "Manage cabin, handle emergencies, provide customer service." },
+    { "id": "jl_sr_flight_attendant", "role_group_id": "rg_flight_attendant", "level_name": "Senior Flight Attendant", "level_number": "IC03", "role_level": "Individual Contributor", "skill_level": "Advanced", "salary_range": "$65k-$85k", "bonus_potential": "8%", "key_responsibilities": "Lead cabin crew, manage complex situations, train new attendants." },
+
+    { "id": "jl_jr_software_engineer", "role_group_id": "rg_software_engineer", "level_name": "Junior Aviation Software Engineer", "level_number": "IC01", "role_level": "Individual Contributor", "skill_level": "Beginner", "salary_range": "$70k-$90k", "bonus_potential": "7%", "key_responsibilities": "Write basic code, assist with testing, learn codebase." },
+    { "id": "jl_software_engineer", "role_group_id": "rg_software_engineer", "level_name": "Aviation Software Engineer", "level_number": "IC02", "role_level": "Individual Contributor", "skill_level": "Intermediate", "salary_range": "$90k-$130k", "bonus_potential": "10%", "key_responsibilities": "Develop and maintain software, debug issues, contribute to design." },
+    { "id": "jl_sr_software_engineer", "role_group_id": "rg_software_engineer", "level_name": "Senior Aviation Software Engineer", "level_number": "IC03", "role_level": "Individual Contributor", "skill_level": "Advanced", "salary_range": "$120k-$160k", "bonus_potential": "15%", "key_responsibilities": "Lead software projects, design complex systems, mentor junior engineers." }
+  ],
+  "jobs_skills": [
+    {
+      "id": "js_cadet_pilot",
+      "job_title": "Cadet Pilot",
+      "core_behavioral_anchor": "Demonstrates unwavering commitment to safety and operational excellence.",
+      "associated_skills": [
+        { "skill_name": "Aerodynamics", "proficiency_level": "Beginner" },
+        { "skill_name": "Flight Theory", "proficiency_level": "Beginner" },
+        { "skill_name": "Aviation Regulations", "proficiency_level": "Beginner" },
+        { "skill_name": "Teamwork", "proficiency_level": "Intermediate" },
+        { "skill_name": "Problem Solving", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "Must pass Class 1 Medical and aptitude tests."
+    },
+    {
+      "id": "js_jr_first_officer",
+      "job_title": "Junior First Officer",
+      "core_behavioral_anchor": "Applies foundational flight skills under supervision.",
+      "associated_skills": [
+        { "skill_name": "Basic Aircraft Operation", "proficiency_level": "Intermediate" },
+        { "skill_name": "Pre-flight Checks", "proficiency_level": "Intermediate" },
+        { "skill_name": "Radio Communication", "proficiency_level": "Intermediate" },
+        { "skill_name": "Flight Instrument Interpretation", "proficiency_level": "Beginner" }
+      ],
+      "exception_override": "Requires CPL (Commercial Pilot License)."
+    },
+    {
+      "id": "js_first_officer",
+      "job_title": "First Officer",
+      "core_behavioral_anchor": "Exhibits strong situational awareness and effective crew resource management.",
+      "associated_skills": [
+        { "skill_name": "Flight Planning", "proficiency_level": "Intermediate" },
+        { "skill_name": "Navigation", "proficiency_level": "Intermediate" },
+        { "skill_name": "Aircraft Systems", "proficiency_level": "Intermediate" },
+        { "skill_name": "Crew Resource Management", "proficiency_level": "Advanced" },
+        { "skill_name": "Emergency Procedures", "proficiency_level": "Intermediate" },
+        { "skill_name": "Crosswind Landing", "proficiency_level": "Beginner" }
+      ],
+      "exception_override": "Requires ATPL (Airline Transport Pilot License) frozen."
+    },
+    {
+      "id": "js_sr_first_officer",
+      "job_title": "Senior First Officer",
+      "core_behavioral_anchor": "Mentors junior crew and manages complex operational challenges.",
+      "associated_skills": [
+        { "skill_name": "Advanced Navigation", "proficiency_level": "Advanced" },
+        { "skill_name": "Complex Systems Management", "proficiency_level": "Advanced" },
+        { "skill_name": "Pilot Mentorship", "proficiency_level": "Intermediate" },
+        { "skill_name": "International Flight Procedures", "proficiency_level": "Advanced" }
+      ],
+      "exception_override": "Minimum 2000 hours as First Officer."
+    },
+    {
+      "id": "js_captain",
+      "job_title": "Captain",
+      "core_behavioral_anchor": "Inspires confidence and leads with decisive judgment under pressure.",
+      "associated_skills": [
+        { "skill_name": "Leadership", "proficiency_level": "Expert" },
+        { "skill_name": "Decision Making", "proficiency_level": "Expert" },
+        { "skill_name": "Risk Management", "proficiency_level": "Expert" },
+        { "skill_name": "Advanced Aircraft Systems", "proficiency_level": "Advanced" },
+        { "skill_name": "International Air Law", "proficiency_level": "Advanced" },
+        { "skill_name": "Complex Emergency Handling", "proficiency_level": "Expert" }
+      ],
+      "exception_override": "Minimum 5000 flight hours, including 1000 hours as First Officer."
+    },
+    {
+      "id": "js_check_airman",
+      "job_title": "Check Airman",
+      "core_behavioral_anchor": "Ensures the highest standards of pilot proficiency and regulatory compliance.",
+      "associated_skills": [
+        { "skill_name": "Pilot Evaluation", "proficiency_level": "Expert" },
+        { "skill_name": "Flight Training Standards", "proficiency_level": "Expert" },
+        { "skill_name": "Regulatory Auditing", "proficiency_level": "Advanced" },
+        { "skill_name": "Instructional Design", "proficiency_level": "Advanced" }
+      ],
+      "exception_override": "Requires FAA Check Airman designation."
+    },
+    {
+      "id": "js_flight_instructor",
+      "job_title": "Flight Instructor",
+      "core_behavioral_anchor": "Effectively imparts complex aviation knowledge and practical skills.",
+      "associated_skills": [
+        { "skill_name": "Flight Instruction", "proficiency_level": "Advanced" },
+        { "skill_name": "Curriculum Development", "proficiency_level": "Intermediate" },
+        { "skill_name": "Pilot Mentorship", "proficiency_level": "Advanced" },
+        { "skill_name": "Aviation Pedagogy", "proficiency_level": "Expert" }
+      ],
+      "exception_override": "Requires CFI/CFII certification."
+    },
+    {
+      "id": "js_simulator_technician",
+      "job_title": "Simulator Technician",
+      "core_behavioral_anchor": "Ensures optimal functionality and realism of flight simulation equipment.",
+      "associated_skills": [
+        { "skill_name": "Simulator Maintenance", "proficiency_level": "Advanced" },
+        { "skill_name": "Avionics Troubleshooting", "proficiency_level": "Intermediate" },
+        { "skill_name": "Electronic Systems Repair", "proficiency_level": "Intermediate" },
+        { "skill_name": "Diagnostic Software", "proficiency_level": "Advanced" }
+      ],
+      "exception_override": "N/A"
+    },
+    {
+      "id": "js_flight_dispatcher",
+      "job_title": "Flight Dispatcher",
+      "core_behavioral_anchor": "Maintains vigilant oversight of flight safety and operational efficiency.",
+      "associated_skills": [
+        { "skill_name": "Flight Planning", "proficiency_level": "Expert" },
+        { "skill_name": "Meteorology Analysis", "proficiency_level": "Advanced" },
+        { "skill_name": "Aviation Regulations", "proficiency_level": "Expert" },
+        { "skill_name": "Air Traffic Control Coordination", "proficiency_level": "Intermediate" },
+        { "skill_name": "Emergency Response Coordination", "proficiency_level": "Advanced" }
+      ],
+      "exception_override": "Requires FAA Aircraft Dispatcher Certificate."
+    },
+    {
+      "id": "js_jr_aircraft_mechanic",
+      "job_title": "Junior Aircraft Mechanic",
+      "core_behavioral_anchor": "Ensures meticulous attention to detail and adherence to basic safety protocols.",
+      "associated_skills": [
+        { "skill_name": "Tool Usage", "proficiency_level": "Beginner" },
+        { "skill_name": "Basic Aircraft Inspection", "proficiency_level": "Beginner" },
+        { "skill_name": "Component Identification", "proficiency_level": "Beginner" },
+        { "skill_name": "Shop Safety", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "N/A"
+    },
+    {
+      "id": "js_aircraft_mechanic",
+      "job_title": "Aircraft Mechanic",
+      "core_behavioral_anchor": "Applies diagnostic skills to resolve mechanical issues efficiently.",
+      "associated_skills": [
+        { "skill_name": "Aircraft Inspection", "proficiency_level": "Intermediate" },
+        { "skill_name": "Troubleshooting", "proficiency_level": "Intermediate" },
+        { "skill_name": "Hydraulic Systems", "proficiency_level": "Intermediate" },
+        { "skill_name": "Electrical Systems", "proficiency_level": "Intermediate" },
+        { "skill_name": "Technical Documentation", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "Requires A&P (Airframe and Powerplant) certification."
+    },
+    {
+      "id": "js_sr_aircraft_mechanic",
+      "job_title": "Senior Aircraft Mechanic",
+      "core_behavioral_anchor": "Leads complex maintenance operations and mentors junior technicians.",
+      "associated_skills": [
+        { "skill_name": "Advanced Troubleshooting", "proficiency_level": "Advanced" },
+        { "skill_name": "Engine Overhaul", "proficiency_level": "Advanced" },
+        { "skill_name": "Regulatory Compliance", "proficiency_level": "Expert" },
+        { "skill_name": "Team Leadership", "proficiency_level": "Advanced" },
+        { "skill_name": "Quality Assurance", "proficiency_level": "Expert" }
+      ],
+      "exception_override": "Minimum 5 years experience with A&P certification."
+    },
+    {
+      "id": "js_jr_flight_attendant",
+      "job_title": "Junior Flight Attendant",
+      "core_behavioral_anchor": "Provides courteous service and ensures passenger comfort.",
+      "associated_skills": [
+        { "skill_name": "Customer Service", "proficiency_level": "Intermediate" },
+        { "skill_name": "Cabin Safety Procedures", "proficiency_level": "Beginner" },
+        { "skill_name": "First Aid Basics", "proficiency_level": "Beginner" },
+        { "skill_name": "In-flight Service", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "N/A"
+    },
+    {
+      "id": "js_flight_attendant",
+      "job_title": "Flight Attendant",
+      "core_behavioral_anchor": "Manages cabin environment and responds effectively to passenger needs.",
+      "associated_skills": [
+        { "skill_name": "Customer Service", "proficiency_level": "Advanced" },
+        { "skill_name": "Emergency Response", "proficiency_level": "Intermediate" },
+        { "skill_name": "First Aid", "proficiency_level": "Intermediate" },
+        { "skill_name": "Communication", "proficiency_level": "Advanced" },
+        { "skill_name": "Conflict Resolution", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "Must pass recurrent safety training annually."
+    },
+    {
+      "id": "js_sr_flight_attendant",
+      "job_title": "Senior Flight Attendant",
+      "core_behavioral_anchor": "Leads cabin crew with composure and expertise in all situations.",
+      "associated_skills": [
+        { "skill_name": "Cabin Crew Leadership", "proficiency_level": "Advanced" },
+        { "skill_name": "Advanced Emergency Procedures", "proficiency_level": "Expert" },
+        { "skill_name": "Crisis Management", "proficiency_level": "Advanced" },
+        { "skill_name": "Training & Mentoring", "proficiency_level": "Intermediate" },
+        { "skill_name": "International Service Protocols", "proficiency_level": "Advanced" }
+      ],
+      "exception_override": "Minimum 3 years experience as Flight Attendant."
+    },
+    {
+      "id": "js_jr_aviation_software_engineer",
+      "job_title": "Junior Aviation Software Engineer",
+      "core_behavioral_anchor": "Applies foundational coding skills to develop robust aviation software.",
+      "associated_skills": [
+        { "skill_name": "Python", "proficiency_level": "Beginner" },
+        { "skill_name": "JavaScript", "proficiency_level": "Beginner" },
+        { "skill_name": "Version Control (Git)", "proficiency_level": "Intermediate" },
+        { "skill_name": "Unit Testing", "proficiency_level": "Beginner" },
+        { "skill_name": "Data Structures", "proficiency_level": "Beginner" }
+      ],
+      "exception_override": "N/A"
+    },
+    {
+      "id": "js_aviation_software_engineer",
+      "job_title": "Aviation Software Engineer",
+      "core_behavioral_anchor": "Designs and implements scalable software solutions for aviation systems.",
+      "associated_skills": [
+        { "skill_name": "Python", "proficiency_level": "Intermediate" },
+        { "skill_name": "JavaScript", "proficiency_level": "Intermediate" },
+        { "skill_name": "Cloud Platforms (AWS/Azure)", "proficiency_level": "Beginner" },
+        { "skill_name": "Database Design (SQL/NoSQL)", "proficiency_level": "Intermediate" },
+        { "skill_name": "API Development", "proficiency_level": "Intermediate" },
+        { "skill_name": "Agile Methodologies", "proficiency_level": "Intermediate" }
+      ],
+      "exception_override": "N/A"
+    },
+    {
+      "id": "js_sr_aviation_software_engineer",
+      "job_title": "Senior Aviation Software Engineer",
+      "core_behavioral_anchor": "Architects and leads the development of critical aviation software infrastructure.",
+      "associated_skills": [
+        { "skill_name": "System Architecture", "proficiency_level": "Advanced" },
+        { "skill_name": "Cloud Security", "proficiency_level": "Advanced" },
+        { "skill_name": "Distributed Systems", "proficiency_level": "Advanced" },
+        { "skill_name": "DevOps Practices", "proficiency_level": "Expert" },
+        { "skill_name": "Mentorship", "proficiency_level": "Advanced" },
+        { "skill_name": "Requirements Analysis", "proficiency_level": "Expert" }
+      ],
+      "exception_override": "Minimum 5 years experience in aviation software development."
+    }
+  ]
+}

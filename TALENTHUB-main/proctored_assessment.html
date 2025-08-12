@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Skill Assessment - Remote Proctoring Platform Integration
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide-react@0.378.0/dist/umd/lucide-react.min.js">
+  </script>
+  <style>
+   body {
+            font-family: 'Inter', sans-serif;
+        }
+        .question-card {
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .proctoring-warning {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        /* Simple modal style */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .code-editor-placeholder {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 200px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap; /* Allows line breaks */
+        }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="bg-slate-100 text-slate-800">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+   <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    <a class="text-2xl font-bold text-sky-600" href="index.html">
+     Remote Proctoring Platform Integration
+    </a>
+    <div class="text-lg font-semibold text-red-600" id="timer">
+     Time Left: 60:00
+    </div>
+   </div>
+  </nav>
+  <div class="container mx-auto px-6 py-8">
+   <header class="mb-8 text-center">
+    <h1 class="text-3xl font-bold text-slate-900" id="assessmentTitle">
+     Skill Assessment
+    </h1>
+    <p class="text-lg text-slate-600 mt-1">
+     Demonstrate your expertise. Please answer all questions to the best of your ability.
+    </p>
+   </header>
+   <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div class="lg:col-span-3 space-y-6" id="questionsContainer">
+     <div class="bg-white p-6 rounded-lg shadow-md question-card">
+      <p class="text-sm text-slate-500 mb-3">
+       Please read the instructions carefully before starting.
+      </p>
+      <p class="text-slate-700">
+       This assessment is timed. Ensure you have a stable internet connection. Any suspicious activity may lead to disqualification.
+      </p>
+     </div>
+    </div>
+    <aside class="lg:col-span-1 space-y-6">
+     <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-slate-800 mb-3">
+       <svg class="lucide lucide-shield-check inline-block mr-2 mb-1 text-green-600" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10">
+        </path>
+        <path d="m9 12 2 2 4-4">
+        </path>
+       </svg>
+       Proctoring
+      </h2>
+      <div class="bg-slate-200 h-40 w-full rounded-md flex items-center justify-center text-slate-500 mb-3">
+       <svg class="lucide lucide-video" fill="none" height="48" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+        <path d="m22 8-6 4 6 4V8Z">
+        </path>
+        <rect height="12" rx="2" ry="2" width="14" x="2" y="6">
+        </rect>
+       </svg>
+       <span class="ml-2">
+        Webcam Feed (Conceptual)
+       </span>
+      </div>
+      <p class="text-xs text-slate-500 mb-3 italic">
+       AI proctoring is active to ensure fairness. This includes monitoring for:
+      </p>
+      <ul class="list-disc list-inside text-xs text-slate-600 space-y-1 mb-4">
+       <li>
+        Leaving the assessment window
+       </li>
+       <li>
+        Copy-pasting external content
+       </li>
+       <li>
+        Presence of other individuals
+       </li>
+      </ul>
+      <div class="hidden bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded-md text-sm proctoring-warning" id="proctoringAlert">
+       <p>
+        <strong>
+         Alert:
+        </strong>
+        Suspicious activity detected. Please maintain focus on the assessment.
+       </p>
+      </div>
+      <div class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded-md text-sm mt-2" id="proctoringViolation">
+       <p>
+        <strong>
+         Warning:
+        </strong>
+        Repeated violations may lead to disqualification.
+       </p>
+      </div>
+     </div>
+     <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-slate-800 mb-4">
+       Navigation
+      </h2>
+      <div class="space-y-2 mb-4">
+       <button class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 px-4 rounded-md transition duration-150" id="prevQuestionBtn">
+        Previous
+       </button>
+       <button class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 px-4 rounded-md transition duration-150" id="nextQuestionBtn">
+        Next
+       </button>
+      </div>
+      <button class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 px-4 rounded-md transition duration-150" id="submitAssessmentBtn">
+       Submit Assessment
+      </button>
+     </div>
+    </aside>
+   </div>
+  </div>
+  <div class="modal" id="confirmationModal">
+   <div class="modal-content">
+    <span class="close-button" id="closeModal">
+     &times;
+    </span>
+    <h2 class="text-xl font-semibold text-slate-800 mb-4">
+     Confirm Submission
+    </h2>
+    <p class="text-slate-700 mb-6">
+     Are you sure you want to submit your assessment? You will not be able to make further changes.
+    </p>
+    <div class="flex justify-center space-x-4">
+     <button class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 px-6 rounded-md" id="cancelSubmitBtn">
+      Cancel
+     </button>
+     <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-md" id="confirmSubmitBtn">
+      Yes, Submit
+     </button>
+    </div>
+   </div>
+  </div>
+  <script>
+   // --- Assessment Data (Conceptual - would come from a backend/Assessment Builder) ---
+        const assessments = {
+            "frontend-dev": {
+                title: "Frontend Developer Skill Assessment",
+                duration: 3600, // seconds (60 minutes)
+                questions: [
+                    {
+                        id: "q1_fe",
+                        type: "multiple-choice",
+                        text: "What is the primary purpose of a `key` prop in React lists?",
+                        options: [
+                            "To style list items uniquely.",
+                            "To help React identify which items have changed, are added, or are removed.",
+                            "To define the order of elements in the list.",
+                            "To store metadata about the list item."
+                        ],
+                        answer: "To help React identify which items have changed, are added, or are removed."
+                    },
+                    {
+                        id: "q2_fe",
+                        type: "multiple-choice",
+                        text: "Which of the following is NOT a valid way to declare a variable in modern JavaScript (ES6+)?",
+                        options: ["var myVar;", "let myVar;", "const myVar = 10;", "static myVar;"],
+                        answer: "static myVar;"
+                    },
+                    {
+                        id: "q3_fe",
+                        type: "coding",
+                        text: "Write a JavaScript function `sumArray(arr)` that takes an array of numbers and returns their sum. Handle cases where the array might be empty or contain non-numeric values (return 0 for such cases).",
+                        placeholderCode: "function sumArray(arr) {\n  // Your code here\n}"
+                    },
+                    {
+                        id: "q4_fe",
+                        type: "text-answer",
+                        text: "Briefly explain the concept of the CSS Box Model."
+                    }
+                ]
+            },
+            "data-sci": {
+                title: "Data Scientist Skill Assessment",
+                duration: 4500, // 75 minutes
+                questions: [
+                    {
+                        id: "q1_ds",
+                        type: "multiple-choice",
+                        text: "What is 'Overfitting' in the context of machine learning?",
+                        options: [
+                            "The model performs well on training data but poorly on unseen data.",
+                            "The model performs poorly on both training and unseen data.",
+                            "The model is too simple to capture the underlying patterns.",
+                            "The data used for training is insufficient."
+                        ],
+                        answer: "The model performs well on training data but poorly on unseen data."
+                    },
+                    {
+                        id: "q2_ds",
+                        type: "coding",
+                        text: "Write a Python function using Pandas to read a CSV file named 'data.csv' and return the first 5 rows.",
+                        placeholderCode: "import pandas as pd\n\ndef read_csv_head():\n  # Your code here"
+                    }
+                ]
+            },
+             "prod-manager": {
+                title: "Product Manager Skill Assessment",
+                duration: 3000, // 50 minutes
+                questions: [
+                    {
+                        id: "q1_pm",
+                        type: "text-answer",
+                        text: "Describe a product you admire and explain what makes its user experience great."
+                    },
+                    {
+                        id: "q2_pm",
+                        type: "multiple-choice",
+                        text: "What is a common goal of A/B testing in product development?",
+                        options: [
+                            "To survey user demographics.",
+                            "To compare two versions of a feature to see which performs better.",
+                            "To fix all software bugs before release.",
+                            "To train new team members."
+                        ],
+                        answer: "To compare two versions of a feature to see which performs better."
+                    }
+                ]
+            },
+            "proctored-skill-generic": { // Added entry for the proctored assessment
+                title: "Proctored Skill Assessment",
+                duration: 3600, // 60 minutes, matches the default timer
+                questions: [
+                    // This assessment is self-contained in the HTML, 
+                    // but we need a placeholder question for the script to work.
+                    // The actual questions are part of the page structure.
+                    // We can make this a generic instruction.
+                    {
+                        id: "q1_proctored_coding",
+                        type: "coding",
+                        text: "Write a JavaScript function called `greetUser` that takes a username as a string argument and returns a greeting string 'Hello, [username]!'. If no username is provided or it's an empty string, it should return 'Hello, Guest!'.",
+                        placeholderCode: "function greetUser(username) {\n  // Your code here\n\n  // Example: \n  // if (!username) { \n  //   return 'Hello, Guest!'; \n  // }\n  // return 'Hello, ' + username + '!';\n}"
+                    }
+                ]
+            }
+            // Add more assessments for other job IDs
+        };
+
+        // --- Global Variables ---
+        let currentJobId = null;
+        let currentAssessment = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // To store user's answers { q_id: answer }
+        let timerInterval;
+        let timeLeft;
+
+        // --- DOM Elements ---
+        const assessmentTitleEl = document.getElementById('assessmentTitle');
+        const questionsContainerEl = document.getElementById('questionsContainer');
+        const timerEl = document.getElementById('timer');
+        const prevQuestionBtn = document.getElementById('prevQuestionBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const submitAssessmentBtn = document.getElementById('submitAssessmentBtn');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cancelSubmitBtn = document.getElementById('cancelSubmitBtn');
+        const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+        const proctoringAlertEl = document.getElementById('proctoringAlert');
+        const proctoringViolationEl = document.getElementById('proctoringViolation');
+
+        // --- Functions ---
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function loadAssessment() {
+            currentJobId = getQueryParam('jobId') || 'frontend-dev'; // Default to frontend-dev if no jobId
+            currentAssessment = assessments[currentJobId];
+
+            if (!currentAssessment) {
+                questionsContainerEl.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-md text-red-600">Error: Assessment not found for this job.</div>`;
+                assessmentTitleEl.textContent = "Assessment Error";
+                // Disable buttons if assessment not found
+                prevQuestionBtn.disabled = true;
+                nextQuestionBtn.disabled = true;
+                submitAssessmentBtn.disabled = true;
+                return;
+            }
+            
+            assessmentTitleEl.textContent = currentAssessment.title;
+            timeLeft = currentAssessment.duration;
+            startTimer();
+            renderQuestion();
+            updateNavigationButtons();
+        }
+
+        function renderQuestion() {
+            questionsContainerEl.innerHTML = ''; // Clear previous question
+            const questionData = currentAssessment.questions[currentQuestionIndex];
+            
+            const questionCard = document.createElement('div');
+            questionCard.className = 'bg-white p-6 rounded-lg shadow-md question-card';
+            
+            let questionHtml = `
+                <p class="text-sm font-medium text-sky-600 mb-1">Question ${currentQuestionIndex + 1} of ${currentAssessment.questions.length}</p>
+                <h3 class="text-lg font-semibold text-slate-800 mb-4">${questionData.text}</h3>
+            `;
+
+            if (questionData.type === "multiple-choice") {
+                questionHtml += '<div class="space-y-2">';
+                questionData.options.forEach((option, index) => {
+                    const isChecked = userAnswers[questionData.id] === option;
+                    questionHtml += `
+                        <div>
+                            <label class="flex items-center p-3 rounded-md border border-slate-200 hover:bg-slate-50 cursor-pointer">
+                                <input type="radio" name="q_${questionData.id}" value="${option}" class="form-radio h-5 w-5 text-sky-600 focus:ring-sky-500" ${isChecked ? 'checked' : ''} data-question-id="${questionData.id}">
+                                <span class="ml-3 text-slate-700">${option}</span>
+                            </label>
+                        </div>
+                    `;
+                });
+                questionHtml += '</div>';
+            } else if (questionData.type === "coding") {
+                const currentCode = userAnswers[questionData.id] || questionData.placeholderCode || "";
+                questionHtml += `
+                    <div>
+                        <label for="code_q_${questionData.id}" class="block text-sm font-medium text-slate-700 mb-1">Your Code:</label>
+                        <textarea id="code_q_${questionData.id}" data-question-id="${questionData.id}" rows="10" class="w-full p-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500 code-editor-placeholder">${currentCode}</textarea>
+                        <p class="text-xs text-slate-500 mt-1">Enter your code solution in the area above.</p>
+                    </div>
+                `;
+            } else if (questionData.type === "text-answer") {
+                 const currentText = userAnswers[questionData.id] || "";
+                 questionHtml += `
+                    <div>
+                        <label for="text_q_${questionData.id}" class="block text-sm font-medium text-slate-700 mb-1">Your Answer:</label>
+                        <textarea id="text_q_${questionData.id}" data-question-id="${questionData.id}" rows="5" class="w-full p-2 border border-slate-300 rounded-md focus:ring-sky-500 focus:border-sky-500" placeholder="Type your answer here...">${currentText}</textarea>
+                    </div>
+                `;
+            }
+            
+            questionCard.innerHTML = questionHtml;
+            questionsContainerEl.appendChild(questionCard);
+
+            // Add event listeners for saving answers
+            document.querySelectorAll(`input[name="q_${questionData.id}"], textarea[data-question-id="${questionData.id}"]`).forEach(input => {
+                input.addEventListener('change', saveAnswer);
+                if (input.tagName === 'TEXTAREA') {
+                    input.addEventListener('keyup', saveAnswer); // Save on keyup for textareas
+                }
+            });
+        }
+
+        function saveAnswer(event) {
+            const questionId = event.target.dataset.questionId || event.target.name.substring(2); // q_q1_fe -> q1_fe
+            if (event.target.type === 'radio') {
+                userAnswers[questionId] = event.target.value;
+            } else { // textarea
+                userAnswers[questionId] = event.target.value;
+            }
+            console.log("Answers:", userAnswers); // For debugging
+        }
+
+        function updateNavigationButtons() {
+            prevQuestionBtn.disabled = currentQuestionIndex === 0;
+            nextQuestionBtn.disabled = currentQuestionIndex === currentAssessment.questions.length - 1;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerEl.textContent = `Time Left: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerEl.textContent = "Time's Up!";
+                    timerEl.classList.remove('text-red-600');
+                    timerEl.classList.add('text-orange-500', 'font-bold');
+                    alert("Time's up! Your assessment will be submitted automatically.");
+                    submitAssessment(); 
+                }
+                 // Simulate proctoring alerts at specific times for demo
+                if (timeLeft === currentAssessment.duration - 30) { // 30s in
+                    showProctoringAlert("Remember to stay focused on the assessment window.");
+                }
+                if (timeLeft === currentAssessment.duration - 90) { // 90s in
+                     showProctoringViolation("Suspicious eye movement detected. Please look at the screen.");
+                }
+
+            }, 1000);
+        }
+
+        function showProctoringAlert(message) {
+            proctoringAlertEl.innerHTML = `<p><strong>Alert:</strong> ${message}</p>`;
+            proctoringAlertEl.classList.remove('hidden');
+            setTimeout(() => proctoringAlertEl.classList.add('hidden'), 5000); // Hide after 5s
+        }
+        function showProctoringViolation(message) {
+            proctoringViolationEl.innerHTML = `<p><strong>Warning:</strong> ${message}</p>`;
+            proctoringViolationEl.classList.remove('hidden');
+            setTimeout(() => proctoringViolationEl.classList.add('hidden'), 7000); // Hide after 7s
+        }
+
+
+        function submitAssessment() {
+            clearInterval(timerInterval);
+            console.log("Submitting assessment for job ID:", currentJobId);
+            console.log("User Answers:", userAnswers);
+            
+            // Conceptual: Calculate score (very simplified)
+            let score = 0;
+            let maxScore = 0;
+            currentAssessment.questions.forEach(q => {
+                maxScore += 1; // Each question worth 1 point for simplicity
+                if (q.type === "multiple-choice" && userAnswers[q.id] === q.answer) {
+                    score += 1;
+                } else if (q.type === "coding" && userAnswers[q.id] && userAnswers[q.id].length > 10) { // Basic check for coding
+                    score += 0.5; // Partial for effort
+                } else if (q.type === "text-answer" && userAnswers[q.id] && userAnswers[q.id].length > 5) {
+                    score += 0.3; // Basic check for text answer
+                }
+            });
+            const percentage = (score / maxScore) * 100;
+
+            // Store results conceptually (e.g., in localStorage for this demo)
+            const assessmentResult = {
+                jobId: currentJobId,
+                jobTitle: currentAssessment.title.replace(" Skill Assessment", ""),
+                answers: userAnswers,
+                score: score,
+                maxScore: maxScore,
+                percentage: percentage.toFixed(2),
+                submittedAt: new Date().toISOString()
+            };
+            localStorage.setItem('latestAssessmentResult', JSON.stringify(assessmentResult));
+            
+            // Redirect to a results/summary page
+            window.location.href = `assessment_results.html`;
+        }
+
+        // --- Event Listeners ---
+        prevQuestionBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateNavigationButtons();
+            }
+        });
+
+        nextQuestionBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < currentAssessment.questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateNavigationButtons();
+            }
+        });
+
+        submitAssessmentBtn.addEventListener('click', () => {
+            confirmationModal.style.display = "block";
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            confirmationModal.style.display = "none";
+        });
+
+        cancelSubmitBtn.addEventListener('click', () => {
+            confirmationModal.style.display = "none";
+        });
+
+        confirmSubmitBtn.addEventListener('click', () => {
+            confirmationModal.style.display = "none";
+            submitAssessment();
+        });
+        
+        window.onclick = function(event) {
+            if (event.target == confirmationModal) {
+                confirmationModal.style.display = "none";
+            }
+        }
+
+        // Conceptual: AI Proctoring - Simulate detection of leaving the window
+        let proctoringViolationCount = 0;
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                proctoringViolationCount++;
+                if (proctoringViolationCount === 1) {
+                     showProctoringAlert("You have navigated away from the assessment. Please return immediately.");
+                } else if (proctoringViolationCount >=2) {
+                    showProctoringViolation(`Warning ${proctoringViolationCount-1}: Leaving the assessment window is not permitted. Further violations may result in disqualification.`);
+                }
+            }
+        });
+         // Conceptual: AI Proctoring - Simulate detection of copy-paste
+        document.addEventListener('copy', (event) => {
+            showProctoringViolation("Copying content is not allowed during the assessment.");
+            // Optionally, prevent default copy action for stricter proctoring:
+            // event.preventDefault(); 
+        });
+         document.addEventListener('paste', (event) => {
+            showProctoringViolation("Pasting content is not allowed during the assessment.");
+            // Optionally, prevent default paste action:
+            // event.preventDefault(); 
+        });
+
+
+        // --- Initialization ---
+        window.onload = loadAssessment;
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

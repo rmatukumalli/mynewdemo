@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Employee Skills Proficiency
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+   body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* -- NEW UX Styles -- */
+        .progress-track {
+            width: 100%;
+            background-color: #e5e7eb; /* gray-200 */
+            border-radius: 9999px;
+            height: 6px;
+            position: relative;
+        }
+        .rating-dot {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .target-line {
+            position: absolute;
+            top: -6px;
+            bottom: -6px;
+            width: 3px;
+            background-color: #ef4444; /* red-500 */
+            transform: translateX(-50%);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .skill-list-item:not(:last-child) {
+            border-bottom: 1px solid #f3f4f6; /* gray-100 */
+        }
+        /* Tab specific styles */
+        .tab-button.active {
+            border-color: #3b82f6; /* blue-500 */
+            color: #1d4ed8; /* blue-700 */
+            background-color: #eff6ff; /* blue-50 */
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Slider Custom Styles */
+        input[type="range"] {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            background: transparent; /* Needed for Safari */
+            cursor: pointer;
+            width: 100%; /* Ensure slider takes full width of its container */
+        }
+
+        /* Thumb styles */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #4f46e5; /* indigo-600 */
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            margin-top: -5px; /* Adjust thumb position to align with track */
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #4f46e5; /* indigo-600 */
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Track styles - specific colors for each slider type */
+        /* My Rating Slider Track */
+        #myRatingSlider- .flex-grow {
+            background-color: #93c5fd; /* blue-300 for track */
+        }
+        input[type="range"].my-rating-track::-webkit-slider-runnable-track {
+            background: #93c5fd; /* blue-300 */
+        }
+        input[type="range"].my-rating-track::-moz-range-track {
+            background: #93c5fd; /* blue-300 */
+        }
+
+        /* Manager Rating Slider Track */
+        #managerRatingSlider- .flex-grow {
+            background-color: #86efac; /* green-300 for track */
+        }
+        input[type="range"].manager-rating-track::-webkit-slider-runnable-track {
+            background: #86efac; /* green-300 */
+        }
+        input[type="range"].manager-rating-track::-moz-range-track {
+            background: #86efac; /* green-300 */
+        }
+  </style>
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="container mx-auto p-4 md:p-8">
+   <!-- Header -->
+   <header class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">
+     My Skills Proficiency
+    </h1>
+    <p class="text-gray-600 mt-1">
+     A comprehensive overview of your skills, ratings, and development areas.
+    </p>
+   </header>
+   <!-- Legend -->
+   <div class="mb-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-lg font-semibold mb-3 text-gray-800">
+     Legend
+    </h3>
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+     <div class="flex items-center">
+      <div class="w-4 h-4 rounded-full bg-blue-500 mr-2 border-2 border-white ring-1 ring-blue-500">
+      </div>
+      <span class="text-sm font-medium">
+       My Rating
+      </span>
+     </div>
+     <div class="flex items-center">
+      <div class="w-4 h-4 rounded-full bg-green-500 mr-2 border-2 border-white ring-1 ring-green-500">
+      </div>
+      <span class="text-sm font-medium">
+       Manager Rating
+      </span>
+     </div>
+     <div class="flex items-center">
+      <div class="h-4 w-1 rounded-full bg-red-500 mr-2">
+      </div>
+      <span class="text-sm font-medium">
+       Company Expectation
+      </span>
+     </div>
+    </div>
+   </div>
+   <!-- Tabs Navigation -->
+   <div class="mb-6 flex flex-wrap border-b border-gray-200">
+    <!-- Tab buttons will be injected here by JavaScript -->
+   </div>
+   <!-- Skills Container (now within tab content) -->
+   <div class="space-y-8" id="tab-content-container">
+    <!-- Tab content will be injected here by JavaScript -->
+   </div>
+  </div>
+  <script>
+   // --- DATA STRUCTURE ---
+        // This represents the data that would typically come from a database or API.
+        const skillsData = {
+            employeeId: "E12345",
+            employeeName: "John Doe",
+            capabilities: [
+                {
+                    capabilityName: "Flight Operations",
+                    competencies: [
+                        {
+                            competencyName: "Core Piloting Skills",
+                            skills: [
+                                { skillName: "Flight Planning", myRating: 4, managerRating: 4, companyExpectation: 4 },
+                                { skillName: "Aerodynamics", myRating: 4, managerRating: 3, companyExpectation: 4 },
+                                { skillName: "Avionics Systems", myRating: 3, managerRating: 4, companyExpectation: 3 },
+                                { skillName: "Emergency Procedures", myRating: 5, managerRating: 5, companyExpectation: 4 },
+                                { skillName: "Instrument Flight Rules (IFR)", myRating: 5, managerRating: 5, companyExpectation: 4 }, // Expert Confirmed
+                            ]
+                        },
+                        {
+                            competencyName: "Situational Awareness & Safety",
+                            skills: [
+                                { skillName: "Weather Analysis", myRating: 4, managerRating: 3, companyExpectation: 4 },
+                                { skillName: "CRM (Crew Resource Management)", myRating: 4, managerRating: 4, companyExpectation: 4 },
+                                { skillName: "Air Traffic Control", myRating: 5, managerRating: 5, companyExpectation: 4 }, // Expert Confirmed
+                                { skillName: "FAA Regulations", myRating: 3, managerRating: 3, companyExpectation: 4 }, // Intermediate Confirmed
+                            ]
+                        }
+                    ]
+                },
+                {
+                    capabilityName: "Aircraft Systems & Maintenance",
+                    competencies: [
+                        {
+                            competencyName: "System Knowledge",
+                            skills: [
+                                { skillName: "Aircraft Maintenance", myRating: 4, managerRating: 4, companyExpectation: 3 }, // Advanced Confirmed
+                                { skillName: "Meteorology", myRating: 4, managerRating: 4, companyExpectation: 3 }, // Advanced Confirmed
+                                { skillName: "Engine Systems", myRating: 3, managerRating: 3, companyExpectation: 3 }, // Related
+                                { skillName: "Hydraulics", myRating: 2, managerRating: 3, companyExpectation: 2 }, // Related
+                            ]
+                        },
+                        {
+                            competencyName: "Navigation & Communication",
+                            skills: [
+                                { skillName: "Radar Systems", myRating: 3, managerRating: 3, companyExpectation: 3 }, // Related
+                                { skillName: "Communication Protocols", myRating: 4, managerRating: 4, companyExpectation: 4 }, // Related
+                                { skillName: "Doppler Radar Interpretation", myRating: 3, managerRating: 3, companyExpectation: 3 }, // Related
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // --- DYNAMIC RENDERING ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtonsContainer = document.querySelector('.mb-6.flex.flex-wrap');
+            const tabContentContainer = document.getElementById('tab-content-container');
+            if (!tabButtonsContainer || !tabContentContainer) return;
+
+            const proficiencyLevels = {
+                0: 'N/A', 1: 'Novice', 2: 'Beginner', 3: 'Competent', 4: 'Proficient', 5: 'Expert'
+            };
+
+            // Function to render skills for a given capability
+            const renderCapabilitySkills = (capability) => {
+                const capabilityElement = document.createElement('div');
+                capabilityElement.className = 'bg-white p-4 sm:p-6 rounded-xl shadow-md border border-gray-200';
+                capabilityElement.innerHTML = `<h2 class="text-2xl font-bold text-gray-900 mb-4">${capability.capabilityName}</h2>`;
+
+                const competenciesContainer = document.createElement('div');
+                competenciesContainer.className = 'space-y-6';
+
+                capability.competencies.forEach(competency => {
+                    const competencyElement = document.createElement('div');
+                    competencyElement.className = 'p-4 border border-gray-100 rounded-lg';
+                    competencyElement.innerHTML = `<h3 class="text-xl font-semibold text-gray-800 mb-2">${competency.competencyName}</h3>`;
+
+                    const skillsList = document.createElement('ul');
+                    skillsList.className = 'space-y-4';
+
+                    competency.skills.forEach(skill => {
+                        // Unique ID for each skill's elements to allow individual updates
+                        const skillId = skill.skillName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-*|-*$/g, '');
+
+                        const skillItem = document.createElement('li');
+                        // Changed grid-cols to accommodate two sliders and a separate summary column
+                        skillItem.className = 'skill-list-item grid grid-cols-1 md:grid-cols-6 gap-4 items-center py-4';
+                        skillItem.innerHTML = `
+                            <div class="md:col-span-2">
+                                <p class="font-medium text-gray-700">${skill.skillName}</p>
+                            </div>
+                            <div class="md:col-span-2 h-12 flex items-center">
+                                <div class="progress-track">
+                                    <div class="target-line" style="left: 0%;" id="targetLine-${skillId}" title=""></div>
+                                    <div class="rating-dot bg-green-500" style="left: 0%;" id="managerDot-${skillId}" title=""></div>
+                                    <div class="rating-dot bg-blue-500" style="left: 0%;" id="myDot-${skillId}" title=""></div>
+                                </div>
+                            </div>
+                            <div class="md:col-span-1 text-sm text-gray-600 flex flex-col space-y-3">
+                                <div class="flex items-center">
+                                    <label for="myRatingSlider-${skillId}" class="w-10 text-gray-700">Me:</label>
+                                    <input type="range" id="myRatingSlider-${skillId}" min="0" max="5" value="${skill.myRating}" class="flex-grow my-rating-track">
+                                    <span class="ml-2 font-bold text-blue-600 w-6 text-right" id="myRatingValue-${skillId}">${skill.myRating}</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <label for="managerRatingSlider-${skillId}" class="w-10 text-gray-700">Mgr:</label>
+                                    <input type="range" id="managerRatingSlider-${skillId}" min="0" max="5" value="${skill.managerRating}" class="flex-grow manager-rating-track">
+                                    <span class="ml-2 font-bold text-green-600 w-6 text-right" id="managerRatingValue-${skillId}">${skill.managerRating}</span>
+                                </div>
+                            </div>
+                            <div class="md:col-span-1 text-sm text-gray-600 flex flex-col space-y-1 items-start md:items-end">
+                                <p class="mb-1">Exp: <strong class="text-red-600" id="companyExpectationValue-${skillId}">${skill.companyExpectation}</strong></p>
+                                <p id="summaryStatus-${skillId}" class="text-xs font-semibold px-2 py-0.5 rounded-full"></p>
+                            </div>
+                        `;
+                        skillsList.appendChild(skillItem);
+
+                        // Get references to the dynamic elements for this skill
+                        const myRatingSlider = skillItem.querySelector(`#myRatingSlider-${skillId}`);
+                        const managerRatingSlider = skillItem.querySelector(`#managerRatingSlider-${skillId}`);
+                        const myRatingValueSpan = skillItem.querySelector(`#myRatingValue-${skillId}`);
+                        const managerRatingValueSpan = skillItem.querySelector(`#managerRatingValue-${skillId}`);
+                        const companyExpectationValueSpan = skillItem.querySelector(`#companyExpectationValue-${skillId}`);
+                        const myDot = skillItem.querySelector(`#myDot-${skillId}`);
+                        const managerDot = skillItem.querySelector(`#managerDot-${skillId}`);
+                        const targetLine = skillItem.querySelector(`#targetLine-${skillId}`);
+                        const summaryStatusSpan = skillItem.querySelector(`#summaryStatus-${skillId}`);
+
+                        // Function to update all visual aspects of a skill item
+                        const updateSkillVisuals = () => {
+                            const maxRating = 5;
+                            const myRatingPercent = (skill.myRating / maxRating) * 100;
+                            const managerRatingPercent = (skill.managerRating / maxRating) * 100;
+                            const companyExpectationPercent = (skill.companyExpectation / maxRating) * 100;
+
+                            myRatingValueSpan.textContent = skill.myRating;
+                            managerRatingValueSpan.textContent = skill.managerRating;
+                            companyExpectationValueSpan.textContent = skill.companyExpectation;
+
+                            myDot.style.left = `${myRatingPercent}%`;
+                            myDot.title = `Me: ${skill.myRating} - ${proficiencyLevels[skill.myRating]}`;
+
+                            managerDot.style.left = `${managerRatingPercent}%`;
+                            managerDot.title = `Manager: ${skill.managerRating} - ${proficiencyLevels[skill.managerRating]}`;
+
+                            targetLine.style.left = `${companyExpectationPercent}%`;
+                            targetLine.title = `Expected: ${skill.companyExpectation} - ${proficiencyLevels[skill.companyExpectation]}`;
+
+                            const gap = skill.managerRating - skill.companyExpectation;
+                            let statusText;
+                            let statusClasses;
+                            if (gap > 0) {
+                                statusText = "Exceeds Expectation";
+                                statusClasses = "bg-green-100 text-green-800";
+                            } else if (gap < 0) {
+                                statusText = "Development Area";
+                                statusClasses = "bg-yellow-100 text-yellow-800";
+                            } else {
+                                statusText = "Meets Expectation";
+                                statusClasses = "bg-blue-100 text-blue-800";
+                            }
+                            summaryStatusSpan.textContent = statusText;
+                            summaryStatusSpan.className = `text-xs font-semibold px-2 py-0.5 rounded-full ${statusClasses}`;
+                        };
+
+                        // Add event listeners to sliders
+                        myRatingSlider.addEventListener('input', (event) => {
+                            skill.myRating = parseInt(event.target.value);
+                            updateSkillVisuals();
+                        });
+
+                        managerRatingSlider.addEventListener('input', (event) => {
+                            skill.managerRating = parseInt(event.target.value);
+                            // As per user request: Company expectation becomes manager's rating
+                            skill.companyExpectation = skill.managerRating; 
+                            updateSkillVisuals();
+                        });
+
+                        // Initial visual update for each skill after it's rendered
+                        updateSkillVisuals();
+                    });
+
+                    competencyElement.appendChild(skillsList);
+                    competenciesContainer.appendChild(competencyElement);
+                });
+
+                capabilityElement.appendChild(competenciesContainer);
+                return capabilityElement;
+            };
+
+            // Generate tabs and their content
+            skillsData.capabilities.forEach((capability, index) => {
+                const tabId = `tab-${capability.capabilityName.toLowerCase().replace(/\s+/g, '-')}`;
+
+                // Create tab button
+                const tabButton = document.createElement('button');
+                tabButton.id = `button-${tabId}`;
+                tabButton.className = `tab-button px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-blue-700 hover:border-blue-300 focus:outline-none transition-colors duration-200`;
+                tabButton.textContent = capability.capabilityName;
+                tabButton.setAttribute('data-tab', tabId);
+                tabButtonsContainer.appendChild(tabButton);
+
+                // Create tab content div
+                const tabContent = document.createElement('div');
+                tabContent.id = tabId;
+                tabContent.className = 'tab-content';
+                
+                // Append the rendered capability skills to the tab content
+                tabContent.appendChild(renderCapabilitySkills(capability));
+                tabContentContainer.appendChild(tabContent);
+
+                // Set the first tab as active by default
+                if (index === 0) {
+                    tabButton.classList.add('active');
+                    tabContent.classList.add('active');
+                }
+            });
+
+            // Add event listeners for tab switching
+            tabButtonsContainer.addEventListener('click', (event) => {
+                const clickedButton = event.target.closest('.tab-button');
+                if (!clickedButton) return;
+
+                // Deactivate all buttons and content
+                document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Activate the clicked button and its corresponding content
+                const targetTabId = clickedButton.getAttribute('data-tab');
+                clickedButton.classList.add('active');
+                document.getElementById(targetTabId).classList.add('active');
+            });
+
+            // Logic to hide home button and footer if in iframe of skills-passport.html
+            if (window.self !== window.top) { // Check if inside an iframe
+                try {
+                    const parentUrl = window.parent.location.href;
+                    if (parentUrl.endsWith('skills-passport.html')) {
+                        const homeButton = document.querySelector('a.home-button[href="index.html"]');
+                        if (homeButton) {
+                            homeButton.style.display = 'none';
+                        }
+                        const footer = document.querySelector('div.custom-footer');
+                        if (footer) {
+                            footer.style.display = 'none';
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not access parent window's location, possibly due to cross-origin restrictions. Elements visibility not changed.", e);
+                }
+            }
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

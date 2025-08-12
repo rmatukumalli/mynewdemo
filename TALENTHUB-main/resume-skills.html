@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Aviation Skills Section
+  </title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="bg-gray-50 p-4 sm:p-6 md:p-10">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div id="navbar-placeholder">
+  </div>
+  <!-- Placeholder for global nav -->
+  <div class="profile-section">
+   <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <!-- === HEADER === -->
+    <header class="mb-8 flex justify-between items-center">
+     <div class="flex-1 min-w-0">
+      <h1 class="text-3xl font-bold leading-tight text-gray-900">
+       Resume Skills
+      </h1>
+      <div class="mt-2 h-1 w-24 bg-green-500 rounded">
+      </div>
+     </div>
+     <button class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700 transition-colors" onclick="openModal('add')">
+      <i class="fas fa-plus">
+      </i>
+      Add Skill
+     </button>
+    </header>
+    <!-- Section for Current Resume -->
+    <div class="mb-8 bg-gray-50 p-4 rounded-lg border flex flex-col sm:flex-row justify-between items-center gap-4">
+     <div class="flex items-center gap-3">
+      <i class="fas fa-file-alt text-3xl text-indigo-500">
+      </i>
+      <div>
+       <p class="text-sm text-gray-600">
+        Current Resume
+       </p>
+       <p class="font-semibold text-gray-800" id="resume-filename">
+        Pilot_Jane_Doe_Resume_2024.pdf
+       </p>
+      </div>
+     </div>
+     <button class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg shadow-sm hover:bg-indigo-700 transition-colors" onclick="document.getElementById('resume-upload-input').click()">
+      <i class="fas fa-upload">
+      </i>
+      Update Resume
+     </button>
+     <input accept=".pdf,.doc,.docx" class="hidden" id="resume-upload-input" onchange="handleResumeUpdate(event)" type="file">
+    </div>
+    <!-- Section for Inferred Skills -->
+    <div class="mb-8">
+     <h3 class="text-xl font-semibold text-gray-800 mb-4">
+      Inferred Skills
+     </h3>
+     <p class="text-sm text-gray-500 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200">
+      <i class="fas fa-info-circle text-blue-500 mr-2">
+      </i>
+      We've inferred the following skills from your resume. Please review and confirm them.
+     </p>
+     <div class="flex flex-wrap gap-4" id="inferred-skills-container">
+      <!-- Inferred skills will be populated by JavaScript -->
+     </div>
+     <p class="text-center text-gray-500 mt-4 hidden" id="no-inferred-skills">
+      All inferred skills have been reviewed!
+     </p>
+    </div>
+    <!-- Section for Confirmed Skills -->
+    <div class="skills-overview">
+     <div class="profile-section-header flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-gray-800">
+       My Confirmed Skills
+      </h3>
+     </div>
+     <div class="skills-container space-y-8" id="resume-skills-container">
+      <!-- Confirmed skills grouped by proficiency will be loaded here by JavaScript -->
+     </div>
+     <p class="no-skills-message hidden text-center text-gray-500 mt-4">
+      No confirmed skills yet. Confirm an inferred skill or click "Add Skill" to get started.
+     </p>
+    </div>
+    <!-- Section for Related Skills Suggestions -->
+    <div class="mt-8 hidden" id="related-skills-section">
+     <h4 class="font-semibold text-gray-700 mb-3">
+      Related Skills You Might Have
+     </h4>
+     <div class="flex flex-wrap gap-2" id="related-skills-container">
+      <!-- Suggestions will be added here -->
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Add/Edit Skill Modal -->
+  <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden" id="skill-modal">
+   <div class="modal-content bg-white rounded-lg shadow-2xl p-6 w-full max-w-md transform transition-all" style="--tw-translate-y: -50px; opacity: 0;">
+    <div class="flex justify-between items-center mb-4">
+     <h2 class="text-xl font-bold text-gray-900" id="modal-title">
+      Add New Skill
+     </h2>
+     <button class="text-gray-400 hover:text-gray-600 text-2xl leading-none" onclick="closeModal()">
+      &times;
+     </button>
+    </div>
+    <form id="skill-form">
+     <input id="edit-skill-name" type="hidden">
+     <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1" for="skill-name">
+       Skill Name
+      </label>
+      <input class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="skill-name" placeholder="e.g., Flight Planning, Avionics" required type="text">
+     </div>
+     <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1" for="skill-level">
+       Proficiency Level
+      </label>
+      <select class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" id="skill-level">
+       <option>
+        Beginner
+       </option>
+       <option>
+        Intermediate
+       </option>
+       <option selected>
+        Advanced
+       </option>
+       <option>
+        Expert
+       </option>
+      </select>
+     </div>
+     <div class="flex justify-end gap-3">
+      <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200" onclick="closeModal()" type="button">
+       Cancel
+      </button>
+      <button class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700" type="submit">
+       Save Skill
+      </button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <!-- Request Validation Modal -->
+  <div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden" id="validation-modal">
+   <div class="modal-content bg-white rounded-lg shadow-2xl p-6 w-full max-w-lg transform transition-all" style="--tw-translate-y: -50px; opacity: 0;">
+    <div class="flex justify-between items-center mb-2">
+     <h2 class="text-xl font-bold text-gray-900" id="validation-modal-title">
+      Request Validation
+     </h2>
+     <button class="text-gray-400 hover:text-gray-600 text-2xl leading-none" onclick="closeValidationModal()">
+      &times;
+     </button>
+    </div>
+    <p class="text-sm text-gray-500 mb-4">
+     Select who you'd like to request skill validation from.
+    </p>
+    <form id="validation-form">
+     <div class="space-y-4 max-h-80 overflow-y-auto pr-2" id="colleagues-list-container">
+      <!-- Colleague list will be populated here -->
+     </div>
+     <div class="flex justify-end gap-3 mt-6 pt-4 border-t">
+      <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200" onclick="closeValidationModal()" type="button">
+       Cancel
+      </button>
+      <button class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700" type="submit">
+       Send Requests
+      </button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <!-- Notification Toast -->
+  <div class="fixed bottom-5 right-5 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-all duration-300 opacity-0 z-50" id="notification-toast">
+   Notification message
+  </div>
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DATA ---
+    let inferredSkills = [
+        { name: 'Flight Planning' }, { name: 'Aerodynamics' }, { name: 'Avionics Systems' },
+        { name: 'CRM (Crew Resource Management)' }, { name: 'Weather Analysis' }, { name: 'Emergency Procedures' },
+    ];
+
+    let confirmedSkills = [
+        { name: 'Air Traffic Control', level: 'Expert', validationStatus: 'certified' }, 
+        { name: 'Aircraft Maintenance', level: 'Advanced', validationStatus: 'verified' },
+        { name: 'Meteorology', level: 'Advanced', validationStatus: 'none' }, 
+        { name: 'Instrument Flight Rules (IFR)', level: 'Expert', validationStatus: 'none'},
+        { name: 'FAA Regulations', level: 'Intermediate', validationStatus: 'none'}
+    ];
+
+    const colleagues = [
+        { id: 1, name: 'John Carter', role: "Manager" }, { id: 2, name: 'Susan Shaw', role: "Manager's Manager" },
+        { id: 3, name: 'Alex Ray', role: "Peer" }, { id: 4, name: 'Maria Garcia', role: "Peer" },
+        { id: 5, name: 'Chen Wei', role: "Peer" }
+    ];
+
+    const relatedSkillsSuggestions = {
+        'Air Traffic Control': ['Radar Systems', 'Communication Protocols'], 'Aircraft Maintenance': ['Engine Systems', 'Hydraulics'],
+        'Meteorology': ['Doppler Radar Interpretation'], 'Flight Planning': ['Fuel Calculation', 'Route Optimization']
+    };
+
+    // --- DOM ELEMENTS ---
+    const inferredContainer = document.getElementById('inferred-skills-container');
+    const confirmedContainer = document.getElementById('resume-skills-container');
+    const relatedContainer = document.getElementById('related-skills-container');
+    const relatedSection = document.getElementById('related-skills-section');
+    const skillModal = document.getElementById('skill-modal');
+    const skillForm = document.getElementById('skill-form');
+    const modalTitle = document.getElementById('modal-title');
+    const editSkillNameInput = document.getElementById('edit-skill-name');
+    const skillNameInput = document.getElementById('skill-name');
+    const skillLevelSelect = document.getElementById('skill-level');
+    const validationModal = document.getElementById('validation-modal');
+    const validationModalTitle = document.getElementById('validation-modal-title');
+    const validationForm = document.getElementById('validation-form');
+    const colleaguesListContainer = document.getElementById('colleagues-list-container');
+    const noInferredSkillsMsg = document.getElementById('no-inferred-skills');
+    const noSkillsMessage = document.querySelector('.no-skills-message');
+    const resumeFilenameEl = document.getElementById('resume-filename');
+    const notificationToast = document.getElementById('notification-toast');
+    let notificationTimeout;
+
+
+    // --- RENDER FUNCTIONS ---
+    const renderInferredSkills = () => {
+        inferredContainer.innerHTML = '';
+        inferredSkills.forEach(skill => {
+            const skillEl = document.createElement('div');
+            skillEl.className = 'bg-gray-100 text-gray-800 px-4 py-2 rounded-lg flex items-center justify-between gap-3 text-sm';
+            skillEl.innerHTML = `
+                <span>${skill.name}</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="confirmInferredSkill('${skill.name}')" class="text-green-500 hover:text-green-700" title="Confirm Skill"><i class="fas fa-check-circle"></i></button>
+                    <button onclick="dismissInferredSkill('${skill.name}')" class="text-red-500 hover:text-red-700" title="Dismiss Skill"><i class="fas fa-times-circle"></i></button>
+                </div>
+            `;
+            inferredContainer.appendChild(skillEl);
+        });
+        updateUiVisibility();
+    };
+
+    const renderConfirmedSkills = () => {
+        confirmedContainer.innerHTML = ''; 
+        const proficiencyOrder = ['Expert', 'Advanced', 'Intermediate', 'Beginner'];
+
+        proficiencyOrder.forEach(level => {
+            const skillsInLevel = confirmedSkills.filter(s => s.level === level).sort((a, b) => a.name.localeCompare(b.name));
+            if (skillsInLevel.length === 0) return;
+
+            const groupWrapper = document.createElement('div');
+            groupWrapper.className = 'w-full';
+
+            const heading = document.createElement('h4');
+            heading.className = 'text-md font-semibold text-gray-600 mb-3';
+            heading.textContent = level;
+            groupWrapper.appendChild(heading);
+
+            const skillPillsContainer = document.createElement('div');
+            skillPillsContainer.className = 'flex flex-wrap gap-3';
+
+            skillsInLevel.forEach(skill => {
+                const skillEl = document.createElement('div');
+                skillEl.className = 'bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg flex items-center justify-between gap-2 text-sm relative';
+                const skillNameId = skill.name.replace(/\s+/g, '-').replace(/[()]/g, '');
+
+                let validationTag = '';
+                if (skill.validationStatus === 'verified') {
+                    validationTag = `<span class="ml-2 text-xs bg-green-200 text-green-800 font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas fa-check"></i> Verified</span>`;
+                } else if (skill.validationStatus === 'certified') {
+                    validationTag = `<span class="ml-2 text-xs bg-yellow-200 text-yellow-800 font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"><i class="fas fa-award"></i> Certified</span>`;
+                }
+
+                const validationLinks = skill.validationStatus === 'none'
+                    ? `<a href="#" onclick="openValidationModal('${skill.name}')" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-check-double fa-fw"></i>Request Validation</a>
+                       <a href="#" onclick="addCertification('${skill.name}')" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-award fa-fw"></i>Add Certification</a>`
+                    : '';
+
+                skillEl.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="font-semibold">${skill.name}</span>
+                        ${validationTag}
+                    </div>
+                    <div class="flex items-center">
+                        <button onclick="openModal('edit', '${skill.name}')" class="p-2 text-indigo-500 hover:text-indigo-700" title="Edit Skill"><i class="fas fa-pencil-alt"></i></button>
+                        <button onclick="deleteSkill('${skill.name}')" class="p-2 text-red-500 hover:text-red-700" title="Delete Skill"><i class="fas fa-trash-alt"></i></button>
+                        <button onclick="toggleSkillMenu(event, '${skillNameId}')" class="p-2 text-gray-500 hover:text-gray-800" title="More options"><i class="fas fa-ellipsis-v"></i></button>
+                    </div>
+                    <div id="menu-${skillNameId}" class="hidden absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20 ring-1 ring-black ring-opacity-5">
+                        <a href="#" onclick="findLearning('${skill.name}')" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-book-open fa-fw"></i>Find Learning</a>
+                        <a href="#" onclick="findProjects('${skill.name}')" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-project-diagram fa-fw"></i>Find Projects</a>
+                        ${validationLinks}
+                    </div>
+                `;
+                skillPillsContainer.appendChild(skillEl);
+            });
+            groupWrapper.appendChild(skillPillsContainer);
+            confirmedContainer.appendChild(groupWrapper);
+        });
+        updateUiVisibility();
+        renderRelatedSkills();
+    };
+    
+    const renderRelatedSkills = () => {
+        const allSuggestions = new Set();
+        const confirmedSkillNames = new Set(confirmedSkills.map(s => s.name));
+        confirmedSkills.forEach(skill => {
+            if (relatedSkillsSuggestions[skill.name]) {
+                relatedSkillsSuggestions[skill.name].forEach(suggestion => {
+                    if (!confirmedSkillNames.has(suggestion)) allSuggestions.add(suggestion);
+                });
+            }
+        });
+        
+        relatedContainer.innerHTML = '';
+        if (allSuggestions.size > 0) {
+            relatedSection.classList.remove('hidden');
+            allSuggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.className = 'bg-green-100 text-green-800 px-3 py-1 text-xs rounded-full hover:bg-green-200 flex items-center gap-1';
+                button.innerHTML = `<span>${suggestion}</span> <i class="fas fa-plus"></i>`;
+                button.onclick = () => addSuggestedSkill(suggestion);
+                relatedContainer.appendChild(button);
+            });
+        } else {
+            relatedSection.classList.add('hidden');
+        }
+    };
+
+    const renderColleaguesList = () => {
+        colleaguesListContainer.innerHTML = '';
+        const groupedByRole = colleagues.reduce((acc, colleague) => {
+            (acc[colleague.role] = acc[colleague.role] || []).push(colleague);
+            return acc;
+        }, {});
+
+        ['Manager', "Manager's Manager", 'Peer'].forEach(role => {
+            if(groupedByRole[role]) {
+                const roleWrapper = document.createElement('div');
+                roleWrapper.innerHTML = `<h4 class="font-semibold text-gray-700 text-sm mb-2">${role}</h4>`;
+                const list = document.createElement('div');
+                list.className = 'space-y-2';
+                groupedByRole[role].forEach(person => {
+                    list.innerHTML += `
+                        <label for="colleague-${person.id}" class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer">
+                            <input type="checkbox" id="colleague-${person.id}" name="validators" value="${person.name}" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                            <span class="ml-3 text-sm text-gray-800">${person.name}</span>
+                        </label>
+                    `;
+                });
+                roleWrapper.appendChild(list);
+                colleaguesListContainer.appendChild(roleWrapper);
+            }
+        });
+    };
+
+    // --- MODAL & FORM HANDLING ---
+    const openTransition = (modalEl) => {
+        modalEl.classList.remove('hidden');
+        setTimeout(() => {
+            modalEl.querySelector('.modal-content').style.transform = 'translateY(0)';
+            modalEl.querySelector('.modal-content').style.opacity = '1';
+        }, 10);
+    };
+
+    const closeTransition = (modalEl) => {
+        const modalContent = modalEl.querySelector('.modal-content');
+        modalContent.style.transform = 'translateY(-50px)';
+        modalContent.style.opacity = '0';
+        setTimeout(() => modalEl.classList.add('hidden'), 300);
+    };
+
+    window.openModal = (mode, skillName = null) => {
+        skillForm.reset();
+        editSkillNameInput.value = '';
+        if (mode === 'edit' && skillName) {
+            const skill = confirmedSkills.find(s => s.name === skillName);
+            if (skill) {
+                modalTitle.textContent = 'Edit Skill';
+                skillNameInput.value = skill.name;
+                skillLevelSelect.value = skill.level;
+                editSkillNameInput.value = skill.name;
+            }
+        } else {
+            modalTitle.textContent = 'Add New Skill';
+        }
+        openTransition(skillModal);
+    };
+    window.closeModal = () => closeTransition(skillModal);
+
+    window.openValidationModal = (skillName) => {
+        validationModalTitle.innerHTML = `Request Validation for <span class="text-indigo-600 font-bold">${skillName}</span>`;
+        validationForm.dataset.skillName = skillName;
+        renderColleaguesList();
+        openTransition(validationModal);
+    };
+    window.closeValidationModal = () => closeTransition(validationModal);
+    
+    skillForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = skillNameInput.value.trim();
+        const level = skillLevelSelect.value;
+        const originalName = editSkillNameInput.value;
+        if (!name) return;
+        if (originalName) {
+            const skill = confirmedSkills.find(s => s.name === originalName);
+            if (skill) { skill.name = name; skill.level = level; }
+        } else if (!confirmedSkills.some(s => s.name.toLowerCase() === name.toLowerCase())) {
+            confirmedSkills.push({ name, level, validationStatus: 'none' });
+        } else {
+            showNotification(`Skill "${name}" already exists.`, 'error');
+        }
+        renderConfirmedSkills();
+        closeModal();
+    });
+
+    validationForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const skillNameToVerify = validationForm.dataset.skillName;
+        const selected = Array.from(validationForm.querySelectorAll('input[name="validators"]:checked')).map(cb => cb.value);
+        
+        if (selected.length > 0) {
+            const skill = confirmedSkills.find(s => s.name === skillNameToVerify);
+            if (skill) {
+                skill.validationStatus = 'verified';
+            }
+            showNotification(`Validation request sent to ${selected.join(', ')}.`);
+            renderConfirmedSkills();
+        } else {
+            showNotification('No colleagues selected.', 'error');
+        }
+        closeValidationModal();
+    });
+
+    // --- SKILL ACTIONS & MENUS ---
+    window.toggleSkillMenu = (event, skillNameId) => {
+        event.stopPropagation();
+        const menu = document.getElementById(`menu-${skillNameId}`);
+        document.querySelectorAll('[id^="menu-"]').forEach(m => {
+            if (m.id !== `menu-${skillNameId}`) m.classList.add('hidden');
+        });
+        menu.classList.toggle('hidden');
+    };
+    
+    window.addCertification = (skillName) => {
+        const skill = confirmedSkills.find(s => s.name === skillName);
+        if(skill) {
+            skill.validationStatus = 'certified';
+            showNotification(`Certification added for ${skillName}.`);
+            renderConfirmedSkills();
+        }
+    };
+    
+    window.findLearning = (skillName) => showNotification(`Finding learning for ${skillName}...`);
+    window.findProjects = (skillName) => showNotification(`Finding projects for ${skillName}...`);
+    window.deleteSkill = (skillName) => {
+        confirmedSkills = confirmedSkills.filter(s => s.name !== skillName);
+        renderConfirmedSkills();
+    };
+    window.confirmInferredSkill = (skillName) => {
+        if (!confirmedSkills.some(s => s.name.toLowerCase() === skillName.toLowerCase())) {
+            confirmedSkills.push({ name: skillName, level: 'Intermediate', validationStatus: 'none' });
+        }
+        inferredSkills = inferredSkills.filter(s => s.name !== skillName);
+        renderInferredSkills();
+        renderConfirmedSkills();
+    };
+    window.dismissInferredSkill = (skillName) => {
+        inferredSkills = inferredSkills.filter(s => s.name !== skillName);
+        renderInferredSkills();
+    };
+    window.addSuggestedSkill = (skillName) => {
+        if (!confirmedSkills.some(s => s.name.toLowerCase() === skillName.toLowerCase())) {
+            confirmedSkills.push({ name: skillName, level: 'Intermediate', validationStatus: 'none' });
+            renderConfirmedSkills();
+        }
+    };
+    
+    // --- UI & MISC ---
+    const updateUiVisibility = () => {
+        noSkillsMessage.classList.toggle('hidden', confirmedSkills.length === 0);
+        noInferredSkillsMsg.classList.toggle('hidden', inferredSkills.length === 0);
+    };
+    window.handleResumeUpdate = (event) => {
+        const file = event.target.files[0];
+        if (file) resumeFilenameEl.textContent = file.name;
+    };
+    window.showNotification = (message, type = 'success') => {
+        if (notificationTimeout) clearTimeout(notificationTimeout);
+        notificationToast.textContent = message;
+        notificationToast.className = 'fixed bottom-5 right-5 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 z-50'; // Reset
+        notificationToast.classList.add(type === 'error' ? 'bg-red-500' : 'bg-gray-800');
+        notificationTimeout = setTimeout(() => {
+            notificationToast.classList.add('opacity-0');
+            setTimeout(() => notificationToast.classList.add('hidden'), 300);
+        }, 3000);
+    };
+    document.addEventListener('click', () => document.querySelectorAll('[id^="menu-"]').forEach(m => m.classList.add('hidden')));
+
+    // --- INITIALIZATION ---
+    renderInferredSkills();
+    renderConfirmedSkills();
+
+    // Logic to hide home button and footer if in iframe of skills-passport.html
+    if (window.self !== window.top) { // Check if inside an iframe
+        try {
+            const parentUrl = window.parent.location.href;
+            if (parentUrl.endsWith('skills-passport.html')) {
+                const homeButton = document.querySelector('a.home-button[href="index.html"]');
+                if (homeButton) {
+                    homeButton.style.display = 'none';
+                }
+                const footer = document.querySelector('div.custom-footer');
+                if (footer) {
+                    footer.style.display = 'none';
+                }
+            }
+        } catch (e) {
+            console.warn("Could not access parent window's location, possibly due to cross-origin restrictions. Elements visibility not changed.", e);
+        }
+    }
+});
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+/* Styles for ATS Dashboard - Candidate Pool Modernization */
+
+/* General Tab Content Styling */
+#candidate-pool {
+    background-color: #f8f9fa; /* Light gray background for the tab content */
+    padding: 25px; /* Increased padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#candidate-pool h3 {
+    font-size: 1.75rem; /* Larger heading */
+    color: #2c3e50; /* Dark blue-gray */
+    margin-bottom: 25px; /* Increased margin */
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+#candidate-pool h3 .fas {
+    margin-right: 12px;
+    color: #3498db; /* Accent blue */
+}
+
+/* Search Bar Styling */
+.search-bar-container {
+    display: flex;
+    margin-bottom: 25px; /* Increased margin */
+    gap: 10px;
+}
+
+#candidatePoolSearchInput {
+    flex-grow: 1;
+    padding: 12px 18px; /* Increased padding */
+    border: 1px solid #dfe4e8; /* Lighter border */
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#candidatePoolSearchInput:focus {
+    border-color: #3498db; /* Accent blue on focus */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none;
+}
+
+#candidatePoolSearchButton {
+    padding: 12px 25px; /* Increased padding */
+    background-color: #3498db; /* Accent blue */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+#candidatePoolSearchButton:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Table Styling */
+.table-responsive {
+    overflow-x: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+#candidatePoolTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Ensure table has a minimum width for responsiveness */
+}
+
+#candidatePoolTable thead th {
+    background-color: #f1f3f5; /* Very light gray for header */
+    color: #495057; /* Darker gray text */
+    padding: 15px 18px; /* Increased padding */
+    text-align: left;
+    font-weight: 600; /* Bolder font */
+    font-size: 0.85rem; /* Slightly smaller font for header */
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #dee2e6; /* Subtle border */
+}
+
+#candidatePoolTable tbody tr {
+    border-bottom: 1px solid #e9ecef; /* Lighter row separator */
+    transition: background-color 0.15s ease;
+}
+
+#candidatePoolTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+#candidatePoolTable tbody tr:hover {
+    background-color: #f8f9fa; /* Light hover effect */
+}
+
+#candidatePoolTable td {
+    padding: 15px 18px; /* Consistent padding with header */
+    font-size: 0.9rem;
+    color: #343a40; /* Standard text color */
+    vertical-align: middle;
+}
+
+#candidatePoolTable td .btn-small {
+    padding: 5px 8px; /* Tighter padding for icon buttons */
+    font-size: 0.9rem; /* Icon size will be relative to this */
+    margin-right: 3px; /* Reduced spacing */
+    border-radius: 50%; /* Circular buttons */
+    width: 32px; /* Fixed width */
+    height: 32px; /* Fixed height */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Ensure icon is centered vertically */
+}
+
+#candidatePoolTable td .btn-small .fas {
+    margin: 0; /* Remove any default margins from icon if text is removed */
+}
+
+#candidatePoolTable td .btn-secondary.btn-small {
+    background-color: #6c757d;
+    color: white;
+}
+#candidatePoolTable td .btn-secondary.btn-small:hover {
+    background-color: #5a6268;
+}
+
+#candidatePoolTable td .btn-primary.btn-small {
+    background-color: #007bff;
+    color: white;
+}
+#candidatePoolTable td .btn-primary.btn-small:hover {
+    background-color: #0056b3;
+}
+
+
+/* Pagination Controls (Basic Styling) */
+.pagination-controls {
+    margin-top: 25px; /* Increased margin */
+    text-align: center;
+}
+
+.pagination-controls button {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border: 1px solid #dfe4e8;
+    background-color: white;
+    color: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination-controls button:hover,
+.pagination-controls button.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.pagination-controls button:disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}
+
+/* === ONBOARDING TAB STYLING === */
+
+/* General Onboarding Tab Content Styling */
+#onboarding {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Sub-tab buttons for Onboarding */
+.onboarding-sub-tabs {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.onboarding-sub-tabs .sub-tab-btn {
+    padding: 12px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: #495057; /* Subdued text color */
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s ease, border-bottom-color 0.2s ease;
+    margin-right: 5px; /* Spacing between tabs */
+}
+
+.onboarding-sub-tabs .sub-tab-btn:hover {
+    color: #3498db; /* Accent blue on hover */
+}
+
+.onboarding-sub-tabs .sub-tab-btn.active {
+    color: #3498db; /* Accent blue for active tab */
+    border-bottom-color: #3498db;
+    font-weight: 600;
+}
+
+/* Headers within Onboarding sub-tabs */
+#onboarding .offer-stages-header h3,
+#onboarding .onboarding-process-header h3 {
+    font-size: 1.6rem; /* Slightly smaller than main tab h3 */
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Filters Container Styling for Onboarding */
+#onboarding .filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+#onboarding .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#onboarding .filter-group label {
+    font-size: 0.85rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+#onboarding .filter-group select,
+#onboarding .filter-group input[type="date"] {
+    padding: 10px 12px;
+    border: 1px solid #dfe4e8;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    min-width: 180px; /* Ensure decent width */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#onboarding .filter-group select:focus,
+#onboarding .filter-group input[type="date"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none;
+}
+
+#onboarding .filters-container .apply-filters-btn {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    align-self: flex-end; /* Align with bottom of other inputs if wrapped */
+}
+
+#onboarding .filters-container .apply-filters-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Collapsible Section Styling for Onboarding */
+#onboarding .collapsible-section {
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+#onboarding .collapsible-trigger {
+    background-color: #f8f9fa; /* Light background for trigger */
+    color: #343a40;
+    cursor: pointer;
+    padding: 15px 20px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e9ecef; /* Separator when collapsed */
+}
+#onboarding .collapsible-trigger.active {
+    border-bottom-color: transparent; /* No border when open */
+}
+
+
+#onboarding .collapsible-trigger:hover {
+    background-color: #e9ecef; /* Slightly darker on hover */
+}
+
+#onboarding .collapsible-trigger .candidate-count {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-left: 8px;
+}
+
+#onboarding .collapsible-trigger .collapsible-icon {
+    transition: transform 0.3s ease;
+}
+
+#onboarding .collapsible-trigger:not(.active) .collapsible-icon {
+    transform: rotate(-90deg);
+}
+#onboarding .collapsible-trigger.active .collapsible-icon {
+    transform: rotate(0deg);
+}
+
+
+#onboarding .collapsible-content {
+    padding: 0; /* Remove padding if table has its own */
+    background-color: white;
+    display: none; /* Handled by JS, but good default */
+    border-top: none; /* Ensure no double border with trigger */
+    border-radius: 0 0 6px 6px; /* Rounded bottom corners */
+}
+
+#onboarding .collapsible-content.active {
+    display: block;
+}
+
+/* Table Styling within Onboarding (reusing .styled-table from HTML) */
+#onboarding .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; /* Adjust as needed */
+}
+
+#onboarding .styled-table thead th {
+    background-color: #f1f3f5;
+    color: #495057;
+    padding: 15px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #dee2e6;
+}
+
+#onboarding .styled-table tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.15s ease;
+}
+
+#onboarding .styled-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+#onboarding .styled-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+#onboarding .styled-table td {
+    padding: 15px 18px;
+    font-size: 0.9rem;
+    color: #343a40;
+    vertical-align: middle;
+}
+
+/* Action Buttons in Onboarding Tables */
+#onboarding .styled-table .btn-small {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+    margin-right: 3px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: none; /* Ensure no default button border interferes */
+}
+
+#onboarding .styled-table .btn-small .fas {
+    margin: 0;
+}
+
+#onboarding .styled-table .btn-view {
+    background-color: #17a2b8; /* Info blue/teal */
+    color: white;
+}
+#onboarding .styled-table .btn-view:hover {
+    background-color: #138496;
+}
+
+#onboarding .styled-table .btn-edit {
+    background-color: #ffc107; /* Warning yellow */
+    color: #212529; /* Dark text for yellow */
+}
+#onboarding .styled-table .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+#onboarding .styled-table .btn-advance {
+    background-color: #28a745; /* Success green */
+    color: white;
+}
+#onboarding .styled-table .btn-advance:hover {
+    background-color: #218838;
+}
+
+/* Ensure specificity if other .btn-secondary styles conflict */
+#onboarding .filters-container button.btn-secondary.apply-filters-btn {
+    /* Styles already defined above, this is just for clarity/override if needed */
+}
+
+/* Ensure the main content area of onboarding tab has some top margin if sub-tabs are present */
+#onboarding .sub-tab-content {
+    margin-top: 0; /* Reset if already there, padding on #onboarding handles outer spacing */
+}

@@ -1,0 +1,2825 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Ontology Database Schema Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #0056b3; }
+        .mermaid { background-color: #fff; padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: center; overflow: auto; height: 600px; }
+        .table-section { margin-bottom: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; }
+        .table-section h3 { margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .table-section ul { list-style: none; padding: 0; }
+        .table-section ul li { margin-bottom: 8px; }
+        .table-section ul li strong { color: #007bff; }
+        .column-details { margin-left: 20px; }
+        .relationship-details { margin-left: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #e2e2e2; }
+
+        /* New styles for TOC sidebar */
+        .schema-details-layout {
+            display: flex;
+            gap: 20px; /* Space between sidebar and main content */
+        }
+
+        .sidebar-toc {
+            flex: 0 0 250px; /* Fixed width for sidebar */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-height: calc(100vh - 100px); /* Adjust as needed */
+            overflow-y: auto; /* Make sidebar scrollable */
+        }
+
+        .sidebar-toc h3 {
+            margin-top: 0;
+            color: #0056b3;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-toc ul li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-toc ul li a {
+            text-decoration: none;
+            color: #007bff;
+            display: block;
+            padding: 5px 0;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-toc ul li a:hover {
+            background-color: #e9f5ff;
+            border-radius: 4px;
+        }
+
+        .main-content {
+            flex-grow: 1; /* Take remaining space */
+        }
+
+        /* Highlight active table section */
+        .table-section.highlight {
+            background-color: #e6f7ff; /* Light blue background */
+            border-color: #91d5ff; /* Blue border */
+        }
+
+        /* Tab styles */
+        .tab-container {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: flex-start; /* Align tabs to the left */
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tab-button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+            border-right: 1px solid #ccc; /* Separator between tabs */
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-button.active {
+            background-color: #ccc;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border-top: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .modal-data-table th, .modal-data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .modal-data-table th {
+            background-color: #e2e2e2;
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 20px; /* Place the button at the bottom of the page */
+            right: 30px; /* Place the button 30px from the right */
+            z-index: 99; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: #007bff; /* Set a background color */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 15px; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 18px; /* Increase font size */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #backToTopBtn:hover {
+            background-color: #0056b3; /* Darker background on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Skills Ontology Database Schema Documentation</h1>
+        <p>This document provides an overview and detailed explanation of the database schema for the Skills Ontology application, derived from <code>app/models.py</code>.</p>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'schemaDetails')">Schema Details</button>
+                <button class="tab-button" onclick="openTab(event, 'appLinkages')">Application Linkages</button>
+                <button class="tab-button" onclick="window.open('database_er_diagram.html', '_blank')">ER Diagram</button>
+            </div>
+
+            <div id="schemaDetails" class="tab-content active">
+                <div class="schema-details-layout">
+                    <div class="sidebar-toc">
+                        <h3>Table of Contents</h3>
+                        <ul id="table-of-contents-list">
+                            <!-- Table links will be dynamically inserted here -->
+                        </ul>
+                    </div>
+                    <div class="main-content">
+                        <h2>Table Details</h2>
+        
+                        <div class="table-section" id="table-assessment">
+                            <h3>Table: <code>assessment</code> (Model: <code>Assessment</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>assessment_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>date_created</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>last_updated</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>assessments</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-behavior">
+                            <h3>Table: <code>behavior</code> (Model: <code>Behavior</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>competency_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>competency.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_level_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>job_level.id</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Competency</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-business_unit">
+                            <h3>Table: <code>business_unit</code> (Model: <code>BusinessUnit</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>head</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>email</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>organization_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>organization.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>strategic_priority</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>kpis</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>business_unit_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>location</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>budget_allocation</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Department</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Organization</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-capability">
+                            <h3>Table: <code>capability</code> (Model: <code>Capability</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>custom_fields</code></td>
+                                        <td>JSON</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_active</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Competency</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-career_path">
+                            <h3>Table: <code>career_path</code> (Model: <code>CareerPath</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>source_role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>target_role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>transition_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>notes</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_default</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Role</code>:</strong> One-to-One/Many-to-One (Backref: <code>('outgoing_career_paths', {'lazy': 'selectin', 'query_class': <class 'flask_sqlalchemy.query.Query'>, 'viewonly': False, 'post_update': False, 'passive_updates': True, 'sync_backref': None})</code>)</li>
+                                
+                                <li><strong>Relates to <code>Role</code>:</strong> One-to-One/Many-to-One (Backref: <code>('incoming_career_paths', {'lazy': 'selectin', 'query_class': <class 'flask_sqlalchemy.query.Query'>, 'viewonly': False, 'post_update': False, 'passive_updates': True, 'sync_backref': None})</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-certification">
+                            <h3>Table: <code>certification</code> (Model: <code>Certification</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>issuing_organization</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>issue_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>expiry_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>credential_id</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>credential_url</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>user_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>organization_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>organization.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>certification_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>status</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>certifications</code>)</li>
+                                
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>certifications</code>)</li>
+                                
+                                <li><strong>Relates to <code>Organization</code>:</strong> One-to-One/Many-to-One (Backref: <code>certifications</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-competency">
+                            <h3>Table: <code>competency</code> (Model: <code>Competency</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>custom_fields</code></td>
+                                        <td>JSON</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Capability</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Behavior</code>:</strong> One-to-Many (Backref: <code>competency</code>)</li>
+                                
+                                <li><strong>Relates to <code>Skill</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Role</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Feedback</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-department">
+                            <h3>Table: <code>department</code> (Model: <code>Department</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>business_unit_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>business_unit.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>manager</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>email</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>headcount_budget</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>function_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>location</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>shift_coverage</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>time_zone</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>department_code</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>BusinessUnit</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-feedback">
+                            <h3>Table: <code>feedback</code> (Model: <code>Feedback</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>giver_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>receiver_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>feedback_text</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>feedback_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>feedback_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>rating</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>associated_role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>competency_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>competency.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>private_notes</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>action_items</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>given_feedback</code>)</li>
+                                
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>received_feedback</code>)</li>
+                                
+                                <li><strong>Relates to <code>Role</code>:</strong> One-to-One/Many-to-One (Backref: <code>feedback_for_role</code>)</li>
+                                
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>feedback</code>)</li>
+                                
+                                <li><strong>Relates to <code>Competency</code>:</strong> One-to-One/Many-to-One (Backref: <code>feedback</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-job_level">
+                            <h3>Table: <code>job_level</code> (Model: <code>JobLevel</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>level_name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>salary_band_min</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>salary_band_max</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>min_experience_years</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>allowed_titles</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>level_code</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_managerial</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>promotion_criteria</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        <li>No explicit relationships defined from this model.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-job_profile">
+                            <h3>Table: <code>job_profile</code> (Model: <code>JobProfile</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_title</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_level_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>job_level.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>role_group_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role_group.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_family</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>education</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>language_requirements</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>reports_to</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>work_model</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_type</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>union_affiliation</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_code</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>work_location</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>travel_required</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>compliance_requirements</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> Many-to-Many (Backref: <code>job_profiles</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-learning_path">
+                            <h3>Table: <code>learning_path</code> (Model: <code>LearningPath</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>title</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_by</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>estimated_duration</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_active</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>LearningPathResourceAssociation</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-learning_path_resources">
+                            <h3>Table: <code>learning_path_resources</code> (Model: <code>LearningPathResourceAssociation</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>learning_path_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>learning_path.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>learning_resource_id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>learning_resource.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>sequence_order</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>LearningPath</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>LearningResource</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-learning_resource">
+                            <h3>Table: <code>learning_resource</code> (Model: <code>LearningResource</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>title</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>url</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>resource_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>author</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>estimated_time_minutes</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>learning_resources</code>)</li>
+                                
+                                <li><strong>Relates to <code>LearningPathResourceAssociation</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-organization">
+                            <h3>Table: <code>organization</code> (Model: <code>Organization</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>company_name</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>industry</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>company_size</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>operating_regions</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>founded_year</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>public_or_private</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>stock_symbol</code></td>
+                                        <td>VARCHAR(10)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>vision_mission</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>org_maturity_level</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>hrms_integrated</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>erp_system</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>org_chart_available</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>org_metadata_file</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>BusinessUnit</code>:</strong> One-to-Many (Backref: <code>organization</code>)</li>
+                                
+                                <li><strong>Relates to <code>ProjectOrAssignment</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Certification</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-proficiency">
+                            <h3>Table: <code>proficiency</code> (Model: <code>Proficiency</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>level</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>UserSkill</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-project_or_assignment">
+                            <h3>Table: <code>project_or_assignment</code> (Model: <code>ProjectOrAssignment</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(255)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>start_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>end_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>status</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>project_type</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>budget</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>manager_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>organization_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>organization.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>associated_role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_active</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>managed_projects</code>)</li>
+                                
+                                <li><strong>Relates to <code>Organization</code>:</strong> One-to-One/Many-to-One (Backref: <code>projects_or_assignments</code>)</li>
+                                
+                                <li><strong>Relates to <code>Role</code>:</strong> One-to-One/Many-to-One (Backref: <code>projects_or_assignments</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-relationship_type">
+                            <h3>Table: <code>relationship_type</code> (Model: <code>RelationshipType</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>SkillRelationship</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-role">
+                            <h3>Table: <code>role</code> (Model: <code>Role</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>department_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>department.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>job_level_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>job_level.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>custom_fields</code></td>
+                                        <td>JSON</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_active</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Competency</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>CareerPath</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>CareerPath</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>UserCareerHistory</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>ProjectOrAssignment</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Feedback</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-role_group">
+                            <h3>Table: <code>role_group</code> (Model: <code>RoleGroup</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>sample_roles</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>strategic_importance</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>business_critical</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>associated_departments</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>role_family_code</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        <li>No explicit relationships defined from this model.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-skill">
+                            <h3>Table: <code>skill</code> (Model: <code>Skill</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>category</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>criticality</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>created_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>updated_at</code></td>
+                                        <td>DATETIME</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>custom_fields</code></td>
+                                        <td>JSON</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>is_active</code></td>
+                                        <td>BOOLEAN</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>SkillTag</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Competency</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Proficiency</code>:</strong> One-to-Many (Backref: <code>skill</code>)</li>
+                                
+                                <li><strong>Relates to <code>SkillRelationship</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>SkillRelationship</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>JobProfile</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>UserSkill</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Assessment</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>LearningResource</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>SkillGap</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Certification</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Feedback</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-skill_gap">
+                            <h3>Table: <code>skill_gap</code> (Model: <code>SkillGap</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>user_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>required_proficiency</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>current_proficiency</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>gap_score</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>skill_gaps</code>)</li>
+                                
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-skill_relationship">
+                            <h3>Table: <code>skill_relationship</code> (Model: <code>SkillRelationship</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>source_skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>target_skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>relationship_type_id</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>relationship_type.id</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>('source_relationships', {'lazy': 'selectin', 'query_class': <class 'flask_sqlalchemy.query.Query'>, 'viewonly': False, 'post_update': False, 'passive_updates': True, 'sync_backref': None})</code>)</li>
+                                
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>('target_relationships', {'lazy': 'selectin', 'query_class': <class 'flask_sqlalchemy.query.Query'>, 'viewonly': False, 'post_update': False, 'passive_updates': True, 'sync_backref': None})</code>)</li>
+                                
+                                <li><strong>Relates to <code>RelationshipType</code>:</strong> One-to-One/Many-to-One (Backref: <code>skill_relationships</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-skill_tag">
+                            <h3>Table: <code>skill_tag</code> (Model: <code>SkillTag</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>name</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> Many-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-user">
+                            <h3>Table: <code>user</code> (Model: <code>User</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>username</code></td>
+                                        <td>VARCHAR(100)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>email</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>Yes</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>description</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>UserSkill</code>:</strong> One-to-Many (Backref: <code>user</code>)</li>
+                                
+                                <li><strong>Relates to <code>UserCareerHistory</code>:</strong> One-to-Many (Backref: <code>user</code>)</li>
+                                
+                                <li><strong>Relates to <code>SkillGap</code>:</strong> One-to-Many (Backref: <code>user</code>)</li>
+                                
+                                <li><strong>Relates to <code>ProjectOrAssignment</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Certification</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Feedback</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                                <li><strong>Relates to <code>Feedback</code>:</strong> One-to-Many (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-user_career_history">
+                            <h3>Table: <code>user_career_history</code> (Model: <code>UserCareerHistory</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>user_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>role_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>role.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>start_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>end_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>notes</code></td>
+                                        <td>TEXT</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Role</code>:</strong> One-to-One/Many-to-One (Backref: <code>user_career_history</code>)</li>
+                                
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="table-section" id="table-user_skill">
+                            <h3>Table: <code>user_skill</code> (Model: <code>UserSkill</code>)</h3>
+                            <h4>Columns:</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Primary Key</th>
+                                        <th>Nullable</th>
+                                        <th>Unique</th>
+                                        <th>Foreign Key</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    <tr>
+                                        <td><code>id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>user_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>user.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>skill_id</code></td>
+                                        <td>VARCHAR(150)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>skill.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>proficiency_level_id</code></td>
+                                        <td>INTEGER</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>proficiency.id</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>acquired_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>last_validated_date</code></td>
+                                        <td>DATE</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><code>validation_status</code></td>
+                                        <td>VARCHAR(50)</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                        <td>N/A</td>
+                                    </tr>
+                            
+                                </tbody>
+                            </table>
+                            <h4>Relationships:</h4>
+                            <ul>
+                        
+                                <li><strong>Relates to <code>Skill</code>:</strong> One-to-One/Many-to-One (Backref: <code>user_skills</code>)</li>
+                                
+                                <li><strong>Relates to <code>Proficiency</code>:</strong> One-to-One/Many-to-One (Backref: <code>user_skills_at_level</code>)</li>
+                                
+                                <li><strong>Relates to <code>User</code>:</strong> One-to-One/Many-to-One (Backref: <code>N/A</code>)</li>
+                                
+                            </ul>
+                        </div>
+                        
+                    </div> <!-- End main-content -->
+                </div> <!-- End schema-details-layout -->
+            </div> <!-- End schemaDetails tab -->
+
+            <div id="appLinkages" class="tab-content">
+                <h2>Application-Table Linkages</h2>
+                <p>This section explains how different functional modules of the application interact with the database tables, providing a high-level overview of data usage.</p>
+
+                <div class="table-section">
+                    <h3>Skills Management</h3>
+                    <p><strong>Relevant APIs:</strong> <code>skill_api.py</code>, <code>proficiency_api.py</code>, <code>skilltag_api.py</code>, <code>skill_relationship_api.py</code>, <code>user_skill_api.py</code>, <code>skill_gap_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('skill')"><code>skill</code></span>, <span class="table-link" onclick="showSampleData('proficiency')"><code>proficiency</code></span>, <span class="table-link" onclick="showSampleData('skill_tag')"><code>skill_tag</code></span>, <span class="table-link" onclick="showSampleData('skill_relationship')"><code>skill_relationship</code></span>, <span class="table-link" onclick="showSampleData('user_skill')"><code>user_skill</code></span>, <span class="table-link" onclick="showSampleData('skill_gap')"><code>skill_gap</code></span></p>
+                    <p><strong>Explanation:</strong> This module handles the creation, retrieval, updating, and deletion of skills, their proficiency levels, tags, and relationships between skills. It also manages user-specific skills and identifies skill gaps, forming the core of the skills ontology.</p>
+                </div>
+
+                <div class="table-section">
+                    <h3>Job Architecture</h3>
+                    <p><strong>Relevant APIs:</strong> <code>job_architecture.py</code>, <code>organization_api.py</code>, <code>business_unit_api.py</code>, <code>department_api.py</code>, <code>rolegroup_api.py</code>, <code>joblevel_api.py</code>, <code>jobprofile_api.py</code>, <code>role_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('organization')"><code>organization</code></span>, <span class="table-link" onclick="showSampleData('business_unit')"><code>business_unit</code></span>, <span class="table-link" onclick="showSampleData('department')"><code>department</code></span>, <span class="table-link" onclick="showSampleData('role_group')"><code>role_group</code></span>, <span class="table-link" onclick="showSampleData('job_level')"><code>job_level</code></span>, <span class="table-link" onclick="showSampleData('job_profile')"><code>job_profile</code></span>, <span class="table-link" onclick="showSampleData('role')"><code>role</code></span></p>
+                    <p><strong>Explanation:</strong> This module defines the organizational structure, job roles, levels, and profiles. It links skills and competencies to specific roles and job requirements, providing the framework for talent management.</p>
+                </div>
+
+                <div class="table-section">
+                    <h3>Competency & Capability Management</h3>
+                    <p><strong>Relevant APIs:</strong> <code>capability_api.py</code>, <code>competency_api.py</code>, <code>behavior_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('capability')"><code>capability</code></span>, <span class="table-link" onclick="showSampleData('competency')"><code>competency</code></span>, <span class="table-link" onclick="showSampleData('behavior')"><code>behavior</code></span></p>
+                    <p><strong>Explanation:</strong> Manages the definition and relationships of capabilities, competencies, and associated behaviors within the organization, providing a hierarchical structure for defining required attributes.</p>
+                </div>
+
+                <div class="table-section">
+                    <h3>User & Career Management</h3>
+                    <p><strong>Relevant APIs:</strong> <code>user_api.py</code>, <code>user_career_history_api.py</code>, <code>career_path_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('user')"><code>user</code></span>, <span class="table-link" onclick="showSampleData('user_career_history')"><code>user_career_history</code></span>, <span class="table-link" onclick="showSampleData('career_path')"><code>career_path</code></span></p>
+                    <p><strong>Explanation:</strong> Handles user profiles, their career progression, and historical roles within the organization, enabling personalized career development and internal mobility.</p>
+                </div>
+
+                <div class="table-section">
+                    <h3>Learning & Development</h3>
+                    <p><strong>Relevant APIs:</strong> <code>learning_resource_api.py</code>, <code>learning_path_api.py</code>, <code>learning_path_resource_association_api.py</code>, <code>assessment_api.py</code>, <code>certification_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('learning_resource')"><code>learning_resource</code></span>, <span class="table-link" onclick="showSampleData('learning_path')"><code>learning_path</code></span>, <span class="table-link" onclick="showSampleData('learning_path_resources')"><code>learning_path_resources</code></span>, <span class="table-link" onclick="showSampleData('assessment')"><code>assessment</code></span>, <span class="table-link" onclick="showSampleData('certification')"><code>certification</code></span></p>
+                    <p><strong>Explanation:</strong> Manages learning content, defines structured learning paths, tracks assessments for skill validation, and records user certifications, supporting continuous learning and development.</p>
+                </div>
+
+                <div class="table-section">
+                    <h3>Feedback & Projects</h3>
+                    <p><strong>Relevant APIs:</strong> <code>feedback_api.py</code>, <code>project_or_assignment_api.py</code></p>
+                    <p><strong>Primary Tables:</strong> <span class="table-link" onclick="showSampleData('feedback')"><code>feedback</code></span>, <span class="table-link" onclick="showSampleData('project_or_assignment')"><code>project_or_assignment</code></span></p>
+                    <p><strong>Explanation:</strong> Manages feedback mechanisms for performance and development, and tracks projects or assignments, linking them to users, roles, and organizations for comprehensive talent insights.</p>
+                </div>
+
+            </div> <!-- End appLinkages tab -->
+        </div> <!-- End tab-container -->
+
+        <!-- The Modal -->
+        <div id="sampleDataModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2 id="modalTableName"></h2>
+                <div id="modalDataTableContainer"></div>
+            </div>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button onclick="topFunction()" id="backToTopBtn" title="Go to top">Top</button>
+
+    </div>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            securityLevel: 'loose',
+            er: {
+                width: 1000,
+                height: 800,
+                layoutDirection: 'TB'
+            },
+        });
+    </script>
+    <script src="../js/ontology_schema_documentation.js"></script>

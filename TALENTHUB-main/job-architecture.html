@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Guide | AKARA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Assuming a general styles.css, adjust if needed -->
+    <link rel="stylesheet" href="aviation-wizard/styles/custom.css"> <!-- Styles from aviation-wizard -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            padding-bottom: 60px; /* Accommodate footer */
+        }
+
+        a,
+        a:visited,
+        a:hover {
+            color: #4285F4 !important; /* Google Blue */
+        }
+
+        .custom-button-text {
+            color: white !important;
+        }
+
+        /* Style for the active tab - updated to blue theme */
+        .tabs-nav-button.active {
+            background-color: #D2E3FC; /* Light Blue background */
+            color: #4285F4; /* Google Blue text */
+            font-weight: 600;
+        }
+        .tabs-nav-button.active svg {
+            stroke: #4285F4; /* Google Blue icon stroke */
+        }
+
+        button:focus, a:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* blue-500 with 50% opacity */
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; /* slate-100 */
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* slate-300 */
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* slate-400 */
+        }
+        .content-card {
+            display: flex;
+            flex-direction: column;
+        }
+        .custom-footer {
+            background-color: #002D62;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.875rem;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-full mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-600">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    <h1 class="text-2xl font-bold text-slate-900 ml-3">Job Architecture Guide</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="aviation-wizard/index.html" class="custom-button-text text-sm px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600 transition-colors">Aviation Job Wizard</a>
+                    <a href="index.html" class="text-sm hover:underline">Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-full mx-auto p-8">
+        <!-- Stepper Container -->
+        <div id="stepper-container" class="flex justify-between items-center mb-8 overflow-x-auto pb-4"></div>
+
+        <!-- Main Content Area for Steps -->
+        <div class="mt-8 bg-white p-8 rounded-xl shadow-lg min-h-[200px] max-h-[calc(100vh-370px)] overflow-y-auto custom-scrollbar" id="step-content">
+            <!-- Step content will be injected here by JavaScript -->
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div id="navigation-container" class="mt-8 flex justify-between items-center"></div>
+    </main>
+
+    <!-- Modal Container (hidden by default) -->
+    <div id="modal-container"></div>
+    <!-- Skill Navigator Modal (if this guide will also use it) -->
+    <!-- <div id="skill-navigator-modal-container"></div> -->
+
+    <script type="module" src="js/job-architecture-guide/main.js?v=${Date.now()}"></script>
+  <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only
+  </div>
+<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

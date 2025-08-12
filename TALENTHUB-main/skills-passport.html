@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Skills Passport
+  </title>
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="css/skills-passport.css" rel="stylesheet">
+  <link href="css/my-skills-table.css" rel="stylesheet">
+  <style>
+   /*
+         * This style expands the main content area to utilize more screen width,
+         * reducing the empty space on the sides as requested.
+         */
+        .container {
+            max-width: 95%; /* Expands the container to 95% of the viewport width */
+        }
+
+        /*
+         * This style increases the height of the content area to prevent
+         * scrolling inside the iframe.
+         */
+        .profile-main-content-area {
+            /* Set a minimum height relative to the viewport height */
+            min-height: 75vh;
+             /* Use flexbox to allow the child content to grow */
+            display: flex;
+        }
+
+        .profile-tab-content.active {
+             /* Allow the active tab content to grow and fill the available space */
+            flex-grow: 1;
+        }
+  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css';
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <link href="css/modules/skills-passport-common.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js">
+  </script>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div id="main-navbar-placeholder">
+  </div>
+  <main class="main-content-padding" style="flex-grow: 1;">
+   <div class="container">
+    <div class="profile-layout-container">
+     <nav class="profile-nav" id="skillsPageSidebar">
+      <ul class="profile-nav-list">
+       <li class="profile-nav-item">
+        <a class="profile-nav-link active" data-main-tab="skills-overview-content" href="#">
+         Overview
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="my-skills-content" href="#">
+         My Skills
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="employee-skills-proficiency-content" href="#">
+         Proficiency Levels
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="resume-skills-content" href="#">
+         Resume-Based Skills
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="certifications-content" href="#">
+         Certifications
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="development-plans-content" href="#">
+         Development Plans
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="skill-history-content" href="#">
+         Skill History
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="skill-gap-analysis-content" href="#">
+         Skill Gap Analysis
+        </a>
+       </li>
+       <li class="profile-nav-item">
+        <a class="profile-nav-link" data-main-tab="john-skills-graph-content" href="#">
+         Skills Graph
+        </a>
+       </li>
+      </ul>
+     </nav>
+     <div class="profile-main-content-area" id="page-content-area">
+      <section class="profile-tab-content profile-section active" id="skills-overview-content" style="display: block;">
+       <iframe id="skills-overview-iframe" src="skills-overview.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="my-skills-content" style="display: none;">
+       <h2>My Complete Skills Inventory</h2>
+       <div class="my-skills-controls">
+        <input type="text" id="mySkillsSearchInput" class="my-skills-search-input" placeholder="Search skills...">
+        <div class="my-skills-category-counts" id="mySkillsCategoryCounts">
+         </div>
+       </div>
+       <div class="my-skills-table-container">
+        <table class="my-skills-table" id="mySkillsTable">
+         <thead>
+          <tr>
+           <th data-column="skillName">Skill Name <span class="sort-icon"></span></th>
+           <th data-column="proficiencyLevel">Proficiency <span class="sort-icon"></span></th>
+           <th data-column="acquisitionDate">Acquired <span class="sort-icon"></span></th>
+           <th data-column="verificationStatus">Status <span class="sort-icon"></span></th>
+          </tr>
+         </thead>
+         <tbody id="mySkillsTableBody">
+          <!-- Sample Data for John Doe -->
+          <!-- Skills will be dynamically populated here by JavaScript -->
+         </tbody>
+        </table>
+       </div>
+      </section>
+      <section class="profile-tab-content profile-section" id="resume-skills-content" style="display: none;">
+      </section>
+      <section class="profile-tab-content profile-section" id="certifications-content" style="display: none;">
+       <iframe id="certifications-iframe" src="certifications.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="development-plans-content" style="display: none;">
+       <iframe id="development-plans-iframe" src="development-plans.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="skill-history-content" style="display: none;">
+       <iframe id="skill-history-iframe" src="skill-history.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="skill-gap-analysis-content" style="display: none;">
+       <iframe id="skill-gap-analysis-iframe" src="skill-gap-analysis.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="employee-skills-proficiency-content" style="display: none;">
+       <iframe id="employee-skills-proficiency-iframe" src="employee-skills-proficiency.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+      <section class="profile-tab-content profile-section" id="john-skills-graph-content" style="display: none;">
+       <iframe id="john-skills-graph-iframe" src="john-skills-graph.html" style="width: 100%; height: 100%; border: none;">
+       </iframe>
+      </section>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+  </script>
+  <script src="js/global-nav-loader.js">
+  </script>
+  <script src="js/skills-passport.js">
+  </script>
+  <script src="js/my-skills-table.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

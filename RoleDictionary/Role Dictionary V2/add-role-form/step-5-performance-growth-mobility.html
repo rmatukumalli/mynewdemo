@@ -1,0 +1,141 @@
+<div class="card">
+    <h2>Step 5: Performance, Growth & Mobility</h2>
+    <div class="form-container">
+        <div class="form-sidebar">
+            <div class="stepper">
+                <div class="step" data-step="1">
+                    <div class="step-title">Role Overview</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-title">Organization & Position Structure</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-title">Classification & Hierarchy</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-title">Skills, Capabilities & Requirements</div>
+                </div>
+                <div class="step active" data-step="5">
+                    <div class="step-title">Performance, Growth & Mobility</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-title">Administrative & Compliance Details</div>
+                </div>
+                <div class="step" data-step="7">
+                    <div class="step-title">Custom Fields</div>
+                </div>
+                <div class="step" data-step="8">
+                    <div class="step-title">Metadata & Activity Log</div>
+                </div>
+                <div class="step" data-step="9">
+                    <div class="step-title">Review & Edit</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-main">
+            <form id="add-role-form-step5">
+        <div class="details-section">
+            <h3>Performance, Growth & Mobility</h3>
+            <div class="form-grid">
+                <div class="form-group form-group-full-width">
+                    <label for="kpis-outcomes">KPIs / Outcomes <i class="fas fa-info-circle info-icon" data-tooltip-key="kpisOutcomesTooltip"></i></label>
+                    <div class="job-description-header">
+                        <button type="button" id="generate-kpis-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                    </div>
+                    <textarea id="kpis-outcomes" class="form-input" rows="3" placeholder="Defines what success looks like (max 5 entries). Separate with new lines or bullet points.">
+- Deliver features on time and with high quality.
+- Reduce frontend bug count by 15% quarterly.
+                    </textarea>
+                    <div class="description-box" id="kpis-outcomes-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="performance-review-cycle">Performance Review Cycle</label>
+                    <select id="performance-review-cycle" class="form-input">
+                        <option value="">Select Cycle</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Bi-annual">Bi-annual</option>
+                        <option value="Annual">Annual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="professional-development-support">Professional Development Support</label>
+                    <select id="professional-development-support" class="form-input">
+                        <option value="">Select Support Level</option>
+                        <option value="Budget up to $1000">Budget up to $1000</option>
+                        <option value="Budget up to $2000">Budget up to $2000</option>
+                        <option value="Budget up to $5000">Budget up to $5000</option>
+                        <option value="Time allocation (e.g., 10%)">Time allocation (e.g., 10%)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="impact-areas">Impact Areas <i class="fas fa-info-circle info-icon" data-tooltip-key="impactAreasTooltip"></i></label>
+                    <div class="job-description-header">
+                        <button type="button" id="generate-impact-areas-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                    </div>
+                    <input type="text" id="impact-areas" class="form-input" placeholder="e.g., Customer Experience, Product Delivery" value="Customer Experience, Product Delivery">
+                    <div class="description-box" id="impact-areas-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="behavioral-competencies">Behavioral Competencies <i class="fas fa-info-circle info-icon" data-tooltip-key="behavioralCompetenciesTooltip"></i></label>
+                    <div class="job-description-header">
+                        <button type="button" id="generate-behavioral-competencies-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                    </div>
+                    <input type="text" id="behavioral-competencies" class="form-input" placeholder="e.g., Communication, Collaboration, Problem Solving" value="Communication, Collaboration, Problem Solving">
+                    <div class="description-box" id="behavioral-competencies-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="career-path-next-roles">Career Path – Next Roles <i class="fas fa-info-circle info-icon" data-tooltip-key="careerPathNextRolesTooltip"></i></label>
+                    <select id="career-path-next-roles" class="form-input" multiple>
+                        <option value="Lead Frontend Engineer" selected>Lead Frontend Engineer</option>
+                        <option value="Staff Engineer" selected>Staff Engineer</option>
+                    </select>
+                    <div class="description-box" id="career-path-next-roles-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="feeder-roles">Feeder Roles</label>
+                    <select id="feeder-roles" class="form-input" multiple>
+                        <option value="Mid-level Frontend Engineer" selected>Mid-level Frontend Engineer</option>
+                    </select>
+                    <div class="description-box" id="feeder-roles-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="mobility-options">Mobility Options <i class="fas fa-info-circle info-icon" data-tooltip-key="mobilityOptionsTooltip"></i></label>
+                    <select id="mobility-options" class="form-input" multiple>
+                        <option value="Backend Engineer" selected>Backend Engineer</option>
+                        <option value="Full Stack Engineer" selected>Full Stack Engineer</option>
+                    </select>
+                    <div class="description-box" id="mobility-options-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="time-allocation">Time Allocation (%) <i class="fas fa-info-circle info-icon" data-tooltip-key="timeAllocationTooltip"></i></label>
+                    <input type="text" id="time-allocation" class="form-input" placeholder="e.g., 60% Development, 40% Meetings" value="60% Development, 40% Meetings">
+                    <div class="description-box" id="time-allocation-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="succession-plan-ready">Succession Plan Ready <i class="fas fa-info-circle info-icon" data-tooltip-key="successionPlanReadyTooltip"></i></label>
+                    <select id="succession-plan-ready" class="form-input">
+                        <option value="Yes" selected>Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                    <div class="description-box" id="succession-plan-ready-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="criticality">Criticality to Business <i class="fas fa-info-circle info-icon" data-tooltip-key="criticalityTooltip"></i></label>
+                    <select id="criticality" class="form-input">
+                        <option value="High" selected>High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <div class="description-box" id="criticality-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="backup-resource">Backup Resource Assigned <i class="fas fa-info-circle info-icon" data-tooltip-key="backupResourceTooltip"></i></label>
+                    <input type="text" id="backup-resource" class="form-input" placeholder="e.g., John Smith" value="John Smith">
+                    <div class="description-box" id="backup-resource-description"></div>
+                </div>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

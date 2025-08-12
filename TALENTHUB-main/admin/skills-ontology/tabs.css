@@ -1,0 +1,40 @@
+/* Tab Styles */
+.tabs {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.tabs button.tab-link {
+    background-color: #f1f1f1;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-right: 2px; /* Space between tabs */
+}
+
+.tabs button.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tabs button.tab-link.active {
+    background-color: #007bff; /* Active tab color */
+    color: white;
+    border-bottom: 2px solid #0056b3; /* Highlight active tab */
+}
+
+.tab-content {
+    display: none; /* Hidden by default */
+    padding: 15px 0; /* Padding for content inside tabs */
+    border-top: none;
+}
+
+/* Ensure the first tab is visible by default if JS isn't overriding */
+/* This is typically handled by inline style in HTML or JS on load */
+/* For example: #existing-skills-tab { display: block; } */

@@ -1,0 +1,308 @@
+/* Color Variables (assuming these are defined elsewhere or will be) */
+:root {
+    --primary-color: #ffffff; /* Lighter background for sidebar */
+    --secondary-color: #f0f4f8; /* Slightly darker background for content boxes */
+    --border-color: #e2e8f0; /* Soft border color */
+    --text-color: #334155; /* Darker primary text */
+    --text-muted-color: #64748b; /* Lighter text for labels */
+    --accent-green: #10b981; /* Vibrant green for current skill */
+    --accent-blue: #3b82f6; /* Standard blue accent */
+    --accent-violet: #8b5cf6; /* Standard violet accent */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.12);
+}
+
+/* Base Styles (Consider adding these if not present) */
+body {
+    font-family: 'Inter', sans-serif; /* Modern, clean font */
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f8fafc; /* Overall page background */
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 700px;
+    background-color: var(--primary-color);
+    box-shadow: -4px 0 12px var(--shadow-medium);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 1000;
+    padding: 24px 24px 120px; /* Bottom padding to prevent overlap with footer */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Include padding in height calculation */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border-left: 1px solid var(--border-color);
+}
+
+.sidebar.visible {
+    transform: translateX(0);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
+
+.closebtn {
+    background: none;
+    border: none;
+    font-size: 28px; /* Even larger close button */
+    cursor: pointer;
+    align-self: flex-end;
+    color: var(--text-muted-color); /* Matches muted text color */
+    margin-bottom: 20px; /* More space */
+    transition: color 0.2s ease-in-out;
+}
+
+.closebtn:hover {
+    color: var(--text-color); /* Darker on hover */
+}
+
+/* Hierarchy View Styles */
+.hierarchy-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; /* Reduced gap */
+    padding: 16px 0; /* Adjusted padding */
+    flex-grow: 1;
+}
+
+.skill-box {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem; /* Further reduced padding */
+    border-radius: 10px; /* Slightly less rounded corners */
+    border: 1px solid var(--border-color);
+    position: relative;
+    text-align: center;
+    width: 90%; /* Maintain relative width */
+    max-width: 280px; /* Reduced max-width */
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px var(--shadow-light); /* Adjusted shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px var(--shadow-medium); /* Subtle lift effect */
+}
+
+.skill-box h3 {
+    margin: 0 0 4px 0; /* Adjusted margin */
+    font-size: 0.75rem; /* Reduced font size */
+    font-weight: 600; /* Bolder label */
+    color: var(--text-muted-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* Spacing for uppercase text */
+}
+
+.skill-box p {
+    margin: 0;
+    font-size: 1rem; /* Reduced font size */
+    font-weight: 700; /* Bolder skill name */
+    color: var(--text-color);
+}
+
+.grandparent {
+    border-color: var(--accent-violet);
+    background-color: #f5f3ff; /* Lighter violet background */
+}
+.grandparent h3 { color: var(--accent-violet); }
+
+.parent {
+    border-color: var(--accent-blue);
+    background-color: #eef7ff; /* Lighter blue background */
+}
+.parent h3 { color: var(--accent-blue); }
+
+.current-skill {
+    background-color: var(--accent-green);
+    color: white;
+    border-color: var(--accent-green);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); /* Green tinted shadow for emphasis */
+}
+.current-skill p, .current-skill h3 { color: white; }
+
+.connector-line {
+    width: 2px;
+    height: 20px; /* Reduced height */
+    background-color: var(--border-color);
+    border-radius: 1px; /* Slight rounding for the line */
+}
+
+/* Section Containers (Behaviors, Relationships, Proficiencies) */
+.behaviors-container,
+.relationships-container,
+.proficiencies-container {
+    width: 100%;
+    margin-top: 30px; /* More vertical space between sections */
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+}
+
+.behaviors-container h4,
+.relationships-container h4,
+.proficiencies-details-container h4 { /* Target section titles */
+    margin-top: 0;
+    margin-bottom: 1.25rem; /* More space below title */
+    color: var(--text-color);
+    font-size: 1.25rem; /* Larger, more prominent section titles */
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 10px; /* Space below title */
+    border-bottom: 1px solid var(--border-color); /* Visual separation */
+}
+
+/* Behaviors Grid */
+.behaviors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjusted min-width for more flexibility */
+    gap: 1.25rem; /* Increased gap */
+}
+
+.behavior-item {
+    background-color: var(--primary-color); /* White background */
+    padding: 1rem; /* Increased padding */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px var(--shadow-light); /* Softer shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.behavior-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-medium);
+}
+
+.behavior-item .title {
+    font-weight: 600;
+    font-size: 0.9rem; /* Slightly larger */
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.behavior-item p {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin: 0;
+}
+
+
+/* Relationships Container */
+.relationship-section {
+    margin-bottom: 20px; /* More space between sections */
+    padding: 15px; /* Increased padding */
+    background-color: var(--secondary-color); /* Consistent secondary color */
+    border: 1px solid var(--border-color);
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 2px 6px var(--shadow-light);
+}
+
+.relationship-section h4 {
+    font-size: 1rem; /* Slightly larger title */
+    color: var(--accent-blue); /* Retain blue accent */
+    margin-top: 0;
+    margin-bottom: 10px; /* More space below title */
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px; /* More padding */
+    font-weight: 700;
+}
+
+.relationship-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.relationship-section li {
+    font-size: 0.95rem; /* Slightly larger list items */
+    color: var(--text-color);
+    padding: 6px 0; /* More vertical padding */
+}
+
+.relationship-type {
+    font-weight: 700; /* Bolder type */
+    color: var(--accent-blue);
+    margin-right: 5px; /* Space between type and skill name */
+}
+
+.relationship-type.part-of {
+    color: #2563eb; /* A distinct blue */
+}
+
+.relationship-type.related-to {
+    color: #9333ea; /* A distinct purple */
+}
+
+.relationship-type.prerequisite {
+    color: #d97706; /* A distinct amber */
+}
+
+/* Proficiencies Container */
+.proficiencies-container {
+    margin-bottom: 20px;
+}
+
+.proficiency-tabs {
+    display: flex;
+    justify-content: center; /* Center the tabs */
+    margin-bottom: 25px; /* More space below tabs */
+    gap: 10px; /* Gap between tabs */
+}
+
+.proficiency-tab {
+    background-color: var(--secondary-color); /* Use secondary color for default tab */
+    color: var(--text-muted-color);
+    border: 1px solid var(--border-color); /* Add a border */
+    padding: 12px 24px; /* More padding */
+    border-radius: 25px; /* More rounded, pill-like shape */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px var(--shadow-light);
+}
+
+.proficiency-tab.active {
+    background-color: var(--accent-violet);
+    color: white;
+    border-color: var(--accent-violet);
+    box-shadow: 0 3px 8px rgba(139, 92, 246, 0.4); /* Violet tinted shadow */
+}
+
+.proficiency-tab:hover:not(.active) {
+    background-color: #eef2f6; /* Lighter hover state */
+    color: var(--text-color);
+    border-color: #d1d9e0;
+    box-shadow: 0 2px 6px var(--shadow-medium);
+}
+
+.proficiency-details-container {
+    padding: 25px; /* More padding */
+    background-color: var(--primary-color); /* White background */
+    border-radius: 12px; /* More rounded */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-light); /* Soft shadow */
+}
+
+.proficiency-detail h4 {
+    margin-top: 0;
+    color: var(--accent-violet);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.proficiency-detail p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.7;
+}

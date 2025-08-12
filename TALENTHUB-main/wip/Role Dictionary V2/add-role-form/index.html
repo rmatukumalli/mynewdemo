@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Role</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a73e8; /* Google Blue */
+            --primary-color-dark: #1665c8;
+            --secondary-color: #5f6368;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e8eaed;
+            --dark-gray: #202124;
+            --white: #ffffff;
+            --success-color: #1e8e3e;
+            --danger-color: #d93025;
+            --font-family: 'Inter', sans-serif;
+            --border-radius: 8px;
+            --box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+        }
+
+        header h1 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        header p {
+            font-size: 1.125rem;
+            color: var(--secondary-color);
+        }
+
+        .form-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .form-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .stepper {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            border: 1px solid var(--medium-gray);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid transparent;
+        }
+
+        .step:hover {
+            background-color: #f1f3f4;
+        }
+
+        .step.active {
+            background-color: #e8f0fe;
+            border-left-color: var(--primary-color);
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-right: 1rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .step.active .step-number {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .form-main {
+            flex-grow: 1;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--medium-gray);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 0;
+            color: var(--dark-gray);
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .details-section {
+            padding: 1.5rem;
+        }
+
+        .details-section h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--dark-gray);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-grid-single-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group-full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: var(--white);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+        
+        textarea.form-input {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .job-description-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-color-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border-color: #dadce0;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f1f3f4;
+            border-color: #d2d5d8;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-ai-generate {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid #e8f0fe;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ai-generate:hover {
+            background-color: #e8f0fe;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--medium-gray);
+        }
+
+        .tags-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag-pill {
+            display: flex;
+            align-items: center;
+            background-color: #e8f0fe;
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .tag-pill .remove-btn {
+            margin-left: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .tag-pill .remove-btn:hover {
+            opacity: 1;
+        }
+
+        .input-with-button {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .input-with-button .form-input {
+            flex-grow: 1;
+        }
+
+        .info-icon {
+            color: var(--secondary-color);
+            cursor: help;
+            font-size: 0.875rem;
+        }
+        
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+        }
+        
+        .skills-table th, .skills-table td {
+            border: 1px solid var(--medium-gray);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .skills-table th {
+            background-color: var(--light-gray);
+            font-weight: 500;
+        }
+        
+        .hierarchy-gradient {
+            background: #e8f0fe;
+            padding: 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .career-path-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .path-card {
+            background: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+
+        .path-title {
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .path-flow {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .role-box {
+            background-color: var(--white);
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--medium-gray);
+            min-width: 140px;
+            flex-shrink: 0;
+        }
+
+        .role-box-title {
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 0.25rem;
+            font-size: 0.9375rem;
+        }
+
+        .role-box-grade {
+            font-size: 0.8125rem;
+            color: var(--secondary-color);
+        }
+
+        .arrow-icon {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+        }
+
+        .ai-recommendations-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #e8f0fe;
+            border-radius: 8px;
+        }
+
+        .ai-recommendations-section h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .ai-recommendations-section p {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .recommendations-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recommendations-container h5 {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .edit-icon {
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        .quick-links {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .quick-links a {
+            margin: 0 10px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quick-links">
+            <a href="prd-executive-summary.html">Executive Summary</a> |
+            <a href="add-role-form-prd.html">View PRD</a> |
+            <a href="admin-prd.html">Admin Config - PRD</a> |
+            <a href="#">Print Preview</a> |
+            <a href="#">Export to Excel</a> |
+            <a href="admin-interface.html">Admin Interface</a> |
+            <a href="../../../Career_pathing_fields.html">Role Form Fields – P1 / P2 / P3</a>
+        </div>
+        <header>
+            <a href="/" class="home-button">Home</a>
+            <h1>Add New Role</h1>
+            <p>Define a new role within the organization's architecture.</p>
+        </header>
+        <div class="form-container">
+            <aside class="form-sidebar">
+                <nav class="stepper">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Role Overview</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Org Structure</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Classification</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Skills & Requirements</div>
+                    </div>
+                    <div class="step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-label">Growth & Mobility</div>
+                    </div>
+                    <div class="step" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-label">Career Pathing</div>
+                    </div>
+                    <div class="step" data-step="7">
+                        <div class="step-number">7</div>
+                        <div class="step-label">Admin & Compliance</div>
+                    </div>
+                    <div class="step" data-step="8">
+                        <div class="step-number">8</div>
+                        <div class="step-label">Custom Fields</div>
+                    </div>
+                    <div class="step" data-step="9">
+                        <div class="step-number">9</div>
+                        <div class="step-label">Metadata</div>
+                    </div>
+                    <div class="step" data-step="10">
+                        <div class="step-number">10</div>
+                        <div class="step-label">Review & Finish</div>
+                    </div>
+                </nav>
+            </aside>
+            <main class="form-main">
+                <div class="main-content">
+                    <div id="step-1-content" class="step-content active">
+                        <div class="card">
+                            <h2>Step 1: Role Overview</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step1">
+                                    <h3>Role Overview</h3>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="role-title">Role Title <i class="fas fa-info-circle info-icon" data-tooltip-key="roleNameTooltip"></i></label>
+                                        <input type="text" id="role-title" class="form-input" placeholder="e.g., Senior Frontend Engineer" value="Senior Frontend Engineer">
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="role-summary">Role Summary <i class="fas fa-info-circle info-icon" data-tooltip-key="roleSummaryTooltip"></i></label>
+                                        <div class="job-description-header">
+                                            <button type="button" id="generate-summary-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                        </div>
+                                        <textarea id="role-summary" class="form-input" rows="2" maxlength="300" placeholder="A brief 2-3 sentence summary">Designs, develops, and maintains user-facing features for our web applications.</textarea>
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="job-description">Job Description <i class="fas fa-info-circle info-icon" data-tooltip-key="jobDescriptionTooltip"></i></label>
+                                        <div class="job-description-header">
+                                            <button type="button" id="generate-jd-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                        </div>
+                                        <textarea id="job-description" class="form-input" rows="5" maxlength="3000" placeholder="Full narrative of the role’s responsibilities, impact, and context.">The Senior Frontend Engineer will build and maintain the user interface, collaborating closely with product managers and designers to implement new features, ensure responsive design, and participate in code reviews.</textarea>
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="key-responsibilities">Key Responsibilities <i class="fas fa-info-circle info-icon" data-tooltip-key="keyResponsibilitiesTooltip"></i></label>
+                                        <div class="job-description-header">
+                                            <button type="button" id="generate-responsibilities-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                        </div>
+                                        <textarea id="key-responsibilities" class="form-input" rows="4" placeholder="List of the role’s most important tasks and responsibilities (4-8 entries recommended, min 3, max 10). Separate with new lines or bullet points.">
+- Develop new user-facing features using React.js
+- Build reusable front-end components
+- Translate designs and wireframes into high-quality code
+- Optimize performance across web platforms
+                                        </textarea>
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="decision-scope">Decision Scope <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="decisionScopeTooltip"></i></label>
+                                        <div class="job-description-header">
+                                            <button type="button" id="generate-decision-scope-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                        </div>
+                                        <textarea id="decision-scope" class="form-input" rows="3" maxlength="500" placeholder="Defines what this role owns or can make decisions on.">Owns technical implementation decisions for frontend features, including framework and library choices on projects.</textarea>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="next-btn-1" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-2-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 2: Organization & Position Structure</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step2">
+                                    <h3>Organization & Position Structure</h3>
+                                    <div class="hierarchy-gradient">
+                                        Business Unit / Division has &rarr; Department has &rarr; Job Family has &rarr; Role Group / Team
+                                    </div>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="business-unit">Business Unit / Division <i class="fas fa-info-circle info-icon" data-tooltip-key="businessUnitTooltip"></i></label>
+                                            <select id="business-unit" class="form-input" required>
+                                                <option value="">Select Business Unit</option>
+                                                <option value="Flight Operations">Flight Operations</option>
+                                                <option value="Ground Operations">Ground Operations</option>
+                                                <option value="Maintenance">Maintenance</option>
+                                                <option value="Training">Training</option>
+                                                <option value="Corporate Aviation">Corporate Aviation</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="department">Department <i class="fas fa-info-circle info-icon" data-tooltip-key="departmentTooltip"></i></label>
+                                            <select id="department" class="form-input" required>
+                                                <option value="">Select Department</option>
+                                                <option value="Pilot Training">Pilot Training</option>
+                                                <option value="Cabin Crew Training">Cabin Crew Training</option>
+                                                <option value="Air Traffic Control">Air Traffic Control</option>
+                                                <option value="Aircraft Maintenance">Aircraft Maintenance</option>
+                                                <option value="Flight Dispatch">Flight Dispatch</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="job-family">Job Family <i class="fas fa-info-circle info-icon" data-tooltip-key="jobFamilyTooltip"></i></label>
+                                            <select id="job-family" class="form-input" required>
+                                                <option value="">Select Job Family</option>
+                                                <option value="Flight Crew">Flight Crew</option>
+                                                <option value="Aviation Training">Aviation Training</option>
+                                                <option value="Air Traffic Management">Air Traffic Management</option>
+                                                <option value="Aircraft Maintenance">Aircraft Maintenance</option>
+                                                <option value="Ground Staff">Ground Staff</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role-group">Role Group / Team <i class="fas fa-info-circle info-icon" data-tooltip-key="roleGroupTooltip"></i></label>
+                                            <select id="role-group" class="form-input" required>
+                                                <option value="">Select Role Group / Team</option>
+                                                <option value="Cadet Program">Cadet Program</option>
+                                                <option value="First Officer Pool">First Officer Pool</option>
+                                                <option value="Captain Pool">Captain Pool</option>
+                                                <option value="Simulator Instructors">Simulator Instructors</option>
+                                                <option value="Line Maintenance Team">Line Maintenance Team</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role-code">Role Code / ID <i class="fas fa-info-circle info-icon" data-tooltip-key="roleCodeTooltip"></i></label>
+                                            <input type="text" id="role-code" class="form-input" value="ENG-FE-IC04" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="created-date">Created Date <i class="fas fa-info-circle info-icon" data-tooltip-key="createdDateTooltip"></i></label>
+                                            <input type="date" id="created-date" class="form-input" value="2025-07-22">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="team-size">Team Size <i class="fas fa-info-circle info-icon" data-tooltip-key="teamSizeTooltip"></i></label>
+                                            <select id="team-size" class="form-input">
+                                                <option value="">Select Team Size</option>
+                                                <option value="1-5">1-5</option>
+                                                <option value="6-10">6-10</option>
+                                                <option value="11-15">11-15</option>
+                                                <option value="16-20">16-20</option>
+                                                <option value="20+">20+</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reporting-lines">Reporting Lines <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="reportingLinesTooltip"></i></label>
+                                            <input type="text" id="reporting-lines" class="form-input" placeholder="e.g., Reports to Engineering Manager">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="matrix-relationships">Matrix Relationships <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="matrixRelationshipsTooltip"></i></label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-matrix-relationships-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                        <input type="text" id="matrix-relationships" class="form-input" placeholder="e.g., Works closely with Product Managers">
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-2" class="btn">Back</button>
+                                    <button id="next-btn-2" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="step-3-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 3: Classification & Hierarchy</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step3">
+                                    <h3>Classification & Hierarchy</h3>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="career-track">Career Track <i class="fas fa-info-circle info-icon" data-tooltip-key="careerTrackTooltip"></i></label>
+                                            <select id="career-track" class="form-input" required>
+                                                <option value="">Select Career Track</option>
+                                                <option value="Flight Crew">Flight Crew</option>
+                                                <option value="Aviation Management">Aviation Management</option>
+                                                <option value="Ground Operations">Ground Operations</option>
+                                                <option value="Maintenance">Maintenance</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="level">Level <i class="fas fa-info-circle info-icon" data-tooltip-key="levelTooltip"></i></label>
+                                            <select id="level" class="form-input" required>
+                                                <option value="">Select Level</option>
+                                                <option value="Trainee">Trainee</option>
+                                                <option value="Junior">Junior</option>
+                                                <option value="Experienced">Experienced</option>
+                                                <option value="Senior">Senior</option>
+                                                <option value="Lead">Lead</option>
+                                                <option value="Chief">Chief</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="grade">Grade / Job Level <i class="fas fa-info-circle info-icon" data-tooltip-key="gradeTooltip"></i></label>
+                                            <select id="grade" class="form-input" required>
+                                                <option value="">Select Grade / Job Level</option>
+                                                <option value="CP01">CP01 (Cadet Pilot)</option>
+                                                <option value="FO01">FO01 (First Officer)</option>
+                                                <option value="CA01">CA01 (Captain)</option>
+                                                <option value="FI01">FI01 (Flight Instructor)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seniority-label">Seniority Label <i class="fas fa-info-circle info-icon" data-tooltip-key="seniorityLabelTooltip"></i></label>
+                                            <select id="seniority-label" class="form-input" required>
+                                                <option value="">Select Seniority</option>
+                                                <option value="Cadet">Cadet</option>
+                                                <option value="Junior First Officer">Junior First Officer</option>
+                                                <option value="Senior First Officer">Senior First Officer</option>
+                                                <option value="Junior Captain">Junior Captain</option>
+                                                <option value="Senior Captain">Senior Captain</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="feeder-roles">Feeder Roles <i class="fas fa-info-circle info-icon" data-tooltip-key="feederRolesTooltip"></i></label>
+                                            <select id="feeder-roles" class="form-input" multiple>
+                                                <option value="Aspiring Pilot">Aspiring Pilot</option>
+                                                <option value="Aviation Student">Aviation Student</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reports-to">Reports To (Reporting Manager) <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="reportsToTooltip"></i></label>
+                                            <select id="reports-to" class="form-input" required>
+                                                <option value="">Select Manager</option>
+                                                <option value="Chief Flight Instructor">Chief Flight Instructor</option>
+                                                <option value="Head of Training">Head of Training</option>
+                                                <option value="Captain">Captain</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location">Location / Region <i class="fas fa-info-circle info-icon" data-tooltip-key="locationTooltip"></i></label>
+                                            <select id="location" class="form-input" multiple required>
+                                                <option value="Training Academy Base">Training Academy Base</option>
+                                                <option value="Various Flight Schools">Various Flight Schools</option>
+                                                <option value="Airline Hub (e.g., Dubai)">Airline Hub (e.g., Dubai)</option>
+                                                <option value="International">International</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location-type">Location Type <i class="fas fa-info-circle info-icon" data-tooltip-key="locationTypeTooltip"></i></label>
+                                            <select id="location-type" class="form-input" required>
+                                                <option value="">Select Location Type</option>
+                                                <option value="On-site">On-site</option>
+                                                <option value="Hybrid">Hybrid</option>
+                                                <option value="Remote (Admin)">Remote (Admin)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employment-type">Employment Type <i class="fas fa-info-circle info-icon" data-tooltip-key="employmentTypeTooltip"></i></label>
+                                            <select id="employment-type" class="form-input" required>
+                                                <option value="">Select Employment Type</option>
+                                                <option value="Full-time Trainee">Full-time Trainee</option>
+                                                <option value="Full-time">Full-time</option>
+                                                <option value="Part-time">Part-time</option>
+                                                <option value="Contractor">Contractor</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contract-type">Contract Type <i class="fas fa-info-circle info-icon" data-tooltip-key="contractTypeTooltip"></i></label>
+                                            <select id="contract-type" class="form-input" required>
+                                                <option value="">Select Contract Type</option>
+                                                <option value="Fixed-term (Program Duration)">Fixed-term (Program Duration)</option>
+                                                <option value="Permanent">Permanent</option>
+                                                <option value="Temporary">Temporary</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-3" class="btn">Back</button>
+                                    <button id="next-btn-3" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-4-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 4: Skills, Capabilities & Requirements</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step4">
+                                    <h3>Skills, Capabilities & Requirements</h3>
+                                    <div class="job-description-header">
+                                        <button type="button" id="generate-skills-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                    </div>
+                                    <table id="skills-table" class="skills-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Capability</th>
+                                                <th>Competency</th>
+                                                <th>Skill</th>
+                                                <th>Min Proficiency</th>
+                                                <th>Target Proficiency</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="add-skill-btn" class="btn btn-secondary">Add Skill</button>
+
+                                    <h4 class="mt-4">Soft Skills</h4>
+                                    <table id="soft-skills-table" class="skills-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Skill</th>
+                                                <th>Min Proficiency</th>
+                                                <th>Target Proficiency</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="add-soft-skill-btn" class="btn btn-secondary">Add Soft Skill</button>
+
+                                    <div class="form-group form-group-full-width">
+                                        <label for="education-requirements">Education Requirements <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                        <input type="text" id="education-requirements" class="form-input" placeholder="e.g., Bachelor's degree in Computer Science">
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="language-requirements">Language Requirements <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                        <input type="text" id="language-requirements" class="form-input" placeholder="e.g., English (Fluent), Spanish (Conversational)">
+                                    </div>
+                                    <div class="form-group form-group-full-width">
+                                        <label for="travel-requirements">Travel Requirements <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                        <select id="travel-requirements" class="form-input">
+                                            <option value="">Select Travel Requirement</option>
+                                            <option value="None">None</option>
+                                            <option value="Occasional (up to 10%)">Occasional (up to 10%)</option>
+                                            <option value="Moderate (10-25%)">Moderate (10-25%)</option>
+                                            <option value="Frequent (25-50%)">Frequent (25-50%)</option>
+                                            <option value="Extensive (50%+)">Extensive (50%+)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-grid">
+                                         <div class="form-group form-group-full-width">
+                                            <label for="experience-requirements">Experience Requirements <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="experience-requirements" class="form-input">
+                                                <option value="">Select Experience Level</option>
+                                                <option value="0-1 years">0-1 years</option>
+                                                <option value="1-3 years">1-3 years</option>
+                                                <option value="3-5 years">3-5 years</option>
+                                                <option value="5-7 years">5-7 years</option>
+                                                <option value="7+ years">7+ years</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tools-technologies">Tools & Technologies <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="toolsTechnologiesTooltip"></i></label>
+                                            <input type="text" id="tools-technologies" class="form-input" placeholder="e.g., GitHub, Postman, Figma" value="GitHub, Postman, Figma, Jira">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="certifications">Certifications <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="certificationsTooltip"></i></label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-certifications-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                            <input type="text" id="certifications" class="form-input" placeholder="e.g., AWS Certified Developer" value="AWS Certified Developer">
+                                        </div>
+                                         <div class="form-group form-group-full-width">
+                                            <label>Learning Resources <i class="fas fa-info-circle info-icon" data-tooltip-key="learningResourcesTooltip"></i></label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-learning-resources-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                            <div id="learning-resources-list" class="learning-resources-container"></div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-4" class="btn">Back</button>
+                                    <button id="next-btn-4" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-5-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 5: Performance, Growth & Mobility</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step5">
+                                    <h3>Performance, Growth & Mobility</h3>
+                                    <div class="form-grid-single-col">
+                                        <div class="form-group form-group-full-width">
+                                            <label for="kpis-outcomes">KPIs / Outcomes <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Defines what success looks like (max 5 entries). Separate with new lines or bullet points.</span>
+                                                </span>
+                                            </label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-kpis-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                            <textarea id="kpis-outcomes" class="form-input" rows="3" placeholder="Defines what success looks like (max 5 entries). Separate with new lines or bullet points.">
+- Deliver features on time and with high quality.
+- Reduce frontend bug count by 15% quarterly.
+                                            </textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="performance-review-cycle">Performance Review Cycle <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="performance-review-cycle" class="form-input">
+                                                <option value="">Select Cycle</option>
+                                                <option value="Quarterly">Quarterly</option>
+                                                <option value="Bi-annual">Bi-annual</option>
+                                                <option value="Annual">Annual</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="professional-development-support">Professional Development Support <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="professional-development-support" class="form-input">
+                                                <option value="">Select Support Level</option>
+                                                <option value="Budget up to $1000">Budget up to $1000</option>
+                                                <option value="Budget up to $2000">Budget up to $2000</option>
+                                                <option value="Budget up to $5000">Budget up to $5000</option>
+                                                <option value="Time allocation (e.g., 10%)">Time allocation (e.g., 10%)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="impact-areas">Impact Areas <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Key areas where the role contributes.</span>
+                                                </span>
+                                            </label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-impact-areas-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                            <input type="text" id="impact-areas" class="form-input" placeholder="e.g., Customer Experience, Product Delivery" value="Customer Experience, Product Delivery">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="behavioral-competencies">Behavioral Competencies <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Soft skills and behaviors crucial for success.</span>
+                                                </span>
+                                            </label>
+                                            <div class="job-description-header">
+                                                <button type="button" id="generate-behavioral-competencies-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                                            </div>
+                                            <input type="text" id="behavioral-competencies" class="form-input" placeholder="e.g., Communication, Collaboration, Problem Solving" value="Communication, Collaboration, Problem Solving">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobility-options">Mobility Options
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Potential lateral or vertical moves.</span>
+                                                </span>
+                                            </label>
+                                            <select id="mobility-options" class="form-input" multiple>
+                                                <option value="Airline Operations">Airline Operations</option>
+                                                <option value="Maintenance (with further training)">Maintenance (with further training)</option>
+                                                <option value="Ground Staff Management">Ground Staff Management</option>
+                                                <option value="Aviation Analyst">Aviation Analyst</option>
+                                                <option value="HR Specialist (Aviation)">HR Specialist (Aviation)</option>
+                                                <option value="Project Manager (Aviation)">Project Manager (Aviation)</option>
+                                            </select>
+                                            <div id="mobility-options-pills" class="tags-display"></div>
+                                        </div>
+                                    </div>
+                                    <h3>Additional Details</h3>
+                                    <div class="form-grid-single-col">
+                                        <div class="form-group">
+                                            <label for="time-allocation">Time Allocation (%)
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Breakdown of time spent on different activities.</span>
+                                                </span>
+                                            </label>
+                                            <input type="text" id="time-allocation" class="form-input" placeholder="e.g., 60% Development, 40% Meetings" value="60% Development, 40% Meetings">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="succession-plan-ready">Succession Plan Ready
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Indicates if a succession plan is in place.</span>
+                                                </span>
+                                            </label>
+                                            <select id="succession-plan-ready" class="form-input">
+                                                <option value="Yes" selected>Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="criticality">Criticality to Business
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">How important this role is to business operations.</span>
+                                                </span>
+                                            </label>
+                                            <select id="criticality" class="form-input">
+                                                <option value="High" selected>High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="backup-resource">Backup Resource Assigned
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The designated backup for this position.</span>
+                                                </span>
+                                            </label>
+                                            <input type="text" id="backup-resource" class="form-input" placeholder="e.g., John Smith" value="John Smith">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-5" class="btn">Back</button>
+                                    <button id="next-btn-5" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-6-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 6: Career Pathing</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step6">
+                                    <h3>Career Pathing & Mobility</h3>
+                                    <div class="form-grid-single-col">
+                                        <div class="form-group">
+                                            <label for="feeder-roles-input">Feeder Roles</label>
+                                            <div class="input-with-button">
+                                                <input type="text" id="feeder-roles-input" class="form-input" list="feeder-roles-list" placeholder="Type to search for roles...">
+                                                <button type="button" id="add-feeder-role-btn" class="btn btn-primary btn-sm">Add</button>
+                                            </div>
+                                            <datalist id="feeder-roles-list">
+                                                <option value="Junior Pilot">
+                                                <option value="Flight School Graduate">
+                                                <option value="Aviation Trainee">
+                                                <option value="Intern">
+                                                <option value="Associate">
+                                                <option value="Entry-Level Specialist">
+                                            </datalist>
+                                            <div id="feeder-roles-pills" class="tags-display"></div>
+                                            <input type="hidden" id="feeder-roles-hidden" name="feeder_roles">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="career-path-next-roles-input">Career Path – Next Roles
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Potential next steps in the career path.</span>
+                                                </span>
+                                            </label>
+                                            <div class="input-with-button">
+                                                <input type="text" id="career-path-next-roles-input" class="form-input" list="career-path-next-roles-list" placeholder="Type to search for roles...">
+                                                <button type="button" id="add-career-path-next-role-btn" class="btn btn-primary btn-sm">Add</button>
+                                            </div>
+                                            <datalist id="career-path-next-roles-list">
+                                                <option value="First Officer (Regional)">
+                                                <option value="Flight Instructor">
+                                                <option value="Senior First Officer">
+                                                <option value="Captain">
+                                                <option value="Chief Flight Instructor">
+                                                <option value="Flight Operations Manager">
+                                                <option value="Aviation Safety Officer">
+                                            </datalist>
+                                            <div id="career-path-next-roles-pills" class="tags-display"></div>
+                                            <input type="hidden" id="career-path-next-roles-hidden" name="career_path_next_roles">
+                                        </div>
+                                    </div>
+                                    <div class="ai-recommendations-section" style="margin-top: 2rem; padding: 1.5rem; background-color: #e8f0fe; border-radius: 8px;">
+                                        <h4 style="margin-top: 0; color: var(--primary-color); font-weight: 600;">
+                                            <i class="fas fa-magic" style="margin-right: 8px;"></i>AI Recommendations
+                                        </h4>
+                                        <p style="font-size: 0.9rem; color: var(--secondary-color); margin-bottom: 1.5rem;">
+                                            Based on the skills associated with this role, here are some role recommendations for “Feeder Roles” and “Career Path – Next Roles” as potential next steps in the career path. Display few roles and allow user to add them?
+                                        </p>
+                                        <div class="recommendations-container">
+                                            <div>
+                                                <h5 style="font-weight: 500;">Feeder Roles</h5>
+                                                <div class="tags-display">
+                                                    <div class="tag-pill" style="background-color: white; border: 1px solid var(--primary-color);">Aviation Student <button class="btn btn-primary btn-sm" style="margin-left: 8px;">Add</button></div>
+                                                    <div class="tag-pill" style="background-color: white; border: 1px solid var(--primary-color);">Intern <button class="btn btn-primary btn-sm" style="margin-left: 8px;">Add</button></div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top: 1rem;">
+                                                <h5 style="font-weight: 500;">Career Path - Next Roles</h5>
+                                                <div class="tags-display">
+                                                    <div class="tag-pill" style="background-color: white; border: 1px solid var(--primary-color);">First Officer <button class="btn btn-primary btn-sm" style="margin-left: 8px;">Add</button></div>
+                                                    <div class="tag-pill" style="background-color: white; border: 1px solid var(--primary-color);">Flight Instructor <button class="btn btn-primary btn-sm" style="margin-left: 8px;">Add</button></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3>Career Path Mapping</h3>
+                                    <div id="career-path-mapping-container" class="career-path-container">
+                                        <!-- Career path mapping will be populated by script -->
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-6" class="btn">Back</button>
+                                    <button id="next-btn-6" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-7-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 7: Administrative & Compliance Details</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step7">
+                                    <h3>Administrative & Compliance Details</h3>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="billable">Billable / Non-Billable <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="billableTooltip"></i></label>
+                                            <select id="billable" class="form-input">
+                                                <option value="Yes">Yes</option>
+                                                <option value="No" selected>No</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="access-level">Access Level / Permissions Group <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="accessLevelTooltip"></i></label>
+                                            <select id="access-level" class="form-input">
+                                                <option value="Contributor" selected>Contributor</option>
+                                                <option value="Admin">Admin</option>
+                                                <option value="Read-Only">Read-Only</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="start-date">Start Date / Expected Onboarding Date <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="startDateTooltip"></i></label>
+                                            <input type="date" id="start-date" class="form-input" value="2025-08-15">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Status <i class="fas fa-info-circle info-icon" data-tooltip-key="statusTooltip"></i></label>
+                                            <select id="status" class="form-input">
+                                                <option value="Active" selected>Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                                <option value="Pending">Pending</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="approval-status">Approval Status <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="approvalStatusTooltip"></i></label>
+                                            <select id="approval-status" class="form-input">
+                                                <option value="Approved" selected>Approved</option>
+                                                <option value="Pending Approval">Pending Approval</option>
+                                                <option value="Rejected">Rejected</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="security-clearance">Security Clearance <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="security-clearance" class="form-input">
+                                                <option value="">Select Clearance</option>
+                                                <option value="Not Required">Not Required</option>
+                                                <option value="Confidential">Confidential</option>
+                                                <option value="Secret">Secret</option>
+                                                <option value="Top Secret">Top Secret</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="background-check">Background Check <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="background-check" class="form-input">
+                                                <option value="">Select Requirement</option>
+                                                <option value="Not Required">Not Required</option>
+                                                <option value="Required upon offer">Required upon offer</option>
+                                                <option value="Required">Required</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mandatory-compliance-training">Mandatory Compliance Training</label>
+                                            <input type="text" id="mandatory-compliance-training" class="form-input" placeholder="e.g., Annual Security Awareness Training">
+                                        </div>
+                                         <div class="form-group form-group-full-width">
+                                            <label for="equipment-provisioning">Equipment Provisioning <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <textarea id="equipment-provisioning" class="form-input" rows="3" placeholder="e.g., MacBook Pro 16-inch, WebStorm, Microsoft 365, Slack"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-7" class="btn">Back</button>
+                                    <button id="next-btn-7" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-8-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 8: Custom Fields</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step8">
+                                    <h3>Custom Fields</h3>
+                                    <div id="custom-fields-container" class="form-grid">
+                                        <div class="form-group">
+                                            <label for="salary-band">Salary Band <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <input type="text" id="salary-band" class="form-input" placeholder="e.g., $120,000 - $160,000 USD">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="remote-work-policy">Remote Work Policy <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="remote-work-policy" class="form-input">
+                                                <option value="">Select Policy</option>
+                                                <option value="Fully Remote">Fully Remote</option>
+                                                <option value="Hybrid">Hybrid</option>
+                                                <option value="Office-based">Office-based</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="travel-expectations">Travel Expectations <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="travel-expectations" class="form-input">
+                                                <option value="">Select Expectations</option>
+                                                <option value="None">None</option>
+                                                <option value="Less than 10%">Less than 10%</option>
+                                                <option value="10-25%">10-25%</option>
+                                                <option value="25-50%">25-50%</option>
+                                                <option value="50%+">50%+</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="on-call-duties">On-call Duties <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="on-call-duties" class="form-input">
+                                                <option value="">Select Duties</option>
+                                                <option value="None">None</option>
+                                                <option value="Primary on-call">Primary on-call</option>
+                                                <option value="Secondary on-call">Secondary on-call</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="innovation-time">Innovation Time <span style="color: red; font-weight: bold;">(P2)</span></label>
+                                            <select id="innovation-time" class="form-input">
+                                                <option value="">Select Time</option>
+                                                <option value="None">None</option>
+                                                <option value="5%">5%</option>
+                                                <option value="10%">10%</option>
+                                                <option value="20%">20%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="add-custom-field-btn" class="btn btn-secondary">Add Custom Field</button>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-8" class="btn">Back</button>
+                                    <button id="next-btn-8" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-9-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 9: Metadata & Activity Log</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step9">
+                                    <h3>Metadata & Activity Log</h3>
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="created-by">Created By / Owner <i class="fas fa-info-circle info-icon" data-tooltip-key="createdByTooltip"></i></label>
+                                            <input type="text" id="created-by" class="form-input" value="Raj Matukumalli" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last-updated">Last Updated <i class="fas fa-info-circle info-icon" data-tooltip-key="lastUpdatedTooltip"></i></label>
+                                            <input type="text" id="last-updated" class="form-input" value="7/22/2025, 9:29:05 PM" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="activity-log-container">
+                                        <h4>Activity Log</h4>
+                                        <div id="activity-log-entries">
+                                            <style>
+                                                .old-value {
+                                                    color: red;
+                                                    font-weight: bold;
+                                                }
+                                                .new-value {
+                                                    color: green;
+                                                    font-weight: bold;
+                                                }
+                                            </style>
+                                            <pre>
+Changed By: Raj Matukumalli
+Changed At: 8/7/2025, 9:45:00 PM
+Field: role title
+<span class="old-value">Old: Senior Frontend Engineer</span>
+<span class="new-value">New: Cadet Pilot</span>
+Field: role summary
+<span class="old-value">Old: Designs, develops, and maintains user-facing features for our web applications.</span>
+<span class="new-value">New: Undergoes comprehensive flight and ground training to become a qualified commercial airline pilot.</span>
+Comment: Initial creation of Cadet Pilot role data.
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-9" class="btn">Back</button>
+                                    <button id="next-btn-9" class="btn btn-primary">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-10-content" class="step-content">
+                        <div class="card">
+                            <h2>Step 10: Review & Finish</h2>
+                            <div class="details-section">
+                                <form id="add-role-form-step10">
+                                    <h3>Review & Edit</h3>
+                                    <p>Review the summary of the role details below. Click "Edit" to jump to a specific step.</p>
+                                    <div id="review-content" class="summary-container">
+                                        <!-- Hierarchical summary will be populated here by script.js -->
+                                    </div>
+
+                                    <details class="info-collapsible">
+                                        <summary>View Job Architecture Best Practices</summary>
+                                        <div class="info-content">
+                                            <p>The most widely accepted and effective job architecture hierarchy is structured as follows, according to HR best practices and leading sources:</p>
+                                            
+                                            <h4>Standard Job Architecture Hierarchy:</h4>
+                                            <ul>
+                                                <li><strong>Job Function:</strong> Broadest grouping, representing major organizational domains (e.g., Operations, Finance, Engineering).</li>
+                                                <li><strong>Job Family:</strong> Related groups of jobs within a function that involve similar work and require related expertise (e.g., within Engineering: Software Engineering, Mechanical Engineering).</li>
+                                                <li><strong>Job Role / Job Title:</strong> Specific positions within a family, describing the basic nature of work (e.g., Software Engineer, QA Analyst).</li>
+                                                <li><strong>Job Level:</strong> Tiers reflecting career progression or responsibility, often standardized across families (e.g., Junior, Mid-Level, Senior, Lead/Manager, Director).</li>
+                                                <li><strong>Job Descriptions/Competencies/Skills:</strong> Each job level and role has associated job descriptions, required qualifications, skills, and behavioral competencies.</li>
+                                                <li><strong>Career Pathways:</strong> Shows possible vertical (promotion) or lateral (cross-functional move) progression based on the defined hierarchy and role competencies.</li>
+                                            </ul>
+                                    
+                                            <h4>Visual Example:</h4>
+                                            <pre style="background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; border-radius: 5px; font-family: monospace;">
+Job Function
+  └── Job Family
+        └── Job Role/Title
+              └── Job Level
+                    └── Job Description/Competencies/Skills
+                                            </pre>
+                                    
+                                            <h4>Example:</h4>
+                                            <pre style="background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px; border-radius: 5px; font-family: monospace;">
+Engineering
+  └── Software Engineering
+        └── Software Engineer
+              ├── Entry Level
+              │     └── Description, competencies, required skills
+              └── Senior Level
+                    └── Description, competencies, required skills
+        └── QA Analyst
+              └── Entry Level, Senior Level, etc.
+                                            </pre>
+                                    
+                                            <h4>Key Insights:</h4>
+                                            <ul>
+                                                <li>Job Level is always nested under role/title, and both fit within a specific family and function.</li>
+                                                <li>This hierarchy ensures pay equity, consistent job evaluation, clear career pathways, and aligned organization structures.</li>
+                                                <li>Organizations may add or rename layers (e.g., "Role Group" or "Role Level") for internal purposes, but should keep the core logic intact for clarity and comparability.</li>
+                                            </ul>
+                                    
+                                        </div>
+                                    </details>
+                                </form>
+                                <div class="form-actions">
+                                    <button id="back-btn-10" class="btn">Back</button>
+                                    <button id="finish-btn-10" class="btn btn-success">Finish</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions" style="display: none;">
+                    <button id="back-btn" class="btn">Back</button>
+                    <button id="next-btn" class="btn btn-primary">Next</button>
+                    <button id="finish-btn" class="btn btn-success" style="display: none;">Finish</button>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script>
+        let currentStep = 1;
+        const totalSteps = 10;
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step-content').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            const currentStepContent = document.getElementById(`step-${stepNumber}-content`);
+            if (currentStepContent) {
+                currentStepContent.classList.add('active');
+            }
+
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            const currentStepIndicator = document.querySelector(`.step[data-step="${stepNumber}"]`);
+            if (currentStepIndicator) {
+                currentStepIndicator.classList.add('active');
+            }
+
+            currentStep = stepNumber;
+            updateButtons();
+            
+            if (currentStep === 10) {
+                loadAllDataForReview();
+            }
+        }
+
+        function navigateToStep(stepNumber) {
+            showStep(stepNumber);
+        }
+
+        function loadAllDataForReview() {
+            const reviewContent = document.getElementById('review-content');
+            reviewContent.innerHTML = '';
+
+            function getVal(id) {
+                const el = document.getElementById(id);
+                if (el.multiple) {
+                    return Array.from(el.selectedOptions).map(o => o.value).join(', ');
+                }
+                return el.value;
+            }
+
+            function createReviewSection(title, data, step) {
+                let html = `<h3>${title} <i class="fas fa-edit edit-icon" onclick="navigateToStep(${step})"></i></h3>`;
+                for (const [key, value] of Object.entries(data)) {
+                    html += `<p><strong>${key}:</strong> ${value}</p>`;
+                }
+                return html;
+            }
+
+            // Step 1
+            reviewContent.innerHTML += createReviewSection('Step 1: Role Overview', {
+                'Role Title': getVal('role-title'),
+                'Role Summary': getVal('role-summary'),
+                'Job Description': getVal('job-description'),
+                'Key Responsibilities': getVal('key-responsibilities'),
+                'Decision Scope': getVal('decision-scope'),
+            }, 1);
+
+            // Step 2
+            reviewContent.innerHTML += createReviewSection('Step 2: Organization & Position Structure', {
+                'Business Unit / Division': getVal('business-unit'),
+                'Department': getVal('department'),
+                'Job Family': getVal('job-family'),
+                'Role Group / Team': getVal('role-group'),
+                'Role Code / ID': getVal('role-code'),
+                'Created Date': getVal('created-date'),
+                'Team Size': getVal('team-size'),
+                'Reporting Lines': getVal('reporting-lines'),
+                'Matrix Relationships': getVal('matrix-relationships'),
+            }, 2);
+
+            // Step 3
+            reviewContent.innerHTML += createReviewSection('Step 3: Classification & Hierarchy', {
+                'Career Track': getVal('career-track'),
+                'Level': getVal('level'),
+                'Grade / Job Level': getVal('grade'),
+                'Seniority Label': getVal('seniority-label'),
+                'Feeder Roles': getVal('feeder-roles'),
+                'Reports To': getVal('reports-to'),
+                'Location / Region': getVal('location'),
+                'Location Type': getVal('location-type'),
+                'Employment Type': getVal('employment-type'),
+                'Contract Type': getVal('contract-type'),
+            }, 3);
+
+            // Step 4
+            reviewContent.innerHTML += createReviewSection('Step 4: Skills, Capabilities & Requirements', {
+                'Experience Requirements': getVal('experience-requirements'),
+                'Tools & Technologies': getVal('tools-technologies'),
+                'Certifications': getVal('certifications'),
+            }, 4);
+
+            // Step 5
+            reviewContent.innerHTML += createReviewSection('Step 5: Performance, Growth & Mobility', {
+                'KPIs / Outcomes': getVal('kpis-outcomes'),
+                'Performance Review Cycle': getVal('performance-review-cycle'),
+                'Professional Development Support': getVal('professional-development-support'),
+                'Impact Areas': getVal('impact-areas'),
+                'Behavioral Competencies': getVal('behavioral-competencies'),
+                'Mobility Options': getVal('mobility-options'),
+                'Time Allocation (%)': getVal('time-allocation'),
+                'Succession Plan Ready': getVal('succession-plan-ready'),
+                'Criticality to Business': getVal('criticality'),
+                'Backup Resource Assigned': getVal('backup-resource'),
+            }, 5);
+
+            // Step 6
+            reviewContent.innerHTML += createReviewSection('Step 6: Career Pathing', {
+                'Feeder Roles': getVal('feeder-roles-hidden'),
+                'Career Path – Next Roles': getVal('career-path-next-roles-hidden'),
+            }, 6);
+
+            // Step 7
+            reviewContent.innerHTML += createReviewSection('Step 7: Administrative & Compliance Details', {
+                'Billable / Non-Billable': getVal('billable'),
+                'Access Level / Permissions Group': getVal('access-level'),
+                'Start Date / Expected Onboarding Date': getVal('start-date'),
+                'Status': getVal('status'),
+                'Approval Status': getVal('approval-status'),
+                'Security Clearance': getVal('security-clearance'),
+                'Background Check': getVal('background-check'),
+                'Mandatory Compliance Training': getVal('mandatory-compliance-training'),
+                'Equipment Provisioning': getVal('equipment-provisioning'),
+            }, 7);
+
+            // Step 8
+            reviewContent.innerHTML += createReviewSection('Step 8: Custom Fields', {
+                'Salary Band': getVal('salary-band'),
+                'Remote Work Policy': getVal('remote-work-policy'),
+                'Travel Expectations': getVal('travel-expectations'),
+                'On-call Duties': getVal('on-call-duties'),
+                'Innovation Time': getVal('innovation-time'),
+            }, 8);
+
+            // Step 9
+            reviewContent.innerHTML += createReviewSection('Step 9: Metadata & Activity Log', {
+                'Created By / Owner': getVal('created-by'),
+                'Last Updated': getVal('last-updated'),
+            }, 9);
+        }
+
+        function updateButtons() {
+            const backBtn = document.getElementById('back-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const finishBtn = document.getElementById('finish-btn');
+            if (backBtn) {
+                backBtn.style.display = currentStep === 1 ? 'none' : 'inline-block';
+            }
+            if (nextBtn) {
+                nextBtn.style.display = currentStep === totalSteps ? 'none' : 'inline-block';
+            }
+            if (finishBtn) {
+                finishBtn.style.display = currentStep === totalSteps ? 'inline-block' : 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const steps = document.querySelectorAll('.step');
+            const nextBtn = document.getElementById('next-btn');
+            const backBtn = document.getElementById('back-btn');
+            const finishBtn = document.getElementById('finish-btn');
+            const addCustomFieldBtn = document.getElementById('add-custom-field-btn');
+            
+            async function loadMockData() {
+                try {
+                    const response = await fetch('../../../RoleDictionary/mock-data.json');
+                    const data = await response.json();
+                    populateForm(data.role);
+                } catch (error) {
+                    console.error('Error loading mock data:', error);
+                }
+            }
+
+            function populateForm(roleData) {
+                // Step 1: Role Overview (originally step 3)
+                const step1Data = roleData.step3_role_overview;
+                if (step1Data) {
+                    document.getElementById('role-title').value = step1Data.role_title || '';
+                    document.getElementById('role-summary').value = step1Data.role_summary || '';
+                    document.getElementById('job-description').value = step1Data.job_description || '';
+                    document.getElementById('key-responsibilities').value = (step1Data.key_responsibilities || []).join('\n');
+                    document.getElementById('decision-scope').value = step1Data.decision_scope || '';
+                }
+
+                // Step 2: Organization & Position Structure (originally step 1)
+                const step2Data = roleData.step1_organization_and_position_structure;
+                if (step2Data) {
+                    document.getElementById('business-unit').value = step2Data.business_unit || '';
+                    document.getElementById('department').value = step2Data.department || '';
+                    document.getElementById('job-family').value = step2Data.job_family || '';
+                    document.getElementById('role-group').value = step2Data.role_group || '';
+                    document.getElementById('role-code').value = step2Data.role_code || '';
+                    document.getElementById('created-date').value = step2Data.created_date || '';
+                    document.getElementById('team-size').value = step2Data.team_size || '';
+                    document.getElementById('reporting-lines').value = step2Data.reporting_lines || '';
+                    document.getElementById('matrix-relationships').value = step2Data.matrix_relationships || '';
+                }
+                
+                // Step 3: Classification & Hierarchy (originally step 2)
+                const step3Data = roleData.step2_classification_and_hierarchy;
+                if (step3Data) {
+                    document.getElementById('career-track').value = step3Data.career_track || '';
+                    document.getElementById('level').value = step3Data.level || '';
+                    document.getElementById('grade').value = step3Data.grade || '';
+                    document.getElementById('seniority-label').value = step3Data.seniority_label || '';
+                    // Assuming feeder-roles is a multi-select
+                    if (step3Data.feeder_roles) {
+                        Array.from(document.getElementById('feeder-roles').options).forEach(option => {
+                            if (step3Data.feeder_roles.includes(option.value)) {
+                                option.selected = true;
+                            }
+                        });
+                    }
+                    document.getElementById('reports-to').value = step3Data.reports_to || '';
+                     if (step3Data.location) {
+                        Array.from(document.getElementById('location').options).forEach(option => {
+                            if (step3Data.location.includes(option.value)) {
+                                option.selected = true;
+                            }
+                        });
+                    }
+                    document.getElementById('location-type').value = step3Data.location_type || '';
+                    document.getElementById('employment-type').value = step3Data.employment_type || '';
+                    document.getElementById('contract-type').value = step3Data.contract_type || '';
+                }
+
+                // Step 4: Skills, Capabilities & Requirements
+                const step4Data = roleData.step4_skills_capabilities_requirements;
+                if (step4Data) {
+                    document.getElementById('experience-requirements').value = step4Data.experience_requirements || '';
+                    document.getElementById('tools-technologies').value = (step4Data.tools_technologies || []).join(', ');
+                    document.getElementById('certifications').value = (step4Data.certifications || []).join(', ');
+                    
+                    const skillsTableBody = document.querySelector('#skills-table tbody');
+                    skillsTableBody.innerHTML = '';
+                    (step4Data.skills || []).forEach(skill => {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td><input type="text" class="form-input" value="${step4Data.capability || ''}"></td>
+                            <td><input type="text" class="form-input" value="${step4Data.competency || ''}"></td>
+                            <td><input type="text" class="form-input" value="${skill.name || ''}"></td>
+                            <td><input type="text" class="form-input" value="${skill.minimum_proficiency || ''}"></td>
+                            <td><input type="text" class="form-input" value="${skill.target_proficiency || ''}"></td>
+                            <td><button type="button" class="btn btn-danger btn-sm remove-skill-btn">Remove</button></td>
+                        `;
+                        skillsTableBody.appendChild(newRow);
+                    });
+
+                    const softSkillsTableBody = document.querySelector('#soft-skills-table tbody');
+                    softSkillsTableBody.innerHTML = '';
+                    (step4Data.soft_skills || []).forEach(skill => {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td><input type="text" class="form-input" value="${skill.name || ''}"></td>
+                            <td><input type="text" class="form-input" value="${skill.minimum_proficiency || ''}"></td>
+                            <td><input type="text" class="form-input" value="${skill.target_proficiency || ''}"></td>
+                            <td><button type="button" class="btn btn-danger btn-sm remove-skill-btn">Remove</button></td>
+                        `;
+                        softSkillsTableBody.appendChild(newRow);
+                    });
+                    
+                    const learningResourcesList = document.getElementById('learning-resources-list');
+                    learningResourcesList.innerHTML = '';
+                    (step4Data.learning_resources || []).forEach(url => {
+                        const div = document.createElement('div');
+                        div.textContent = url;
+                        learningResourcesList.appendChild(div);
+                    });
+                }
+                
+                // Step 5: Performance, Growth & Mobility
+                const step5Data = roleData.step5_performance_growth_mobility;
+                if (step5Data) {
+                    document.getElementById('kpis-outcomes').value = (step5Data.kpis_outcomes || []).join('\n');
+                    document.getElementById('performance-review-cycle').value = step5Data.performance_review_cycle || '';
+                    document.getElementById('professional-development-support').value = step5Data.professional_development_support || '';
+                    document.getElementById('impact-areas').value = (step5Data.impact_areas || []).join(', ');
+                    document.getElementById('behavioral-competencies').value = (step5Data.behavioral_competencies || []).join(', ');
+                    if (step5Data.mobility_options) {
+                        Array.from(document.getElementById('mobility-options').options).forEach(option => {
+                            if (step5Data.mobility_options.includes(option.value)) {
+                                option.selected = true;
+                            }
+                        });
+                    }
+                    if(step5Data.time_allocation) {
+                        document.getElementById('time-allocation').value = `Ground: ${step5Data.time_allocation.ground_school}, Flight: ${step5Data.time_allocation.flight_training}, Study: ${step5Data.time_allocation.self_study}`;
+                    }
+                    document.getElementById('succession-plan-ready').value = step5Data.succession_plan_ready ? 'Yes' : 'No';
+                    document.getElementById('criticality').value = step5Data.criticality_to_business || '';
+                    document.getElementById('backup-resource').value = step5Data.backup_resource_assigned || '';
+                }
+
+                // Step 6: Career Pathing
+                const step6Data = roleData.step5_performance_growth_mobility;
+                if (step6Data) {
+                    // Feeder Roles
+                    const feederRolesPills = document.getElementById('feeder-roles-pills');
+                    feederRolesPills.innerHTML = '';
+                    (step6Data.feeder_roles || []).forEach(role => {
+                        const pill = document.createElement('div');
+                        pill.className = 'tag-pill';
+                        pill.textContent = role;
+                        feederRolesPills.appendChild(pill);
+                    });
+                    document.getElementById('feeder-roles-hidden').value = (step6Data.feeder_roles || []).join(',');
+
+                    // Career Path Next Roles
+                    const nextRolesPills = document.getElementById('career-path-next-roles-pills');
+                    nextRolesPills.innerHTML = '';
+                    (step6Data.career_path_next_roles || []).forEach(role => {
+                        const pill = document.createElement('div');
+                        pill.className = 'tag-pill';
+                        pill.textContent = role;
+                        nextRolesPills.appendChild(pill);
+                    });
+                    document.getElementById('career-path-next-roles-hidden').value = (step6Data.career_path_next_roles || []).join(',');
+                    
+                    // Career Path Mapping
+                    const careerPathContainer = document.getElementById('career-path-mapping-container');
+                    careerPathContainer.innerHTML = '';
+                    if (step6Data.career_path_mapping && step6Data.career_path_mapping.length > 0) {
+                        step6Data.career_path_mapping.forEach(path => {
+                            const pathCard = document.createElement('div');
+                            pathCard.className = 'path-card';
+
+                            const pathTitle = document.createElement('div');
+                            pathTitle.className = 'path-title';
+                            pathTitle.textContent = path.path_name;
+                            pathCard.appendChild(pathTitle);
+
+                            const pathFlow = document.createElement('div');
+                            pathFlow.className = 'path-flow';
+
+                            const currentRoleBox = createRoleBox(path.current_role, '');
+                            pathFlow.appendChild(currentRoleBox);
+
+                            path.next_roles.forEach(nextRole => {
+                                const arrow = document.createElement('div');
+                                arrow.className = 'arrow-icon-container';
+                                arrow.innerHTML = '<i class="fas fa-long-arrow-alt-right arrow-icon"></i>';
+                                pathFlow.appendChild(arrow);
+
+                                const nextRoleBox = createRoleBox(nextRole.role_title, nextRole.grade);
+                                pathFlow.appendChild(nextRoleBox);
+                            });
+
+                            pathCard.appendChild(pathFlow);
+                            careerPathContainer.appendChild(pathCard);
+                        });
+                    }
+                }
+
+                // Step 7: Admin & Compliance
+                const step7AdminData = roleData.step6_admin_compliance;
+                if (step7AdminData) {
+                    document.getElementById('billable').value = step7AdminData.billable ? 'Yes' : 'No';
+                    document.getElementById('access-level').value = step7AdminData.access_level || '';
+                    document.getElementById('start-date').value = step7AdminData.expected_onboarding_date || '';
+                    document.getElementById('status').value = step7AdminData.status || '';
+                    document.getElementById('approval-status').value = step7AdminData.approval_status || '';
+                    document.getElementById('security-clearance').value = step7AdminData.security_clearance || '';
+                    document.getElementById('background-check').value = step7AdminData.background_check || '';
+                    document.getElementById('mandatory-compliance-training').value = (step7AdminData.mandatory_compliance_training || []).join(', ');
+                    if(step7AdminData.equipment_provisioning){
+                        document.getElementById('equipment-provisioning').value = `Uniform: ${step7AdminData.equipment_provisioning.uniform}, Materials: ${(step7AdminData.equipment_provisioning.training_materials || []).join(', ')}`;
+                    }
+                }
+
+                // Step 8: Custom Fields
+                const step8Data = roleData.step7_custom_fields;
+                if (step8Data) {
+                    document.getElementById('salary-band').value = step8Data.training_program_duration || '';
+                    document.getElementById('remote-work-policy').value = step8Data.scholarship_details || '';
+                    document.getElementById('travel-expectations').value = step8Data.post_graduation_commitment || '';
+                    document.getElementById('on-call-duties').value = step8Data.medical_requirements || '';
+                    document.getElementById('innovation-time').value = step8Data.simulator_hours_completed || '';
+                }
+                
+                // Step 9: Metadata
+                const step9Data = roleData.step8_metadata_activity_log;
+                if(step9Data) {
+                    document.getElementById('created-by').value = step9Data.created_by || '';
+                    document.getElementById('last-updated').value = step9Data.last_updated || '';
+                }
+            }
+
+            function createRoleBox(title, grade) {
+                const roleBox = document.createElement('div');
+                roleBox.className = 'role-box';
+
+                const roleTitle = document.createElement('div');
+                roleTitle.className = 'role-box-title';
+                roleTitle.textContent = title;
+                roleBox.appendChild(roleTitle);
+
+                if (grade) {
+                    const roleGrade = document.createElement('div');
+                    roleGrade.className = 'role-grade';
+                    roleGrade.textContent = `Grade: ${grade}`;
+                    roleBox.appendChild(roleGrade);
+                }
+
+                return roleBox;
+            }
+
+
+
+            function goToNextStep() {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    navigateToStep(currentStep);
+                }
+            }
+
+            function goToPrevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    navigateToStep(currentStep);
+                }
+            }
+
+            function addCustomField(data = {}) {
+                const container = document.getElementById('custom-fields-container');
+                const newField = document.createElement('div');
+                newField.className = 'custom-field form-grid';
+                newField.innerHTML = `
+                    <div class="form-group">
+                        <label>Field Name</label>
+                        <input type="text" name="custom-field-name" class="form-input" placeholder="e.g., Preferred Interview Panel" value="${data.fieldName || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Field Type</label>
+                        <select name="custom-field-type" class="form-input">
+                            <option value="Text" ${data.fieldType === 'Text' ? 'selected' : ''}>Text</option>
+                            <option value="Number" ${data.fieldType === 'Number' ? 'selected' : ''}>Number</option>
+                            <option value="Date" ${data.fieldType === 'Date' ? 'selected' : ''}>Date</option>
+                            <option value="Dropdown" ${data.fieldType === 'Dropdown' ? 'selected' : ''}>Dropdown</option>
+                            <option value="Checkbox" ${data.fieldType === 'Checkbox' ? 'selected' : ''}>Checkbox</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Default Value</label>
+                        <input type="text" name="custom-field-default-value" class="form-input" placeholder="e.g., 'Yes'" value="${data.defaultValue || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Instructions / Tooltip</label>
+                        <input type="text" name="custom-field-instructions" class="form-input" placeholder="Optional instructions" value="${data.instructions || ''}">
+                    </div>
+                    <button type="button" class="btn btn-danger remove-custom-field-btn">Remove</button>
+                `;
+                container.appendChild(newField);
+                newField.querySelector('.remove-custom-field-btn').addEventListener('click', () => {
+                    newField.remove();
+                });
+            }
+
+            function initializeEventListeners() {
+                if (nextBtn) nextBtn.addEventListener('click', goToNextStep);
+                if (backBtn) backBtn.addEventListener('click', goToPrevStep);
+                
+                if (finishBtn) {
+                    finishBtn.addEventListener('click', () => {
+                        alert('Form submitted successfully!');
+                        // In a real app, you would collect and submit form data here.
+                    });
+                }
+                
+                if (addCustomFieldBtn) {
+                    addCustomFieldBtn.addEventListener('click', () => addCustomField());
+                }
+
+                steps.forEach(step => {
+                    step.addEventListener('click', () => {
+                        const stepNumber = parseInt(step.getAttribute('data-step'));
+                        navigateToStep(stepNumber);
+                    });
+                });
+
+                const nextBtn1 = document.getElementById('next-btn-1');
+                if (nextBtn1) {
+                    nextBtn1.addEventListener('click', () => {
+                        navigateToStep(2);
+                    });
+                }
+
+                const nextBtn2 = document.getElementById('next-btn-2');
+                if (nextBtn2) {
+                    nextBtn2.addEventListener('click', () => {
+                        navigateToStep(3);
+                    });
+                }
+
+                const backBtn2 = document.getElementById('back-btn-2');
+                if (backBtn2) {
+                    backBtn2.addEventListener('click', () => {
+                        navigateToStep(1);
+                    });
+                }
+
+                const nextBtn3 = document.getElementById('next-btn-3');
+                if (nextBtn3) {
+                    nextBtn3.addEventListener('click', () => {
+                        navigateToStep(4);
+                    });
+                }
+
+                const backBtn3 = document.getElementById('back-btn-3');
+                if (backBtn3) {
+                    backBtn3.addEventListener('click', () => {
+                        navigateToStep(2);
+                    });
+                }
+
+                const nextBtn4 = document.getElementById('next-btn-4');
+                if (nextBtn4) {
+                    nextBtn4.addEventListener('click', () => {
+                        navigateToStep(5);
+                    });
+                }
+
+                const backBtn4 = document.getElementById('back-btn-4');
+                if (backBtn4) {
+                    backBtn4.addEventListener('click', () => {
+                        navigateToStep(3);
+                    });
+                }
+
+                const nextBtn5 = document.getElementById('next-btn-5');
+                if (nextBtn5) {
+                    nextBtn5.addEventListener('click', () => {
+                        navigateToStep(6);
+                    });
+                }
+
+                const backBtn5 = document.getElementById('back-btn-5');
+                if (backBtn5) {
+                    backBtn5.addEventListener('click', () => {
+                        navigateToStep(4);
+                    });
+                }
+
+                const nextBtn6 = document.getElementById('next-btn-6');
+                if (nextBtn6) {
+                    nextBtn6.addEventListener('click', () => {
+                        navigateToStep(7);
+                    });
+                }
+
+                const backBtn6 = document.getElementById('back-btn-6');
+                if (backBtn6) {
+                    backBtn6.addEventListener('click', () => {
+                        navigateToStep(5);
+                    });
+                }
+
+                const nextBtn7 = document.getElementById('next-btn-7');
+                if (nextBtn7) {
+                    nextBtn7.addEventListener('click', () => {
+                        navigateToStep(8);
+                    });
+                }
+
+                const backBtn7 = document.getElementById('back-btn-7');
+                if (backBtn7) {
+                    backBtn7.addEventListener('click', () => {
+                        navigateToStep(6);
+                    });
+                }
+
+                const nextBtn8 = document.getElementById('next-btn-8');
+                if (nextBtn8) {
+                    nextBtn8.addEventListener('click', () => {
+                        navigateToStep(9);
+                    });
+                }
+
+                const backBtn8 = document.getElementById('back-btn-8');
+                if (backBtn8) {
+                    backBtn8.addEventListener('click', () => {
+                        navigateToStep(7);
+                    });
+                }
+
+                const nextBtn9 = document.getElementById('next-btn-9');
+                if (nextBtn9) {
+                    nextBtn9.addEventListener('click', () => {
+                        navigateToStep(10);
+                    });
+                }
+
+                const backBtn9 = document.getElementById('back-btn-9');
+                if (backBtn9) {
+                    backBtn9.addEventListener('click', () => {
+                        navigateToStep(8);
+                    });
+                }
+
+                const finishBtn10 = document.getElementById('finish-btn-10');
+                if (finishBtn10) {
+                    finishBtn10.addEventListener('click', () => {
+                        alert('Form submitted successfully!');
+                    });
+                }
+
+                const backBtn10 = document.getElementById('back-btn-10');
+                if (backBtn10) {
+                    backBtn10.addEventListener('click', () => {
+                        navigateToStep(9);
+                    });
+                }
+            }
+
+            function initializeAIRecommendations() {
+                document.querySelectorAll('.ai-recommendations-section .btn-primary').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const pill = this.closest('.tag-pill');
+                        const roleText = pill.textContent.replace('Add', '').trim();
+                        const isFeederRole = this.closest('.recommendations-container').querySelector('h5').textContent.includes('Feeder');
+
+                        if (isFeederRole) {
+                            addPill('feeder-roles-pills', roleText);
+                        } else {
+                            addPill('career-path-next-roles-pills', roleText);
+                        }
+                    });
+                });
+            }
+
+            function addPill(containerId, text) {
+                const container = document.getElementById(containerId);
+                const pill = document.createElement('div');
+                pill.className = 'tag-pill';
+                pill.textContent = text;
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.onclick = () => pill.remove();
+                pill.appendChild(removeBtn);
+                container.appendChild(pill);
+            }
+
+            // Initial setup
+            initializeEventListeners();
+            showStep(1);
+            loadMockData();
+            initializeAIRecommendations();
+        });
+    </script>
+</body>
+</html>

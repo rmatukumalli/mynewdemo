@@ -1,0 +1,127 @@
+<div class="card">
+    <h2>Step 2: Organization & Position Structure</h2>
+    <div class="form-container">
+        <div class="form-sidebar">
+            <div class="stepper">
+                <div class="step" data-step="1">
+                    <div class="step-title">Role Overview</div>
+                </div>
+                <div class="step active" data-step="2">
+                    <div class="step-title">Organization & Position Structure</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-title">Classification & Hierarchy</div>
+                </div>
+            <div class="step" data-step="4">
+                <div class="step-title">Skills, Capabilities & Requirements</div>
+            </div>
+            <div class="step" data-step="5">
+                <div class="step-title">Performance, Growth & Mobility</div>
+            </div>
+            <div class="step" data-step="6">
+                <div class="step-title">Administrative & Compliance Details</div>
+            </div>
+            <div class="step" data-step="7">
+                <div class="step-title">Custom Fields</div>
+            </div>
+            <div class="step" data-step="8">
+                <div class="step-title">Metadata & Activity Log</div>
+            </div>
+            <div class="step" data-step="9">
+                <div class="step-title">Review & Edit</div>
+            </div>
+        </div>
+        </div>
+        <div class="form-main">
+            <form id="add-role-form-step1">
+        <div class="details-section">
+            <h3>Organization & Position Structure</h3>
+            <div class="hierarchy-gradient">
+                Business Unit / Division has &rarr; Department has &rarr; Job Family has &rarr; Role Group / Team
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="business-unit">Business Unit / Division <i class="fas fa-info-circle info-icon" data-tooltip-key="businessUnitTooltip"></i></label>
+                    <select id="business-unit" class="form-input" required>
+                        <option value="">Select Business Unit</option>
+                        <option value="Consumer Tech">Consumer Tech</option>
+                        <option value="Enterprise">Enterprise</option>
+                        <option value="Corporate">Corporate</option>
+                    </select>
+                    <div class="description-box" id="business-unit-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department <i class="fas fa-info-circle info-icon" data-tooltip-key="departmentTooltip"></i></label>
+                    <select id="department" class="form-input" required>
+                        <option value="">Select Department</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Product">Product</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Sales">Sales</option>
+                    </select>
+                    <div class="description-box" id="department-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="job-family">Job Family <i class="fas fa-info-circle info-icon" data-tooltip-key="jobFamilyTooltip"></i></label>
+                    <select id="job-family" class="form-input" required>
+                        <option value="">Select Job Family</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Data & Analytics">Data & Analytics</option>
+                        <option value="Product Management">Product Management</option>
+                    </select>
+                    <div class="description-box" id="job-family-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="role-group">Role Group / Team <i class="fas fa-info-circle info-icon" data-tooltip-key="roleGroupTooltip"></i></label>
+                    <select id="role-group" class="form-input" required>
+                        <option value="">Select Role Group / Team</option>
+                        <option value="Front-end">Front-end</option>
+                        <option value="Back-end">Back-end</option>
+                        <option value="Full-stack">Full-stack</option>
+                        <option value="Mobile">Mobile</option>
+                    </select>
+                    <div class="description-box" id="role-group-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="role-code">Role Code / ID <i class="fas fa-info-circle info-icon" data-tooltip-key="roleCodeTooltip"></i></label>
+                    <input type="text" id="role-code" class="form-input" value="ENG-FE-IC04" readonly>
+                    <div class="description-box" id="role-code-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="created-date">Created Date <i class="fas fa-info-circle info-icon" data-tooltip-key="createdDateTooltip"></i></label>
+                    <input type="date" id="created-date" class="form-input" value="2025-07-22">
+                    <div class="description-box" id="created-date-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="team-size">Team Size <i class="fas fa-info-circle info-icon" data-tooltip-key="teamSizeTooltip"></i></label>
+                    <select id="team-size" class="form-input">
+                        <option value="">Select Team Size</option>
+                        <option value="1-5">1-5</option>
+                        <option value="6-10">6-10</option>
+                        <option value="11-15">11-15</option>
+                        <option value="16-20">16-20</option>
+                        <option value="20+">20+</option>
+                    </select>
+                    <div class="description-box" id="team-size-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="reporting-lines">Reporting Lines <i class="fas fa-info-circle info-icon" data-tooltip-key="reportingLinesTooltip"></i></label>
+                    <input type="text" id="reporting-lines" class="form-input" placeholder="e.g., Reports to Engineering Manager">
+                    <div class="description-box" id="reporting-lines-description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="matrix-relationships">Matrix Relationships <i class="fas fa-info-circle info-icon" data-tooltip-key="matrixRelationshipsTooltip"></i></label>
+                    <div class="job-description-header">
+                        <button type="button" id="generate-matrix-relationships-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
+                    </div>
+                    <input type="text" id="matrix-relationships" class="form-input" placeholder="e.g., Works closely with Product Managers">
+                    <div class="description-box" id="matrix-relationships-description"></div>
+                </div>
+            </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

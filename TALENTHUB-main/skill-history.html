@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Employee Skill History
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest">
+  </script>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+   /* --- Base Styles for a Professional Light Theme SaaS Look --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's slate-50 */
+            color: #334155; /* Default text color (slate-700) */
+        }
+
+        /* --- Timeline Structure (Unchanged) --- */
+        .timeline { position: relative; padding: 2rem 0; }
+        .timeline::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background-color: #e2e8f0; }
+        .timeline-item { position: relative; width: 50%; padding: 0.5rem 2.5rem; opacity: 0; transform: translateY(20px); animation: fadeIn 0.6s ease-out forwards; }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 3rem; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 3rem; }
+        .timeline-icon { position: absolute; top: 1.25rem; z-index: 10; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: #ffffff; border: 2px solid #e2e8f0; }
+        .timeline-item:nth-child(odd) .timeline-icon { right: -20px; }
+        .timeline-item:nth-child(even) .timeline-icon { left: -20px; }
+        .timeline-content { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #e2e8f0; transition: border-color 0.3s ease, box-shadow 0.3s ease; position: relative; }
+        .timeline-content:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.07); }
+        .timeline-content::before { content: ''; height: 0; position: absolute; top: 1.75rem; width: 0; z-index: 1; border: solid transparent; border-width: 8px; }
+        .timeline-item:nth-child(odd) .timeline-content::before { right: -16px; border-left-color: #e2e8f0; }
+        .timeline-item:hover:nth-child(odd) .timeline-content::before { border-left-color: #cbd5e1; }
+        .timeline-item:nth-child(even) .timeline-content::before { left: -16px; border-right-color: #e2e8f0; }
+        .timeline-item:hover:nth-child(even) .timeline-content::before { border-right-color: #cbd5e1; }
+        .key-milestone .timeline-icon { border-color: #2563eb; }
+        .key-milestone .timeline-content { border-color: #93c5fd; }
+        @media screen and (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { width: 100%; padding-left: 3.75rem; padding-right: 0.5rem; left: 0; }
+            .timeline-icon, .timeline-item:nth-child(odd) .timeline-icon, .timeline-item:nth-child(even) .timeline-icon { left: 0; }
+            .timeline-content::before { left: -16px; border-right-color: #e2e8f0; border-left-color: transparent; }
+            .timeline-item:hover .timeline-content::before { border-right-color: #cbd5e1; }
+        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* --- UI Element Styling (Unchanged) --- */
+        .filter-btn { background-color: transparent; color: #475569; border: 1px solid #e2e8f0; transition: all 0.2s ease-in-out; }
+        .filter-btn:hover { background-color: #f1f5f9; border-color: #cbd5e1; color: #1e293b; }
+        .filter-btn.active { background-color: #2563eb; border-color: #2563eb; color: #ffffff; }
+        .status-badge { display: inline-block; font-size: 0.75rem; font-weight: 500; padding: 0.125rem 0.625rem; border-radius: 9999px; }
+        .status-verified { background-color: #dcfce7; color: #166534; }
+        .status-expiring { background-color: #fef9c3; color: #854d0e; }
+        .skill-tag { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+        .form-input { width: 100%; border-radius: 0.5rem; border: 1px solid #e2e8f0; background-color: #ffffff; padding: 0.5rem 0.75rem; font-weight: 500; color: #334155; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .form-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .search-input { padding-left: 2.5rem; }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="bg-slate-50">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="min-h-screen" id="app">
+   <div class="w-full max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+    <header class="text-left mb-8 border-b border-slate-200 pb-6">
+     <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+      Employee Skill History
+     </h1>
+     <p class="text-base text-slate-500 mt-1">
+      An interactive timeline of milestones and achievements for John Doe.
+     </p>
+    </header>
+    <div class="flex flex-col lg:flex-row gap-3 mb-10">
+     <div class="flex-shrink-0 flex items-center gap-2 p-1.5 rounded-xl border border-slate-200 bg-white/60 overflow-x-auto" id="timeline-filters">
+     </div>
+     <div class="flex-grow flex flex-col sm:flex-row gap-3">
+      <select class="form-input" id="time-filter-select">
+      </select>
+      <div class="relative flex-grow">
+       <i class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" data-lucide="search">
+       </i>
+       <input class="form-input search-input" id="search-input" placeholder="Search by keyword..." type="text">
+      </div>
+     </div>
+    </div>
+    <div class="relative" id="history-timeline-container">
+    </div>
+   </div>
+  </div>
+  <script>
+   document.addEventListener('DOMContentLoaded', () => {
+            // MOCK DATA (Unchanged)
+            const initialPilotData = { id: '11235', name: 'John Doe', role: 'Pilot', careerPaths: [ { title: 'Captain', description: 'Leads the flight crew and is responsible for the safety and operation of the aircraft. This is the next logical step in an airline career.', requiredSkills: ['Advanced Crew Resource Management', 'Leadership', 'Mentorship', 'Complex Decision Making'] }, { title: 'Fleet Manager / Chief Pilot', description: 'Manages a specific aircraft fleet or group of pilots, focusing on operational efficiency, training standards, and staffing.', requiredSkills: ['Operations Management', 'Budgeting', 'Regulatory Compliance', 'Logistics'] }, { title: 'Safety Auditor / Designated Examiner (DE)', description: 'A senior role focusing on maintaining and improving safety standards, or a federally appointed role to examine and certify pilots.', requiredSkills: ['Safety Management Systems (SMS)', 'Auditing Techniques', 'Incident Investigation', 'FAA Regulations'] } ], learningActivity: [{ title: 'Initial Flight Training', type: 'Certification Prep', completionDate: '2024-07-19', skillsGained: [{ name: 'Basic Aerodynamics'}, { name: 'VFR Navigation'}] }, { title: 'Safety Management Systems', type: 'Course', completionDate: '2024-09-05', skillsGained: [{ name: 'Risk Assessment'}] }, { title: 'Advanced Weather Systems', type: 'Course', completionDate: '2025-02-15', skillsGained: [{ name: 'Weather Analysis', endorsedByManager: true }, { name: 'Doppler Radar Interpretation' }] }, { title: 'Annual Security Compliance', type: 'Compliance Training', completionDate: '2025-03-01', skillsGained: [{ name: 'Security Protocols', endorsedByManager: true }] }, { title: 'Crew Resource Management', type: 'Workshop', completionDate: '2025-05-21', skillsGained: [{ name: 'Team Communication'}] },], certifications: [{ name: 'FAA Airframe & Powerplant (A&P)', status: 'Verified', issuer: 'FAA', validatedSkills: ['Aircraft Maintenance', 'Avionics'], issueDate: '2022-01-10', expiryDate: 'N/A' }, { name: 'Airline Transport Pilot (ATP)', status: 'Verified', issuer: 'FAA', validatedSkills: ['Flight Operations', 'Crew Resource Management'], issueDate: '2021-05-20', expiryDate: 'N/A' }, { name: 'Certified Aviation Manager (CAM)', status: 'Expiring Soon', issuer: 'NBAA', validatedSkills: ['Aviation Safety', 'Business Management'], issueDate: '2024-03-15', expiryDate: 'Mar 15, 2027' }], careerHighlights: [{ role: 'Pilot', startDate: '2023-01-15', endDate: 'Present', achievements: ['Completed 500+ flight hours', 'Mentored two junior first officers.'] }, { role: 'First Officer', startDate: '2021-05-20', endDate: '2023-01-14', achievements: ['Received type rating for Boeing 737.', 'Perfect safety record.'] }, { role: 'Cadet Pilot', startDate: '2020-06-01', endDate: '2021-05-19', achievements: ['Graduated top of class from flight academy.'] }], developmentHistory: [{ date: '2025-05-20', title: 'Passenger Safety Validated', description: 'Completed Annual Recurrent Safety Training with a score of 98%.'}, { date: '2025-03-15', title: 'Project Management Development', description: 'Enrolled in "Project Management Fundamentals for Aviation Professionals".'}, { date: '2025-02-28', title: '360-Degree Feedback', description: 'Praised for exceptional teamwork and communication during flight operations.'}], };
+            
+            // --- STATE MANAGEMENT ---
+            let appState = {
+                activeFilter: 'all',
+                timeFilter: 'all',
+                searchTerm: '',
+                data: {},
+            };
+            
+            // --- UI & FILTER RENDERING ---
+            function renderTimelineFilters() {
+                const filters = [ { key: 'all', label: 'All', icon: 'list' }, { key: 'career', label: 'Career', icon: 'briefcase' }, { key: 'learning', label: 'Learning', icon: 'book-open' }, { key: 'certification', label: 'Certs', icon: 'award' }, { key: 'development', label: 'Dev', icon: 'trending-up' }];
+                const container = document.getElementById('timeline-filters');
+                container.innerHTML = filters.map(f => {
+                    const isActive = appState.activeFilter === f.key;
+                    return `<button data-filter="${f.key}" class="filter-btn ${isActive ? 'active' : ''} font-semibold py-2 px-3 sm:px-4 rounded-lg flex items-center gap-2 text-sm sm:text-base"><i data-lucide="${f.icon}" class="w-4 h-4"></i><span>${f.label}</span></button>`;
+                }).join('');
+            }
+            
+            function renderTimeFilterDropdown(historyItems) {
+                const timeSelect = document.getElementById('time-filter-select');
+                const quarters = new Set();
+
+                historyItems.forEach(item => {
+                    const date = item.date;
+                    const year = date.getFullYear();
+                    const quarter = Math.floor(date.getMonth() / 3) + 1;
+                    quarters.add(`${year}-Q${quarter}`);
+                });
+
+                const sortedQuarters = Array.from(quarters).sort().reverse();
+                
+                let optionsHtml = '<option value="all">All Time</option>';
+                sortedQuarters.forEach(q => {
+                    optionsHtml += `<option value="${q}">${q.replace('-', ' ')}</option>`
+                });
+                
+                timeSelect.innerHTML = optionsHtml;
+            }
+
+            function renderHistoryTimeline() {
+                const data = appState.data;
+                const timelineContainer = document.getElementById('history-timeline-container');
+                let historyItems = [];
+                // --- Data Aggregation (Unchanged) ---
+                data.careerHighlights.forEach(item => historyItems.push({ ...item, type: 'career', date: new Date(item.startDate), isMilestone: true }));
+                data.learningActivity.forEach(item => historyItems.push({ ...item, type: 'learning', date: new Date(item.completionDate) }));
+                data.certifications.forEach(item => historyItems.push({ ...item, type: 'certification', date: new Date(item.issueDate) }));
+                data.developmentHistory.forEach(item => historyItems.push({ ...item, type: 'development', date: new Date(item.date) }));
+
+                // --- MULTI-FILTER LOGIC ---
+                let filteredItems = historyItems;
+                
+                // 1. Filter by Category
+                if(appState.activeFilter !== 'all') {
+                    filteredItems = filteredItems.filter(item => item.type === appState.activeFilter);
+                }
+
+                // 2. Filter by Time (Quarters Only)
+                if (appState.timeFilter !== 'all') {
+                    const [year, quarter] = appState.timeFilter.split('-');
+                    filteredItems = filteredItems.filter(item => {
+                        const itemDate = item.date;
+                        const itemQuarter = `Q${Math.floor(itemDate.getMonth() / 3) + 1}`;
+                        return itemDate.getFullYear() == year && itemQuarter === quarter;
+                    });
+                }
+                
+                // 3. Filter by Search Term
+                if (appState.searchTerm.trim() !== '') {
+                    const lowerCaseSearch = appState.searchTerm.toLowerCase();
+                    filteredItems = filteredItems.filter(item => {
+                        const searchableText = [
+                            item.title, item.role, item.description, item.issuer,
+                            ...(item.achievements || []),
+                            ...(item.skillsGained ? item.skillsGained.map(s => s.name) : [])
+                        ].join(' ').toLowerCase();
+                        return searchableText.includes(lowerCaseSearch);
+                    });
+                }
+
+                // --- Render HTML ---
+                filteredItems.sort((a, b) => b.date - a.date);
+                let timelineHtml = `<div class="timeline">`;
+                if (filteredItems.length > 0) {
+                    timelineHtml += filteredItems.map(item => {
+                        // Switch case for get...Html functions remains the same
+                        switch (item.type) {
+                            case 'career': return getCareerTimelineHtml(item);
+                            case 'learning': return getLearningTimelineHtml(item);
+                            case 'certification': return getCertificationTimelineHtml(item);
+                            case 'development': return getDevelopmentTimelineHtml(item);
+                            default: return '';
+                        }
+                    }).join('');
+                    if(appState.activeFilter === 'all' && appState.timeFilter === 'all' && appState.searchTerm === '') {
+                        timelineHtml += getWhatsNextHtml(data.careerPaths);
+                    }
+                } else {
+                     timelineHtml += `<div class="text-center py-16 col-span-full"><i data-lucide="search-x" class="w-12 h-12 mx-auto text-slate-400"></i><h4 class="mt-4 text-lg font-semibold text-slate-600">No Results Found</h4><p class="text-slate-500">Try adjusting your filters or search term.</p></div>`;
+                }
+                timelineHtml += `</div>`;
+                timelineContainer.innerHTML = timelineHtml;
+                
+                document.querySelectorAll('.timeline-item').forEach((item, index) => { item.style.animationDelay = `${index * 100}ms`; });
+                lucide.createIcons();
+            }
+            
+            // --- EVENT LISTENERS ---
+            function setupEventListeners() {
+                const filtersContainer = document.getElementById('timeline-filters');
+                const timeSelect = document.getElementById('time-filter-select');
+                const searchInput = document.getElementById('search-input');
+
+                filtersContainer.addEventListener('click', (e) => {
+                    const button = e.target.closest('.filter-btn');
+                    if(button) {
+                        appState.activeFilter = button.dataset.filter;
+                        renderTimelineFilters();
+                        renderHistoryTimeline();
+                    }
+                });
+
+                timeSelect.addEventListener('change', (e) => {
+                    appState.timeFilter = e.target.value;
+                    renderHistoryTimeline();
+                });
+
+                searchInput.addEventListener('input', (e) => {
+                    appState.searchTerm = e.target.value;
+                    renderHistoryTimeline();
+                });
+            }
+
+            // --- HTML GENERATORS (Unchanged from previous light theme) ---
+            function getFormattedDate(date) { return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }); }
+            const timelineItemWrapper = (icon, date, title, body, isMilestone = false) => { const milestoneClass = isMilestone ? 'key-milestone' : ''; const iconColorClass = isMilestone ? 'text-blue-600' : 'text-slate-500'; return `<div class="timeline-item ${milestoneClass}"><div class="timeline-icon"><i data-lucide="${icon}" class="w-5 h-5 ${iconColorClass}"></i></div><div class="timeline-content"><p class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">${getFormattedDate(date)}</p>${title}${body}</div></div>`; };
+            const getCareerTimelineHtml = (item) => { const title = `<h3 class="font-bold text-base text-slate-800">${item.role}</h3>`; const body = `<div class="text-sm text-slate-500 mt-2 space-y-1"><p><span class="font-medium text-slate-600">Duration:</span> ${getFormattedDate(new Date(item.startDate))} - ${item.endDate}</p><ul class="list-disc pl-5 mt-2 text-slate-500/80">${item.achievements.map(a => `<li>${a}</li>`).join('')}</ul></div>`; return timelineItemWrapper('briefcase', item.date, title, body, item.isMilestone); };
+            const getLearningTimelineHtml = (item) => { const title = `<h3 class="font-bold text-base text-slate-800">${item.title}</h3>`; const skillsHtml = item.skillsGained.map(skill => `<span class="skill-tag">${skill.name}</span>`).join(''); const body = `<div class="text-sm text-slate-500 mt-2 space-y-3"><p><span class="font-medium text-slate-600">Type:</span> ${item.type}</p><div class="flex flex-wrap gap-2 items-center">${skillsHtml}</div></div>`; return timelineItemWrapper('book-open', item.date, title, body); };
+            const getCertificationTimelineHtml = (item) => { const title = `<h3 class="font-bold text-base text-slate-800">${item.name}</h3>`; const statusClass = item.status === 'Verified' ? 'status-verified' : 'status-expiring'; const body = `<div class="text-sm text-slate-500 mt-2 space-y-3"><p><span class="font-medium text-slate-600">Issuer:</span> ${item.issuer}</p><div><span class="status-badge ${statusClass}">${item.status}</span></div></div>`; return timelineItemWrapper('award', item.date, title, body, true); };
+            const getDevelopmentTimelineHtml = (item) => { const title = `<h3 class="font-bold text-base text-slate-800">${item.title}</h3>`; const body = `<p class="text-sm text-slate-500 mt-1">${item.description}</p>`; return timelineItemWrapper('trending-up', item.date, title, body); };
+            const getWhatsNextHtml = (paths) => { const pathCards = paths.map(path => `<div class="bg-slate-50 p-4 rounded-lg border border-slate-200 hover:border-blue-500 hover:bg-white transition-colors duration-300 group"><h4 class="font-bold text-sm text-slate-700 flex items-center"><i data-lucide="compass" class="w-5 h-5 mr-3 text-slate-400 group-hover:text-blue-500 transition-colors"></i>${path.title}</h4><p class="text-sm text-slate-500 mt-1 pl-8">${path.description}</p></div>`).join(''); return `<div class="timeline-item"><div class="timeline-icon !border-blue-500"><i data-lucide="sparkles" class="w-5 h-5 text-blue-500"></i></div><div class="timeline-content !border-slate-200"><h3 class="text-base font-bold text-slate-800 mb-4">Recommended Next Steps</h3><div class="space-y-3">${pathCards}</div></div></div>`};
+
+            // --- INITIALIZATION ---
+            function initializeApp() {
+                appState.data = initialPilotData;
+                const allItems = [ ...initialPilotData.careerHighlights.map(i => ({...i, date: new Date(i.startDate)})), ...initialPilotData.learningActivity.map(i => ({...i, date: new Date(i.completionDate)})), ...initialPilotData.certifications.map(i => ({...i, date: new Date(i.issueDate)})), ...initialPilotData.developmentHistory.map(i => ({...i, date: new Date(i.date)}))];
+                
+                renderTimelineFilters();
+                renderTimeFilterDropdown(allItems);
+                setupEventListeners();
+                renderHistoryTimeline(); // Initial render
+            }
+
+            initializeApp();
+
+            // Logic to hide home button and footer if in iframe of skills-passport.html
+            if (window.self !== window.top) { // Check if inside an iframe
+                try {
+                    const parentUrl = window.parent.location.href;
+                    if (parentUrl.endsWith('skills-passport.html')) {
+                        const homeButton = document.querySelector('a.home-button[href="index.html"]');
+                        if (homeButton) {
+                            homeButton.style.display = 'none';
+                        }
+                        const footer = document.querySelector('div.custom-footer');
+                        if (footer) {
+                            footer.style.display = 'none';
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not access parent window's location, possibly due to cross-origin restrictions. Elements visibility not changed.", e);
+                }
+            }
+        });
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

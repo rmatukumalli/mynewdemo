@@ -1,0 +1,228 @@
+/* Basic Admin Panel Styles */
+body.admin-page { /* Add class="admin-page" to body of admin HTML files if specific styling is needed */
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Styles for feature links on the admin dashboard */
+.admin-feature-link {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.admin-feature-link:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    color: white;
+}
+
+/* Styling for the Skills & Competency Management section list */
+#skills-competency-management ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#skills-competency-management li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex; /* Align items in a row */
+    justify-content: space-between; /* Space out text and link */
+    align-items: center; /* Vertically align items */
+}
+
+#skills-competency-management li strong {
+    color: #333;
+}
+
+header h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #2980b9;
+}
+
+/* Login Form Specific Styles */
+#admin-login-form div {
+    margin-bottom: 15px;
+}
+
+#admin-login-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#admin-login-form input[type="text"],
+#admin-login-form input[type="password"] {
+    width: calc(100% - 22px); /* Adjust for padding and border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#admin-login-form button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#admin-login-form button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* Dashboard Specific Styles */
+#admin-content {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Admin Navbar Styles */
+.admin-navbar {
+    background-color: #343a40; /* Dark background */
+    padding: 10px 20px;
+    color: white;
+    position: fixed; /* Keep navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it's above other content */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Max width for content within navbar */
+    margin: 0 auto; /* Center the container */
+}
+
+.admin-navbar-brand {
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.admin-navbar-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.admin-navbar-links li {
+    margin-left: 20px;
+}
+
+.admin-navbar-links li a {
+    color: #f8f9fa; /* Light color for links */
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-navbar-links li a:hover,
+.admin-navbar-links li a.active { /* Style for active link */
+    background-color: #495057; /* Slightly darker background on hover/active */
+    color: white;
+}
+
+.admin-navbar-logout {
+    background-color: #dc3545; /* Red for logout */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.admin-navbar-logout:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Adjust body padding to prevent content from being hidden by fixed navbar */
+body.admin-page {
+    padding-top: 70px; /* Height of the navbar + some margin */
+    font-family: Arial, sans-serif; /* Re-affirming from existing styles */
+    background-color: #f4f7f6; /* Re-affirming from existing styles */
+    color: #333; /* Re-affirming from existing styles */
+    margin: 0; /* Ensure no default margin */
+}
+
+/* Ensure container on admin pages is not affected by body padding-top directly if it has its own margin-top */
+body.admin-page .container {
+    width: 80%;
+    margin: 20px auto; /* Keep existing margins */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}

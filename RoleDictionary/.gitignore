@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Archives
+*.zip
+
+# Virtual environment
+venv/
+
+# Logs
+gunicorn.log

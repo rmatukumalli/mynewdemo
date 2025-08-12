@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Role Form - Product Requirements Document</title>
+    <link rel="stylesheet" href="/RoleDictionary/Role%20Dictionary%20V2/role-architecture-mini.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0; /* Remove default body margin */
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .contact-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .contact-list li {
+            margin-bottom: 5px;
+        }
+        .page-content {
+            margin: 20px; /* Add margin to content */
+        }
+
+        /* Responsive adjustments for PRD page */
+        @media (max-width: 768px) {
+            .page-content {
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            section {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+            .page-header .header-text h1 {
+                font-size: 1.5em !important; /* Override inline style for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-content {
+                margin: 5px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            h3 {
+                font-size: 1em;
+            }
+            .page-header .header-text h1 {
+                font-size: 1.2em !important; /* Further override for very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-text">
+                <h1 style="color: white !important;">Product Requirements Document: Add/Edit Role Form (Phase 2)</h1>
+            </div>
+        </header>
+        <div class="page-content">
+            <div style="text-align: right; margin-bottom: 20px; margin-top: 20px;">
+                <p><a href="index.html">Back to Add New Role</a></p>
+            </div>
+    <p><strong>Product Name:</strong> Add/Edit Role Form (Phase 2)</p>
+    <p><strong>Version:</strong> 1.0</p>
+
+    <p><strong>Contacts:</strong></p>
+    <ul class="contact-list">
+        <li>● Product Manager: [Raj Matukumalli]</li>
+        <li>● Engineering Lead: [Seolyoung]</li>
+        <li>● Design Lead: [Kevin]</li>
+    </ul>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#executive-summary">Executive Summary</a></li>
+        <li><a href="#phase-context-scope-clarification">Phase Context and Scope Clarification</a></li>
+        <li><a href="#market-opportunity">Market Opportunity</a></li>
+        <li><a href="#strategic-alignment">Strategic Alignment</a></li>
+        <li><a href="#customer-user-needs">Customer & User Needs</a></li>
+        <li><a href="#value-proposition-messaging">Value Proposition & Messaging</a></li>
+        <li><a href="#competitive-advantage">Competitive Advantage</a></li>
+        <li><a href="#product-scope-use-cases">Product Scope and Use Cases</a>
+            <ol>
+                <li><a href="#step-1-role-overview">Step 1: Role Overview</a></li>
+                <li><a href="#step-2-organization-position-structure">Step 2: Organization & Position Structure</a></li>
+                <li><a href="#step-3-classification-hierarchy">Step 3: Classification & Hierarchy</a></li>
+                <li><a href="#step-4-skills-capabilities-competencies-behaviors">Step 4: Skills, Capabilities, Competencies & Behaviors</a></li>
+                <li><a href="#step-5-performance-growth-mobility">Step 5: Performance, Growth & Mobility</a></li>
+                <li><a href="#step-6-administrative-compliance-details">Step 6: Administrative & Compliance Details</a></li>
+                <li><a href="#step-7-custom-fields">Step 7: Custom Fields</a></li>
+                <li><a href="#step-8-metadata-activity-log">Step 8: Metadata & Activity Log</a></li>
+                <li><a href="#step-9-review-edit">Step 9: Review & Edit</a></li>
+                <li><a href="#additional-functional-requirements">Additional Functional Requirements (Phase 2 Enhancements)</a>
+                    <ol>
+                        <li><a href="#tooltips-field-level-guidance">Tooltips for Field-Level Guidance</a></li>
+                        <li><a href="#generate-with-ai-functionality">“Generate with AI” Functionality</a></li>
+                        <li><a href="#print-preview-support">Print Preview Support</a></li>
+                        <li><a href="#export-to-excel">Export to Excel</a></li>
+                        <li><a href="#bulk-import-export-roles">Bulk Import/Export Roles</a></li>
+                        <li><a href="#role-architecture-linkage">Role Architecture Linkage</a></li>
+                        <li><a href="#skills-ontology-integration">Skills Ontology Integration</a></li>
+                    </ol>
+                </li>
+                <li><a href="#user-interaction-flow">User Interaction Flow</a></li>
+            </ol>
+        </li>
+        <li><a href="#non-functional-requirements">Non-Functional Requirements</a>
+            <ol>
+                <li><a href="#general-requirements">General Requirements</a></li>
+                <li><a href="#ai-specific-requirements-llms">AI-Specific Requirements (LLMs)</a></li>
+            </ol>
+        </li>
+        <li><a href="#go-to-market-approach">Go-to-Market Approach</a></li>
+        <li><a href="#technical-architecture-integration">Technical Architecture & Integration</a></li>
+        <li><a href="#user-experience-design">User Experience & Design</a></li>
+        <li><a href="#data-analytics">Data & Analytics</a></li>
+        <li><a href="#security-compliance">Security & Compliance</a></li>
+        <li><a href="#implementation-operations">Implementation & Operations</a></li>
+        <li><a href="#success-metrics-testing">Success Metrics & Testing</a></li>
+        <li><a href="#ai-implementation-details">AI Implementation Details</a></li>
+        <li><a href="#risk-management">Risk Management</a></li>
+        <li><a href="#dependencies-assumptions">Dependencies & Assumptions</a></li>
+        <li><a href="#field-data-model-json">Field Data Model (JSON)</a></li>
+    </ol>
+
+    <section>
+        <h2 id="executive-summary">1. Executive Summary</h2>
+        <p>This product requirement document describes building an "Add/Edit Role Form" feature integrated with the existing Role Dictionary system. This feature aims to streamline the process of defining, adding, and modifying roles within the organization, ensuring data consistency and completeness. This functionality will comply with defined user-level permissions.</p>
+        <p>It answers to an identified market opportunity (improved data governance and operational efficiency), is aligned with our company strategy of enhancing HR and talent management tools, and leverages our unique competitive edge (integrated skills ontology and role architecture) with a pilot phase planned for Q4 2025.</p>
+        <p><strong>Success criteria:</strong></p>
+        <ul>
+            <li>● 90% user satisfaction rating for the role creation process.</li>
+            <li>● 75% reduction in manual data entry errors for new roles.</li>
+            <li>● Integration with existing role architecture and skills ontology achieved by launch.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Phase Context and Scope Clarification</h2>
+        <p>This PRD is focused on Phase 2 of the Role Dictionary and Role Architecture initiative. The Phase 1 work, completed earlier, delivered a redesigned Role Dictionary and Role Profile with full feature parity compared to the legacy system. Phase 2 builds on that foundation by enhancing the Add/Edit Role form, capturing richer role metadata to support the future Role Architecture (planned for Phase 3).</p>
+        <p>As part of Phase 2, the goal is to:</p>
+        <ul>
+            <li>Expand the Role Profile with additional fields and capabilities that will become critical inputs into the hierarchical Role Architecture.</li>
+            <li>Improve usability and data quality by introducing guidance and automation features.</li>
+            <li>Lay the groundwork for reporting, analysis, and downstream systems by standardizing data capture and structure.</li>
+        </ul>
+        <p>These enhancements will feed into Phase 3, where the organization will develop and implement a full Role Architecture framework, including hierarchies, departments, job families, and career paths.</p>
+    </section>
+
+    <section>
+        <h2>2. Market Opportunity</h2>
+        <p>The market for integrated HR and talent management solutions has shown a consistent growth rate of 12% CAGR due to increasing demand for structured talent data and efficient workforce planning. Currently, it’s at an early growth stage (20% market penetration), providing ample room for capturing substantial value. TAM projected at $500M by 2028.</p>
+    </section>
+
+    <section>
+        <h2>3. Strategic Alignment</h2>
+        <p>The "Add Role Form" aligns with our company’s focus on providing comprehensive and intuitive talent management solutions. It directly supports our mid-term objective of increasing adoption of the Role Dictionary by 30% by simplifying the role creation process and ensuring data quality. This plays to our strengths in developing robust data management tools and leveraging our proprietary skills ontology.</p>
+    </section>
+
+    <section>
+        <h2>4. Customer & User Needs</h2>
+        <p>Users in the HR Administrator and Talent Acquisition Specialist segments spend significant time daily on defining and inputting new role descriptions, resulting in frequent inconsistencies and manual errors. 60% of users report this as their top pain (source: internal user interviews, n=50, high importance vs. low satisfaction). Constraints: Data privacy regulations (e.g., GDPR, CCPA) require careful handling of role-related data.</p>
+    </section>
+
+    <section>
+        <h2>5. Value Proposition & Messaging</h2>
+        <p>The "Add Role Form" reduces manual data entry and inconsistencies by 75%, saving HR professionals significant time and effort, addressing the pain point of inefficient role definition with a guided, multi-step input process and real-time validation. Unlike generic HRIS systems, we offer deep integration with our proprietary skills ontology and role architecture, ensuring highly accurate and structured role data. Messaging: "Streamline role definition with intelligent, integrated forms for precise talent management."</p>
+    </section>
+
+    <section>
+        <h2>6. Competitive Advantage</h2>
+        <p>The "Add Role Form" leverages our unique proprietary skills ontology and existing Role Dictionary architecture, giving us a 12-18 month competitive lead. Unlike competitor approaches that rely on manual input or basic templates, our specific advantage is hard to replicate due to the complexity and depth of our integrated data models and the established user base of the Role Dictionary.</p>
+    </section>
+
+    <section>
+        <h2>7. Product Scope and Use Cases</h2>
+        <p>The "Add Role Form" will provide a guided, multi-step process for defining new roles. This form is designed to ensure comprehensive and consistent data capture for each role, serving as a foundational reference for talent management. The functionality for each step is detailed below:</p>
+        <h3>7.1 Step 1: Role Overview (<code>step-1-role-overview.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Capture fundamental information about the role.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Role Title (Text Input, Required)</li>
+                    <li>Role Summary (Text Area, Max 300 chars, Optional, AI-generatable)</li>
+                    <li>Job Description (Text Area, Max 3000 chars, Optional, AI-generatable)</li>
+                    <li>Key Responsibilities (Text Area, 4-8 entries recommended, min 3, max 10, Optional, AI-generatable)</li>
+                    <li>Decision Scope (Text Area, Max 500 chars, Optional, AI-generatable)</li>
+                </ul>
+            </li>
+            <li><strong>Validation:</strong> Role Title is required.</li>
+        </ul>
+
+        <h3>7.2 Step 2: Organization & Position Structure (<code>step-2-organization-position-structure.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Define where the role fits within the organizational hierarchy.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Business Unit / Division (Dropdown, Required)</li>
+                    <li>Department (Dropdown, Required)</li>
+                    <li>Job Family (Dropdown, Required)</li>
+                    <li>Role Group / Team (Dropdown, Required)</li>
+                    <li>Role Code / ID (Text Input, Read-only, Auto-generated)</li>
+                    <li>Created Date (Date Input, Auto-populated)</li>
+                    <li>Team Size (Dropdown)</li>
+                    <li>Reporting Lines (Text Input)</li>
+                    <li>Matrix Relationships (Text Input, AI-generatable)</li>
+                </ul>
+            </li>
+            <li><strong>Validation:</strong> Business Unit, Department, Job Family, and Role Group are required.</li>
+        </ul>
+
+        <h3>7.3 Step 3: Classification & Hierarchy (<code>step-3-classification-hierarchy.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Categorize the role based on various classification schemes.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Career Track (Dropdown, Required)</li>
+                    <li>Level (Dropdown, Required)</li>
+                    <li>Grade / Job Level (Dropdown, Required)</li>
+                    <li>Seniority Label (Dropdown, Required)</li>
+                    <li>Feeder Roles (Multi-select)</li>
+                    <li>Reports To (Reporting Manager) (Dropdown, Required)</li>
+                    <li>Location / Region (Multi-select, Required)</li>
+                    <li>Location Type (Dropdown, Required)</li>
+                    <li>Employment Type (Dropdown, Required)</li>
+                    <li>Contract Type (Dropdown, Required)</li>
+                </ul>
+            </li>
+            <li><strong>Validation:</strong> All required fields must be populated.</li>
+        </ul>
+
+        <h3>7.4 Step 4: Skills, Capabilities & Requirements (<code>step-4-skills-capabilities-requirements.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Specify the essential skills, capabilities, and requirements for the role.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Technical Skills (Table with Capability, Competency, Skill, Min Proficiency, Target Proficiency, AI-generatable)</li>
+                    <li>Soft Skills (Table with Skill, Min Proficiency, Target Proficiency, AI-generatable)</li>
+                    <li>Education Requirements (Text Input)</li>
+                    <li>Language Requirements (Text Input)</li>
+                    <li>Travel Requirements (Dropdown)</li>
+                    <li>Experience Requirements (Dropdown)</li>
+                    <li>Tools & Technologies (Text Input)</li>
+                    <li>Certifications (Text Input, AI-generatable)</li>
+                    <li>Learning Resources (Dynamic List, AI-generatable)</li>
+                </ul>
+            </li>
+            <li><strong>Interactions:</strong> "Add Skill" and "Add Soft Skill" buttons to add rows to tables. AI-powered suggestions for Technical Skills, Soft Skills, Certifications, and Learning Resources.</li>
+        </ul>
+
+        <h3>7.5 Step 5: Performance, Growth & Mobility (<code>step-5-performance-growth-mobility.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Outline performance expectations, career progression, and mobility options.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>KPIs / Outcomes (Text Area, Max 5 entries, AI-generatable)</li>
+                    <li>Performance Review Cycle (Dropdown)</li>
+                    <li>Professional Development Support (Dropdown)</li>
+                    <li>Impact Areas (Text Input, AI-generatable)</li>
+                    <li>Behavioral Competencies (Text Input, AI-generatable)</li>
+                    <li>Career Path – Next Roles (Multi-select)</li>
+                    <li>Feeder Roles (Multi-select)</li>
+                    <li>Mobility Options (Multi-select)</li>
+                    <li>Time Allocation (%) (Text Input)</li>
+                    <li>Succession Plan Ready (Dropdown)</li>
+                    <li>Criticality to Business (Dropdown)</li>
+                    <li>Backup Resource Assigned (Text Input)</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>7.6 Step 6: Administrative & Compliance Details (<code>step-6-administrative-compliance-details.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Capture administrative and regulatory information.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Billable / Non-Billable (Dropdown)</li>
+                    <li>Access Level / Permissions Group (Dropdown)</li>
+                    <li>Start Date / Expected Onboarding Date (Date Input)</li>
+                    <li>Status (Dropdown)</li>
+                    <li>Approval Status (Dropdown)</li>
+                    <li>Security Clearance (Dropdown)</li>
+                    <li>Background Check (Dropdown)</li>
+                    <li>Mandatory Compliance Training (Text Input)</li>
+                    <li>Equipment Provisioning (Text Area)</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>7.7 Step 7: Custom Fields (<code>step-7-custom-fields.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Allow for organization-specific data points not covered by standard fields.</li>
+            <li><strong>Fields:</strong>
+                <ul>
+                    <li>Salary Band (Text Input)</li>
+                    <li>Remote Work Policy (Dropdown)</li>
+                    <li>Travel Expectations (Dropdown)</li>
+                    <li>On-call Duties (Dropdown)</li>
+                    <li>Innovation Time (Dropdown)</li>
+                </ul>
+            </li>
+            <li><strong>Interactions:</strong> "Add Custom Field" button to dynamically add more custom fields.</li>
+        </ul>
+
+        <h3>7.8 Step 8: Metadata & Activity Log (<code>step-8-metadata-activity-log.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Display system-generated metadata and a history of changes.</li>
+            <li><strong>Fields (Read-only):</strong>
+                <ul>
+                    <li>Created By / Owner (Text Input)</li>
+                    <li>Last Updated (Text Input)</li>
+                </ul>
+            </li>
+            <li><strong>Interactions:</strong> Activity Log (Dynamic List)</li>
+        </ul>
+
+        <h3>7.9 Step 9: Review & Edit (<code>step-9-review-edit.html</code>)</h3>
+        <ul>
+            <li><strong>Purpose:</strong> Provide a consolidated view of all entered information for final review and submission.</li>
+            <li><strong>Functionality:</strong>
+                <ul>
+                    <li>Display all data from previous steps in a read-only, hierarchical summary format.</li>
+                    <li>Ability to navigate back to any step for editing.</li>
+                    <li>"Submit" button to finalize role creation.</li>
+                    <li>"Save Draft" button to save progress without final submission.</li>
+                    <li>"Cancel" button to discard changes.</li>
+                    <li>"Print Preview" button to render the complete role definition in a print-friendly format.</li>
+                    <li>"Export to Excel" button to generate a structured Excel file of the role definition.</li>
+                </ul>
+            </li>
+            <li><strong>Validation:</strong> Final check for completeness and consistency before submission.</li>
+            <li><strong>Interactions:</strong> "View Job Architecture Best Practices" collapsible section for additional guidance.</li>
+        </ul>
+        <p><strong>Desired Customer Outcomes:</strong> Reduced time-to-define new roles by 50% and improved data quality and consistency across the Role Dictionary.</p>
+        <p><strong>High-Risk Assumption:</strong> Users will find the structured, multi-step input process intuitive and efficient, leading to high adoption.</p>
+        <p><strong>Test:</strong> Conduct usability testing with a diverse group of HR administrators and talent acquisition specialists using interactive prototypes (Design: [Link to Figma prototype/wireframes]) to gather feedback on workflow, clarity, and ease of use. Iterate based on findings.</p>
+
+        <h3>7.10 Additional Functional Requirements (Phase 2 Enhancements)</h3>
+        <p>In addition to the functionality outlined in the multi-step form, the following capabilities must be included as part of the Phase 2 scope:</p>
+        
+        <h4>7.10.1 Tooltips for Field-Level Guidance</h4>
+        <ul>
+            <li><strong>Description:</strong> Each input field within the "Add Role Form" will feature a context-aware tooltip or inline help text. This guidance will appear on hover or focus, providing clear instructions, examples, or definitions relevant to the specific field.</li>
+            <li><strong>Purpose:</strong> To reduce user errors, improve data quality, and enhance the overall usability of the form by providing immediate assistance without requiring users to navigate away from the input field.</li>
+            <li><strong>Implementation Notes:</strong> Tooltips should be concise and easily dismissible. For complex fields, a link to more detailed documentation may be provided within the tooltip.</li>
+        </ul>
+
+        <h4>7.10.2 “Generate with AI” Functionality</h4>
+        <ul>
+            <li><strong>Description:</strong> Integrate AI-assisted generation capabilities for key text-based fields. Users will be able to trigger AI generation based on initial inputs like Role Title, Job Family, or a brief set of keywords. The "Generate with AI" button will be applied to the following fields, with the specified minimum requirements for generation:
+                <ul>
+                    <li>Role Summary (from Step 1: Role Overview)
+                        <ul>
+                            <li>Minimum Requirement: Role Title</li>
+                        </ul>
+                    </li>
+                    <li>Job Description (from Step 1: Role Overview)
+                        <ul>
+                            <li>Minimum Requirement: Role Title</li>
+                        </ul>
+                    </li>
+                    <li>Key Responsibilities (from Step 1: Role Overview)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Decision Scope (from Step 1: Role Overview)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Matrix Relationships (from Step 2: Organization & Position Structure)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Technical Skills (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Soft Skills (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Certifications (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Learning Resources (from Step 4: Skills, Capabilities & Requirements)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>KPIs / Outcomes (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Impact Areas (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                    <li>Behavioral Competencies (from Step 5: Performance, Growth & Mobility)
+                        <ul>
+                            <li>Minimum Requirement: Role Title and/or Job Description</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Purpose:</strong> To accelerate the role definition process, ensure consistency in language and skill mapping, and provide a starting point for users, especially for common roles or when facing writer's block.</li>
+            <li><strong>Implementation Notes:</strong> The AI model should leverage the existing Skills Ontology and Role Dictionary data for context. Users must have the ability to review, edit, and accept or reject AI-generated content. Tooltips or helper text will be provided near the "Generate with AI" button or relevant fields to inform users about the minimum input requirements for successful AI generation.</li>
+        </ul>
+        <h5>7.10.2.1 AI Generation Versioning & Review</h5>
+        <ul>
+            <li><strong>Description:</strong> Users will have the ability to re-generate AI-suggested content for a given field up to 5 times. Each generation will create a new version.</li>
+            <li><strong>Functionality:</strong>
+                <ul>
+                    <li><strong>Re-generate:</strong> A button to trigger a new AI generation, creating a new version (up to 5).</li>
+                    <li><strong>Version Navigation:</strong> Controls (e.g., "Previous Version," "Next Version," or a dropdown) to allow users to review all generated versions.</li>
+                    <li><strong>Undo/Redo:</strong> Functionality to revert to a previous version or re-apply a later version within the current session.</li>
+                    <li><strong>Select & Save:</strong> Users can select their preferred version from the generated options and apply it to the form field.</li>
+                </ul>
+            </li>
+            <li><strong>Storage:</strong> Generated versions will be stored temporarily (e.g., in local session storage) and will not be persisted to the database until the user explicitly clicks "Save Draft" or "Submit" for the entire role form. This ensures that only desired content is saved permanently.</li>
+            <li><strong>Purpose:</strong> To provide users with flexibility and control over AI-generated content, allowing them to explore multiple options and refine suggestions to best fit their needs.</li>
+        </ul>
+
+        <h4>7.10.3 Print Preview Support</h4>
+        <ul>
+            <li><strong>Description:</strong> Provide a "Print Preview" option accessible from the "Review & Edit" step (Step 9). This feature will render the complete role definition in a clean, print-friendly format, suitable for physical copies or PDF generation.</li>
+            <li><strong>Purpose:</strong> To allow users to review the entire role profile in a consolidated, shareable format before final submission or distribution, ensuring all details are accurate and presentable.</li>
+            <li><strong>Implementation Notes:</strong> The print preview should optimize layout for readability, remove interactive elements, and ensure consistent styling.</li>
+        </ul>
+
+        <h4>7.10.4 Export to Excel</h4>
+        <ul>
+            <li><strong>Description:</strong> Implement an "Export to Excel" feature, accessible from the "Review & Edit" step (Step 9) and potentially from a role management dashboard. This will generate a structured Excel file containing all data fields and sections of the role definition.</li>
+            <li><strong>Purpose:</strong> To facilitate offline review, data sharing with stakeholders who prefer spreadsheet formats, and integration with other systems that rely on Excel imports. The standardized format ensures data consistency.</li>
+            <li><strong>Implementation Notes:</strong> The Excel template should have clearly defined columns corresponding to each field, including nested data (e.g., skills with proficiency levels) in a readable format.</li>
+        </ul>
+
+        <h4>7.10.5 Bulk Import/Export Roles</h4>
+        <ul>
+            <li><strong>Description:</strong> Enhance the existing import/export functionality to support bulk operations for all fields and sections defined in the "Add Role Form." This includes both importing multiple new role definitions from a standardized Excel or CSV template and exporting a comprehensive dataset of existing roles.</li>
+            <li><strong>Purpose:</strong> To enable efficient migration of large volumes of role data, support mass updates, and provide robust data backup and integration capabilities. This extends the utility of the Role Dictionary for larger organizations.</li>
+            <li><strong>Implementation Notes:</strong> The import process should include robust validation, error reporting for failed imports, and clear instructions for template population. The export should generate a template that can be directly used for re-import.</li>
+        </ul>
+
+        <h4>7.10.6 Role Architecture Linkage</h4>
+        <ul>
+            <li><strong>Description:</strong> Introduce specific fields or metadata within relevant form steps (e.g., "Organization & Position Structure," "Classification & Hierarchy") that allow users to indicate how the role is expected to fit into the future Role Architecture. This includes fields for Job Family, Job Level, and potential Career Path indicators.</li>
+            <li><strong>Purpose:</strong> To lay the groundwork for Phase 3's full Role Architecture framework by capturing essential hierarchical and structural data now. This proactive data capture will simplify downstream mapping, integration, and the eventual implementation of career pathing and organizational design tools.</li>
+            <li><strong>Implementation Notes:</strong> These fields will initially function as data capture points. While the full hierarchical logic will be implemented in Phase 3, the data captured in Phase 2 must be structured to be forward-compatible with the planned architecture.</li>
+        </ul>
+
+        <h4>7.10.7 Skills Ontology Integration</h4>
+        <ul>
+            <li><strong>Description:</strong> The "Add Role Form" will integrate with the existing Skills Ontology to provide structured data for role definition. Specifically, the integration will leverage the following ontology objects:
+                <ul>
+                    <li><strong>Skills:</strong> Used for populating "Required Skills" and "Preferred Skills" fields (Section 7.4) with standardized skill definitions, including proficiency levels. This enables auto-completion, search, and consistent skill mapping.</li>
+                    <li><strong>Roles:</strong> Used for populating fields related to organizational structure, such as "Reporting To" and "Career Path/Next Roles" (Sections 7.2 and 7.5), allowing linkage to existing role definitions within the system.</li>
+                </ul>
+            </li>
+            <li><strong>Purpose:</strong> To ensure data consistency, leverage existing organizational knowledge, and facilitate accurate reporting and analysis by linking new role definitions to a standardized skills and role framework.</li>
+            <li><strong>Implementation Notes:</strong> The integration will primarily involve read-only access to the Skills and Roles objects for data lookup and suggestion. Future phases may explore write-back capabilities or more complex relationships. Integration with "Person/User," "Content," and "Projects" ontology objects is outside the scope of Phase 2 for the "Add Role Form."</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>7.11 User Interaction Flow</h2>
+        <p>The "Add Role Form" is designed as a multi-step wizard to guide users through the comprehensive role definition process. The interaction flow ensures a logical progression, data integrity, and a user-friendly experience.</p>
+        <ul>
+            <li><strong>Step Navigation:</strong> Users will navigate through the 9 defined steps (7.1 to 7.9) sequentially. Each step will focus on a specific category of role information.</li>
+            <li><strong>"Next" Button:</strong>
+                <ul>
+                    <li><strong>Functionality:</strong> Advances the user to the subsequent step.</li>
+                    <li><strong>Validation:</strong> Before proceeding, the system will perform client-side and server-side validation for all required fields within the current step. If validation fails, appropriate error messages will be displayed, preventing progression until errors are resolved.</li>
+                    <li><strong>State Preservation:</strong> Data entered in the current step will be saved (e.g., to local storage or a draft backend) upon clicking "Next" to ensure progress is not lost.</li>
+                </ul>
+            </li>
+            <li><strong>"Back" Button:</strong>
+                <ul>
+                    <li><strong>Functionality:</strong> Returns the user to the previous step.</li>
+                    <li><strong>State Preservation:</strong> Data from previous steps will be pre-populated, allowing users to review and modify previously entered information without loss.</li>
+                    <li><strong>Validation:</strong> No validation is performed when navigating backward.</li>
+                </ul>
+            </li>
+            <li><strong>Progress Indicator:</strong> A visual progress indicator (e.g., a step-by-step tracker or progress bar) will be displayed prominently to show the user their current position within the form and the total number of steps remaining.</li>
+            <li><strong>Form Submission:</strong> The final "Submit" action will only be available on the "Review & Edit" step (7.9). Upon submission, all collected data will be finalized and stored in the Role Dictionary.</li>
+            <li><strong>Save Draft:</strong> A "Save Draft" option will be available at any point to allow users to save their incomplete progress and return to the form later.</li>
+            <li><strong>Cancel:</strong> A "Cancel" option will allow users to exit the form, with a confirmation prompt to prevent accidental data loss.</li>
+            <li><strong>Error Handling:</strong> Clear, actionable error messages will be provided for validation failures or system errors, guiding users on how to resolve issues.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>8. Non-Functional Requirements</h2>
+        <h3>8.1 General Requirements</h3>
+        <p>The "Add Role Form" must deliver form responses in <500ms for 95% of submissions, scale to 1,000 concurrent users with 99.9% uptime, and meet ISO 27001 security standards. Peak load: 100 submissions per hour during peak HR activity.</p>
+        <h3>8.2 AI-Specific Requirements (LLMs)</h3>
+        <p>AI (if integrated for suggestions/auto-completion) must achieve 85% accuracy on skill suggestions based on role title, limit irrelevant suggestions to <5%, and meet ethical guidelines for fairness and bias mitigation via a human-in-the-loop review process. Measured by precision and recall on a curated test set, validated quarterly.</p>
+    </section>
+
+    <section>
+        <h2 id="go-to-market-approach">9. Go-to-Market Approach</h2>
+        <ul>
+            <li>● Phase 1: Launch an MVP targeting internal HR administrators in the US region, offering 75% savings in role definition time within 3 months. Success: 80% activation rate and 5 positive case studies in 6 months.</li>
+            <li>● Phase 2: Expand to external enterprise clients, integrating with existing HRIS systems and offering advanced analytics on role data.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="technical-architecture-integration">10. Technical Architecture & Integration</h2>
+        <p>This section outlines the technical foundation and integration points for the Add/Edit Role Form, ensuring it fits seamlessly within our existing ecosystem.</p>
+        <ul>
+            <li><strong>API Specifications:</strong> We'll define clear API contracts for how the form interacts with the existing Role Dictionary and Skills Ontology, ensuring smooth data exchange.</li>
+            <li><strong>Data Model/Schema:</strong> Detailed definitions for all new fields and their relationships will be established to maintain data integrity and consistency.</li>
+            <li><strong>Database Migration:</strong> A robust strategy will be developed to migrate existing role data to accommodate the new schema, minimizing disruption.</li>
+            <li><strong>Integration Touchpoints:</strong> We'll identify and plan for integration with other critical HR systems like HRIS and ATS, ensuring data flows correctly across platforms.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="user-experience-design">11. User Experience & Design</h2>
+        <p>Our focus here is to ensure the Add/Edit Role Form is intuitive, accessible, and provides a delightful user experience.</p>
+        <ul>
+            <li><strong>Accessibility:</strong> The form will adhere to WCAG compliance standards, including screen reader support, to ensure it's usable by everyone.</li>
+            <li><strong>Mobile Responsiveness:</strong> We'll design the form to be fully responsive, providing a consistent and usable experience across various devices.</li>
+            <li><strong>Error Handling & Guidance:</strong> Beyond basic validation, we'll implement clear, user-friendly error messages and guidance to help users correct mistakes and complete the form efficiently.</li>
+            <li><strong>Internationalization/Localization:</strong> If future plans include supporting multiple regions, we'll lay the groundwork for internationalization and localization to adapt the form for different languages and cultural contexts.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="data-analytics">12. Data & Analytics</h2>
+        <p>This section covers how we'll manage role data and leverage it for insights and reporting.</p>
+        <ul>
+            <li><strong>Data Retention Policies:</strong> Clear policies will be established for retaining drafts, version history, and deleted roles to meet compliance and operational needs.</li>
+            <li><strong>Analytics & Reporting:</strong> We'll define key metrics to track, such as form completion rates, time-to-define a role, and data quality scores, to measure success and identify areas for improvement.</li>
+            <li><strong>Data Export Formats:</strong> Beyond Excel, we'll explore additional data export formats like JSON or direct API endpoints to support diverse integration needs.</li>
+            <li><strong>Audit Trail:</strong> Comprehensive audit trail requirements will be implemented to track all changes to role data for compliance and accountability.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="security-compliance">13. Security & Compliance</h2>
+        <p>Ensuring the security and compliance of sensitive role data is paramount.</p>
+        <ul>
+            <li><strong>Role-Based Access Control (RBAC):</strong> Detailed RBAC rules will define who can create, edit, or view different types of role data, ensuring data security and integrity.</li>
+            <li><strong>Data Encryption:</strong> We'll implement robust data encryption both at rest (stored data) and in transit (data moving across networks) to protect sensitive information.</li>
+            <li><strong>Specific Compliance Requirements:</strong> Beyond GDPR/CCPA, we'll identify and adhere to any industry-specific or additional regulatory compliance requirements (e.g., SOX).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="implementation-operations">14. Implementation & Operations</h2>
+        <p>This section outlines our approach to bringing the Add/Edit Role Form to life and ensuring its smooth operation.</p>
+        <ul>
+            <li><strong>Rollout Strategy:</strong> We'll plan a phased deployment approach, potentially starting with a pilot group, to ensure a smooth transition and gather early feedback.</li>
+            <li><strong>Training & Change Management:</strong> A comprehensive plan will be developed to train users and manage the organizational change associated with the new form.</li>
+            <li><strong>Monitoring & Alerting:</strong> Robust monitoring and alerting systems will be put in place to proactively identify and address any performance or operational issues.</li>
+            <li><strong>Backup & Disaster Recovery:</strong> Clear procedures for data backup and disaster recovery will be established to ensure business continuity.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="success-metrics-testing">15. Success Metrics & Testing</h2>
+        <p>Defining how we measure success and ensure the quality of the Add/Edit Role Form.</p>
+        <ul>
+            <li><strong>A/B Testing:</strong> We'll consider A/B testing strategies for different form layouts or guidance methods to optimize user experience and data quality.</li>
+            <li><strong>User Acceptance Criteria (UAC):</strong> Specific UACs with detailed scenarios will be defined to ensure the form meets user needs and expectations.</li>
+            <li><strong>Performance Benchmarks:</strong> Beyond the initial 500ms response time, we'll establish additional performance benchmarks for various interactions and data volumes.</li>
+            <li><strong>Rollback Criteria:</strong> Clear criteria will be defined for when to roll back changes if adoption targets or critical performance metrics are not met.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="ai-implementation-details">16. AI Implementation Details</h2>
+        <p>This section provides more depth on the AI components integrated into the form.</p>
+        <ul>
+            <li><strong>Model Selection & Benchmarks:</strong> Criteria for selecting AI models (e.g., for text generation, skill suggestions) will be defined, along with performance benchmarks for accuracy and relevance.</li>
+            <li><strong>Training Data & Updates:</strong> Requirements for AI model training data and a plan for ongoing model updates to maintain performance and relevance will be established.</li>
+            <li><strong>Fallback Mechanisms:</strong> Clear fallback mechanisms will be designed for scenarios where AI generation fails or provides irrelevant suggestions, ensuring a graceful user experience.</li>
+            <li><strong>User Consent & Transparency:</strong> Guidelines for user consent and transparency around AI usage will be implemented, informing users when AI is assisting and allowing them to opt-out or provide feedback.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="risk-management">17. Risk Management</h2>
+        <p>This section identifies potential risks associated with the Add/Edit Role Form initiative and outlines strategies to mitigate them, ensuring a smoother development and deployment process.</p>
+        <ul>
+            <li><strong>Technical Risks:</strong>
+                <ul>
+                    <li><strong>Integration Failures:</strong> Risk of issues when integrating with existing Role Dictionary, Skills Ontology, or other HR systems.
+                        <ul><li><em>Mitigation:</em> Define clear API specs, conduct thorough integration testing, and use robust error handling.</li></ul>
+                    </li>
+                    <li><strong>Performance Issues:</strong> Risk of slow response times or scalability problems under high load.
+                        <ul><li><em>Mitigation:</em> Implement performance benchmarks, conduct load testing, and optimize database queries and front-end rendering.</li></ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>User Adoption Risks:</strong> Risk that users may not fully adopt the new form or utilize its advanced features.
+                <ul><li><em>Mitigation:</em> Conduct usability testing, provide comprehensive training and support, and gather continuous user feedback for iterative improvements.</li></ul>
+            </li>
+            <li><strong>Data Migration Risks:</strong> Risk of data loss or corruption during the migration of existing role data to the new schema.
+                <ul><li><em>Mitigation:</em> Develop a detailed migration plan, perform multiple dry runs, implement robust backup and rollback procedures, and validate data integrity post-migration.</li></ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="dependencies-assumptions">18. Dependencies & Assumptions</h2>
+        <p>This section clarifies external factors and underlying assumptions critical to the successful delivery of the Add/Edit Role Form.</p>
+        <ul>
+            <li><strong>External System Dependencies:</strong>
+                <ul>
+                    <li>Reliable and accessible APIs for the existing Role Dictionary and Skills Ontology.</li>
+                    <li>Availability and stability of third-party integrations (e.g., HRIS, ATS) for data exchange.</li>
+                </ul>
+            </li>
+            <li><strong>Third-Party Integrations Required:</strong>
+                <ul>
+                    <li>Specific APIs or connectors for HRIS (e.g., Workday, SAP SuccessFactors) for seamless data flow.</li>
+                    <li>Potential integration with external assessment platforms if skill assessment data is to be linked.</li>
+                </ul>
+            </li>
+            <li><strong>Assumptions about User Behavior or System Capacity:</strong>
+                <ul>
+                    <li>Users will engage with tooltips and AI suggestions to improve data quality.</li>
+                    <li>The existing infrastructure can support the increased load from new features and data volume.</li>
+                    <li>Stakeholders will provide timely feedback during design and development phases.</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2 id="field-data-model-json">19. Field Data Model (JSON)</h2>
+        <p>This section provides a JSON representation of all fields captured across the 9 steps of the Add/Edit Role Form, detailing their type, requirements, and notes.</p>
+        <pre><code class="language-json">{
+  "formFields": [
+    {
+      "step": "7.1 Step 1: Role Overview",
+      "fields": [
+        {"name": "Role Title", "type": "Text Input", "required": true, "exampleValue": "Senior Frontend Engineer"},
+        {"name": "Role Summary", "type": "Text Area", "required": false, "notes": "Max 300 chars, AI-generatable", "exampleValue": "Designs, develops, and maintains user-facing features for our web applications."},
+        {"name": "Job Description", "type": "Text Area", "required": false, "notes": "Max 3000 chars, AI-generatable", "exampleValue": "The Senior Frontend Engineer will build and maintain the user interface, collaborating closely with product managers and designers to implement new features, ensure responsive design, and participate in code reviews."},
+        {"name": "Key Responsibilities", "type": "Text Area", "required": false, "notes": "4-8 entries recommended, min 3, max 10, AI-generatable", "exampleValue": "- Develop new user-facing features using React.js\n- Build reusable front-end components\n- Translate designs and wireframes into high-quality code\n- Optimize performance across web platforms"},
+        {"name": "Decision Scope", "type": "Text Area", "required": false, "notes": "Max 500 chars, AI-generatable", "exampleValue": "Owns technical implementation decisions for frontend features, including framework and library choices on projects."}
+      ]
+    },
+    {
+      "step": "7.2 Step 2: Organization & Position Structure",
+      "fields": [
+        {"name": "Business Unit / Division", "type": "Dropdown", "required": true, "exampleValue": "Consumer Tech"},
+        {"name": "Department", "type": "Dropdown", "required": true, "exampleValue": "Engineering"},
+        {"name": "Job Family", "type": "Dropdown", "required": true, "exampleValue": "Software Engineering"},
+        {"name": "Role Group / Team", "type": "Dropdown", "required": true, "exampleValue": "Front-end"},
+        {"name": "Role Code / ID", "type": "Text Input", "required": false, "notes": "Read-only, Auto-generated", "exampleValue": "ENG-FE-IC04"},
+        {"name": "Created Date", "type": "Date Input", "required": false, "notes": "Auto-populated", "exampleValue": "2025-07-22"},
+        {"name": "Team Size", "type": "Dropdown", "required": false, "exampleValue": "6-10"},
+        {"name": "Reporting Lines", "type": "Text Input", "required": false, "exampleValue": "Reports to Engineering Manager"},
+        {"name": "Matrix Relationships", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Works closely with Product Managers"}
+      ]
+    },
+    {
+      "step": "7.3 Step 3: Classification & Hierarchy",
+      "fields": [
+        {"name": "Career Track", "type": "Dropdown", "required": true, "exampleValue": "Technical"},
+        {"name": "Level", "type": "Dropdown", "required": true, "exampleValue": "Individual Contributor"},
+        {"name": "Grade / Job Level", "type": "Dropdown", "required": true, "exampleValue": "IC4"},
+        {"name": "Seniority Label", "type": "Dropdown", "required": true, "exampleValue": "Senior"},
+        {"name": "Feeder Roles", "type": "Multi-select", "required": false, "exampleValue": ["Mid-level Frontend Engineer", "Software Engineer II"]},
+        {"name": "Reports To (Reporting Manager)", "type": "Dropdown", "required": true, "exampleValue": "Jane Doe"},
+        {"name": "Location / Region", "type": "Multi-select", "required": true, "exampleValue": ["Hyderabad", "Remote", "EMEA"]},
+        {"name": "Location Type", "type": "Dropdown", "required": true, "exampleValue": "Remote"},
+        {"name": "Employment Type", "type": "Dropdown", "required": true, "exampleValue": "Full-time"},
+        {"name": "Contract Type", "type": "Dropdown", "required": true, "exampleValue": "Permanent"}
+      ]
+    },
+    {
+      "step": "7.4 Step 4: Skills, Capabilities, Competencies & Behaviors",
+      "fields": [
+        {"name": "Technical Skills", "type": "Table", "required": false, "notes": "Capability, Competency, Skill, Min Proficiency, Target Proficiency, AI-generatable", "exampleValue": []},
+        {"name": "Soft Skills", "type": "Table", "required": false, "notes": "Skill, Min Proficiency, Target Proficiency, AI-generatable", "exampleValue": []},
+        {"name": "Education Requirements", "type": "Text Input", "required": false, "exampleValue": "Bachelor's degree in Computer Science"},
+        {"name": "Language Requirements", "type": "Text Input", "required": false, "exampleValue": "English (Fluent), Spanish (Conversational)"},
+        {"name": "Travel Requirements", "type": "Dropdown", "required": false, "exampleValue": "Occasional (up to 10%)"},
+        {"name": "Experience Requirements", "type": "Dropdown", "required": false, "exampleValue": "5-7 years"},
+        {"name": "Tools & Technologies", "type": "Text Input", "required": false, "exampleValue": "GitHub, Postman, Figma, Jira"},
+        {"name": "Certifications", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "AWS Certified Developer"},
+        {"name": "Learning Resources", "type": "Dynamic List", "required": false, "notes": "AI-generatable", "exampleValue": []}
+      ]
+    },
+    {
+      "step": "7.5 Step 5: Performance, Growth & Mobility",
+      "fields": [
+        {"name": "KPIs / Outcomes", "type": "Text Area", "required": false, "notes": "Max 5 entries, AI-generatable", "exampleValue": "- Deliver features on time and with high quality.\n- Reduce frontend bug count by 15% quarterly."},
+        {"name": "Performance Review Cycle", "type": "Dropdown", "required": false, "exampleValue": "Quarterly"},
+        {"name": "Professional Development Support", "type": "Dropdown", "required": false, "exampleValue": "Budget up to $1000"},
+        {"name": "Impact Areas", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Customer Experience, Product Delivery"},
+        {"name": "Behavioral Competencies", "type": "Text Input", "required": false, "notes": "AI-generatable", "exampleValue": "Communication, Collaboration, Problem Solving"},
+        {"name": "Career Path – Next Roles", "type": "Multi-select", "required": false, "exampleValue": ["Lead Frontend Engineer", "Staff Engineer"]},
+        {"name": "Feeder Roles", "type": "Multi-select", "required": false, "exampleValue": ["Mid-level Frontend Engineer"]},
+        {"name": "Mobility Options", "type": "Multi-select", "required": false, "exampleValue": ["Backend Engineer", "Full Stack Engineer"]},
+        {"name": "Time Allocation (%)", "type": "Text Input", "required": false, "exampleValue": "60% Development, 40% Meetings"},
+        {"name": "Succession Plan Ready", "type": "Dropdown", "required": false, "exampleValue": "Yes"},
+        {"name": "Criticality to Business", "type": "Dropdown", "required": false, "exampleValue": "High"},
+        {"name": "Backup Resource Assigned", "type": "Text Input", "required": false, "exampleValue": "John Smith"}
+      ]
+    },
+    {
+      "step": "7.6 Step 6: Administrative & Compliance Details",
+      "fields": [
+        {"name": "Billable / Non-Billable", "type": "Dropdown", "required": false, "exampleValue": "No"},
+        {"name": "Access Level / Permissions Group", "type": "Dropdown", "required": false, "exampleValue": "Contributor"},
+        {"name": "Start Date / Expected Onboarding Date", "type": "Date Input", "required": false, "exampleValue": "2025-08-15"},
+        {"name": "Status", "type": "Dropdown", "required": false, "exampleValue": "Active"},
+        {"name": "Approval Status", "type": "Dropdown", "required": false, "exampleValue": "Approved"},
+        {"name": "Security Clearance", "type": "Dropdown", "required": false, "exampleValue": "Not Required"},
+        {"name": "Background Check", "type": "Dropdown", "required": false, "exampleValue": "Required upon offer"},
+        {"name": "Mandatory Compliance Training", "type": "Text Input", "required": false, "exampleValue": "Annual Security Awareness Training"},
+        {"name": "Equipment Provisioning", "type": "Text Area", "required": false, "exampleValue": "MacBook Pro 16-inch, WebStorm, Microsoft 365, Slack"}
+      ]
+    },
+    {
+      "step": "7.7 Step 7: Custom Fields",
+      "fields": [
+        {"name": "Salary Band", "type": "Text Input", "required": false, "exampleValue": "$120,000 - $160,000 USD"},
+        {"name": "Remote Work Policy", "type": "Dropdown", "required": false, "exampleValue": "Fully Remote"},
+        {"name": "Travel Expectations", "type": "Dropdown", "required": false, "exampleValue": "Less than 10%"},
+        {"name": "On-call Duties", "type": "Dropdown", "required": false, "exampleValue": "Secondary on-call"},
+        {"name": "Innovation Time", "type": "Dropdown", "required": false, "exampleValue": "10%"}
+      ]
+    },
+    {
+      "step": "7.8 Step 8: Metadata & Activity Log",
+      "fields": [
+        {"name": "Created By / Owner", "type": "Text Input", "required": false, "notes": "Read-only", "exampleValue": "Raj Matukumalli"},
+        {"name": "Last Updated", "type": "Text Input", "required": false, "notes": "Read-only", "exampleValue": "7/22/2025, 9:29:05 PM"},
+        {"name": "Activity Log", "type": "Dynamic List", "required": false, "notes": "Read-only", "exampleValue": []}
+      ]
+    },
+    {
+      "step": "7.9 Step 9: Review & Edit",
+      "fields": [
+        {"name": "Review Content", "type": "Hierarchical Summary", "required": false, "notes": "Populated by script.js", "exampleValue": "as displayed in step 9"},
+        {"name": "Job Architecture Best Practices", "type": "Collapsible Section", "required": false, "exampleValue": "Standard Job Architecture Hierarchy, Visual Example, Key Insights"}
+      ]
+    }
+  ]
+}</code></pre>
+    </section>
+        </div> <!-- Close page-content -->
+    </div> <!-- Close page-container -->
+</body>
+</html>

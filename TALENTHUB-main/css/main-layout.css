@@ -1,0 +1,19 @@
+
+/*
+ * ===============================================
+ * Main Layout Styles for Consistent Margins
+ * ===============================================
+ * This file provides a shared layout for all pages.
+ */
+
+.container {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.main-content-container {
+    margin-top: 2rem;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Gaps</title>
+    <link rel="stylesheet" href="../static/dist/style.css">
+</head>
+<body>
+    <div class="flex flex-col h-screen bg-gray-100">
+    <div class="flex flex-col h-full">
+        <div class="flex-1 p-8 overflow-y-auto">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <!-- Step Header -->
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800">Step 7: Analyze Skill Gaps</h1>
+                    <p class="text-gray-600">Compare required skills for specific jobs against the organization’s current skill inventory to identify critical gaps.</p>
+                </div>
+
+                <div class="flex space-x-8">
+                    <!-- Left Pane: Select Job for Analysis -->
+                    <div class="w-1/2">
+                        <h2 class="text-xl font-semibold text-slate-700 mb-4">Select Job for Analysis</h2>
+                        <div class="mb-4">
+                            <label for="job-title-select" class="block text-gray-700 text-sm font-bold mb-2">Choose a job title:</label>
+                            <div class="relative">
+                                <select id="job-title-select" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
+                                    <option value="job_1">Captain (A320 Type Rated) (Level: L5)</option>
+                                    <option value="job_2">First Officer (A320 Type Rated) (Level: L3)</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Pane: Skill Gap Analysis Details -->
+                    <div class="w-1/2 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h2 class="text-xl font-semibold text-slate-700 mb-4">Skill Gap Analysis Details</h2>
+                        <div id="analysis-details">
+                            <h3 class="text-lg font-medium text-blue-700 mb-3">Analysis for: <a href="#" class="underline">Captain (A320 Type Rated)</a></h3>
+
+                            <div class="mb-4">
+                                <h4 class="text-md font-medium text-slate-700 mb-2">Required Skills for Job:</h4>
+                                <div id="required-skills" class="space-y-2">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg> Aircraft Piloting (L5)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg> Navigation (L4)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg> Air Traffic Control Communication (L4)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg> Leadership (L5)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4 class="text-md font-medium text-slate-700 mb-2">Identified Skill Gaps:</h4>
+                                <div id="skill-gaps" class="space-y-2">
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                        <span class="block sm:inline">Missing: Emergency Response Management (Required L4)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-md font-medium text-slate-700 mb-2">Skills Present in Organization (Meeting or Exceeding Requirement):</h4>
+                                <div id="present-skills" class="space-y-2">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg> Aircraft Piloting (L5)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg> Navigation (L4)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg> Air Traffic Control Communication (L4)
+                                    </span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg> Leadership (L5)
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -2,38 +2,53 @@ from flask import Flask, send_from_directory, jsonify, request
 import json
 import os
 
+# Set static_folder to the root of the repository.
+# When gunicorn runs RoleDictionary.app:app from the root,
+# the current working directory for app.py is the repository root.
 app = Flask(__name__, static_folder='.')
 
 @app.route('/')
 def serve_index():
-    return send_from_directory('.', 'index.html')
+    # index.html is located at RoleDictionary/index.html relative to the repository root
+    return send_from_directory('RoleDictionary', 'index.html')
 
 @app.route('/Role Dictionary V2/add-role-form/<path:filename>')
 def serve_add_role_form_files(filename):
-    return send_from_directory('Role Dictionary V2/add-role-form', filename)
+    # Files are located at RoleDictionary/Role Dictionary V2/add-role-form/<filename>
+    return send_from_directory('RoleDictionary/Role Dictionary V2/add-role-form', filename)
 
 @app.route('/Role Dictionary V2/<path:filename>')
 def serve_v2_files(filename):
-    return send_from_directory('Role Dictionary V2', filename)
+    # Files are located at RoleDictionary/Role Dictionary V2/<filename>
+    return send_from_directory('RoleDictionary/Role Dictionary V2', filename)
 
 @app.route('/add-role-form')
 def serve_add_role_form():
-    return send_from_directory('Role Dictionary V2/add-role-form', 'index.html')
+    # The add-role-form index.html is at RoleDictionary/Role Dictionary V2/add-role-form/index.html
+    return send_from_directory('RoleDictionary/Role Dictionary V2/add-role-form', 'index.html')
 
 @app.route('/step-<int:step_number>-<string:page_name>.html')
 def serve_step_files(step_number, page_name):
-    return send_from_directory('Role Dictionary V2/add-role-form', f'step-{step_number}-{page_name}.html')
+    # Files are located at RoleDictionary/Role Dictionary V2/add-role-form/step-<int>-<string>.html
+    return send_from_directory('RoleDictionary/Role Dictionary V2/add-role-form', f'step-{step_number}-{page_name}.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
-    # This route will handle requests for files directly under the RoleDictionary folder
-    # e.g., /mock-data.json, /style.css, /Images/tip.jpg
-    # It assumes these files are directly within the RoleDictionary directory or its subdirectories.
-    return send_from_directory('.', filename)
+    # This route should serve static files that are directly under the RoleDictionary/ directory
+    # e.g., RoleDictionary/mock-data.json, RoleDictionary/skills-ontology.html, RoleDictionary/Images/tip.jpg
+    # The filename here would be 'mock-data.json', 'skills-ontology.html', 'Images/tip.jpg'
+    # So we need to prepend 'RoleDictionary/' to the path.
+    return send_from_directory('RoleDictionary', filename)
+
+@app.route('/TALENTHUB-main/<path:filename>')
+def serve_talenthub_main_files(filename):
+    # Files are located at TALENTHUB-main/<filename> relative to the repository root
+    return send_from_directory('TALENTHUB-main', filename)
 
 @app.route('/api/mock-data')
 def get_mock_data():
-    with open('mock-data.json') as f:
+    # mock-data.json is located at RoleDictionary/mock-data.json relative to the repository root
+    with open('RoleDictionary/mock-data.json') as f:
         data = json.load(f)
     return jsonify(data)
 

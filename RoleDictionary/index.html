@@ -109,6 +109,18 @@
                     <svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <span>1. Ready</span>
                 </button>
+                <button class="tabs-nav-button w-full flex items-center space-x-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 transition-colors duration-150" data-tab-target="#tab-job-architecture" role="tab" aria-selected="false">
+                    <svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+                    <span>Job Architecture</span>
+                </button>
+                <button class="tabs-nav-button w-full flex items-center space-x-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 transition-colors duration-150" data-tab-target="#tab-add-role-form" role="tab" aria-selected="false">
+                    <svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    <span>Add Role Form</span>
+                </button>
+                <button class="tabs-nav-button w-full flex items-center space-x-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 transition-colors duration-150" data-tab-target="#tab-career-pathing" role="tab" aria-selected="false">
+                    <svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Career Pathing & Personalized Learning</span>
+                </button>
                 <button class="tabs-nav-button w-full flex items-center space-x-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100 transition-colors duration-150" data-tab-target="#tab-wip" role="tab" aria-selected="false">
                     <svg class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     <span>2. WIP</span>
@@ -181,16 +193,43 @@
                     <!-- Simplified other tabs -->
                     <div id="tab-admin" class="tab-panel hidden" role="tabpanel"><div class="bg-white border border-slate-200 rounded-lg p-6"><h2 class="text-xl font-semibold text-slate-800 mb-1">5. Admin & Backend Tools</h2><p class="text-slate-500 mb-4">Internal automation and system maintenance.</p><a href="job_scraper.html" class="text-indigo-600 hover:underline text-lg">Job Scraper</a></div></div>
 
+                    <div id="tab-job-architecture" class="tab-panel hidden" role="tabpanel">
+                        <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-lg text-slate-800 mb-4">Job Architecture</h3>
+                            <p class="text-sm text-slate-500 mb-4 flex-grow">A comprehensive view of job roles, levels, and their relationships.</p>
+                            <a href="job-architecture.html" class="text-indigo-600 hover:underline block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                </svg>
+                                Job Architecture
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="tab-add-role-form" class="tab-panel hidden" role="tabpanel">
+                        <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-lg text-slate-800 mb-4">Add Role Form - Phase 2 - Concept</h3>
+                            <p class="text-sm text-slate-500 mb-4 flex-grow">A form to add new roles to the dictionary.</p>
+                            <a href="/add-role-form" class="text-indigo-600 hover:underline block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
+                                Add Role Form - Phase 2 - Concept
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="tab-career-pathing" class="tab-panel hidden" role="tabpanel">
+                        <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
+                            <h3 class="font-semibold text-lg text-slate-800 mb-4">Career Pathing & Personalized Learning</h3>
+                            <p class="text-sm text-slate-500 mb-4 flex-grow">MVP scope</p>
+                            <a href="career_pathing_mvp.html" class="text-indigo-600 hover:underline block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
+                                Career Pathing & Personalized Learning
+                            </a>
+                        </div>
+                    </div>
+
                     <div id="tab-ready" class="tab-panel" role="tabpanel">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                            <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg text-slate-800 mb-4">Career Pathing & Personalized Learning</h3>
-                                <p class="text-sm text-slate-500 mb-4 flex-grow">MVP scope</p>
-                                <a href="career_pathing_mvp.html" class="text-indigo-600 hover:underline block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
-                                    Career Pathing & Personalized Learning
-                                </a>
-                            </div>
                             <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
                                 <h3 class="font-semibold text-lg text-slate-800 mb-4">Role Dictionary - Older Version</h3>
                                 <p class="text-sm text-slate-500 mb-4 flex-grow">A dictionary of all the roles in the organization.</p>
@@ -205,37 +244,6 @@
                                 <a href="/add-role-form" class="text-indigo-600 hover:underline block">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
                                     Add Role Form - Phase 2 - Concept
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="tab-wip" class="tab-panel hidden" role="tabpanel">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg text-slate-800 mb-4">Role Dictionary V2</h3>
-                                <p class="text-sm text-slate-500 mb-4 flex-grow">A dictionary of all the roles in the organization (V2).</p>
-                                <a href="Role Dictionary V2/role-dictionary.html" class="text-indigo-600 hover:underline block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
-                                    Role Dictionary V2
-                                </a>
-                            </div>
-                            <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg text-slate-800 mb-4">Skills Ontology</h3>
-                                <p class="text-sm text-slate-500 mb-4 flex-grow">An interactive visualization of skills, roles, and their connections.</p>
-                                <a href="#" onclick="checkPassword(event)" class="text-indigo-600 hover:underline block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z" />
-                                    </svg>
-                                    Skills Ontology Visualization
-                                </a>
-                            </div>
-                            <div class="bg-white border content-card border-slate-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg text-slate-800 mb-4">Career Pathing & Personalized Learning</h3>
-                                <p class="text-sm text-slate-500 mb-4 flex-grow">MVP scope</p>
-                                <a href="career_pathing_mvp.html" class="text-indigo-600 hover:underline block">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20"><defs><linearGradient id="aiIconGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" /><stop offset="50%" style="stop-color:#FF69B4;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" /></linearGradient></defs><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0V6h-1a1 1 0 110-2h1V3a1 1 0 011-1zM7 8a1 1 0 011 1v1h1a1 1 0 110 2H8v1a1 1 0 11-2 0v-1H5a1 1 0 110-2h1V9a1 1 0 011-1zm5 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd" fill="url(#aiIconGradient)" /></svg>
-                                    Career Pathing & Personalized Learning
                                 </a>
                             </div>
                         </div>
@@ -369,106 +377,3 @@
 <!-- Triggering a new build to ensure all files are deployed -->
 </body>
 </html>
-  <div class="custom-footer">
-    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
-  </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tabs-nav-button');
-            const tabPanels = document.querySelectorAll('.tab-panel');
-            const toggleButtons = document.querySelectorAll('[data-toggle-id]');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.querySelector('main'); // Assuming main content is within <main>
-
-            // Create backdrop element
-            const backdrop = document.createElement('div');
-            backdrop.id = 'sidebar-backdrop';
-            backdrop.className = 'fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden';
-            document.body.appendChild(backdrop);
-
-            // Toggle sidebar visibility
-            mobileMenuButton.addEventListener('click', () => {
-                sidebar.classList.toggle('-translate-x-full');
-                backdrop.classList.toggle('hidden');
-            });
-
-            // Close sidebar when backdrop is clicked
-            backdrop.addEventListener('click', () => {
-                sidebar.classList.add('-translate-x-full');
-                backdrop.classList.add('hidden');
-            });
-
-            // Close sidebar when a navigation item is clicked (for mobile)
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Existing tab switching logic
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                        btn.setAttribute('aria-selected', 'false');
-                    });
-                    tabPanels.forEach(panel => {
-                        panel.classList.add('hidden');
-                        panel.classList.remove('active');
-                    });
-
-                    button.classList.add('active');
-                    button.setAttribute('aria-selected', 'true');
-                    
-                    const targetId = button.getAttribute('data-tab-target');
-                    const targetPanel = document.querySelector(targetId);
-                    if (targetPanel) {
-                        targetPanel.classList.remove('hidden');
-                        targetPanel.classList.add('active');
-                    }
-
-                    // Close sidebar on mobile after selection
-                    if (window.innerWidth < 768) { // Tailwind's 'md' breakpoint is 768px
-                        sidebar.classList.add('-translate-x-full');
-                        backdrop.classList.add('hidden');
-                    }
-                });
-            });
-
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetId = button.getAttribute('data-toggle-id');
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        const isHidden = targetElement.classList.contains('hidden');
-                        targetElement.classList.toggle('hidden');
-                        button.textContent = isHidden ? 'Show less' : 'Show more';
-                    }
-                });
-            });
-
-            // Ensure correct initial tab state on page load
-            tabPanels.forEach(panel => {
-                panel.classList.add('hidden'); // Hide all panels
-                panel.classList.remove('active'); // Ensure no panel is active initially
-            });
-
-            // Explicitly activate the desired tab on load
-            const initialActiveButton = document.querySelector('.tabs-nav-button.active');
-            if (initialActiveButton) {
-                const targetId = initialActiveButton.getAttribute('data-tab-target');
-                const targetPanel = document.querySelector(targetId);
-                if (targetPanel) {
-                    targetPanel.classList.remove('hidden');
-                    targetPanel.classList.add('active');
-                }
-            }
-
-            // Disable right-click context menu
-            document.addEventListener('contextmenu', function(event) {
-                event.preventDefault();
-            });
-
-        });
-    </script>
-<script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
-</body>

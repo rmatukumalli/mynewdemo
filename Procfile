@@ -1,1 +1,1 @@
-web: gunicorn RoleDictionary.app:app --chdir RoleDictionary
+web: gunicorn TALENTHUB-main.wsgi:app --chdir TALENTHUB-main

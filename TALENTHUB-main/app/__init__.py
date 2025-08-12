@@ -132,8 +132,22 @@ def create_app():
                 app.logger.error(f"Error serving admin-dashboard.html explicitly (defined in create_app): {e}")
                 abort(500)
 
+        # --- Specific route for CSS files ---
+        @app.route('/css/<path:filename>')
+        def serve_css_factory(filename):
+            app.logger.info(f"serve_css_factory called for: {filename}")
+            css_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'css'))
+            try:
+                return send_from_directory(css_dir, filename)
+            except NotFound:
+                app.logger.info(f"CSS file not found: {filename} (path searched: {os.path.join(css_dir, filename)})")
+                abort(404)
+            except Exception as e:
+                app.logger.error(f"Error serving CSS file {filename}: {e}")
+                abort(500)
+
         # --- General static file server (moved from app.py) ---
-        # This serves files from the project root and subdirectories like css/, js/, admin/
+        # This serves files from the project root and subdirectories like js/, admin/
         # It's placed after more specific routes.
         @app.route('/<path:filename>')
         def serve_root_static_factory(filename):

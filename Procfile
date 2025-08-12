@@ -1,1 +1,1 @@
-web: gunicorn RoleDictionary.app:app
+web: gunicorn RoleDictionary.app:app --chdir RoleDictionary

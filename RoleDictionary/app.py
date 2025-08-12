@@ -9,8 +9,9 @@ app = Flask(__name__, static_folder='.')
 
 @app.route('/')
 def serve_index():
-    # index.html is located at RoleDictionary/index.html relative to the repository root
-    return send_from_directory('RoleDictionary', 'index.html')
+    # index.html is located at TALENTHUB-main/index.html relative to the repository root
+    # Since the app is run with --chdir RoleDictionary, we need to go up one level and then into TALENTHUB-main
+    return send_from_directory('../TALENTHUB-main', 'index.html')
 
 @app.route('/Role Dictionary V2/add-role-form/<path:filename>')
 def serve_add_role_form_files(filename):
@@ -48,7 +49,8 @@ def serve_talenthub_main_files(filename):
 @app.route('/api/mock-data')
 def get_mock_data():
     # mock-data.json is located at RoleDictionary/mock-data.json relative to the repository root
-    with open('RoleDictionary/mock-data.json') as f:
+    # Since the app is run with --chdir RoleDictionary, mock-data.json is in the current directory
+    with open('mock-data.json') as f:
         data = json.load(f)
     return jsonify(data)
 

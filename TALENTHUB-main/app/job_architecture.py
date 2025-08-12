@@ -409,7 +409,6 @@ def delete_job_skill(id):
 def ai_generate_job_description():
     data = request.json
     job_title = data.get('jobTitle', 'Default Job')
-    time.sleep(1.5) # Simulate AI processing time
     return jsonify({
         "description": f"AI-generated detailed description for {job_title}: This role involves comprehensive responsibilities in {job_title.lower()} operations, requiring strong analytical and leadership skills.",
         "core_skills": [f"Advanced {job_title.replace(' ', '')} Skills", "Strategic Planning"],
@@ -423,7 +422,6 @@ def ai_suggest_missing_skills():
     data = request.json
     current_skills = data.get('currentSkills', [])
     job_title = data.get('jobTitle', 'Generic Role')
-    time.sleep(1.0)
     return jsonify({
         "suggested_skills": [f"AI Suggested Skill for {job_title} 1", f"AI Suggested Skill for {job_title} 2"]
     })
@@ -432,7 +430,6 @@ def ai_suggest_missing_skills():
 def ai_career_path_recommendation():
     data = request.json
     current_role = data.get('currentRole', 'Current Role')
-    time.sleep(1.0)
     return jsonify({
         "next_roles": [f"Senior {current_role}", f"Lead {current_role.replace('Junior ', '')}"],
         "required_skill_delta": ["Leadership Skills", "Project Management"],
@@ -446,7 +443,6 @@ def ai_career_path_recommendation():
 @job_arch_bp.route('/api/ai/risk_predictions', methods=['POST'])
 def ai_risk_predictions():
     data = request.json
-    time.sleep(1.0)
     return jsonify({
         "talent_risks": ["High attrition risk in junior roles.", "Skill shortage in emerging tech."],
         "promotion_blockers": ["Lack of clear career progression paths for mid-level staff."]
@@ -456,7 +452,6 @@ def ai_risk_predictions():
 def ai_training_plan_generation():
     data = request.json
     skill_gap = data.get('skillGap', 'Generic Skill Gap')
-    time.sleep(1.0)
     return jsonify({
         "training_plan": f"Comprehensive training plan for {skill_gap}: Module 1 (Basics), Module 2 (Advanced), Project-based learning."
     })
@@ -464,7 +459,6 @@ def ai_training_plan_generation():
 @job_arch_bp.route('/api/ai/organizational_insights', methods=['POST'])
 def ai_organizational_insights():
     data = request.json
-    time.sleep(1.5)
     return jsonify({
         "insights": [
             "**AI Insight:** Overall organizational completeness is good.",
@@ -479,7 +473,6 @@ def ai_organizational_insights():
 @job_arch_bp.route('/api/ai/role_clustering_recommendations', methods=['POST'])
 def ai_role_clustering_recommendations():
     data = request.json
-    time.sleep(1.0)
     return jsonify({
         "role_clusters": ["Sales & Marketing Cluster", "Engineering & Product Cluster"],
         "bu_recommendations": ["Consider a new 'Digital Transformation' Business Unit."],

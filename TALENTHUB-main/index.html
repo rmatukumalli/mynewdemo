@@ -517,5 +517,143 @@
 
         });
     </script>
+
+    <!-- Calendar Visual for Days Left -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <div class="relative w-40 h-48 bg-white rounded-lg shadow-xl overflow-hidden">
+            <!-- Top banner -->
+            <div class="absolute top-0 left-0 right-0 h-10 bg-slate-700 flex items-center justify-center text-white font-bold text-sm uppercase tracking-wider rounded-t-lg">
+                DAYS LEFT
+            </div>
+            <!-- Calendar rings -->
+            <div class="absolute top-8 left-0 right-0 flex justify-around px-4">
+                <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+            </div>
+            <!-- Day count -->
+            <div class="flex items-center justify-center h-full pt-4">
+                <span id="days-left-visual" class="text-6xl font-extrabold text-slate-800"></span>
+            </div>
+            <!-- Page curl effect -->
+            <div class="absolute bottom-0 right-0 w-8 h-8 bg-slate-100 rounded-tl-lg" style="clip-path: polygon(0 100%, 100% 100%, 100% 0);"></div>
+        </div>
+    </div>
+
+    <script>
+/**
+ * Parse an ISO date string (YYYY-MM-DD) to a Date at local midnight.
+ */
+function parseISODateToLocal(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d); // local time at midnight
+}
+
+/**
+ * Check if a date (Date object) matches any holiday in Set of 'YYYY-MM-DD' strings.
+ */
+function isHoliday(date, holidaySet) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return holidaySet.has(`${yyyy}-${mm}-${dd}`);
+}
+
+/**
+ * Count working days (Mon-Fri) between start (inclusive) and end (inclusive),
+ * excluding holidays provided as an array of 'YYYY-MM-DD' strings.
+ *
+ * Parameters:
+ *   startDate (Date) - start date (usually today)
+ *   endDate   (Date) - target date
+ *   holidays  (Array) - array of 'YYYY-MM-DD' strings to exclude
+ *
+ * Returns:
+ *   Number of working days excluding weekends and listed holidays.
+ */
+function countWorkingDaysExcludingHolidays(startDate, endDate, holidays = []) {
+  if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
+    throw new Error('startDate and endDate must be Date objects');
+  }
+
+  // If start is after end, return 0
+  if (startDate > endDate) return 0;
+
+  // Build a Set for O(1) holiday checks
+  const holidaySet = new Set(holidays);
+
+  // Normalize times to local midnight to avoid DST/time issues
+  let cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+  const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+
+  let count = 0;
+  while (cursor <= end) {
+    const day = cursor.getDay(); // 0 = Sunday, 6 = Saturday
+    if (day !== 0 && day !== 6 && !isHoliday(cursor, holidaySet)) {
+      count++;
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return count;
+}
+
+/**
+ * Utility: render the counter in the element with given id
+ * Updates once now; schedules an update at local midnight for subsequent days.
+ */
+function renderWorkingDaysCounter({
+  targetDateISO = '2026-06-30', // Default target date for Q2 2026
+  holidays = []
+} = {}) {
+  const daysLeftVisualEl = document.getElementById('days-left-visual');
+  if (!daysLeftVisualEl) return;
+
+  function countTotalDays(startDate, endDate) {
+    const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    return Math.round(Math.abs((end - start) / oneDay)) + 1; // +1 to include the end date
+  }
+
+  function updateNow() {
+    const today = new Date();
+    const target = parseISODateToLocal(targetDateISO);
+    const totalDaysLeft = countTotalDays(today, target);
+    daysLeftVisualEl.textContent = totalDaysLeft;
+  }
+
+  updateNow();
+
+  // Schedule an update at next local midnight so the count increments each day
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const msUntilMidnight = nextMidnight - now;
+
+  setTimeout(function scheduleDaily() {
+    updateNow();
+    // Then set interval for every 24 hours
+    setInterval(updateNow, 24 * 60 * 60 * 1000);
+  }, msUntilMidnight);
+}
+
+/* === Example usage ===
+   Provide any company/national holidays (YYYY-MM-DD). The list below is an example.
+   Replace with your authoritative holiday set or fetch from server if needed.
+*/
+const holidays = [
+  '2025-08-15', // example: Independence Day (India)
+  '2025-10-02', // example: Gandhi Jayanti
+  '2025-12-25', // example: Christmas
+  // Add company observed holidays here...
+  // '2026-01-26', ...
+];
+
+renderWorkingDaysCounter({
+  targetDateISO: '2026-06-30',
+  holidays: holidays
+});
+</script>
 </body>
 </html>

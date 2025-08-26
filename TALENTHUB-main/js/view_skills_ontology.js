@@ -216,12 +216,30 @@ async function displaySkillDetails(skillId) {
         renderHierarchyView(skillDetails);
         renderProficienciesInSlideout(skillDetails.proficiencies, skillDetails.name);
         fetchAndDisplaySkillRelationships(skillId);
-        renderSkillMetadata(skillDetails); // Call the new rendering function for insights
+        renderSkillMetadata(skillDetails);
 
         // Update skill name in insights panel
         const insightsSkillNameText = document.getElementById('insights-skill-name').querySelector('.skill-name-text');
         if (insightsSkillNameText) {
             insightsSkillNameText.textContent = `Skill Insights for ${skillDetails.name}`;
+        }
+
+        // Update skill name in related occupations panel
+        const relatedOccupationsSkillNameText = document.getElementById('related-occupations-skill-name').querySelector('.skill-name-text');
+        if (relatedOccupationsSkillNameText) {
+            relatedOccupationsSkillNameText.textContent = `Related Occupations for ${skillDetails.name}`;
+        }
+
+        // Update skill name in job postings panel
+        const jobPostingsSkillNameText = document.getElementById('job-postings-skill-name').querySelector('.skill-name-text');
+        if (jobPostingsSkillNameText) {
+            jobPostingsSkillNameText.textContent = `Job Postings for ${skillDetails.name}`;
+        }
+
+        // Update skill name in optimization tools panel
+        const optimizationToolsSkillNameText = document.getElementById('optimization-tools-skill-name').querySelector('.skill-name-text');
+        if (optimizationToolsSkillNameText) {
+            optimizationToolsSkillNameText.textContent = `Optimization Tools for ${skillDetails.name}`;
         }
         
         // Make the hierarchy panel visible now that it's populated
@@ -629,6 +647,21 @@ async function initializeApp() {
         data = await response.text();
         document.getElementById('insights-slideout-placeholder').innerHTML = data;
 
+        // Load new related occupations slideout
+        response = await fetch('slideout_related_occupations.html');
+        data = await response.text();
+        document.getElementById('related-occupations-slideout-placeholder').innerHTML = data;
+
+        // Load new job postings slideout
+        response = await fetch('slideout_job_postings.html');
+        data = await response.text();
+        document.getElementById('job-postings-slideout-placeholder').innerHTML = data;
+
+        // Load new optimization tools slideout
+        response = await fetch('slideout_optimization_tools.html');
+        data = await response.text();
+        document.getElementById('optimization-tools-slideout-placeholder').innerHTML = data;
+
     } catch (error) {
         console.error("Failed to load slideout panel HTML:", error);
         return;
@@ -655,61 +688,46 @@ async function initializeApp() {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
-
-    if (!sidebar) {
-        console.error('Hierarchy sidebar element not found.');
-        return;
-    }
-
-    const isOpening = !sidebar.classList.contains('visible');
-
-    // If we are opening this sidebar, close the other one first.
-    if (isOpening && proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
-        proficienciesSidebar.classList.remove('visible');
-    }
-
-    sidebar.classList.toggle('visible');
-}
-
-function toggleProficienciesSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
-
-    if (!proficienciesSidebar) {
-        console.error('Proficiencies sidebar element not found.');
-        return;
-    }
-
-    const isOpening = !proficienciesSidebar.classList.contains('visible');
-
-    // If we are opening this sidebar, close the other one first.
-    if (isOpening && sidebar && sidebar.classList.contains('visible')) {
-        sidebar.classList.remove('visible');
-    }
-
-    proficienciesSidebar.classList.toggle('visible');
-}
-
-// Global toggle functions for sidebars
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
     const insightsSidebar = document.getElementById('insights-sidebar');
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
 
-    if (!sidebar) {
-        console.error('Hierarchy sidebar element not found.');
+    const skillDetailsPanel = document.getElementById('skill-details-panel'); // Add this line
+    const skillInsightsPanel = document.getElementById('skill-insights-panel');
+    const relatedOccupationsPanel = document.getElementById('related-occupations-panel');
+    const jobPostingsPanel = document.getElementById('job-postings-panel');
+    const optimizationToolsPanel = document.getElementById('optimization-tools-panel');
+
+    // Close all other sidebars and hide their panels
+    [proficienciesSidebar, insightsSidebar, relatedOccupationsSidebar, jobPostingsSidebar, optimizationToolsSidebar].forEach(sb => {
+        if (sb && sb.classList.contains('visible')) {
+            sb.classList.remove('visible');
+        }
+    });
+    [skillInsightsPanel, relatedOccupationsPanel, jobPostingsPanel, optimizationToolsPanel].forEach(panel => {
+        if (panel) panel.style.display = 'none';
+    });
+
+    if (!skillDetailsPanel || !sidebar || !skillInsightsPanel || !relatedOccupationsPanel || !jobPostingsPanel || !optimizationToolsPanel) {
+        console.error('One or more sidebar or skill details panel elements not found.');
         return;
     }
 
     const isOpening = !sidebar.classList.contains('visible');
 
     if (isOpening) {
-        if (proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
-            proficienciesSidebar.classList.remove('visible');
-        }
-        if (insightsSidebar && insightsSidebar.classList.contains('visible')) {
-            insightsSidebar.classList.remove('visible');
-        }
+        [proficienciesSidebar, insightsSidebar, relatedOccupationsSidebar, jobPostingsSidebar, optimizationToolsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        [skillInsightsPanel, relatedOccupationsPanel, jobPostingsPanel, optimizationToolsPanel].forEach(panel => {
+            if (panel) panel.style.display = 'none';
+        });
+        skillDetailsPanel.style.display = 'block'; // Make the Relationships panel visible when opening
+    } else {
+        skillDetailsPanel.style.display = 'none'; // Hide the Relationships panel when closing
     }
 
     sidebar.classList.toggle('visible');
@@ -719,21 +737,31 @@ function toggleProficienciesSidebar() {
     const sidebar = document.getElementById('sidebar');
     const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
     const insightsSidebar = document.getElementById('insights-sidebar');
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
 
-    if (!proficienciesSidebar) {
-        console.error('Proficiencies sidebar element not found.');
+    const proficienciesPanel = document.getElementById('proficiencies-sidebar').querySelector('.skill-details'); // Assuming panel is inside sidebar
+
+    if (!proficienciesSidebar || !proficienciesPanel) {
+        console.error('Proficiencies sidebar or panel element not found.');
         return;
     }
 
     const isOpening = !proficienciesSidebar.classList.contains('visible');
 
     if (isOpening) {
-        if (sidebar && sidebar.classList.contains('visible')) {
-            sidebar.classList.remove('visible');
-        }
-        if (insightsSidebar && insightsSidebar.classList.contains('visible')) {
-            insightsSidebar.classList.remove('visible');
-        }
+        [sidebar, insightsSidebar, relatedOccupationsSidebar, jobPostingsSidebar, optimizationToolsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        [document.getElementById('skill-insights-panel'), document.getElementById('related-occupations-panel'), document.getElementById('job-postings-panel'), document.getElementById('optimization-tools-panel')].forEach(panel => {
+            if (panel) panel.style.display = 'none';
+        });
+        proficienciesPanel.style.display = 'block';
+    } else {
+        proficienciesPanel.style.display = 'none';
     }
 
     proficienciesSidebar.classList.toggle('visible');
@@ -743,9 +771,13 @@ function toggleSkillInsightsSidebar() {
     const sidebar = document.getElementById('sidebar');
     const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
     const insightsSidebar = document.getElementById('insights-sidebar');
-    const skillInsightsPanel = document.getElementById('skill-insights-panel'); // Get the panel
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
 
-    if (!insightsSidebar || !skillInsightsPanel) { // Check for both
+    const skillInsightsPanel = document.getElementById('skill-insights-panel');
+
+    if (!insightsSidebar || !skillInsightsPanel) {
         console.error('Skill Insights sidebar or panel element not found.');
         return;
     }
@@ -753,18 +785,175 @@ function toggleSkillInsightsSidebar() {
     const isOpening = !insightsSidebar.classList.contains('visible');
 
     if (isOpening) {
-        if (sidebar && sidebar.classList.contains('visible')) {
-            sidebar.classList.remove('visible');
-        }
-        if (proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
-            proficienciesSidebar.classList.remove('visible');
-        }
-        skillInsightsPanel.style.display = 'block'; // Make the panel visible when opening the sidebar
+        [sidebar, proficienciesSidebar, relatedOccupationsSidebar, jobPostingsSidebar, optimizationToolsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        skillInsightsPanel.style.display = 'block';
     } else {
-        skillInsightsPanel.style.display = 'none'; // Hide the panel when closing the sidebar
+        skillInsightsPanel.style.display = 'none';
     }
 
     insightsSidebar.classList.toggle('visible');
+}
+
+function toggleRelatedOccupationsSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
+
+    const relatedOccupationsPanel = document.getElementById('related-occupations-panel');
+
+    if (!relatedOccupationsSidebar || !relatedOccupationsPanel) {
+        console.error('Related Occupations sidebar or panel element not found.');
+        return;
+    }
+
+    const isOpening = !relatedOccupationsSidebar.classList.contains('visible');
+
+    if (isOpening) {
+        [sidebar, proficienciesSidebar, insightsSidebar, jobPostingsSidebar, optimizationToolsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        relatedOccupationsPanel.style.display = 'block';
+    } else {
+        relatedOccupationsPanel.style.display = 'none';
+    }
+
+    relatedOccupationsSidebar.classList.toggle('visible');
+}
+
+function toggleJobPostingsSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
+
+    const jobPostingsPanel = document.getElementById('job-postings-panel');
+
+    if (!jobPostingsSidebar || !jobPostingsPanel) {
+        console.error('Job Postings sidebar or panel element not found.');
+        return;
+    }
+
+    const isOpening = !jobPostingsSidebar.classList.contains('visible');
+
+    if (isOpening) {
+        [sidebar, proficienciesSidebar, insightsSidebar, relatedOccupationsSidebar, optimizationToolsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        jobPostingsPanel.style.display = 'block';
+        // Render charts when the Job Postings sidebar is opened
+        if (currentSelectedSkillId) {
+            const skillNameText = document.getElementById('job-postings-skill-name').querySelector('.skill-name-text');
+            renderJobPostingsCharts(skillNameText.textContent.replace('Job Postings for ', ''));
+        }
+    } else {
+        jobPostingsPanel.style.display = 'none';
+    }
+
+    jobPostingsSidebar.classList.toggle('visible');
+}
+
+function toggleOptimizationToolsSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+    const relatedOccupationsSidebar = document.getElementById('related-occupations-sidebar');
+    const jobPostingsSidebar = document.getElementById('job-postings-sidebar');
+    const optimizationToolsSidebar = document.getElementById('optimization-tools-sidebar');
+
+    const optimizationToolsPanel = document.getElementById('optimization-tools-panel');
+
+    if (!optimizationToolsSidebar || !optimizationToolsPanel) {
+        console.error('Optimization Tools sidebar or panel element not found.');
+        return;
+    }
+
+    const isOpening = !optimizationToolsSidebar.classList.contains('visible');
+
+    if (isOpening) {
+        [sidebar, proficienciesSidebar, insightsSidebar, relatedOccupationsSidebar, jobPostingsSidebar].forEach(sb => {
+            if (sb && sb.classList.contains('visible')) {
+                sb.classList.remove('visible');
+            }
+        });
+        optimizationToolsPanel.style.display = 'block';
+    } else {
+        optimizationToolsPanel.style.display = 'none';
+    }
+
+    optimizationToolsSidebar.classList.toggle('visible');
+}
+
+// Function to render job postings charts
+let jobTrendsChart = null; // To store the chart instance
+
+function renderJobPostingsCharts(skillName) {
+    const ctx = document.getElementById('job-trends-chart');
+
+    if (!ctx) {
+        console.error('Job trends chart canvas not found.');
+        return;
+    }
+
+    // Destroy existing chart if it exists
+    if (jobTrendsChart) {
+        jobTrendsChart.destroy();
+    }
+
+    // Dummy data for job postings trends
+    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+    const data = [120, 150, 130, 180, 200]; // Example job posting counts
+
+    jobTrendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Job Postings for ${skillName}`,
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Job Postings Trend (Last 5 Months)'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Postings'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                }
+            }
+        }
+    });
 }
 
 // Wait for the DOM to be fully loaded before initializing the app

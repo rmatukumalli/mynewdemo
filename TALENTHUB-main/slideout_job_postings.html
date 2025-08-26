@@ -1,0 +1,53 @@
+<!-- Job Postings Slide-out Panel -->
+<div class="sidebar" id="job-postings-sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleJobPostingsSidebar()">&times;</a>
+    <div class="skill-details" id="job-postings-panel" style="display: none;">
+        <h3 id="job-postings-skill-name">
+            <span class="skill-name-text">Job Postings for </span>
+        </h3>
+
+        <div id="job-postings-container" class="metadata-container">
+            <h4>Job Posting Data</h4>
+            <div class="metadata-section">
+                <h5>Select Country</h5>
+                <select id="country-select">
+                    <option value="US">United States</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australia</option>
+                    <option value="IN">India</option>
+                </select>
+            </div>
+            <div class="metadata-section">
+                <h5>Top Companies Posting</h5>
+                <ul id="top-companies">
+                    <li>Company A</li>
+                    <li>Company B</li>
+                    <li>Company C</li>
+                </ul>
+            </div>
+            <div class="metadata-section">
+                <h5>Top Job Titles</h5>
+                <ul id="top-job-titles">
+                    <li>Software Engineer</li>
+                    <li>Data Analyst</li>
+                    <li>Project Manager</li>
+                </ul>
+            </div>
+            <div class="metadata-section">
+                <h5>Job Postings Trends</h5>
+                <div class="chart-container">
+                    <canvas id="job-trends-chart"></canvas>
+                </div>
+            </div>
+            <div class="metadata-section">
+                <h5>Live Job Postings</h5>
+                <ul id="live-job-postings">
+                    <li><a href="#">Job Title 1 at Company X</a></li>
+                    <li><a href="#">Job Title 2 at Company Y</a></li>
+                    <li><a href="#">Job Title 3 at Company Z</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

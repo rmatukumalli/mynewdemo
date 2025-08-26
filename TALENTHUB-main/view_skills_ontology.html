@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/slideout_hierarchy.css">
     <link rel="stylesheet" href="css/slideout_proficiencies.css">
     <link rel="stylesheet" href="css/slideout_insights.css">
+    <link rel="stylesheet" href="css/slideout_related_occupations.css">
+    <link rel="stylesheet" href="css/slideout_job_postings.css">
+    <link rel="stylesheet" href="css/slideout_optimization_tools.css">
 </head>
 <body>
     <div class="container">
@@ -27,6 +30,9 @@
                 <button class="hierarchy-button" onclick="toggleSidebar()">Relationships</button>
                 <button class="hierarchy-button" onclick="toggleProficienciesSidebar()">Proficiency Levels</button>
                 <button class="hierarchy-button" onclick="toggleSkillInsightsSidebar()">Skill Insights</button>
+                <button class="hierarchy-button" onclick="toggleRelatedOccupationsSidebar()">Related Occupations</button>
+                <button class="hierarchy-button" onclick="toggleJobPostingsSidebar()">Job Postings</button>
+                <button class="hierarchy-button" onclick="toggleOptimizationToolsSidebar()">Optimization Tools</button>
             </div>
         </div>
 
@@ -80,8 +86,12 @@
         <div id="slideout-placeholder"></div>
         <div id="proficiencies-slideout-placeholder"></div>
         <div id="insights-slideout-placeholder"></div>
+        <div id="related-occupations-slideout-placeholder"></div>
+        <div id="job-postings-slideout-placeholder"></div>
+        <div id="optimization-tools-slideout-placeholder"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script src="js/view_skills_ontology.js?v=1719624963"></script>
     <footer class="page-footer">
         <div class="footer-links">

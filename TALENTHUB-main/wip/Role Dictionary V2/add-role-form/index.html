@@ -162,19 +162,21 @@
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            column-gap: 16px; /* Consistent horizontal spacing */
+            row-gap: 20px; /* Adjusted vertical spacing between grid rows */
         }
         
         .form-grid-single-col {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            row-gap: 20px; /* Adjusted vertical spacing for single column grid */
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
+            gap: 8px; /* Consistent vertical spacing between label and input */
         }
         
         .form-group-full-width {
@@ -182,13 +184,26 @@
         }
 
         .form-group label {
+            display: flex;
+            align-items: center;
             font-weight: 500;
             font-size: 0.875rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px; /* Consistent bottom margin for labels */
             color: var(--secondary-color);
         }
 
-        .form-input, .form-select, .form-textarea {
+        .form-input, .form-select {
+            width: 100%;
+            height: 40px; /* Consistent input height */
+            padding: 0.625rem 1rem;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: var(--white);
+        }
+
+        .form-textarea {
             width: 100%;
             padding: 0.625rem 1rem;
             border: 1px solid #dadce0;
@@ -331,6 +346,47 @@
             cursor: help;
             font-size: 0.875rem;
         }
+
+        .info-icon-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .info-icon-container .tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the icon */
+            left: 50%;
+            margin-left: -100px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .info-icon-container .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* At the bottom of the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-gray) transparent transparent transparent;
+        }
+
+        .info-icon-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
         
         .step-content {
             display: none;
@@ -465,6 +521,12 @@
             color: var(--primary-color);
             text-decoration: none;
         }
+
+        @media (max-width: 768px) {
+            .form-grid, .form-grid-single-col {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -537,25 +599,45 @@
                                 <form id="add-role-form-step1">
                                     <h3>Role Overview</h3>
                                     <div class="form-group form-group-full-width">
-                                        <label for="role-title">Role Title <i class="fas fa-info-circle info-icon" data-tooltip-key="roleNameTooltip"></i></label>
+                                        <label for="role-title">Role Title
+                                            <span class="info-icon-container">
+                                                <i class="fas fa-info-circle info-icon"></i>
+                                                <span class="tooltip">The official title of the role.</span>
+                                            </span>
+                                        </label>
                                         <input type="text" id="role-title" class="form-input" placeholder="e.g., Senior Frontend Engineer" value="Senior Frontend Engineer">
                                     </div>
                                     <div class="form-group form-group-full-width">
-                                        <label for="role-summary">Role Summary <i class="fas fa-info-circle info-icon" data-tooltip-key="roleSummaryTooltip"></i></label>
+                                        <label for="role-summary">Role Summary
+                                            <span class="info-icon-container">
+                                                <i class="fas fa-info-circle info-icon"></i>
+                                                <span class="tooltip">A brief 2-3 sentence summary of the role's purpose.</span>
+                                            </span>
+                                        </label>
                                         <div class="job-description-header">
                                             <button type="button" id="generate-summary-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                         </div>
                                         <textarea id="role-summary" class="form-input" rows="2" maxlength="300" placeholder="A brief 2-3 sentence summary">Designs, develops, and maintains user-facing features for our web applications.</textarea>
                                     </div>
                                     <div class="form-group form-group-full-width">
-                                        <label for="job-description">Job Description <i class="fas fa-info-circle info-icon" data-tooltip-key="jobDescriptionTooltip"></i></label>
+                                        <label for="job-description">Job Description
+                                            <span class="info-icon-container">
+                                                <i class="fas fa-info-circle info-icon"></i>
+                                                <span class="tooltip">Full narrative of the role’s responsibilities, impact, and context.</span>
+                                            </span>
+                                        </label>
                                         <div class="job-description-header">
                                             <button type="button" id="generate-jd-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                         </div>
                                         <textarea id="job-description" class="form-input" rows="5" maxlength="3000" placeholder="Full narrative of the role’s responsibilities, impact, and context.">The Senior Frontend Engineer will build and maintain the user interface, collaborating closely with product managers and designers to implement new features, ensure responsive design, and participate in code reviews.</textarea>
                                     </div>
                                     <div class="form-group form-group-full-width">
-                                        <label for="key-responsibilities">Key Responsibilities <i class="fas fa-info-circle info-icon" data-tooltip-key="keyResponsibilitiesTooltip"></i></label>
+                                        <label for="key-responsibilities">Key Responsibilities
+                                            <span class="info-icon-container">
+                                                <i class="fas fa-info-circle info-icon"></i>
+                                                <span class="tooltip">List of the role’s most important tasks and responsibilities (4-8 entries recommended, min 3, max 10). Separate with new lines or bullet points.</span>
+                                            </span>
+                                        </label>
                                         <div class="job-description-header">
                                             <button type="button" id="generate-responsibilities-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                         </div>
@@ -567,7 +649,12 @@
                                         </textarea>
                                     </div>
                                     <div class="form-group form-group-full-width">
-                                        <label for="decision-scope">Decision Scope <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="decisionScopeTooltip"></i></label>
+                                        <label for="decision-scope">Decision Scope <span style="color: red; font-weight: bold;">(P2)</span>
+                                            <span class="info-icon-container">
+                                                <i class="fas fa-info-circle info-icon"></i>
+                                                <span class="tooltip">Defines what this role owns or can make decisions on.</span>
+                                            </span>
+                                        </label>
                                         <div class="job-description-header">
                                             <button type="button" id="generate-decision-scope-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                         </div>
@@ -591,7 +678,12 @@
                                     </div>
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="business-unit">Business Unit / Division <i class="fas fa-info-circle info-icon" data-tooltip-key="businessUnitTooltip"></i></label>
+                                            <label for="business-unit">Business Unit / Division
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The primary business unit or division this role belongs to.</span>
+                                                </span>
+                                            </label>
                                             <select id="business-unit" class="form-input" required>
                                                 <option value="">Select Business Unit</option>
                                                 <option value="Flight Operations">Flight Operations</option>
@@ -602,7 +694,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="department">Department <i class="fas fa-info-circle info-icon" data-tooltip-key="departmentTooltip"></i></label>
+                                            <label for="department">Department
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The specific department within the business unit.</span>
+                                                </span>
+                                            </label>
                                             <select id="department" class="form-input" required>
                                                 <option value="">Select Department</option>
                                                 <option value="Pilot Training">Pilot Training</option>
@@ -613,7 +710,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="job-family">Job Family <i class="fas fa-info-circle info-icon" data-tooltip-key="jobFamilyTooltip"></i></label>
+                                            <label for="job-family">Job Family
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">A grouping of jobs involving similar work and requiring related skills.</span>
+                                                </span>
+                                            </label>
                                             <select id="job-family" class="form-input" required>
                                                 <option value="">Select Job Family</option>
                                                 <option value="Flight Crew">Flight Crew</option>
@@ -624,7 +726,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="role-group">Role Group / Team <i class="fas fa-info-circle info-icon" data-tooltip-key="roleGroupTooltip"></i></label>
+                                            <label for="role-group">Role Group / Team
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">A smaller grouping or team within a job family.</span>
+                                                </span>
+                                            </label>
                                             <select id="role-group" class="form-input" required>
                                                 <option value="">Select Role Group / Team</option>
                                                 <option value="Cadet Program">Cadet Program</option>
@@ -635,15 +742,30 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="role-code">Role Code / ID <i class="fas fa-info-circle info-icon" data-tooltip-key="roleCodeTooltip"></i></label>
+                                            <label for="role-code">Role Code / ID
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">A unique identifier for the role.</span>
+                                                </span>
+                                            </label>
                                             <input type="text" id="role-code" class="form-input" value="ENG-FE-IC04" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="created-date">Created Date <i class="fas fa-info-circle info-icon" data-tooltip-key="createdDateTooltip"></i></label>
+                                            <label for="created-date">Created Date
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The date this role was created in the system.</span>
+                                                </span>
+                                            </label>
                                             <input type="date" id="created-date" class="form-input" value="2025-07-22">
                                         </div>
                                         <div class="form-group">
-                                            <label for="team-size">Team Size <i class="fas fa-info-circle info-icon" data-tooltip-key="teamSizeTooltip"></i></label>
+                                            <label for="team-size">Team Size
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The approximate size of the team this role is part of.</span>
+                                                </span>
+                                            </label>
                                             <select id="team-size" class="form-input">
                                                 <option value="">Select Team Size</option>
                                                 <option value="1-5">1-5</option>
@@ -654,11 +776,21 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="reporting-lines">Reporting Lines <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="reportingLinesTooltip"></i></label>
+                                            <label for="reporting-lines">Reporting Lines <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Describes who this role reports to.</span>
+                                                </span>
+                                            </label>
                                             <input type="text" id="reporting-lines" class="form-input" placeholder="e.g., Reports to Engineering Manager">
                                         </div>
                                         <div class="form-group">
-                                            <label for="matrix-relationships">Matrix Relationships <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="matrixRelationshipsTooltip"></i></label>
+                                            <label for="matrix-relationships">Matrix Relationships <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Describes key cross-functional relationships.</span>
+                                                </span>
+                                            </label>
                                             <div class="job-description-header">
                                                 <button type="button" id="generate-matrix-relationships-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                             </div>
@@ -681,7 +813,12 @@
                                     <h3>Classification & Hierarchy</h3>
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="career-track">Career Track <i class="fas fa-info-circle info-icon" data-tooltip-key="careerTrackTooltip"></i></label>
+                                            <label for="career-track">Career Track
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The defined career path this role falls under.</span>
+                                                </span>
+                                            </label>
                                             <select id="career-track" class="form-input" required>
                                                 <option value="">Select Career Track</option>
                                                 <option value="Flight Crew">Flight Crew</option>
@@ -691,7 +828,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="level">Level <i class="fas fa-info-circle info-icon" data-tooltip-key="levelTooltip"></i></label>
+                                            <label for="level">Level
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The general level of seniority for this role (e.g., Junior, Senior).</span>
+                                                </span>
+                                            </label>
                                             <select id="level" class="form-input" required>
                                                 <option value="">Select Level</option>
                                                 <option value="Trainee">Trainee</option>
@@ -703,7 +845,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="grade">Grade / Job Level <i class="fas fa-info-circle info-icon" data-tooltip-key="gradeTooltip"></i></label>
+                                            <label for="grade">Grade / Job Level
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The specific job grade or level within the career track.</span>
+                                                </span>
+                                            </label>
                                             <select id="grade" class="form-input" required>
                                                 <option value="">Select Grade / Job Level</option>
                                                 <option value="CP01">CP01 (Cadet Pilot)</option>
@@ -713,7 +860,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="seniority-label">Seniority Label <i class="fas fa-info-circle info-icon" data-tooltip-key="seniorityLabelTooltip"></i></label>
+                                            <label for="seniority-label">Seniority Label
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">A descriptive label for the role's seniority.</span>
+                                                </span>
+                                            </label>
                                             <select id="seniority-label" class="form-input" required>
                                                 <option value="">Select Seniority</option>
                                                 <option value="Cadet">Cadet</option>
@@ -724,14 +876,24 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="feeder-roles">Feeder Roles <i class="fas fa-info-circle info-icon" data-tooltip-key="feederRolesTooltip"></i></label>
+                                            <label for="feeder-roles">Feeder Roles
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Roles that typically lead into this position.</span>
+                                                </span>
+                                            </label>
                                             <select id="feeder-roles" class="form-input" multiple>
                                                 <option value="Aspiring Pilot">Aspiring Pilot</option>
                                                 <option value="Aviation Student">Aviation Student</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="reports-to">Reports To (Reporting Manager) <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="reportsToTooltip"></i></label>
+                                            <label for="reports-to">Reports To (Reporting Manager) <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The direct reporting manager for this role.</span>
+                                                </span>
+                                            </label>
                                             <select id="reports-to" class="form-input" required>
                                                 <option value="">Select Manager</option>
                                                 <option value="Chief Flight Instructor">Chief Flight Instructor</option>
@@ -740,7 +902,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="location">Location / Region <i class="fas fa-info-circle info-icon" data-tooltip-key="locationTooltip"></i></label>
+                                            <label for="location">Location / Region
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The primary location(s) or region(s) for this role.</span>
+                                                </span>
+                                            </label>
                                             <select id="location" class="form-input" multiple required>
                                                 <option value="Training Academy Base">Training Academy Base</option>
                                                 <option value="Various Flight Schools">Various Flight Schools</option>
@@ -749,7 +916,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="location-type">Location Type <i class="fas fa-info-circle info-icon" data-tooltip-key="locationTypeTooltip"></i></label>
+                                            <label for="location-type">Location Type
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The type of work arrangement (e.g., On-site, Hybrid, Remote).</span>
+                                                </span>
+                                            </label>
                                             <select id="location-type" class="form-input" required>
                                                 <option value="">Select Location Type</option>
                                                 <option value="On-site">On-site</option>
@@ -758,7 +930,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="employment-type">Employment Type <i class="fas fa-info-circle info-icon" data-tooltip-key="employmentTypeTooltip"></i></label>
+                                            <label for="employment-type">Employment Type
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The nature of employment (e.g., Full-time, Part-time, Contractor).</span>
+                                                </span>
+                                            </label>
                                             <select id="employment-type" class="form-input" required>
                                                 <option value="">Select Employment Type</option>
                                                 <option value="Full-time Trainee">Full-time Trainee</option>
@@ -768,7 +945,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="contract-type">Contract Type <i class="fas fa-info-circle info-icon" data-tooltip-key="contractTypeTooltip"></i></label>
+                                            <label for="contract-type">Contract Type
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The type of contract (e.g., Permanent, Fixed-term).</span>
+                                                </span>
+                                            </label>
                                             <select id="contract-type" class="form-input" required>
                                                 <option value="">Select Contract Type</option>
                                                 <option value="Fixed-term (Program Duration)">Fixed-term (Program Duration)</option>
@@ -858,18 +1040,33 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="tools-technologies">Tools & Technologies <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="toolsTechnologiesTooltip"></i></label>
+                                            <label for="tools-technologies">Tools & Technologies <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Key software, tools, and technologies required for the role.</span>
+                                                </span>
+                                            </label>
                                             <input type="text" id="tools-technologies" class="form-input" placeholder="e.g., GitHub, Postman, Figma" value="GitHub, Postman, Figma, Jira">
                                         </div>
                                         <div class="form-group">
-                                            <label for="certifications">Certifications <span style="color: red; font-weight: bold;">(P2)</span> <i class="fas fa-info-circle info-icon" data-tooltip-key="certificationsTooltip"></i></label>
+                                            <label for="certifications">Certifications <span style="color: red; font-weight: bold;">(P2)</span>
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Required or preferred professional certifications.</span>
+                                                </span>
+                                            </label>
                                             <div class="job-description-header">
                                                 <button type="button" id="generate-certifications-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                             </div>
                                             <input type="text" id="certifications" class="form-input" placeholder="e.g., AWS Certified Developer" value="AWS Certified Developer">
                                         </div>
                                          <div class="form-group form-group-full-width">
-                                            <label>Learning Resources <i class="fas fa-info-circle info-icon" data-tooltip-key="learningResourcesTooltip"></i></label>
+                                            <label>Learning Resources
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">Recommended learning resources for this role.</span>
+                                                </span>
+                                            </label>
                                             <div class="job-description-header">
                                                 <button type="button" id="generate-learning-resources-btn" class="btn btn-ai-generate btn-sm">Generate with AI</button>
                                             </div>
@@ -1251,11 +1448,21 @@
                                     <h3>Metadata & Activity Log</h3>
                                     <div class="form-grid">
                                         <div class="form-group">
-                                            <label for="created-by">Created By / Owner <i class="fas fa-info-circle info-icon" data-tooltip-key="createdByTooltip"></i></label>
+                                            <label for="created-by">Created By / Owner
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The user who created this role entry.</span>
+                                                </span>
+                                            </label>
                                             <input type="text" id="created-by" class="form-input" value="Raj Matukumalli" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="last-updated">Last Updated <i class="fas fa-info-circle info-icon" data-tooltip-key="lastUpdatedTooltip"></i></label>
+                                            <label for="last-updated">Last Updated
+                                                <span class="info-icon-container">
+                                                    <i class="fas fa-info-circle info-icon"></i>
+                                                    <span class="tooltip">The date and time of the last modification.</span>
+                                                </span>
+                                            </label>
                                             <input type="text" id="last-updated" class="form-input" value="7/22/2025, 9:29:05 PM" readonly>
                                         </div>
                                     </div>

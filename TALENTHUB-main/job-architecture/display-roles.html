@@ -70,8 +70,13 @@
             padding: 1rem 1.25rem;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
-            white-space: nowrap;
             font-size: 0.875rem;
+        }
+        /* Specific style for Business Units table to allow text wrapping */
+        #business-units-table td {
+            white-space: normal; /* Allow text to wrap */
+            word-wrap: break-word; /* Ensure long words break */
+            overflow-wrap: break-word; /* Modern alternative for word-wrap */
         }
         th {
             background-color: #f8fafc;

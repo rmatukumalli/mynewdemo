@@ -1,6 +1,6 @@
 // All required DOM elements
-const capabilitySelect = document.getElementById('capability-select');
-const competencySelect = document.getElementById('competency-select');
+const skillGroupSelect = document.getElementById('capability-select');
+const skillSetSelect = document.getElementById('competency-select');
 const skillsListContainer = document.getElementById('skills-list');
 const behaviorsListContainer = document.getElementById('behaviors-list');
 const skillSearchInput = document.getElementById('skill-search-input');
@@ -46,18 +46,18 @@ async function loadAllCapabilities() {
  * Populates the capabilities dropdown from the pre-loaded data.
  */
 function populateCapabilitiesDropdown() {
-    capabilitySelect.innerHTML = ''; // Clear loading message
+    skillGroupSelect.innerHTML = ''; // Clear loading message
     
     const placeholderOption = document.createElement('option');
     placeholderOption.value = '';
-    placeholderOption.textContent = '-- Select a Domain --';
-    capabilitySelect.appendChild(placeholderOption);
+    placeholderOption.textContent = '-- Select a Skill Group --';
+    skillGroupSelect.appendChild(placeholderOption);
 
     allCapabilities.forEach(cap => {
         const option = document.createElement('option');
         option.value = cap.id;
         option.textContent = cap.name;
-        capabilitySelect.appendChild(option);
+        skillGroupSelect.appendChild(option);
     });
 }
 
@@ -71,8 +71,8 @@ async function loadCompetencies(capabilityId) {
     const skillDetailsPanel = document.getElementById('skill-details-panel');
     if(skillDetailsPanel) skillDetailsPanel.style.display = 'none';
 
-    competencySelect.innerHTML = '<option value="">-- Select an Area of Expertise --</option>';
-    competencySelect.disabled = true;
+    skillSetSelect.innerHTML = '<option value="">-- Select a Skill Set --</option>';
+    skillSetSelect.disabled = true;
     currentSelectedSkillId = null;
     currentSelectedCompetency = null;
 
@@ -85,9 +85,9 @@ async function loadCompetencies(capabilityId) {
             const option = document.createElement('option');
             option.value = comp.id;
             option.textContent = comp.name;
-            competencySelect.appendChild(option);
+            skillSetSelect.appendChild(option);
         });
-        competencySelect.disabled = false;
+        skillSetSelect.disabled = false;
     }
 }
 
@@ -157,23 +157,29 @@ async function loadSkills(competencyId) {
  */
 async function displaySkillDetails(skillId) {
     currentSelectedSkillId = skillId;
-    const skillDetailsPanel = document.getElementById('skill-details-panel');
-    const sidebar = document.getElementById('sidebar');
+    const skillDetailsPanel = document.getElementById('skill-details-panel'); // Hierarchy panel
+    const sidebar = document.getElementById('sidebar'); // Hierarchy sidebar
     const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar'); // New insights sidebar
+    const skillInsightsPanel = document.getElementById('skill-insights-panel'); // New insights panel
 
-    // If the proficiencies sidebar is open, close it before showing the hierarchy.
+    // If any other sidebar is open, close it before showing the hierarchy.
     if (proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
         proficienciesSidebar.classList.remove('visible');
     }
+    if (insightsSidebar && insightsSidebar.classList.contains('visible')) { // Close insights sidebar
+        insightsSidebar.classList.remove('visible');
+    }
 
-    if (!skillDetailsPanel || !sidebar) {
+    if (!skillDetailsPanel || !sidebar || !skillInsightsPanel) { // Check for new insights panel
         console.error('Sidebar or skill details panel not found.');
         return;
     }
 
-    // Hide panel and show sidebar while loading
+    // Hide panels and show hierarchy sidebar while loading
     skillDetailsPanel.style.display = 'none';
-    sidebar.classList.add('visible');
+    skillInsightsPanel.style.display = 'none'; // Hide insights panel too
+    sidebar.classList.add('visible'); // Default to hierarchy view
 
     const timestamp = new Date().getTime();
     const rawDetails = await fetchData(`/api/v1/ontology/skills/${skillId}/details_full?_=${timestamp}`);
@@ -181,6 +187,16 @@ async function displaySkillDetails(skillId) {
 
     if (rawDetails) {
         const skillDetails = Array.isArray(rawDetails) ? rawDetails[0] : rawDetails;
+
+        // --- Start Dummy Metadata Injection ---
+        skillDetails.demandSignals = "High demand in Tech (80%), Moderate in Finance (50%)";
+        skillDetails.relatedRoles = ["Software Engineer", "Data Scientist", "AI/ML Specialist"];
+        skillDetails.learningContent = [
+            { name: "Advanced Python Course", url: "#" },
+            { name: "Machine Learning Certification", url: "#" }
+        ];
+        skillDetails.industryTags = ["Technology", "Data Science", "Artificial Intelligence"];
+        // --- End Dummy Metadata Injection ---
 
         if (!skillDetails) {
             console.error("Skill details are null or undefined after processing API response.");
@@ -200,10 +216,17 @@ async function displaySkillDetails(skillId) {
         renderHierarchyView(skillDetails);
         renderProficienciesInSlideout(skillDetails.proficiencies, skillDetails.name);
         fetchAndDisplaySkillRelationships(skillId);
+        renderSkillMetadata(skillDetails); // Call the new rendering function for insights
+
+        // Update skill name in insights panel
+        const insightsSkillNameText = document.getElementById('insights-skill-name').querySelector('.skill-name-text');
+        if (insightsSkillNameText) {
+            insightsSkillNameText.textContent = `Skill Insights for ${skillDetails.name}`;
+        }
         
-        // Make the panel visible now that it's populated
+        // Make the hierarchy panel visible now that it's populated
         skillDetailsPanel.style.display = 'block';
-        // Also ensure the sidebar is visible
+        // Also ensure the hierarchy sidebar is visible
         sidebar.classList.add('visible');
 
     } else {
@@ -212,73 +235,174 @@ async function displaySkillDetails(skillId) {
     }
 }
 
+function renderSkillMetadata(skillDetails) {
+    console.log("renderSkillMetadata called with:", skillDetails);
+    const metadataContainer = document.getElementById('metadata-container');
+    console.log("metadataContainer:", metadataContainer);
+    if (!metadataContainer) {
+        console.error("Metadata container not found in DOM.");
+        return;
+    }
+
+    const demandSignalsElem = document.getElementById('demand-signals');
+    const relatedRolesList = document.getElementById('related-roles');
+    const learningContentList = document.getElementById('learning-content');
+    const industryTagsElem = document.getElementById('industry-tags');
+
+    if (!demandSignalsElem || !relatedRolesList || !learningContentList || !industryTagsElem) {
+        console.error("One or more metadata elements not found in DOM.");
+        return;
+    }
+
+    // Populate Demand Signals
+    demandSignalsElem.textContent = skillDetails.demandSignals || 'No data available.';
+
+    // Populate Related Roles
+    relatedRolesList.innerHTML = '';
+    if (skillDetails.relatedRoles && skillDetails.relatedRoles.length > 0) {
+        skillDetails.relatedRoles.forEach(role => {
+            const li = document.createElement('li');
+            li.textContent = role;
+            relatedRolesList.appendChild(li);
+        });
+    } else {
+        relatedRolesList.innerHTML = '<li>No data available.</li>';
+    }
+
+    // Populate Associated Learning Content
+    learningContentList.innerHTML = '';
+    if (skillDetails.learningContent && skillDetails.learningContent.length > 0) {
+        skillDetails.learningContent.forEach(content => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = content.url;
+            a.textContent = content.name;
+            a.target = "_blank"; // Open in new tab
+            li.appendChild(a);
+            learningContentList.appendChild(li);
+        });
+    } else {
+        learningContentList.innerHTML = '<li>No data available.</li>';
+    }
+
+    // Populate Industry Tags
+    industryTagsElem.textContent = (skillDetails.industryTags && skillDetails.industryTags.length > 0) ? skillDetails.industryTags.join(', ') : 'No data available.';
+
+    metadataContainer.style.display = 'block'; // Make the metadata container visible
+}
+
 async function fetchAndDisplaySkillRelationships(skillId) {
     try {
         const response = await fetch(`/api/v1/ontology/skills/${skillId}/relationships`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const relationships = await response.json();
 
-        const prerequisites = [];
-        const requiredBy = [];
-        const relatedSkills = [];
+        // Define relationship type groupings
+        const relationshipGroupings = {
+            "Hierarchy": ["part_of", "is_specialization_of", "is_generalization_of"],
+            "Learning Path": ["prerequisite_of", "is_prerequisite_for", "is_successor_to", "is_corequisite_with"],
+            "Associative": ["related_to", "is_complementary_to", "is_alternative_to", "is_similar_to"],
+            "Contextual": ["is_used_in", "is_enabled_by", "is_contradictory_to"]
+        };
+
+        const groupedRelationships = {
+            "Hierarchy": document.getElementById('hierarchy-relationships-list'),
+            "Learning Path": document.getElementById('learning-path-relationships-list'),
+            "Associative": document.getElementById('associative-relationships-list'),
+            "Contextual": document.getElementById('contextual-relationships-list')
+        };
+
+        // Clear previous relationships
+        for (const groupName in groupedRelationships) {
+            if (groupedRelationships[groupName]) {
+                groupedRelationships[groupName].innerHTML = '';
+            }
+        }
+
+        // --- Start Dummy Data Injection for Grouped Relationships ---
+        const dummySkillId = skillId;
+        const dummyGroupedRelationships = [
+            // Hierarchy
+            { source_skill: { id: "dummy-skill-h1", name: "Broader Skill" }, target_skill: { id: dummySkillId, name: "Current Skill" }, relationship_type: { id: "is_generalization_of", name: "isGeneralizationOf" } },
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-h2", name: "Niche Skill" }, relationship_type: { id: "is_specialization_of", name: "isSpecializationOf" } },
+            // Learning Path
+            { source_skill: { id: "dummy-skill-lp1", name: "Foundation Skill" }, target_skill: { id: dummySkillId, name: "Current Skill" }, relationship_type: { id: "is_prerequisite_for", name: "isPrerequisiteFor" } },
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-lp2", name: "Next Step Skill" }, relationship_type: { id: "is_successor_to", name: "isSuccessorTo" } },
+            { source_skill: { id: "dummy-skill-lp3", name: "Parallel Skill" }, target_skill: { id: dummySkillId, name: "Current Skill" }, relationship_type: { id: "is_corequisite_with", name: "isCorequisiteWith" } },
+            // Associative
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-a1", name: "Complementary Skill" }, relationship_type: { id: "is_complementary_to", name: "isComplementaryTo" } },
+            { source_skill: { id: "dummy-skill-a2", name: "Alternative Skill" }, target_skill: { id: dummySkillId, name: "Current Skill" }, relationship_type: { id: "is_alternative_to", name: "isAlternativeTo" } },
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-a3", name: "Similar Skill" }, relationship_type: { id: "is_similar_to", name: "isSimilarTo" } },
+            // Contextual
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-c1", name: "Project Management" }, relationship_type: { id: "is_used_in", name: "isUsedIn" } },
+            { source_skill: { id: "dummy-skill-c2", name: "Leadership" }, target_skill: { id: dummySkillId, name: "Current Skill" }, relationship_type: { id: "is_enabled_by", name: "isEnabledBy" } },
+            { source_skill: { id: dummySkillId, name: "Current Skill" }, target_skill: { id: "dummy-skill-c3", name: "Outdated Method" }, relationship_type: { id: "is_contradictory_to", name: "isContradictoryTo" } }
+        ];
+        relationships.push(...dummyGroupedRelationships);
+        // --- End Dummy Data Injection ---
+
 
         relationships.forEach(rel => {
+            const relationshipTypeId = rel.relationship_type.id;
+            const relationshipTypeName = rel.relationship_type.name;
+            let targetSkillName = '';
+            let sourceSkillName = '';
+
             if (rel.source_skill.id === skillId) {
-                // If this skill is the source, the other skill is the target.
-                // Example: "This skill" (source) is a "prerequisite of" (type) "that skill" (target).
-                // So, "that skill" is required by "this skill".
-                if (rel.relationship_type.id === "prerequisite_of") {
-                    requiredBy.push(rel.target_skill.name);
-                } else {
-                    relatedSkills.push(`${rel.relationship_type.name}: ${rel.target_skill.name}`);
-                }
+                targetSkillName = rel.target_skill.name;
+                sourceSkillName = "Current Skill"; // For display purposes
             } else if (rel.target_skill.id === skillId) {
-                // If this skill is the target, the other skill is the source.
-                // Example: "That skill" (source) is a "prerequisite of" (type) "this skill" (target).
-                // So, "this skill" has a prerequisite of "that skill".
-                if (rel.relationship_type.id === "prerequisite_of") {
-                    prerequisites.push(rel.source_skill.name);
+                targetSkillName = "Current Skill"; // For display purposes
+                sourceSkillName = rel.source_skill.name;
+            } else {
+                return; // Skip relationships not directly involving the current skill
+            }
+
+            // Determine the group for the relationship
+            let groupFound = false;
+            for (const groupName in relationshipGroupings) {
+                if (relationshipGroupings[groupName].includes(relationshipTypeId)) {
+                    const li = document.createElement('li');
+                    const typeClass = relationshipTypeName.toLowerCase().replace(/\s+/g, '-');
+
+                    // For "isPrerequisiteFor" and "prerequisite_of", we need to distinguish source/target for display
+                    if (groupName === "Learning Path" && (relationshipTypeId === "prerequisite_of" || relationshipTypeId === "is_prerequisite_for")) {
+                        if (rel.target_skill.id === skillId) { // Current skill is the target, so source is the prerequisite
+                            li.innerHTML = `<span class="relationship-type prerequisite">Prerequisite:</span> ${sourceSkillName}`;
+                        } else { // Current skill is the source, so target is required by current skill
+                            li.innerHTML = `<span class="relationship-type required-by">Required By:</span> ${targetSkillName}`;
+                        }
+                    } else {
+                        // For other relationships, display type and the other skill
+                        if (rel.source_skill.id === skillId) {
+                            li.innerHTML = `<span class="relationship-type ${typeClass}">${relationshipTypeName}:</span> ${targetSkillName}`;
+                        } else {
+                            li.innerHTML = `<span class="relationship-type ${typeClass}">${relationshipTypeName}:</span> ${sourceSkillName}`;
+                        }
+                    }
+                    if (groupedRelationships[groupName]) {
+                        groupedRelationships[groupName].appendChild(li);
+                    }
+                    groupFound = true;
+                    break;
+                }
+            }
+            if (!groupFound) {
+                // Fallback for any un-categorized relationships, put them in Associative or a new 'Other' category
+                const li = document.createElement('li');
+                const typeClass = relationshipTypeName.toLowerCase().replace(/\s+/g, '-');
+                if (rel.source_skill.id === skillId) {
+                    li.innerHTML = `<span class="relationship-type ${typeClass}">${relationshipTypeName}:</span> ${targetSkillName}`;
                 } else {
-                    relatedSkills.push(`${rel.relationship_type.name}: ${rel.source_skill.name}`);
+                    li.innerHTML = `<span class="relationship-type ${typeClass}">${relationshipTypeName}:</span> ${sourceSkillName}`;
+                }
+                if (groupedRelationships["Associative"]) {
+                    groupedRelationships["Associative"].appendChild(li);
                 }
             }
         });
 
         const relationshipsContainer = document.getElementById('relationships-container');
-        relationshipsContainer.innerHTML = '';
-
-        if (prerequisites.length > 0) {
-            const section = document.createElement('div');
-            section.classList.add('relationship-section');
-            section.innerHTML = `<h4>Prerequisites</h4><ul>${prerequisites.map(p => `<li>${p}</li>`).join('')}</ul>`;
-            relationshipsContainer.appendChild(section);
-        }
-
-        if (requiredBy.length > 0) {
-            const section = document.createElement('div');
-            section.classList.add('relationship-section');
-            section.innerHTML = `<h4>Required By</h4><ul>${requiredBy.map(r => `<li>${r}</li>`).join('')}</ul>`;
-            relationshipsContainer.appendChild(section);
-        }
-
-        const relatedSkillsSection = document.createElement('div');
-        relatedSkillsSection.classList.add('relationship-section');
-        relatedSkillsSection.innerHTML = `<h4>Related Skills</h4>`;
-        if (relatedSkills.length > 0) {
-            const ul = document.createElement('ul');
-            relatedSkills.forEach(r => {
-                const [type, ...skillParts] = r.split(':');
-                const skill = skillParts.join(':').trim();
-                const li = document.createElement('li');
-                const typeClass = type.toLowerCase().replace(/\s+/g, '-');
-                li.innerHTML = `<span class="relationship-type ${typeClass}">${type}:</span> ${skill}`;
-                ul.appendChild(li);
-            });
-            relatedSkillsSection.appendChild(ul);
-        } else {
-            relatedSkillsSection.innerHTML += '<p>No related skills data available.</p>';
-        }
-        relationshipsContainer.appendChild(relatedSkillsSection);
         relationshipsContainer.style.display = 'block';
 
     } catch (error) {
@@ -329,7 +453,7 @@ function renderHierarchyView(skillDetails) {
 
     [grandparentSkillBox, parentSkillBox].forEach(el => el.style.display = 'none');
     behaviorsGrid.innerHTML = '';
-    relationshipsContainer.innerHTML = '';
+    // relationshipsContainer.innerHTML = ''; // Removed this line
 
     detailSkillNameText.textContent = skillDetails.name;
     currentSkillNameHierarchyElem.textContent = skillDetails.name;
@@ -499,20 +623,27 @@ async function initializeApp() {
         response = await fetch('slideout_proficiencies.html');
         data = await response.text();
         document.getElementById('proficiencies-slideout-placeholder').innerHTML = data;
+
+        // Load new insights slideout
+        response = await fetch('slideout_insights.html');
+        data = await response.text();
+        document.getElementById('insights-slideout-placeholder').innerHTML = data;
+
     } catch (error) {
         console.error("Failed to load slideout panel HTML:", error);
         return;
     }
+    // Removed loading of slideout_relationships_help.html as it's inlined
 
-    capabilitySelect.innerHTML = '<option value="">Loading Ontology Data...</option>';
+    skillGroupSelect.innerHTML = '<option value="">Loading Ontology Data...</option>';
     await loadAllCapabilities();
     populateCapabilitiesDropdown();
     
-    capabilitySelect.addEventListener('change', (event) => {
+    skillGroupSelect.addEventListener('change', (event) => {
         if (event.target.value) loadCompetencies(event.target.value);
     });
 
-    competencySelect.addEventListener('change', (event) => {
+    skillSetSelect.addEventListener('change', (event) => {
         if (event.target.value) loadSkills(event.target.value);
     });
 
@@ -557,6 +688,83 @@ function toggleProficienciesSidebar() {
     }
 
     proficienciesSidebar.classList.toggle('visible');
+}
+
+// Global toggle functions for sidebars
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+
+    if (!sidebar) {
+        console.error('Hierarchy sidebar element not found.');
+        return;
+    }
+
+    const isOpening = !sidebar.classList.contains('visible');
+
+    if (isOpening) {
+        if (proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
+            proficienciesSidebar.classList.remove('visible');
+        }
+        if (insightsSidebar && insightsSidebar.classList.contains('visible')) {
+            insightsSidebar.classList.remove('visible');
+        }
+    }
+
+    sidebar.classList.toggle('visible');
+}
+
+function toggleProficienciesSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+
+    if (!proficienciesSidebar) {
+        console.error('Proficiencies sidebar element not found.');
+        return;
+    }
+
+    const isOpening = !proficienciesSidebar.classList.contains('visible');
+
+    if (isOpening) {
+        if (sidebar && sidebar.classList.contains('visible')) {
+            sidebar.classList.remove('visible');
+        }
+        if (insightsSidebar && insightsSidebar.classList.contains('visible')) {
+            insightsSidebar.classList.remove('visible');
+        }
+    }
+
+    proficienciesSidebar.classList.toggle('visible');
+}
+
+function toggleSkillInsightsSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const proficienciesSidebar = document.getElementById('proficiencies-sidebar');
+    const insightsSidebar = document.getElementById('insights-sidebar');
+    const skillInsightsPanel = document.getElementById('skill-insights-panel'); // Get the panel
+
+    if (!insightsSidebar || !skillInsightsPanel) { // Check for both
+        console.error('Skill Insights sidebar or panel element not found.');
+        return;
+    }
+
+    const isOpening = !insightsSidebar.classList.contains('visible');
+
+    if (isOpening) {
+        if (sidebar && sidebar.classList.contains('visible')) {
+            sidebar.classList.remove('visible');
+        }
+        if (proficienciesSidebar && proficienciesSidebar.classList.contains('visible')) {
+            proficienciesSidebar.classList.remove('visible');
+        }
+        skillInsightsPanel.style.display = 'block'; // Make the panel visible when opening the sidebar
+    } else {
+        skillInsightsPanel.style.display = 'none'; // Hide the panel when closing the sidebar
+    }
+
+    insightsSidebar.classList.toggle('visible');
 }
 
 // Wait for the DOM to be fully loaded before initializing the app

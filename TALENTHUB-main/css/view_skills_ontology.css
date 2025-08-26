@@ -713,3 +713,110 @@ body, html {
     width: 100%;
     z-index: 1000;
 }
+
+/* Styles for inline relationship help text */
+.relationships-container .relationship-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.relationships-container .relationship-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.relationships-container .relationship-section h4 {
+    font-size: 1.2em;
+    color: var(--text-color-dark);
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.relationships-container .relationship-help-text {
+    background-color: var(--secondary-color);
+    border-left: 4px solid var(--accent-blue);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--text-color-medium);
+}
+
+.relationships-container .relationship-help-text p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.relationships-container .relationship-help-text h5 {
+    font-size: 1em;
+    color: var(--text-color-dark);
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+.relationships-container .relationship-help-text ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.relationships-container .relationship-help-text li {
+    margin-bottom: 5px;
+}
+
+.relationships-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.relationships-container ul li {
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+    color: var(--text-color-dark);
+    box-shadow: 0 2px 5px var(--shadow-color-light);
+}
+
+.relationships-container ul li .relationship-type {
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--accent-blue); /* Default for relationship types */
+}
+
+/* Specific colors for relationship types */
+.relationships-container ul li .part-of,
+.relationships-container ul li .isgeneralizationof,
+.relationships-container ul li .isspecializationof {
+    color: var(--accent-violet); /* Hierarchy */
+}
+
+.relationships-container ul li .prerequisite,
+.relationships-container ul li .required-by,
+.relationships-container ul li .issuccessorto,
+.relationships-container ul li .iscorequisitewith {
+    color: var(--accent-green); /* Learning Path */
+}
+
+.relationships-container ul li .related-to,
+.relationships-container ul li .iscomplementaryto,
+.relationships-container ul li .isalternativeto,
+.relationships-container ul li .issimilarto {
+    color: var(--accent-orange); /* Associative */
+}
+
+.relationships-container ul li .isusedin,
+.relationships-container ul li .isenabledby,
+.relationships-container ul li .iscontradictoryto {
+    color: var(--accent-blue); /* Contextual */
+}

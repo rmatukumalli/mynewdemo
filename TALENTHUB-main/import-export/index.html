@@ -5,72 +5,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Import/Export Data</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 1024px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        h1, h2, h3 {
+            color: #1f2937;
+        }
+        h1 {
+            font-weight: 700;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: #3b82f6; /* Tailwind's blue-500 */
+            border-radius: 2px;
+        }
+        .list-item-title {
+            font-weight: 600;
+            color: #374151;
+        }
+        .list-item-content {
+            font-weight: 400;
+            color: #6b7280;
+        }
+    </style>
 </head>
-<body class="bg-slate-100 text-slate-700">
-    <div class="container mx-auto mt-8 p-4">
-        <header class="bg-white p-4 rounded-lg border border-slate-200 mb-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-slate-800">Import/Export Data</h1>
-            <a href="/job-architecture/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600 border border-slate-300 px-4 py-2 rounded-md">Back to Job Architecture</a>
+<body class="p-8 md:p-12">
+    <div class="container mx-auto space-y-12">
+        <header class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Import/Export Data</h1>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+                Manage your job architecture data by importing new roles or exporting existing data for review and backup.
+            </p>
         </header>
-        <main class="bg-white p-6 rounded-lg border border-slate-200">
-            <div class="mb-6">
-                <h2 class="text-xl font-semibold text-slate-800 mb-2">Import Data</h2>
-                <p class="mb-4">Upload a CSV file to import data into the Job Architecture Wizard.</p>
-                <input type="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
-                <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-blue-700">Import Data</button>
+
+        <div class="flex justify-between items-center mb-8">
+            <a href="../index.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                Home
+            </a>
+            <a href="../job-architecture/index.html" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                &larr; Back to Job Architecture
+            </a>
+        </div>
+
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">Import Data</h2>
+            <p class="text-gray-600 mb-4">Upload a CSV file to import data into the Job Architecture Wizard. Ensure your file follows the <a href="../job-architecture/job-architecture-prd.html#section-10" class="text-blue-600 hover:underline" target="_blank">Comprehensive Role Import Schema</a>.</p>
+            <input type="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+            <button class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-blue-700">Import Data</button>
+        </section>
+
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">Imported Data Preview</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-500 rounded-lg overflow-hidden">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Role Title</th>
+                            <th scope="col" class="px-6 py-3">Role Summary</th>
+                            <th scope="col" class="px-6 py-3">Job Description</th>
+                            <th scope="col" class="px-6 py-3">Business Unit / Division</th>
+                            <th scope="col" class="px-6 py-3">Department</th>
+                            <th scope="col" class="px-6 py-3">Job Family</th>
+                            <th scope="col" class="px-6 py-3">Role Group / Team</th>
+                            <th scope="col" class="px-6 py-3">Role Code / ID</th>
+                            <th scope="col" class="px-6 py-3">Skills Table (skillId)</th>
+                            <th scope="col" class="px-6 py-3">Skills Table (skill name)</th>
+                            <th scope="col" class="px-6 py-3">Skills Table (relatedSkills)</th>
+                            <th scope="col" class="px-6 py-3">Soft Skills Table (skillId)</th>
+                            <th scope="col" class="px-6 py-3">Soft Skills Table (skill name)</th>
+                            <th scope="col" class="px-6 py-3">Soft Skills Table (relatedSkills)</th>
+                            <th scope="col" class="px-6 py-3">Behavioral Competencies</th>
+                            <th scope="col" class="px-6 py-3">Tools & Technologies</th>
+                            <th scope="col" class="px-6 py-3">Level</th>
+                            <th scope="col" class="px-6 py-3">Feeder Roles</th>
+                            <th scope="col" class="px-6 py-3">Reports To</th>
+                            <th scope="col" class="px-6 py-3">Reporting Lines</th>
+                            <th scope="col" class="px-6 py-3">Matrix Relationships</th>
+                            <th scope="col" class="px-6 py-3">Career Track</th>
+                            <th scope="col" class="px-6 py-3">Career Path – Next Roles</th>
+                            <th scope="col" class="px-6 py-3">Career Path Mapping</th>
+                            <th scope="col" class="px-6 py-3">AI Recommendations</th>
+                            <th scope="col" class="px-6 py-3">Education Requirements</th>
+                            <th scope="col" class="px-6 py-3">Certifications</th>
+                            <th scope="col" class="px-6 py-3">Learning Resources</th>
+                            <th scope="col" class="px-6 py-3">Status</th>
+                            <th scope="col" class="px-6 py-3">Approval Status</th>
+                            <th scope="col" class="px-6 py-3">Location / Region</th>
+                            <th scope="col" class="px-6 py-3">Employment Type</th>
+                            <th scope="col" class="px-6 py-3">Salary Band</th>
+                            <th scope="col" class="px-6 py-3">Remote Work Policy</th>
+                            <th scope="col" class="px-6 py-3">On-call Duties</th>
+                            <th scope="col" class="px-6 py-3">Innovation Time</th>
+                            <th scope="col" class="px-6 py-3">Activity Log</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Pilot</td>
+                            <td class="px-6 py-4">Responsible for operating aircraft.</td>
+                            <td class="px-6 py-4">Flies aircraft, ensures safety.</td>
+                            <td class="px-6 py-4">Flight Operations</td>
+                            <td class="px-6 py-4">Pilots</td>
+                            <td class="px-6 py-4">Flight Crew</td>
+                            <td class="px-6 py-4">Captains</td>
+                            <td class="px-6 py-4">PILOT-001</td>
+                            <td class="px-6 py-4">s-pyt-001, s-sql-003</td>
+                            <td class="px-6 py-4">Python Programming, SQL Database</td>
+                            <td class="px-6 py-4">s-alg-002, s-web-003</td>
+                            <td class="px-6 py-4">ss-act-001, ss-tm-002</td>
+                            <td class="px-6 py-4">Active Listening, Time Management</td>
+                            <td class="px-6 py-4">ss-emp-002</td>
+                            <td class="px-6 py-4">Leadership</td>
+                            <td class="px-6 py-4">Flight Simulators</td>
+                            <td class="px-6 py-4">L5</td>
+                            <td class="px-6 py-4">First Officer</td>
+                            <td class="px-6 py-4">Chief Pilot</td>
+                            <td class="px-6 py-4">Direct</td>
+                            <td class="px-6 py-4">N/A</td>
+                            <td class="px-6 py-4">Management</td>
+                            <td class="px-6 py-4">Chief Pilot</td>
+                            <td class="px-6 py-4">Map Data</td>
+                            <td class="px-6 py-4">AI Path 1</td>
+                            <td class="px-6 py-4">B.S. Aviation</td>
+                            <td class="px-6 py-4">ATP</td>
+                            <td class="px-6 py-4">Flight Safety Course</td>
+                            <td class="px-6 py-4">Filled</td>
+                            <td class="px-6 py-4">Approved</td>
+                            <td class="px-6 py-4">Global</td>
+                            <td class="px-6 py-4">Full-time</td>
+                            <td class="px-6 py-4">$150k-200k</td>
+                            <td class="px-6 py-4">No</td>
+                            <td class="px-6 py-4">Yes</td>
+                            <td class="px-6 py-4">10%</td>
+                            <td class="px-6 py-4">Log Entry 1</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">First Officer</td>
+                            <td class="px-6 py-4">Assists the Pilot in command.</td>
+                            <td class="px-6 py-4">Co-pilots aircraft, monitors systems.</td>
+                            <td class="px-6 py-4">Flight Operations</td>
+                            <td class="px-6 py-4">Pilots</td>
+                            <td class="px-6 py-4">Flight Crew</td>
+                            <td class="px-6 py-4">First Officers</td>
+                            <td class="px-6 py-4">FO-002</td>
+                            <td class="px-6 py-4">s-nav-001, s-atc-002</td>
+                            <td class="px-6 py-4">Navigation, Air Traffic Control</td>
+                            <td class="px-6 py-4">s-rad-001</td>
+                            <td class="px-6 py-4">ss-tm-002, ss-col-001</td>
+                            <td class="px-6 py-4">Time Management, Collaboration</td>
+                            <td class="px-6 py-4">ss-ldr-001</td>
+                            <td class="px-6 py-4">Adaptability</td>
+                            <td class="px-6 py-4">Flight Management System</td>
+                            <td class="px-6 py-4">L4</td>
+                            <td class="px-6 py-4">Cadet Pilot</td>
+                            <td class="px-6 py-4">Pilot</td>
+                            <td class="px-6 py-4">Direct</td>
+                            <td class="px-6 py-4">N/A</td>
+                            <td class="px-6 py-4">Individual Contributor</td>
+                            <td class="px-6 py-4">Pilot</td>
+                            <td class="px-6 py-4">Map Data</td>
+                            <td class="px-6 py-4">AI Path 2</td>
+                            <td class="px-6 py-4">B.S. Aviation</td>
+                            <td class="px-6 py-4">CPL</td>
+                            <td class="px-6 py-4">CRM Training</td>
+                            <td class="px-6 py-4">Filled</td>
+                            <td class="px-6 py-4">Approved</td>
+                            <td class="px-6 py-4">Global</td>
+                            <td class="px-6 py-4">Full-time</td>
+                            <td class="px-6 py-4">$100k-150k</td>
+                            <td class="px-6 py-4">No</td>
+                            <td class="px-6 py-4">Yes</td>
+                            <td class="px-6 py-4">5%</td>
+                            <td class="px-6 py-4">Log Entry 2</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Cabin Crew</td>
+                            <td class="px-6 py-4">Ensures passenger safety and comfort.</td>
+                            <td class="px-6 py-4">Serves passengers, handles emergencies.</td>
+                            <td class="px-6 py-4">In-Flight Services</td>
+                            <td class="px-6 py-4">Cabin Operations</td>
+                            <td class="px-6 py-4">Cabin Crew</td>
+                            <td class="px-6 py-4">Flight Attendants</td>
+                            <td class="px-6 py-4">CC-003</td>
+                            <td class="px-6 py-4">s-fa-001, s-serv-001</td>
+                            <td class="px-6 py-4">First Aid, Customer Service</td>
+                            <td class="px-6 py-4">s-emg-001</td>
+                            <td class="px-6 py-4">ss-cs-001, ss-com-001</td>
+                            <td class="px-6 py-4">Customer Service, Communication</td>
+                            <td class="px-6 py-4">ss-empathy-001</td>
+                            <td class="px-6 py-4">Problem Solving</td>
+                            <td class="px-6 py-4">Emergency Equipment</td>
+                            <td class="px-6 py-4">L3</td>
+                            <td class="px-6 py-4">Junior Cabin Crew</td>
+                            <td class="px-6 py-4">Purser</td>
+                            <td class="px-6 py-4">Direct</td>
+                            <td class="px-6 py-4">N/A</td>
+                            <td class="px-6 py-4">Individual Contributor</td>
+                            <td class="px-6 py-4">Purser</td>
+                            <td class="px-6 py-4">Map Data</td>
+                            <td class="px-6 py-4">AI Path 3</td>
+                            <td class="px-6 py-4">High School Diploma</td>
+                            <td class="px-6 py-4">First Aid Cert</td>
+                            <td class="px-6 py-4">Safety Procedures</td>
+                            <td class="px-6 py-4">Filled</td>
+                            <td class="px-6 py-4">Approved</td>
+                            <td class="px-6 py-4">Global</td>
+                            <td class="px-6 py-4">Full-time</td>
+                            <td class="px-6 py-4">$50k-70k</td>
+                            <td class="px-6 py-4">No</td>
+                            <td class="px-6 py-4">No</td>
+                            <td class="px-6 py-4">0%</td>
+                            <td class="px-6 py-4">Log Entry 3</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Aircraft Maintenance Engineer</td>
+                            <td class="px-6 py-4">Maintains and repairs aircraft.</td>
+                            <td class="px-6 py-4">Inspects, troubleshoots, repairs aircraft.</td>
+                            <td class="px-6 py-4">Maintenance</td>
+                            <td class="px-6 py-4">Engineering</td>
+                            <td class="px-6 py-4">Aircraft Maintenance</td>
+                            <td class="px-6 py-4">Avionics</td>
+                            <td class="px-6 py-4">AME-004</td>
+                            <td class="px-6 py-4">s-avio-001, s-mech-001</td>
+                            <td class="px-6 py-4">Avionics, Aircraft Mechanics</td>
+                            <td class="px-6 py-4">s-diag-001</td>
+                            <td class="px-6 py-4">ss-atd-001, ss-prob-001</td>
+                            <td class="px-6 py-4">Attention to Detail, Problem Solving</td>
+                            <td class="px-6 py-4">ss-crit-001</td>
+                            <td class="px-6 py-4">Critical Thinking</td>
+                            <td class="px-6 py-4">Diagnostic Tools</td>
+                            <td class="px-6 py-4">L4</td>
+                            <td class="px-6 py-4">Maintenance Technician</td>
+                            <td class="px-6 py-4">Lead Engineer</td>
+                            <td class="px-6 py-4">Direct</td>
+                            <td class="px-6 py-4">N/A</td>
+                            <td class="px-6 py-4">Individual Contributor</td>
+                            <td class="px-6 py-4">Lead Engineer</td>
+                            <td class="px-6 py-4">Map Data</td>
+                            <td class="px-6 py-4">AI Path 4</td>
+                            <td class="px-6 py-4">Diploma in AME</td>
+                            <td class="px-6 py-4">AME License</td>
+                            <td class="px-6 py-4">Aircraft Systems Course</td>
+                            <td class="px-6 py-4">Filled</td>
+                            <td class="px-6 py-4">Approved</td>
+                            <td class="px-6 py-4">Local</td>
+                            <td class="px-6 py-4">Full-time</td>
+                            <td class="px-6 py-4">$70k-100k</td>
+                            <td class="px-6 py-4">No</td>
+                            <td class="px-6 py-4">Yes</td>
+                            <td class="px-6 py-4">0%</td>
+                            <td class="px-6 py-4">Log Entry 4</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="mt-8">
-                <h2 class="text-xl font-semibold text-slate-800 mb-2">Imported Data Preview</h2>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="py-2 px-4 border-b">Job Family</th>
-                                <th class="py-2 px-4 border-b">Job Profile</th>
-                                <th class="py-2 px-4 border-b">Job Level</th>
-                                <th class="py-2 px-4 border-b">Role Group</th>
-                                <th class="py-2 px-4 border-b">Role Level</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="py-2 px-4 border-b">Flight Operations</td>
-                                <td class="py-2 px-4 border-b">Pilot</td>
-                                <td class="py-2 px-4 border-b">L5</td>
-                                <td class="py-2 px-4 border-b">Captains</td>
-                                <td class="py-2 px-4 border-b">Captain</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 px-4 border-b">Flight Operations</td>
-                                <td class="py-2 px-4 border-b">Pilot</td>
-                                <td class="py-2 px-4 border-b">L4</td>
-                                <td class="py-2 px-4 border-b">First Officers</td>
-                                <td class="py-2 px-4 border-b">Senior First Officer</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 px-4 border-b">In-Flight Services</td>
-                                <td class="py-2 px-4 border-b">Cabin Crew</td>
-                                <td class="py-2 px-4 border-b">L3</td>
-                                <td class="py-2 px-4 border-b">Flight Attendants</td>
-                                <td class="py-2 px-4 border-b">Purser</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 px-4 border-b">Maintenance</td>
-                                <td class="py-2 px-4 border-b">Aircraft Maintenance Engineer</td>
-                                <td class="py-2 px-4 border-b">L4</td>
-                                <td class="py-2 px-4 border-b">Avionics</td>
-                                <td class="py-2 px-4 border-b">Lead Technician</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="mt-8">
-                <h2 class="text-xl font-semibold text-slate-800 mb-2">Export Data</h2>
-                <p class="mb-4">Export the current job architecture data as a CSV file.</p>
-                <button class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-green-700">Export Data</button>
-            </div>
-        </main>
+        </section>
+
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">Export Data</h2>
+            <p class="text-gray-600 mb-4">Export the current job architecture data as a CSV file.</p>
+            <button class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-green-700">Export Data</button>
+        </section>
     </div>
 </body>
 </html>

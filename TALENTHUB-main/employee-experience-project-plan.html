@@ -13,13 +13,49 @@
             top: 0;
             right: -100%;
             width: 100%;
-            max-width: 500px;
+            max-width: 90%; /* Expanded width for documents */
             height: 100%;
             background-color: white;
             z-index: 50;
             transition: right 0.3s ease-in-out;
             overflow-y: auto;
             box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Styling for document content within the slideout */
+        .slideout-content h1, .slideout-content h2, .slideout-content h3, .slideout-content h4 {
+            color: #4285F4; /* Google Blue */
+            font-weight: bold;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        .slideout-content h1 { font-size: 2.25rem; } /* text-4xl */
+        .slideout-content h2 { font-size: 1.875rem; } /* text-3xl */
+        .slideout-content h3 { font-size: 1.5rem; } /* text-2xl */
+        .slideout-content h4 { font-size: 1.25rem; } /* text-xl */
+        .slideout-content ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .slideout-content ol {
+            list-style-type: decimal;
+            padding-left: 1.5em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .slideout-content li {
+            margin-bottom: 0.25em;
+            color: #374151; /* Tailwind gray-700 */
+        }
+        .dark .slideout-content li {
+            color: #d1d5db; /* Tailwind dark:text-gray-300 */
+        }
+        .slideout-content strong {
+            color: #1f2937; /* Tailwind gray-900 */
+        }
+        .dark .slideout-content strong {
+            color: #f9fafb; /* Tailwind dark:text-gray-50 */
         }
         .slideout.is-open {
             right: 0;
@@ -45,14 +81,53 @@
         .tier-2-color { color: #3b82f6; } /* Tailwind's blue-600 */
         .tier-3-color { color: #9333ea; } /* Tailwind's purple-600 */
         .google-blue { color: #4285F4; }
+        /* Custom styles for PRD content within the slideout */
+        .mvp-section {
+            border-left: 4px solid #22c55e; /* Green for MVP */
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f0fdf4; /* Light green background */
+            border-radius: 0.25rem;
+        }
+        .dark .mvp-section {
+            background-color: #14532d; /* Darker green for dark mode */
+        }
+        .extended-section {
+            border-left: 4px solid #3b82f6; /* Blue for Extended */
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            background-color: #eff6ff; /* Light blue background */
+            border-radius: 0.25rem;
+        }
+        .dark .extended-section {
+            background-color: #1e3a8a; /* Darker blue for dark mode */
+        }
+        .persona-section {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1f2937; /* Tailwind gray-900 */
+        }
+        .dark .persona-section {
+            color: #f9fafb; /* Tailwind dark:text-gray-50 */
+        }
+        .feature-item {
+            margin-bottom: 0.5rem;
+        }
+        .feature-item strong {
+            color: #4285F4; /* Google Blue for feature names */
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 font-sans p-8">
 
     <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
-        <div class="p-4 border-b border-gray-200 dark:border-gray-600 flex space-x-2">
-            <button id="foundations-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 dark:bg-blue-500">Foundations</button>
-            <button id="capabilities-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Capabilities & Features</button>
+        <div class="p-4 border-b border-gray-200 dark:border-gray-600 flex justify-between">
+            <div class="flex space-x-2">
+                <button id="foundations-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 dark:bg-blue-500">Foundations</button>
+                <button id="capabilities-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Capabilities & Features</button>
+            </div>
+            <button id="documents-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Documents</button>
         </div>
 
         <div class="overflow-x-auto p-4">
@@ -226,11 +301,343 @@
                     { name: 'Manager Team Building & Talent Management Integration', userStories: ['As an **HR rep**, I want mentorship data to inform team building and development records.'] },
                 ]
             },
+            {
+                id: 14, epic: 'Documents', capabilities: 'Documentation', dependencies: 'None', priority: 'Tier 1 (Informational)', color: 'text-gray-600', rationale: 'This section provides access to key Product Requirement Documents (PRDs) for various project components.',
+                type: 'documents',
+                documents: [
+                    {
+                        title: 'Product Requirement Document (PRD): Career Pathing',
+                        content: `
+Table of Contents
+Product Requirement Document (PRD): Career Pathing
+1. Product Overview
+2. Goals and Objectives
+3. User Requirements
+4. Functional Requirements (MVP)
+4A. Future Enhancements / Additional Features
+5. Non-Functional Requirements
+6. Use Cases
+7. Wireframes or Mockups
+8. Technical Specifications
+9. Dependencies
+10. Timeline and Milestones
+11. Assumptions and Constraints
+
+1. Product Overview
+<strong>Career Pathing is a strategic capability designed to empower employees to visualize, plan, and navigate their professional growth within the organization.</strong> It provides a transparent, structured framework that outlines potential career trajectories, detailing the skills, experiences, and roles required for advancement. By leveraging AI to generate dynamic paths based on real-world, successful career progressions within the company, this tool aims to demystify career growth. <strong>The primary goal is to enhance internal mobility, boost employee engagement, and increase retention by making career progression transparent, achievable, and actionable.</strong>
+Core Distinction: This capability fundamentally evolves career pathing from a traditional, fixed "career ladder" to a <strong>dynamic, multi-directional network.</strong> While the "Branching Network View/Subway Map" provides a familiar, structured look at established progressions, the <strong>AI-powered "Radar View" is the core innovation. It uncovers viable, alternative pathways—including lateral and diagonal moves—based on real-world data of how successful careers actually unfold</strong>, rather than relying on predefined, linear steps. This ensures employees see a realistic and expansive set of opportunities based on their unique skills.
+2. Goals and Objectives
+• <strong>Increase Employee Retention: Reduce attrition by providing clear, tangible growth opportunities within the company. Target: Decrease voluntary turnover by 15% within 18 months of launch.</strong>
+• <strong>Boost Internal Mobility: Facilitate the movement of talent across different roles and departments. Target: Increase the rate of internal hires for open positions by 25% within one year.</strong>
+• <strong>Enhance Employee Engagement: Empower employees to take ownership of their career development, leading to higher job satisfaction. Target: Improve employee engagement scores related to career growth by 20% in the next annual survey.</strong>
+• Improve Workforce Planning: Provide leadership with insights into potential career trajectories to better forecast talent supply and demand.
+3. User Requirements
+• As a Learner (Employee), I want to see potential career paths from my current role so that I can plan my long-term professional development.
+• As a Learner, I want to understand the skill gaps between my current role and an aspirational role so that I know what I need to learn.
+• As an Admin, I want to easily define and manage the roles and skills that constitute our organization's career architecture so that the information remains accurate and relevant.
+• As an HR Representative, I want to identify employees who are ready for promotion or new opportunities so that I can build strong talent pipelines for critical roles.
+4. Functional Requirements (MVP)
+Epic: Career Path Visualization (Learner)
+• Feature 4.1.1: Branching Network View/ Subway Map View: The system will display a default "Branching Network View/ Subway Map" showing a standard, vertical progression for the learner's current role family.
+• Feature 4.1.2: Interactive Radar View: The system will generate and display an interactive "Radar View" that shows both vertical and lateral career moves based on successful, real-world career trajectories within the company's data.
+• Feature 4.1.3: View Toggling: Learners can seamlessly toggle between the "Branching Network/Subway Map" and "Radar" views.
+Epic: Role Selection and Skill Matching (Learner)
+• Feature 4.2.1: Role Selection: Learners can click on any role node in the Branching Network/Subway Map or Radar view to select it as an aspirational role.
+• Feature 4.2.2: Skill Comparison View: Upon selecting a role, the UI will update to display a side-by-side comparison of the learner's current skills against the skills required for the selected aspirational role.
+Epic: Role Details Panel (Learner)
+• Feature 4.3.1: Access Role Details: A "Details" button or icon will be available for each role.
+• Feature 4.3.2: Panel Display: Clicking the "Details" button will open a panel displaying in-depth information, including key responsibilities, required skills, recommended next steps, and suggested learning courses.
+Epic: Opportunities Discovery (Learner)
+• Feature 4.4.1: Suggest Related Roles: The system will display a "You might also be interested in..." section suggesting other relevant roles based on the learner's exploration and profile.
+Epic: Role Architecture Management (Admin)
+• Feature 4.5.1: Visual Role Editor: Admins will have access to a visual interface to create, edit, and delete roles within the system.
+• Feature 4.5.2: Skill Assignment: Admins can assign required skills and proficiency levels to each role by selecting from the master Skills Ontology.
+• Feature 4.5.3: Path Definition: Admins can establish and visualize relationships (ladders, connections) between different roles.
+Epic: Career Path Analysis & Insights (HR Representative)
+• Feature 4.6.1: Group Analysis: HR Reps can filter by department, team, or employee group to view analytics on common career progressions.
+• Feature 4.6.2: Data Visualization: The tool will provide visualizations (e.g., Sankey diagrams) showing the flow of talent and skill densities for the selected group.
+Epic: Talent Pool Identification (HR Representative)
+• Feature 4.7.1: Search for Talent: HR Reps can input a target role to generate a list of high-potential employees.
+• Feature 4.7.2: Potential Assessment: The generated list will be based on employees who are on a path towards, or already possess the requisite skills for, the target role.
+4A. Future Enhancements / Additional Features
+For the Learner (Employee):
+• Saved Paths & Progress Tracking: Ability for learners to save multiple aspirational paths or development plans and view a clear progress tracker for their chosen path.
+• Direct LMS Enrollment: Deeper integration with the Learning Management System (LMS) to allow for one-click enrollment in recommended courses.
+• Personalized Opportunity Discovery: Enhance the "Discover More Opportunities" feature to be more dynamic, using individual skill profiles and performance data for recommendations.
+• Holistic Skill Guidance: Provide guidance on acquiring missing skills that goes beyond courses, such as suggesting relevant stretch assignments or mentorship connections.
+For the Admin:
+• Data Management Tools: Features to import and export career path data in bulk.
+• Advanced Analytics: A dashboard for analytics on career path engagement, most popular paths, and organizational skill gaps identified through pathing data.
+• Customizable Pathing Rules: Ability for admins to configure and customize career pathing rules, such as defining mandatory skills for promotion or creating alternative/non-traditional paths.
+• HRIS Synchronization: Full, automated synchronization with the HRIS for all relevant employee data.
+• "Career Path in a Box": A feature allowing admins to package, bundle, and promote high-demand career paths (e.g., "AI Specialist Path") as a pre-configured offering for employees.
+For the HR Representative:
+• Mobility Reporting: Advanced reporting on internal mobility trends, promotion velocity, and the success rates of career pathing initiatives.
+• Career Counseling Support: Features to support career counseling sessions, such as the ability to simulate different career scenarios for an employee.
+• Succession Planning Integration: Direct integration with succession planning tools to feed talent pool data into the broader talent management ecosystem.
+5. Non-Functional Requirements
+• Performance: The AI-powered Radar View must generate and load within 3 seconds. Page load times for all views should not exceed 2 seconds.
+• Scalability: The system must support up to 10,000 concurrent users without performance degradation.
+• Security: All user data must be encrypted. Access controls must be role-based to ensure that Admins and HR Reps can only access data relevant to their permissions.
+• Usability: The interface must be intuitive and require minimal training for all user personas. The design must be responsive and accessible on standard web browsers and mobile devices.
+6. Use Cases
+• Use Case 1 (Learner): Priya, a Marketing Specialist, logs in. She sees her current role at the center of the Radar View. She explores the view and sees a possible lateral move to "Product Marketing Manager." She clicks on it. The view updates to show she has 70% of the required skills. She opens the "Details" panel to see the specific skill gaps and finds a list of recommended internal courses to close them.
+• Use Case 2 (Admin): David, an HR Admin, is tasked with adding a new "Data Scientist" role. He opens the Role Architecture tool, creates the new role, and uses the skill selection interface to pull "Python," "Machine Learning," and "SQL" from the Skills Ontology, assigning a "Proficient" level to each. He then links this role as a potential next step for "Data Analysts."
+7. Wireframes or Mockups
+• Learner Dashboard: A central view with the user's current role prominently displayed. Two tabs/buttons at the top allow switching between "Branching Network/Subway Map" and "Radar View."
+• Radar View: A node-based graph visualization. The user's role is a central node, with lines connecting to other role nodes. Hovering over a node provides a brief summary.
+• Skill Comparison View: A two-column layout. The left column lists the skills for the target role. The right column shows the user's current skills, with visual indicators (e.g., checkmarks, gaps) to show matches and discrepancies.
+• Admin Role Editor: A drag-and-drop interface where roles are represented as cards. Admins can draw lines between cards to create paths and click on a card to open an editing modal for assigning skills.
+8. Technical Specifications
+• Frontend: React.js for a dynamic and responsive user interface. D3.js or a similar library for Radar View visualizations.
+• Backend: Python/Node.js with a microservices architecture.
+• AI/ML: A recommendation engine built using collaborative filtering and content-based filtering to generate dynamic career paths from historical employee data.
+• Database: PostgreSQL for structured data (roles, skills) and a graph database like Neo4j to manage complex role relationships efficiently.
+9. Dependencies
+• HRIS System: Requires integration for up-to-date employee role, skill, and performance data.
+• Skills Ontology: This tool is critically dependent on a well-defined and managed Skills Ontology for skill mapping.
+• Learning Management System (LMS): Requires integration to pull and recommend relevant courses.
+10. Timeline and Milestones
+• Phase 1 (MVP):
+o Milestone 1: Basic Role Architecture and Skills Ontology management for Admins.
+o Milestone 2: Learner view with static "Branching Network View/ Subway Map" and "Role Details" panel.
+o Milestone 3: Launch MVP to a pilot group of users.
+• Phase 2 (AI Integration):
+o Milestone 4: Develop and integrate the AI engine for the dynamic "Radar View."
+o Milestone 5: Launch Radar View and HR analytics features.
+• Phase 3 (Enhancements):
+o Implement features from the "Future Enhancements / Additional Features" section based on priority.
+11. Assumptions and Constraints
+• Assumption: The organization has sufficient and clean historical employee career data to train the AI model effectively.
+• Assumption: A comprehensive Skills Ontology will be available and maintained.
+• Constraint: Initial AI recommendations may require manual validation by Admins or HR.
+• Constraint: The project timeline is dependent on the successful integration with the existing HRIS and LMS platforms.
+`
+                    },
+                    {
+                        title: 'Product Requirement Document (PRD): Skill Gap Analysis',
+                        content: `
+Product Requirement Document (PRD): Skill Gap Analysis
+1. Product Overview
+<strong>Skill Gap Analysis is a data-driven capability that provides employees and the organization with a clear understanding of the discrepancies between current skill sets and the skills required for a role, project, or future career aspiration.</strong> By offering precise, visual, and actionable insights into an individual's or team's strengths and development areas, this tool enables targeted learning interventions. <strong>This capability is fundamental for fostering personal growth, enabling strategic workforce planning, and ensuring the organization possesses the critical skills needed to achieve its future objectives.</strong>
+2. Goals and Objectives
+• <strong>Enable Targeted Development: Provide employees with a clear roadmap of the skills they need to acquire for their desired career goals. Target: 80% of employees with a development plan will use the tool to identify skill gaps within 6 months of launch.</strong>
+• <strong>Improve Workforce Planning: Equip HR and leadership with accurate data on organizational skill strengths and weaknesses to inform strategic decisions. Target: Reduce time-to-fill for critical roles by 20% by identifying internal talent more effectively.</strong>
+• <strong>Increase L&D ROI: Ensure that learning and development resources are allocated to address the most critical skill gaps. Target: Increase the completion rate of recommended courses linked to identified skill gaps by 30%.</strong>
+3. User Requirements
+• As a Learner (Employee), I want to compare my skills against a target role so that I can see exactly where I need to improve.
+• As a Learner, I want to receive a concrete development plan based on my skill gaps so that I have clear, actionable steps to take.
+• As an Admin, I want to manage the master list of all skills and proficiency levels for the company so that all skill analyses are based on a consistent framework.
+• As an HR Representative, I want to understand the collective skill gaps of a department so that I can plan strategic training initiatives.
+4. Functional Requirements (MVP)
+Epic: Skill Gap Analysis & Visualization (Learner)
+• Feature 4.1.1: Target Role Selection: Learners can select a "Target Role for Analysis" from a searchable list of all roles defined in the Role Architecture.
+• Feature 4.1.2: Analysis Dashboard: Upon selection, the system will display a dashboard that includes a skill match percentage, a spiderweb/radar chart, and a detailed table of gaps.
+Epic: Development Plan Generation (Learner)
+• Feature 4.2.1: Plan Generation Button: A "Generate Plan" button will be available on the analysis dashboard.
+• Feature 4.2.2: Recommended Actions: Clicking the button will generate a list of recommended learning actions tailored to close the identified skill gaps.
+Epic: Skills Ontology Management (Admin)
+• Feature 4.3.1: Centralized Skill Interface: Admins will have access to a dedicated interface to manage the company's official Skills Ontology, including adding/editing skills, defining proficiency levels, and categorizing them.
+Epic: Workforce Skill Planning & Reporting (HR Representative)
+• Feature 4.4.1: Aggregate Reporting: HR Reps can run reports to analyze skill gaps at a team, department, or organizational level.
+• Feature 4.4.2: Strategic Initiative Analysis: HR Reps can run a report against a strategic goal (e.g., "AI Readiness") to visualize the organization's current proficiency and highlight critical gaps.
+4A. Future Enhancements / Additional Features
+For the Learner (Employee):
+• Comparative Analysis: Ability to analyze skill gaps against multiple target roles simultaneously or compare different development paths.
+• PDP Integration: Integration with a personal development plan (PDP) to track progress on closing identified gaps over time.
+• Granular Recommendations: More detailed recommendations, linking directly to specific modules or exercises within learning resources.
+• 360-Degree Skill View: Option to self-assess skills or request manager assessment for a more comprehensive view.
+• Historical Tracking: A historical view of skill development and gap closure over time.
+For the Admin:
+• Organizational Analysis Tools: Tools to run skill gap analyses for entire teams, departments, or the whole organization.
+• Advanced Reporting: Reporting and analytics on organizational skill gaps, critical skill shortages, and emerging skill needs.
+• Automated Data Sync: Deeper integration with HRIS and learning platforms for automated data synchronization.
+For the HR Representative:
+• High-Potential Identification: Features to identify high-potential employees based on their skill profiles and development progress.
+• Program Development Support: Support for creating and managing organizational development programs based on identified skill gaps.
+• Recruitment Integration: Integration with recruitment systems to inform external hiring needs based on internal skill availability.
+5. Non-Functional Requirements
+• Data Accuracy: Skill data synchronized from the HRIS and self-assessments must be accurate.
+• Performance: Skill gap analysis for an individual must complete within 3 seconds. Aggregate reports should generate within 10 seconds.
+• Security: An employee's skill gap data is confidential and should only be visible to the employee, their manager, and authorized HR personnel.
+6. Use Cases
+• Use Case 1 (Learner): Chen, a Junior Developer, selects "Senior Developer" as his target role. The dashboard shows a 65% skill match and a gap in "System Architecture." He clicks "Generate Plan," and the system recommends two advanced courses on system design.
+• Use Case 2 (Admin): Maria (Admin) opens the Skills Ontology tool and adds a new skill, "Prompt Engineering," with five proficiency levels. This skill is now available for mapping to roles.
+7. Technical Specifications
+• Frontend: React.js with a data visualization library like Chart.js or D3.js.
+• Backend: Python/Node.js.
+• Database: PostgreSQL.
+• Architecture: API-first design to allow other tools to query skill gap data.
+8. Dependencies
+• Role Architecture Tool: Dependent on the Role Architecture tool for role-to-skill mappings.
+• HRIS System: Requires a reliable connection to the HRIS for employee skill data.
+• Learning Management System (LMS): Necessary for generating actionable development plans.
+9. Timeline and Milestones
+• Phase 1 (Foundation):
+◦ Milestone 1: Build and deploy the Skills Ontology Management tool.
+• Phase 2 (MVP):
+◦ Milestone 2: Develop the Learner-facing Skill Gap Analysis dashboard and Development Plan Generation.
+• Phase 3 (Organizational Tools):
+◦ Milestone 3: Build aggregate reporting and strategic analysis tools for HR.
+10. Assumptions and Constraints
+• Assumption: The organization can agree upon a standardized set of skills and proficiency levels.
+• Assumption: Employee skill data is reasonably accurate or can be supplemented by self-assessment.
+• Constraint: The quality of recommendations is limited by the quality of content in the LMS.
+`
+                    },
+                    {
+                        title: 'Product Requirement Document (PRD): Personalized Learning Recommendations',
+                        content: `
+Product Requirement Document (PRD): Personalized Learning Recommendations
+1. Product Overview
+<strong>Personalized Learning Recommendations is an intelligent capability that transforms the employee development experience from a generic, catalog-based approach to a tailored, individual-centric journey.</strong> By leveraging data on an employee's current skills, identified skill gaps, and career aspirations, the <strong>system's AI-powered engine proactively suggests the most relevant and impactful learning resources. This ensures that learning is efficient, engaging, and directly aligned with both individual and organizational goals.</strong>
+2. Goals and Objectives
+• <strong>Increase Learning Engagement: Drive adoption of learning resources by making them more relevant. Target: Increase monthly active users of the LMS by 40% within one year.</strong>
+• <strong>Accelerate Skill Acquisition: Help employees close skill gaps faster by recommending the most effective content. Target: Reduce the average time to close an identified skill gap by 25%.</strong>
+• <strong>Improve Learning Experience: Increase satisfaction by pushing relevant content to employees. Target: Achieve a user satisfaction score of 85% for recommendations.</strong>
+3. User Requirements
+• As a Learner, I want to receive a personalized learning plan based on my career goals so I know what to learn next.
+• As a Learner, I want to discover internal projects that will help me build new skills.
+• As an Admin, I want to ensure our learning content is properly tagged so the AI can effectively recommend it.
+• As an HR Representative, I want to see analytics on learning engagement to understand the impact of our L&D programs.
+4. Functional Requirements (MVP)
+Epic: Personalized Learning Plan (Learner)
+• Feature 4.1.1: Goal-Based Dashboard: Displays a personalized dashboard when a learner selects a learning goal (e.g., a target role).
+• Feature 4.1.2: Recommended Content List: The dashboard will feature a list of recommended learning items tailored to the learner's skill gaps for that goal, with completion status tracked from the LMS.
+Epic: Integration with Talent Marketplace (Learner)
+• Feature 4.2.1: Surface Opportunities: A dedicated section within the learning plan will display relevant internal opportunities (projects, gigs) from the Talent Marketplace, matched based on needed skills.
+Epic: AI Content Enrichment (Admin)
+• Feature 4.3.1: Content Tagging Interface: Admins will have an interface to manage skill tags for learning content.
+• Feature 4.3.2: AI-Powered Tag Suggestions: The system will analyze content metadata and suggest relevant skill tags from the Skills Ontology for admin validation.
+Epic: Learning Path Strategy (Admin)
+• Feature 4.4.1: Path Generation & Curation: Admins can define a career path (start and end role), have the AI generate a draft learning plan, and then curate it before publishing it as the official recommendation.
+Epic: Learning Analytics Dashboard (HR Representative)
+• Feature 4.5.1: Engagement Metrics: HR Reps will have access to a dashboard with key metrics like learning hours, completion rates, and the impact of learning on skill development.
+4A. Future Enhancements / Additional Features
+For the Learner (Employee):
+• Sophisticated Recommendation Engine: An engine that considers learning styles, past learning history, and peer recommendations.
+• External Platform Integration: Integration with external learning platforms (e.g., Coursera, LinkedIn Learning).
+• Goal Setting & Tracking: Ability to set learning goals and track progress against them within the platform.
+• Notifications & Feedback: Proactive notifications for learning activities and a feedback mechanism for learners to rate recommendations.
+• Recommendation Clarity: Clearer indication of how each recommendation directly addresses a specific skill gap.
+• Proactive Calendar Scheduling: Option for the system to find and suggest open slots in the learner's work calendar to schedule time for learning.
+For the Admin:
+• AI-Generated Curricula: Allow AI to auto-generate entire curricula for specific skill gaps or roles, which admins can then review and approve.
+• Configurable Logic: Tools to configure the recommendation engine's logic (e.g., weighting skills, prioritizing content types).
+• Utilization Analytics: Deeper analytics on learning resource utilization, completion rates, and impact on skill development.
+For the HR Representative:
+• Targeted Campaigns: Ability to push targeted learning campaigns to specific employee segments based on strategic skill needs.
+• Effectiveness Reporting: Reporting on the effectiveness of learning programs in closing organizational skill gaps.
+• SME Identification: Tools to identify and promote internal subject matter experts who can contribute to learning content or mentorship.
+5. Non-Functional Requirements
+• Recommendation Relevance: The engine must achieve a minimum 75% relevance score (measured by user ratings and click-through rates).
+• Performance: Recommendations must load on the user's dashboard within 2 seconds.
+• Scalability: The AI engine must be able to process data for the entire employee base in overnight batch processes.
+6. Use Cases
+• Use Case 1 (Learner): After identifying a skill gap in "Financial Modeling," Sarah visits her Learning Plan. The system has recommended an e-learning course, an internal project on budget analysis, and an upcoming webinar.
+• Use Case 2 (Admin): James needs to tag new videos on "Agile Methodologies." The AI suggests tags like "Scrum" and "Kanban." James validates them, and the content is now ready to be recommended.
+7. Technical Specifications
+• Frontend: React.js.
+• Backend: Python for AI/ML services, Node.js for general APIs.
+• AI/ML: A hybrid recommendation engine (Content-Based and Collaborative Filtering).
+• Database: PostgreSQL.
+8. Dependencies
+• Skill Gap Analysis: The engine's primary input is the output of the Skill Gap Analysis tool.
+• Skills Ontology & Content Tagging: Recommendation relevance depends on a well-managed ontology and accurately tagged content.
+• Talent Marketplace: Required for the "Apply Your Skills" feature.
+9. Timeline and Milestones
+• Phase 1 (Foundation):
+◦ Milestone 1: Develop the AI Content Enrichment tool for Admins and tag critical content.
+• Phase 2 (MVP Launch):
+◦ Milestone 2: Develop the Learner-facing Personalized Learning Plan dashboard.
+• Phase 3 (Expansion):
+◦ Milestone 3: Integrate with the Talent Marketplace and release advanced Admin/HR tools.
+10. Assumptions and Constraints
+• Assumption: Learning content metadata is sufficient for AI-powered tag suggestions.
+• Assumption: Employees will have defined career goals to drive recommendations.
+• Constraint: The recommendation engine will require a "cold start" period to learn and improve accuracy.
+`
+                    },
+                    {
+                        title: 'Product Requirement Document (PRD): Connections – Mentors & Networking',
+                        content: `
+Product Requirement Document (PRD): Connections – Mentors & Networking
+1. Product Overview
+<strong>Connections is a capability designed to foster a culture of mentorship, knowledge sharing, and community within the organization.</strong> It facilitates meaningful internal connections by enabling employees to easily discover and connect with experienced colleagues as mentors, find and join communities of practice, and participate in internal learning events. <strong>By breaking down silos and making the organization's collective expertise accessible, Connections supports employee development, strengthens internal networks, and enhances organizational cohesion.</strong>
+2. Goals and Objectives
+• <strong>Foster a Mentorship Culture: Increase the number of formal and informal mentorship relationships. Target: Achieve 500 active mentorship pairings within the first year.</strong>
+• <strong>Enhance Knowledge Sharing: Facilitate the transfer of tacit knowledge across teams. Target: Launch 20 active communities of practice within 18 months.</strong>
+• <strong>Improve Employee Onboarding: Help new hires build professional networks more quickly. Target: 90% of new hires to have at least one connection within their first 90 days.</strong>
+3. User Requirements
+• As a Learner, I want to find a mentor who has expertise in a skill I want to develop.
+• As a Learner, I want to join internal groups related to my professional interests to learn from my peers.
+• As an Admin, I want to set up and manage formal mentorship programs.
+• As an HR Representative, I want to understand the health and impact of our mentorship programs.
+4. Functional Requirements (MVP)
+Epic: Mentor & Network Discovery (Learner)
+• Feature 4.1.1: Searchable Directory: A searchable directory of employees who have opted in as mentors, filterable by skills, department, etc.
+• Feature 4.1.2: User Profiles & Connection: Profiles display skills and expertise, with a button to send a connection request.
+Epic: Community & Events Hub (Learner)
+• Feature 4.2.1: Directories: A directory of all internal communities and a calendar/list of upcoming L&D events, with options to join or RSVP.
+Epic: Mentorship Program Management (Admin)
+• Feature 4.3.1: Program Creation & Matching: Admins can create formal mentorship programs, set matching criteria, and invite participants, with system-suggested pairings.
+Epic: Community Management (Admin)
+• Feature 4.4.1: Community Creation: Admins can create new internal communities, assign owners, and manage membership settings.
+Epic: Program Health Dashboard (HR Representative)
+• Feature 4.5.1: Key Metrics Tracking: A dashboard displaying the health of mentorship programs, including active pairings and satisfaction ratings.
+Epic: Mentorship Gap Analysis (HR Representative)
+• Feature 4.6.1: Gap Reporting: Reports to identify which departments or skill areas have a shortage of available mentors to focus recruitment efforts.
+4A. Future Enhancements / Additional Features
+For the Learner (Employee):
+• Mentorship Tools: Tools for scheduling mentorship sessions, tracking progress, and providing feedback.
+• Communication Integration: Integration with communication tools (e.g., Slack, Teams) for easy connection.
+• Structured Programs: Support for different types of mentorship (e.g., formal, informal, reverse mentorship).
+• Community Creation: Functionality for users (not just admins) to create and manage internal communities of practice or interest groups.
+For the Admin:
+• Advanced Analytics: Analytics on mentorship program participation, mentor/mentee satisfaction, and impact on employee development.
+• Event Configuration: Configuration options for creating, managing, and promoting networking events.
+For the HR Representative:
+• Manager Team Building: A feature to help managers use skill data to find employees for new project teams.
+• Impact Reporting: Reporting on the impact of connection programs on employee retention, skill development, and internal mobility.
+• Participation Promotion: Tools to promote and encourage participation in mentorship and networking activities across the organization.
+• Talent Management Integration: Integration with talent management systems to track mentorship as part of an employee's official development record.
+5. Non-Functional Requirements
+• Privacy & Security: Participation is voluntary. All data must be secure, and users must opt-in to be discoverable.
+• Performance: Directory searches must load in under 2 seconds.
+• Usability: The process of finding and connecting with a mentor should be simple and intuitive.
+6. Use Cases
+• Use Case 1 (Learner): Alex filters the directory for "Public Speaking," finds Maria, a Sales Director, and sends her a connection request to learn about her experience.
+• Use Case 2 (Admin): Sarah creates a mentorship program for high-potential female leaders, enrolls participants, and uses the system's suggestions to confirm 15 optimal pairings.
+7. Technical Specifications
+• Frontend: React.js.
+• Backend: Node.js/Python.
+• Search: Elasticsearch for fast and relevant directory filtering.
+• Database: PostgreSQL.
+• Integrations: APIs for HRIS (profiles), Calendar (scheduling), and Communication tools (Slack/Teams).
+8. Dependencies
+• Employee Profile Data: Relies on the HRIS for accurate employee information.
+• Skills Ontology: The skill search feature is dependent on the master Skills Ontology.
+• Employee Participation: Success is contingent on employees volunteering as mentors and mentees.
+9. Timeline and Milestones
+• Phase 1 (MVP):
+◦ Milestone 1: Build the employee directory, profiles, and connection workflow. Launch the Community & Events Hub (view only).
+• Phase 2 (Program Management):
+◦ Milestone 2: Build the Mentorship Program and Community Management tools for Admins, along with dashboards for HR.
+• Phase 3 (Enhancements):
+◦ Milestone 3: Implement deeper integrations and features from the "Future Enhancements" section.
+10. Assumptions and Constraints
+• Assumption: A significant number of experienced employees will volunteer to be mentors.
+• Constraint: The initial launch may face a "chicken-and-egg" problem requiring a targeted campaign to get both mentors and mentees on board.
+`
+                    }
+                ]
+            }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
             const foundationsTab = document.getElementById('foundations-tab');
             const capabilitiesTab = document.getElementById('capabilities-tab');
+            const documentsTab = document.getElementById('documents-tab');
             const projectTableBody = document.getElementById('project-table-body');
             const tabButtons = document.querySelectorAll('.tab-button');
 
@@ -245,40 +652,97 @@
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    currentTab = button.id === 'foundations-tab' ? 'foundations' : 'capabilities';
+                    console.log('Button clicked:', button.id);
+                    if (button.id === 'foundations-tab') {
+                        currentTab = 'foundations';
+                    } else if (button.id === 'capabilities-tab') {
+                        currentTab = 'capabilities';
+                    } else if (button.id === 'documents-tab') {
+                        currentTab = 'documents';
+                    }
+                    console.log('Current tab after click:', currentTab);
                     switchTab(button);
                     renderTable(currentTab);
                 });
             });
 
             function renderTable(tab) {
+                console.log('Rendering table for tab:', tab);
                 projectTableBody.innerHTML = '';
                 let index = 1;
-                projectData.forEach(epic => {
-                    if (epic.type === tab) {
+
+                const headers = document.querySelectorAll('thead th');
+                if (tab === 'documents') {
+                    headers[1].textContent = 'Document Title';
+                    headers[2].textContent = 'Category';
+                    headers[3].textContent = 'Related Documents';
+                    headers[4].textContent = 'Status';
+                    headers[5].textContent = 'Last Updated';
+
+                    const documentsEpic = projectData.find(epic => epic.type === 'documents');
+                    if (documentsEpic && documentsEpic.documents) {
+                        documentsEpic.documents.forEach(doc => {
+                            const row = document.createElement('tr');
+                            row.className = `cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 epic-row`;
+                            row.dataset.docTitle = doc.title;
+                            row.innerHTML = `
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-900 dark:text-gray-100">${index++}</td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                                    <span class="mr-2 text-gray-600 dark:text-gray-400">+</span>
+                                    ${doc.title}
+                                </td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300"></td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300"></td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300"></td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300"></td>
+                            `;
+                            projectTableBody.appendChild(row);
+                            row.addEventListener('click', () => {
+                                showSlideout(doc, 'document');
+                            });
+                        });
+                    } else {
                         const row = document.createElement('tr');
-                        const rowColorClass = epic.rowColor ? epic.rowColor : '';
-                        row.className = `cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 epic-row ${rowColorClass}`;
-                        row.dataset.epicId = epic.id;
-    
+                        row.className = `epic-row`;
                         row.innerHTML = `
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-900 dark:text-gray-100">${index++}</td>
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
-                                <span class="mr-2 text-gray-600 dark:text-gray-400">+</span>
-                                ${epic.epic}
-                            </td>
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.capabilities}</td>
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.dependencies}</td>
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap ${epic.color}">${epic.priority}</td>
-                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.rationale}</td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-900 dark:text-gray-100" colspan="6">No documents available yet.</td>
                         `;
                         projectTableBody.appendChild(row);
-    
-                        row.addEventListener('click', () => {
-                            showSlideout(epic);
-                        });
                     }
-                });
+                } else {
+                    // Restore original headers for other tabs
+                    headers[1].textContent = 'Epic';
+                    headers[2].textContent = 'Capability Sets';
+                    headers[3].textContent = 'Dependencies';
+                    headers[4].textContent = 'Priority';
+                    headers[5].textContent = 'Rationale';
+
+                    projectData.forEach(epic => {
+                        if (epic.type === tab) {
+                            const row = document.createElement('tr');
+                            const rowColorClass = epic.rowColor ? epic.rowColor : '';
+                            row.className = `cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 epic-row ${rowColorClass}`;
+                            row.dataset.epicId = epic.id;
+        
+                            row.innerHTML = `
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-900 dark:text-gray-100">${index++}</td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                                    <span class="mr-2 text-gray-600 dark:text-gray-400">+</span>
+                                    ${epic.epic}
+                                </td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.capabilities}</td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.dependencies}</td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap ${epic.color}">${epic.priority}</td>
+                                <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.rationale}</td>
+                            `;
+                            projectTableBody.appendChild(row);
+        
+                            row.addEventListener('click', () => {
+                                showSlideout(epic, 'epic');
+                            });
+                        }
+                    });
+                }
             }
 
             function switchTab(activeButton) {
@@ -286,72 +750,129 @@
                     if (button === activeButton) {
                         button.classList.add('text-white', 'bg-blue-600', 'dark:bg-blue-500');
                         button.classList.remove('text-gray-700', 'bg-gray-200', 'dark:text-gray-300', 'dark:bg-gray-700');
+                        console.log(`Activating tab: ${button.id}`);
                     } else {
                         button.classList.remove('text-white', 'bg-blue-600', 'dark:bg-blue-500');
                         button.classList.add('text-gray-700', 'bg-gray-200', 'dark:text-gray-300', 'dark:bg-gray-700');
+                        console.log(`Deactivating tab: ${button.id}`);
                     }
                 });
             }
 
-            // Function to show the slideout panel with epic data
-            function showSlideout(epic) {
-                slideoutTitle.textContent = epic.epic;
+            // Function to show the slideout panel with epic data or document data
+            function showSlideout(data, type) {
                 slideoutContent.innerHTML = '';
-                
-                // Add Dependencies section
-                const dependenciesSection = document.createElement('div');
-                dependenciesSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700';
-                dependenciesSection.innerHTML = `
-                    <h4 class="font-bold google-blue mb-2">Dependencies</h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">${epic.dependencies}</p>
-                `;
-                slideoutContent.appendChild(dependenciesSection);
 
-                // Add Features section
-                const featuresSection = document.createElement('div');
-                featuresSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 last:pb-0';
-                
-                const userStoriesByPersona = {
-                    'Learner': [],
-                    'Admin': [],
-                    'HR rep': [],
-                    'Admin/HR rep': []
-                };
+                if (type === 'epic') {
+                    slideoutTitle.textContent = data.epic;
+                    
+                    // Add Dependencies section
+                    const dependenciesSection = document.createElement('div');
+                    dependenciesSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700';
+                    dependenciesSection.innerHTML = `
+                        <h4 class="font-bold google-blue mb-2">Dependencies</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">${data.dependencies}</p>
+                    `;
+                    slideoutContent.appendChild(dependenciesSection);
 
-                epic.features.forEach(feature => {
-                    feature.userStories.forEach(story => {
-                        const personaMatch = story.match(/As an? \*\*([^]+?)\*\*/);
-                        if (personaMatch && personaMatch[1]) {
-                            const persona = personaMatch[1].trim();
-                            if (userStoriesByPersona[persona]) {
-                                userStoriesByPersona[persona].push({
-                                    featureName: feature.name,
-                                    story: story
-                                });
+                    // Add Features section
+                    const featuresSection = document.createElement('div');
+                    featuresSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 last:pb-0';
+                    
+                    const userStoriesByPersona = {
+                        'Learner': [],
+                        'Admin': [],
+                        'HR rep': [],
+                        'Admin/HR rep': []
+                    };
+
+                    data.features.forEach(feature => {
+                        feature.userStories.forEach(story => {
+                            const personaMatch = story.match(/As an? \*\*([^]+?)\*\*/);
+                            if (personaMatch && personaMatch[1]) {
+                                const persona = personaMatch[1].trim();
+                                if (userStoriesByPersona[persona]) {
+                                    userStoriesByPersona[persona].push({
+                                        featureName: feature.name,
+                                        story: story
+                                    });
+                                }
                             }
-                        }
+                        });
                     });
-                });
 
-                let featuresHtml = '';
-                for (const persona in userStoriesByPersona) {
-                    if (userStoriesByPersona[persona].length > 0) {
-                        featuresHtml += `
-                            <div class="mb-4">
-                                <h5 class="font-bold text-gray-900 dark:text-gray-100 mb-1">${persona} Features:</h5>
-                                <ul class="list-disc list-inside space-y-1 pl-4">
-                                    ${userStoriesByPersona[persona].map(item => `<li><span class="font-semibold">${item.featureName}:</span> ${item.story}</li>`).join('')}
-                                </ul>
-                            </div>
-                        `;
+                    let featuresHtml = '';
+                    for (const persona in userStoriesByPersona) {
+                        if (userStoriesByPersona[persona].length > 0) {
+                            featuresHtml += `
+                                <div class="mb-4">
+                                    <h5 class="font-bold text-gray-900 dark:text-gray-100 mb-1">${persona} Features:</h5>
+                                    <ul class="list-disc list-inside space-y-1 pl-4">
+                                        ${userStoriesByPersona[persona].map(item => `<li><span class="font-semibold">${item.featureName}:</span> ${item.story}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                        }
                     }
-                }
 
-                featuresSection.innerHTML = `
-                    <h4 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Features</h4>
-                    ${featuresHtml}
-                `;
-                slideoutContent.appendChild(featuresSection);
+                    featuresSection.innerHTML = `
+                        <h4 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Features</h4>
+                        ${featuresHtml}
+                    `;
+                    slideoutContent.appendChild(featuresSection);
+
+                } else if (type === 'document') {
+                    slideoutTitle.textContent = data.title;
+                    const documentContent = document.createElement('div');
+                    documentContent.className = 'prose dark:prose-invert max-w-none'; // Tailwind prose for basic markdown styling
+                    
+                    let formattedContent = data.content;
+
+                    // Remove "Table of Contents" and its items
+                    formattedContent = formattedContent.replace(/Table of Contents\n(?:.*\n)*?(?=\n\d+\.\sProduct Overview)/, '');
+
+                    // Regex to find and wrap MVP and Extended Features sections
+                    formattedContent = formattedContent.replace(
+                        /(4\. Functional Requirements \(MVP\))([\s\S]*?)(4A\. Future Enhancements \/ Additional Features)/g,
+                        `<div class="mvp-section p-4 mt-4">
+                            <h3 class="text-2xl font-bold google-blue mb-4">$1</h3>
+                            <div class="text-gray-700 dark:text-gray-300">$2</div>
+                        </div>
+                        <div class="extended-section p-4 mt-4">
+                            <h3 class="text-2xl font-bold google-blue mb-4">$3</h3>`
+                    );
+                    formattedContent = formattedContent.replace(
+                        /(4A\. Future Enhancements \/ Additional Features)([\s\S]*?)(5\. Non-Functional Requirements)/g,
+                        `<div class="extended-section p-4 mt-4">
+                            <h3 class="text-2xl font-bold google-blue mb-4">$1</h3>
+                            <div class="text-gray-700 dark:text-gray-300">$2</div>
+                        </div>
+                        <h3 class="text-2xl font-bold google-blue mt-8 mb-4">$3</h3>`
+                    );
+
+                    // Replace generic headers with styled ones
+                    formattedContent = formattedContent.replace(/^(\d+\.\s.*?)$/gm, (match, p1) => {
+                        if (p1.includes("Functional Requirements (MVP)") || p1.includes("Future Enhancements / Additional Features")) {
+                            return match; // Already handled by the above regex
+                        }
+                        if (p1.match(/^\d+\.\s/)) {
+                            return `<h3 class="text-2xl font-bold google-blue mt-8 mb-4">${p1}</h3>`;
+                        }
+                        return match;
+                    });
+                    formattedContent = formattedContent.replace(/^(Epic:\s.*?)$/gm, `<h4 class="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-3">$1</h4>`);
+                    formattedContent = formattedContent.replace(/^(•\sFeature\s\d+\.\d+\.\d+:\s.*?)$/gm, `<div class="feature-item text-gray-700 dark:text-gray-300">$1</div>`);
+                    formattedContent = formattedContent.replace(/^(•\s.*?)$/gm, `<li class="text-gray-700 dark:text-gray-300">$1</li>`);
+
+
+                    // Attempt to group user stories by persona within the feature items
+                    // This is a more advanced parsing step. For simplicity, I'll just make sure the persona is bold and distinct.
+                    formattedContent = formattedContent.replace(/As an? \*\*(.*?)\*\*/g, `<span class="persona-section">$1</span>`);
+
+
+                    documentContent.innerHTML = formattedContent;
+                    slideoutContent.appendChild(documentContent);
+                }
 
                 slideoutPanel.classList.add('is-open');
                 backdrop.classList.add('is-open');

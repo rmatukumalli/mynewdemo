@@ -117,12 +117,104 @@
         .feature-item strong {
             color: #4285F4; /* Google Blue for feature names */
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem; /* Reduce overall padding on smaller screens */
+            }
+            .max-w-7xl {
+                max-width: 100%; /* Allow main container to take full width */
+                margin-left: 0;
+                margin-right: 0;
+                border-radius: 0; /* Remove rounded corners for full-width look */
+            }
+            .p-4 {
+                padding: 0.75rem; /* Reduce padding in sections */
+            }
+            .flex.justify-end.space-x-2 {
+                flex-direction: column; /* Stack tab buttons vertically */
+                align-items: stretch; /* Stretch buttons to full width */
+                space-x-2: 0; /* Remove horizontal space */
+                gap: 0.5rem; /* Add vertical space between stacked buttons */
+            }
+            .tab-button {
+                width: 100%; /* Make tab buttons full width */
+                text-align: center;
+            }
+            .slideout {
+                max-width: 100%; /* Slideout takes full width on mobile */
+            }
+            .slideout-content h1 { font-size: 1.75rem; } /* text-3xl */
+            .slideout-content h2 { font-size: 1.5rem; } /* text-2xl */
+            .slideout-content h3 { font-size: 1.25rem; } /* text-xl */
+            .slideout-content h4 { font-size: 1rem; } /* text-lg */
+            .slideout-content ul, .slideout-content ol {
+                padding-left: 1em; /* Reduce list padding */
+            }
+            .p-6 {
+                padding: 1rem; /* Reduce slideout panel padding */
+            }
+            .text-xl {
+                font-size: 1.125rem; /* Reduce slideout title font size */
+            }
+            .overflow-x-auto {
+                -webkit-overflow-scrolling: touch; /* Improve scrolling on iOS */
+            }
+            table {
+                display: block; /* Allow table to scroll horizontally */
+                width: max-content; /* Ensure table takes content width */
+            }
+            thead, tbody, th, td, tr {
+                display: block; /* Make table elements block-level for stacking */
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                border: 1px solid #ccc;
+                margin-bottom: 0.5rem;
+            }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+            /* Specific labels for each column */
+            td:nth-of-type(1):before { content: "#"; }
+            td:nth-of-type(2):before { content: "Epic"; }
+            td:nth-of-type(3):before { content: "Capability Sets"; }
+            td:nth-of-type(4):before { content: "Dependencies"; }
+            td:nth-of-type(5):before { content: "Priority"; }
+            td:nth-of-type(6):before { content: "Rationale"; }
+
+            /* Document tab specific labels */
+            .documents-tab-active td:nth-of-type(2):before { content: "Document Title"; }
+            .documents-tab-active td:nth-of-type(3):before { content: "Category"; }
+            .documents-tab-active td:nth-of-type(4):before { content: "Related Documents"; }
+            .documents-tab-active td:nth-of-type(5):before { content: "Status"; }
+            .documents-tab-active td:nth-of-type(6):before { content: "Last Updated"; }
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 font-sans p-8">
 
     <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
-        <div class="p-4 border-b border-gray-200 dark:border-gray-600 flex justify-end space-x-2">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-600 flex flex-wrap justify-end gap-2">
             <button id="foundations-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 dark:bg-blue-500">Foundations</button>
             <button id="capabilities-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Capabilities & Features</button>
             <button id="documents-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Documents</button>
@@ -756,6 +848,12 @@ For the HR Representative:
                         console.log(`Deactivating tab: ${button.id}`);
                     }
                 });
+
+                if (currentTab === 'documents') {
+                    projectTableBody.classList.add('documents-tab-active');
+                } else {
+                    projectTableBody.classList.remove('documents-tab-active');
+                }
             }
 
             // Function to show the slideout panel with epic data or document data

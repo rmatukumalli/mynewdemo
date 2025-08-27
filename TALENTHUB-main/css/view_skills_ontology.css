@@ -67,11 +67,12 @@ body, html {
 .page-header {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Added to space out header elements */
+    justify-content: space-between;
     background-color: var(--header-bg);
     color: white;
     padding: 20px 24px;
     margin-bottom: 24px;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 .header-icon-container {
@@ -99,8 +100,10 @@ body, html {
 
 .header-actions {
     display: flex;
-    gap: 20px; /* Space between buttons */
+    gap: 20px;
     align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    margin-top: 15px; /* Add some space when wrapping */
 }
 
 .home-link, .hierarchy-button, .proficiency-button {
@@ -600,66 +603,230 @@ body, html {
 }
 
 @media (max-width: 768px) { /* Mobile */
-    .top-bar {
+    .page-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
-        padding: 12px 20px;
+        padding: 15px 20px;
+        margin-bottom: 20px;
     }
-    .top-bar .logo {
-        font-size: 28px;
+
+    .header-text h1 {
+        font-size: 22px;
     }
-    .top-bar-actions {
+
+    .header-text p {
+        font-size: 13px;
+    }
+
+    .header-actions {
+        flex-direction: column;
         width: 100%;
-        justify-content: stretch; /* Stretch buttons */
         gap: 10px;
+        margin-top: 20px;
     }
-    .hierarchy-button, .proficiency-button {
-        flex-grow: 1;
-        text-align: center;
-        justify-content: center; /* Center text within buttons */
+
+    .home-link, .hierarchy-button, .proficiency-button {
+        width: 100%;
+        min-width: unset;
+        padding: 10px 15px;
+        font-size: 14px;
+        height: auto;
     }
+
     .main-content {
         padding: 20px;
         gap: 20px;
     }
+
     .ontology-column {
-        padding: 22px;
+        padding: 20px;
         border-radius: 15px;
         min-height: auto;
+        max-width: none; /* Remove max-width for full width on mobile */
+        min-width: unset; /* Remove min-width for full width on mobile */
     }
+
+    .ontology-column h4 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
     .form-group {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
-    .select-wrapper select, .search-box input {
-        padding: 12px 15px;
+
+    .form-group label {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .select-wrapper select,
+    .search-box input {
+        padding: 10px 15px;
         border-radius: 10px;
-        font-size: 16px;
+        font-size: 15px;
     }
+
+    .skill-tags {
+        gap: 15px;
+    }
+
     .skill-tag, .behavior-tag {
-        min-height: 50px;
-        padding: 13px 22px;
+        min-height: 45px;
+        padding: 12px 20px;
         font-size: 14px;
-        max-width: 100%;
-        text-align: center;
+        border-radius: 30px;
+        width: 100%; /* Make tags take full width */
     }
+
     .skill-details #detail-skill-name {
-        font-size: 22px;
+        font-size: 20px;
         margin-bottom: 15px;
     }
+
     .skill-details .description {
-        font-size: 15px;
-        line-height: 1.7;
-    }
-    .search-result-item {
-        padding: 12px 18px;
-    }
-    .breadcrumb {
         font-size: 14px;
-        gap: 6px;
+        line-height: 1.6;
     }
-    .app-footer {
-        padding: 25px;
+
+    .category-badge {
+        padding: 8px 15px;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .search-results {
+        max-height: 250px;
+        top: calc(100% + 8px);
+    }
+
+    .search-result-item {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        font-size: 11px;
+    }
+
+    .custom-footer {
+        padding: 0.75rem 0;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) { /* Smaller Mobile Devices */
+    .page-header {
+        padding: 10px 15px;
+        margin-bottom: 15px;
+    }
+
+    .header-text h1 {
+        font-size: 20px;
+    }
+
+    .header-text p {
+        font-size: 12px;
+    }
+
+    .header-actions {
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .home-link, .hierarchy-button, .proficiency-button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .main-content {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .ontology-column {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .ontology-column h4 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .select-wrapper select,
+    .search-box input {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .skill-tags {
+        gap: 10px;
+    }
+
+    .skill-tag, .behavior-tag {
+        min-height: 40px;
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 25px;
+    }
+
+    .skill-details #detail-skill-name {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .skill-details .description {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .category-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .search-results {
+        max-height: 200px;
+        top: calc(100% + 6px);
+    }
+
+    .search-result-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .footer-links {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .footer-links a {
+        font-size: 10px;
+    }
+
+    .custom-footer {
+        padding: 0.5rem 0;
+        font-size: 0.7rem;
     }
 }
 
@@ -707,11 +874,12 @@ body, html {
     text-align: center;
     padding: 1rem 0;
     font-size: 0.875rem;
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
-    z-index: 1000;
+    /* Removed fixed positioning for better mobile flow */
+    /* position: fixed; */
+    /* left: 0; */
+    /* bottom: 0; */
+    /* z-index: 1000; */
 }
 
 /* Styles for inline relationship help text */

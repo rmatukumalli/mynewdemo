@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Experience Project Plan</title>
+    <!-- Use Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the slideout panel and backdrop */
+        .slideout {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background-color: white;
+            z-index: 50;
+            transition: right 0.3s ease-in-out;
+            overflow-y: auto;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .slideout.is-open {
+            right: 0;
+        }
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        .backdrop.is-open {
+            display: block;
+            opacity: 1;
+        }
+        /* Custom colors for priority tiers */
+        .tier-1-color { color: #22c55e; } /* Tailwind's green-500 */
+        .tier-2-color { color: #3b82f6; } /* Tailwind's blue-600 */
+        .tier-3-color { color: #9333ea; } /* Tailwind's purple-600 */
+        .google-blue { color: #4285F4; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 font-sans p-8">
+
+    <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-600 flex space-x-2">
+            <button id="foundations-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 dark:bg-blue-500">Foundations</button>
+            <button id="capabilities-tab" class="tab-button px-4 py-2 text-sm font-medium rounded-lg text-gray-700 bg-gray-200 dark:text-gray-300 dark:bg-gray-700">Capabilities & Features</button>
+        </div>
+
+        <div class="overflow-x-auto p-4">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 dark:bg-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-1/12">#</th>
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-2/12">Epic</th>
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-2/12">Capability Sets</th>
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-3/12">Dependencies</th>
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-1/12">Priority</th>
+                        <th class="p-4 border-b border-gray-200 dark:border-gray-600 w-4/12">Rationale</th>
+                    </tr>
+                </thead>
+                <tbody id="project-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Slideout Panel -->
+    <div id="slideout-panel" class="slideout dark:bg-gray-900">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h3 id="slideout-title" class="text-xl font-bold text-gray-900 dark:text-gray-100"></h3>
+            <button id="close-slideout" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x text-gray-600 dark:text-gray-400"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="slideout-content" class="p-6 text-gray-700 dark:text-gray-300">
+            <!-- Features and user stories will be dynamically injected here -->
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop"></div>
+    
+    <script>
+        const projectData = [
+            // Foundational Epics (Tier 1 - Must Have)
+            {
+                id: 1, epic: 'Skills Ontology Management', capabilities: 'Data Science, Career Pathing, Connections', dependencies: 'None (Foundational)', priority: 'Tier 1 (Must-Have)', color: 'text-green-600', rationale: 'This epic is a foundational administrative function to create the master list of all skills, which is a core dependency for all other AI and user-facing epics. This is the starting point for building a unified, skill-based platform.',
+                type: 'foundations',
+                features: [
+                    { name: 'Centralized Skill Interface', userStories: ['As an **Admin**, I want to manage the master list of all skills, so that all skill analyses are based on a consistent framework.'] },
+                    { name: 'AI-Powered Tag Suggestions (for content)', userStories: ['As an **Admin**, I want the system to suggest relevant skill tags for learning content, so that I can efficiently enrich our content library.'] },
+                ]
+            },
+            {
+                id: 2, epic: 'Role Architecture Management', capabilities: 'Data Science, Career Pathing', dependencies: 'Requires: Skills Ontology Management', priority: 'Tier 1 (Must-Have)', color: 'text-green-600', rationale: 'This epic is the logical next step, defining the roles and career paths that the platform will use. It acts as the structural foundation that learners navigate and that AI models analyze.',
+                type: 'foundations',
+                features: [
+                    { name: 'Visual Role Editor', userStories: ['As an **Admin**, I want to visually create, edit, and delete roles, so that I can easily maintain the system\'s career architecture.'] },
+                    { name: 'Skill Assignment', userStories: ['As an **Admin**, I want to assign specific skills and proficiency levels to each role, so that the role requirements are clearly defined.'] },
+                    { name: 'Path Definition', userStories: ['As an **Admin**, I want to establish and visualize the connections between different roles, so that I can create official career paths.'] },
+                ]
+            },
+            {
+                id: 3, epic: 'AI-driven Career Lattice', capabilities: 'Data Science', dependencies: 'Requires: Skills Ontology Management, Historical employee data', priority: 'Tier 1 (Must-Have)', color: 'text-green-600', rowColor: 'bg-red-100 dark:bg-red-900', rationale: 'This AI/Data Science epic is the core innovation behind dynamic career pathing. The team will build a model to analyze historical data and suggest non-obvious career paths, which is crucial for modern talent management.',
+                type: 'foundations',
+                features: [
+                    { name: 'Non-obvious Path Suggestion', userStories: ['As a **Learner**, I want the system to suggest career paths that I might not have considered, so that I can explore new opportunities within the company.'] },
+                ]
+            },
+            {
+                id: 4, epic: 'Skills Gap Analysis (AI/NLP)', capabilities: 'Data Science', dependencies: 'Requires: Skills Ontology Management', priority: 'Tier 1 (Must-Have)', color: 'text-green-600', rowColor: 'bg-red-100 dark:bg-red-900', rationale: 'This epic is where the core AI/NLP models for skills analysis are built. These models are crucial for accurately identifying and quantifying skill gaps for a given role, which is the basis for personalized recommendations.',
+                type: 'foundations',
+                features: [
+                    { name: 'Gap Identification', userStories: ['As a **Learner**, I want the system to accurately identify my skill gaps for a target role, so that I know what to focus on for my development.'] },
+                ]
+            },
+            {
+                id: 5, epic: 'Career Path Inference Engine', capabilities: 'Data Science', dependencies: 'Requires: Skills Ontology Management, Historical employee data', priority: 'Tier 1 (Must-Have)', color: 'text-green-600', rowColor: 'bg-red-100 dark:bg-red-900', rationale: 'This is the data science epic for inferring career progression. It provides the logic to identify feeder roles and next roles from past data, which validates and enhances the Role Architecture.',
+                type: 'foundations',
+                features: [
+                    { name: 'Feeder/Next Role Inference', userStories: ['As an **Admin**, I want the system to infer logical feeder roles for a position, so that I can validate and enhance the career architecture.'] },
+                ]
+            },
+
+            // Capability Epics (Tier 1 - MVP)
+            {
+                id: 6, epic: 'Career Pathing (MVP)', capabilities: 'Career Pathing', dependencies: 'Requires: Role Architecture Management, AI-driven Career Lattice', priority: 'Tier 1 (Core MVP)', color: 'text-green-600', rationale: 'This epic delivers the core learner-facing features for exploring career paths. It provides immediate value by visualizing both traditional and AI-suggested career trajectories.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Branching Network View / Subway Map', userStories: ['As a **Learner**, I want to see a structured, vertical career ladder for my role so I can understand traditional progression.'] },
+                    { name: 'Interactive Radar View (Basic AI)', userStories: ['As a **Learner**, I want to see lateral career options based on my skills so I can explore non-linear paths.'] },
+                    { name: 'Role Selection & Skill Comparison', userStories: ['As a **Learner**, I want to compare my current skills against an aspirational role to identify gaps.'] },
+                    { name: 'Role Details Panel', userStories: ['As a **Learner**, I want to view responsibilities, required skills, and recommended next steps for any role.'] },
+                    { name: 'Opportunities Discovery', userStories: ['As a **Learner**, I want to see related roles I might be interested in based on my profile.'] },
+                    { name: 'Role Architecture Management', userStories: ['As an **Admin**, I want to manage roles, assign skills, and define next-role relationships.'] },
+                    { name: 'Career Path Analysis & Insights (HR)', userStories: ['As an **HR rep**, I want to analyze common career trajectories within teams or departments.'] },
+                ]
+            },
+            {
+                id: 7, epic: 'Skill Gap Analysis (MVP)', capabilities: 'Skill Gap Analysis', dependencies: 'Requires: Skills Ontology Management, Skills Gap Analysis (AI/NLP Model), Role Architecture Management', priority: 'Tier 1 (Core MVP)', color: 'text-green-600', rationale: 'This epic provides the core functionality for learners to identify and understand their skill gaps, which is essential for personal and organizational development.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Target Role Selection', userStories: ['As a **Learner**, I want to select a target role to analyze my skill gaps.'] },
+                    { name: 'Skill Gap Dashboard', userStories: ['As a **Learner**, I want to see my skill match percentage and visual gap chart.'] },
+                    { name: 'Development Plan Generation', userStories: ['As a **Learner**, I want a list of actions or learning resources to close gaps.'] },
+                    { name: 'Skills Ontology Management', userStories: ['As an **Admin**, I want to manage the master skill list to ensure accurate analysis.'] },
+                    { name: 'Aggregate Reporting', userStories: ['As an **HR rep**, I want to view skill gaps at the team or department level.'] },
+                ]
+            },
+            {
+                id: 8, epic: 'Personalized Learning Recs (MVP)', capabilities: 'Personalized Learning Recommendations', dependencies: 'Requires: Skills Ontology Management, Skill Gap Analysis (AI/NLP Model), Role Architecture Management', priority: 'Tier 1 (Core MVP)', color: 'text-green-600', rationale: 'This epic closes the loop by using skill gap data to provide actionable learning recommendations, a key part of the platform\'s value proposition.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Goal-Based Dashboard', userStories: ['As a **Learner**, I want a dashboard showing learning recommendations tied to my career goal.'] },
+                    { name: 'Recommended Content List', userStories: ['As a **Learner**, I want prioritized learning resources based on my skill gaps.'] },
+                    { name: 'Basic Admin Content Tagging', userStories: ['As an **Admin**, I want to tag learning content with relevant skills.'] },
+                    { name: 'Learning Analytics (HR)', userStories: ['As an **HR rep**, I want to view basic engagement and completion metrics.'] },
+                ]
+            },
+            {
+                id: 9, epic: 'Connections/Mentoring (MVP)', capabilities: 'Connections', dependencies: 'Requires: Skills Ontology Management', priority: 'Tier 1 (Core MVP)', color: 'text-green-600', rationale: 'This epic provides the core social features, enabling employees to connect with peers and mentors, a key driver of engagement and knowledge transfer.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Searchable Mentor Directory', userStories: ['As a **Learner**, I want to search for mentors by skills or department.'] },
+                    { name: 'Profile & Connection Requests', userStories: ['As a **Learner**, I want to view profiles and request connections.'] },
+                    { name: 'Community & Events Hub (View only)', userStories: ['As a **Learner**, I want to browse communities and L&D events.'] },
+                    { name: 'Mentorship Program Creation & Matching (Admin)', userStories: ['As an **Admin**, I want to set up formal mentorship programs.'] },
+                    { name: 'Program Health Dashboard (HR)', userStories: ['As an **HR rep**, I want to track active pairings and basic satisfaction metrics.'] },
+                ]
+            },
+
+            // Capability Epics (Tier 2 - Extended/Future Enhancements)
+            {
+                id: 10, epic: 'Career Pathing (Extended)', capabilities: 'Career Pathing', dependencies: 'Requires: Data from Career Pathing MVP', priority: 'Tier 2 (Extended)', color: 'text-blue-600 dark:text-blue-400', rationale: 'These are advanced features that build on the core Career Pathing functionality, providing deeper personalization and more robust analytics for both learners and administrators.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Saved Paths & Progress Tracking', userStories: ['As a **Learner**, I want to save multiple aspirational paths and track my progress over time.'] },
+                    { name: 'Direct LMS Enrollment', userStories: ['As a **Learner**, I want to enroll in recommended courses directly from the platform.'] },
+                    { name: 'Personalized Opportunity Discovery', userStories: ['As a **Learner**, I want AI-driven recommendations for roles beyond my immediate path.'] },
+                    { name: 'Holistic Skill Guidance', userStories: ['As a **Learner**, I want suggestions for skills via projects, mentorship, or stretch assignments.'] },
+                    { name: 'Advanced Analytics for Admins/HR', userStories: ['As an **Admin/HR rep**, I want dashboards showing engagement, skill gaps, and popular paths.'] },
+                    { name: 'Customizable Pathing Rules & HRIS Integration', userStories: ['As an **Admin**, I want to define promotion rules and synchronize roles with HRIS.'] },
+                ]
+            },
+            {
+                id: 11, epic: 'Skill Gap Analysis (Extended)', capabilities: 'Skill Gap Analysis', dependencies: 'Requires: Data from Skill Gap Analysis MVP', priority: 'Tier 2 (Extended)', color: 'text-blue-600 dark:text-blue-400', rationale: 'These features enhance the core skill gap analysis by adding comparative tools, deeper integration with other systems, and historical tracking to show development over time.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Comparative Analysis Across Roles', userStories: ['As a **Learner**, I want to compare skill gaps across multiple target roles.'] },
+                    { name: 'PDP Integration', userStories: ['As a **Learner**, I want my skill development plan linked to my personal development plan.'] },
+                    { name: '360-Degree Skill Assessment', userStories: ['As a **Learner**, I want to include manager assessments or peer feedback for a full view.'] },
+                    { name: 'Historical Tracking', userStories: ['As a **Learner/Admin/HR**, I want to track skill progression over time.'] },
+                    { name: 'Advanced Organizational Analytics', userStories: ['As an **Admin/HR**, I want insights on critical skill shortages and emerging skills.'] },
+                    { name: 'Automated Data Sync', userStories: ['As an **Admin**, I want skill data synced with HRIS and LMS automatically.'] },
+                ]
+            },
+            {
+                id: 12, epic: 'Personalized Learning Recs (Extended)', capabilities: 'Personalized Learning Recommendations', dependencies: 'Requires: Data from Personalized Learning Recs MVP', priority: 'Tier 2 (Extended)', color: 'text-blue-600 dark:text-blue-400', rationale: 'These features add sophistication to the recommendation engine, making it more intelligent and providing more comprehensive administrative tools for managing learning content and campaigns.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Sophisticated Recommendation Engine', userStories: ['As a **Learner**, I want recommendations considering learning style, history, and peer trends.'] },
+                    { name: 'External Platform Integration', userStories: ['As a **Learner**, I want recommendations to include external platforms like Coursera.'] },
+                    { name: 'Goal Tracking & Notifications', userStories: ['As a **Learner**, I want to track progress and receive proactive alerts for learning.'] },
+                    { name: 'AI-Generated Curricula & Admin Curation', userStories: ['As an **Admin**, I want AI to suggest full learning plans that I can review.'] },
+                    { name: 'Targeted Campaigns (HR)', userStories: ['As an **HR rep**, I want to push learning campaigns to specific employee segments.'] },
+                    { name: 'SME Identification', userStories: ['As an **HR rep**, I want to identify internal experts for mentorship or content creation.'] },
+                ]
+            },
+            {
+                id: 13, epic: 'Connections/Mentoring (Extended)', capabilities: 'Connections', dependencies: 'Requires: Data from Connections/Mentoring MVP', priority: 'Tier 2 (Extended)', color: 'text-blue-600 dark:text-blue-400', rationale: 'These features build on the core connections functionality by providing better tools for managing mentorships, integrating with communication platforms, and offering deeper analytics on engagement and impact.',
+                type: 'capabilities',
+                features: [
+                    { name: 'Mentorship Tools & Scheduling', userStories: ['As a **Learner**, I want to schedule sessions, track progress, and give feedback.'] },
+                    { name: 'Communication Integration', userStories: ['As a **Learner**, I want Slack/Teams integration for seamless connection.'] },
+                    { name: 'Structured Programs & Community Creation by Users', userStories: ['As a **Learner/Admin**, I want to create new communities or programs.'] },
+                    { name: 'Advanced Analytics & Event Configuration (Admin/HR)', userStories: ['As an **Admin/HR**, I want to analyze program impact and configure events.'] },
+                    { name: 'Manager Team Building & Talent Management Integration', userStories: ['As an **HR rep**, I want mentorship data to inform team building and development records.'] },
+                ]
+            },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const foundationsTab = document.getElementById('foundations-tab');
+            const capabilitiesTab = document.getElementById('capabilities-tab');
+            const projectTableBody = document.getElementById('project-table-body');
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            const slideoutPanel = document.getElementById('slideout-panel');
+            const slideoutTitle = document.getElementById('slideout-title');
+            const slideoutContent = document.getElementById('slideout-content');
+            const closeButton = document.getElementById('close-slideout');
+            const backdrop = document.getElementById('backdrop');
+
+            let currentTab = 'foundations';
+            renderTable(currentTab);
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    currentTab = button.id === 'foundations-tab' ? 'foundations' : 'capabilities';
+                    switchTab(button);
+                    renderTable(currentTab);
+                });
+            });
+
+            function renderTable(tab) {
+                projectTableBody.innerHTML = '';
+                let index = 1;
+                projectData.forEach(epic => {
+                    if (epic.type === tab) {
+                        const row = document.createElement('tr');
+                        const rowColorClass = epic.rowColor ? epic.rowColor : '';
+                        row.className = `cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 epic-row ${rowColorClass}`;
+                        row.dataset.epicId = epic.id;
+    
+                        row.innerHTML = `
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-900 dark:text-gray-100">${index++}</td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                                <span class="mr-2 text-gray-600 dark:text-gray-400">+</span>
+                                ${epic.epic}
+                            </td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.capabilities}</td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.dependencies}</td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm font-semibold whitespace-nowrap ${epic.color}">${epic.priority}</td>
+                            <td class="p-4 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300">${epic.rationale}</td>
+                        `;
+                        projectTableBody.appendChild(row);
+    
+                        row.addEventListener('click', () => {
+                            showSlideout(epic);
+                        });
+                    }
+                });
+            }
+
+            function switchTab(activeButton) {
+                tabButtons.forEach(button => {
+                    if (button === activeButton) {
+                        button.classList.add('text-white', 'bg-blue-600', 'dark:bg-blue-500');
+                        button.classList.remove('text-gray-700', 'bg-gray-200', 'dark:text-gray-300', 'dark:bg-gray-700');
+                    } else {
+                        button.classList.remove('text-white', 'bg-blue-600', 'dark:bg-blue-500');
+                        button.classList.add('text-gray-700', 'bg-gray-200', 'dark:text-gray-300', 'dark:bg-gray-700');
+                    }
+                });
+            }
+
+            // Function to show the slideout panel with epic data
+            function showSlideout(epic) {
+                slideoutTitle.textContent = epic.epic;
+                slideoutContent.innerHTML = '';
+                
+                // Add Dependencies section
+                const dependenciesSection = document.createElement('div');
+                dependenciesSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700';
+                dependenciesSection.innerHTML = `
+                    <h4 class="font-bold google-blue mb-2">Dependencies</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${epic.dependencies}</p>
+                `;
+                slideoutContent.appendChild(dependenciesSection);
+
+                // Add Features section
+                const featuresSection = document.createElement('div');
+                featuresSection.className = 'mb-4 pb-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 last:pb-0';
+                
+                const userStoriesByPersona = {
+                    'Learner': [],
+                    'Admin': [],
+                    'HR rep': [],
+                    'Admin/HR rep': []
+                };
+
+                epic.features.forEach(feature => {
+                    feature.userStories.forEach(story => {
+                        const personaMatch = story.match(/As an? \*\*([^]+?)\*\*/);
+                        if (personaMatch && personaMatch[1]) {
+                            const persona = personaMatch[1].trim();
+                            if (userStoriesByPersona[persona]) {
+                                userStoriesByPersona[persona].push({
+                                    featureName: feature.name,
+                                    story: story
+                                });
+                            }
+                        }
+                    });
+                });
+
+                let featuresHtml = '';
+                for (const persona in userStoriesByPersona) {
+                    if (userStoriesByPersona[persona].length > 0) {
+                        featuresHtml += `
+                            <div class="mb-4">
+                                <h5 class="font-bold text-gray-900 dark:text-gray-100 mb-1">${persona} Features:</h5>
+                                <ul class="list-disc list-inside space-y-1 pl-4">
+                                    ${userStoriesByPersona[persona].map(item => `<li><span class="font-semibold">${item.featureName}:</span> ${item.story}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                }
+
+                featuresSection.innerHTML = `
+                    <h4 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Features</h4>
+                    ${featuresHtml}
+                `;
+                slideoutContent.appendChild(featuresSection);
+
+                slideoutPanel.classList.add('is-open');
+                backdrop.classList.add('is-open');
+            }
+
+            // Function to hide the slideout panel
+            function hideSlideout() {
+                slideoutPanel.classList.remove('is-open');
+                backdrop.classList.remove('is-open');
+            }
+
+            closeButton.addEventListener('click', hideSlideout);
+            backdrop.addEventListener('click', hideSlideout);
+            
+        });
+    </script>
+</body>
+</html>

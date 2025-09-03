@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Advisor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <header class="main-header">
+        <a href="/index.html" class="home-link">Home</a>
+    </header>
+    <div id="page-container">
+        <div id="info-panel">
+            <h1>AI Career Advisor</h1>
+            <p>With respect to the conversational coach, here is a possible way we can approach the solution. In this example we are taking a two-pronged approach: using a proprietary matching algorithm for structured skill-role mapping, and leveraging an LLM to deliver personalized, conversational guidance.</p>
+            <h2>The Matching Algorithm</h2>
+            <p>The proposed matching algorithm (we need to build/use if there is an existing one) will sit at the core of the recommendation engine. Its responsibilities would include:</p>
+            <ul>
+                <li><strong>Understanding the current role:</strong> Based on user input or profile metadata (e.g., “Developer”).</li>
+                <li><strong>Defining target roles / career paths:</strong> Identifying possible aspirational roles (e.g., “Senior Developer,” “Tech Lead,” “Solutions Architect”).</li>
+                <li><strong>Mapping skill gaps:</strong> Using a proprietary model or ruleset to compare current skill set (known or inferred), skills required for target roles, and levels of proficiency expected.</li>
+                <li><strong>Generating recommendations:</strong> Outputting structured, role-specific skill development advice (e.g., “advanced JavaScript,” “system design,” “cloud computing”).</li>
+            </ul>
+            <h2>The LLM Layer</h2>
+            <p>The LLM acts as the front-end intelligence layer that takes the output from the matching algorithm and delivers it in a natural, conversational format. Its role includes:</p>
+            <ul>
+                <li><strong>Contextualizing results:</strong> Translating structured skill gap data into meaningful explanations, personalized to the user.</li>
+                <li><strong>Handling ambiguity or user intent:</strong> Interpreting open-ended queries and using algorithm output to answer.</li>
+                <li><strong>Conversational flow and UX:</strong> Making the experience feel like an intelligent career coach.</li>
+            </ul>
+            <h2>Matching Algorithm Inputs</h2>
+            <div id="algorithm-inputs">
+                <p><strong>Current Role:</strong> <span id="current-role">Developer</span></p>
+                <p><strong>Aspirational Role:</strong> <span id="aspirational-role">Senior Developer</span></p>
+            </div>
+            <h2>Skill Gap Analysis</h2>
+            <div id="skill-gap-analysis">
+                <p>Based on your current role and aspirational role, here is a summary of the skill gaps identified by our matching algorithm:</p>
+                <ul id="skill-gap-list"></ul>
+            </div>
+        </div>
+        <div id="chat-container">
+            <div id="chat-box"></div>
+            <div id="input-container">
+                <input type="text" id="user-input" placeholder="Ask me about your career path...">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+  <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+</body>
+</html>

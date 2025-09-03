@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Role Fields & Use Cases (Updated Priority)</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the sortable header */
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+        .sortable:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Job Role Fields & Use Cases</h1>
+            <p class="mt-2 text-md text-gray-600 dark:text-gray-400">A detailed, field-by-field breakdown prioritized by strategic importance.</p>
+        </header>
+
+        <!-- Priority Legend -->
+        <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <h3 class="font-semibold text-lg text-gray-900 dark:text-white mb-3">Priority Key:</h3>
+            <div class="flex flex-col sm:flex-row flex-wrap gap-4 text-sm">
+                <div class="flex items-center">
+                    <span class="inline-block px-2 py-1 mr-2 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span>
+                    <span class="dark:text-gray-300"><b>Highest Priority:</b> Job Architecture, Workforce Planning, Career Pathing & Core LMS</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="inline-block px-2 py-1 mr-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span>
+                     <span class="dark:text-gray-300"><b>High Priority:</b> Employee Experience & Performance Management</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="inline-block px-2 py-1 mr-2 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span>
+                     <span class="dark:text-gray-300"><b>Medium Priority:</b> Talent Acquisition & Admin/Compliance</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Responsive table container -->
+        <div class="relative overflow-x-auto shadow-md rounded-lg">
+            <table id="roleTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 sortable" onclick="sortTable(0)">
+                            Priority <span id="sort-indicator"></span>
+                        </th>
+                        <th scope="col" class="px-6 py-3">Step</th>
+                        <th scope="col" class="px-6 py-3">Field</th>
+                        <th scope="col" class="px-6 py-3">Primary Area(s)</th>
+                        <th scope="col" class="px-6 py-3">Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Step 1 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">1</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Role Title</td>
+                        <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                        <td class="px-6 py-4">The primary naming convention for the role; essential for job postings and internal catalogs.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">1</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Role Summary</td>
+                        <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                        <td class="px-6 py-4">A concise overview used in internal career sites and to differentiate roles.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">1</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Job Description</td>
+                        <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                        <td class="px-6 py-4">The detailed definition of the role, its duties, and context. The source of truth.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">1</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Key Responsibilities</td>
+                        <td class="px-6 py-4">Job Architecture, Performance Management</td>
+                        <td class="px-6 py-4">Core duties of the role, essential for both architecture and performance management.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">1</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Decision Scope</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Defines the level of autonomy and impact on business decisions.</td>
+                    </tr>
+                    <!-- Step 2 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Business Unit / Division</td>
+                        <td class="px-6 py-4">Workforce Planning, Job Architecture</td>
+                        <td class="px-6 py-4">High-level organizational context for reporting and analysis.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Department</td>
+                        <td class="px-6 py-4">Workforce Planning, Job Architecture</td>
+                        <td class="px-6 py-4">Specific functional area the role belongs to.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Job Family</td>
+                        <td class="px-6 py-4">Job Architecture, Workforce Planning</td>
+                        <td class="px-6 py-4">Groups related roles for easier analysis, career pathing, and skill management.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Role Group / Team</td>
+                        <td class="px-6 py-4">Workforce Planning</td>
+                        <td class="px-6 py-4">The immediate team or group for operational context.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Role Code / ID</td>
+                        <td class="px-6 py-4">Job Architecture / HRIS</td>
+                        <td class="px-6 py-4">Ensures data integrity and consistent referencing across all systems.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Created Date</td>
+                        <td class="px-6 py-4">Job Architecture / Auditing</td>
+                        <td class="px-6 py-4">Core metadata for governance and tracking the history of the architecture.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Team Size</td>
+                        <td class="px-6 py-4">Workforce Planning</td>
+                        <td class="px-6 py-4">Data point for analyzing spans and layers.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Reporting Lines</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Defines formal management structure for reviews and approvals.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">2</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Matrix Relationships</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Identifies key stakeholders for project work and 360-degree feedback.</td>
+                    </tr>
+                    <!-- Step 3 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Career Track</td>
+                        <td class="px-6 py-4">Job Architecture, Career Pathing</td>
+                        <td class="px-6 py-4">Defines the nature of progression (e.g., Individual Contributor vs. Management).</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Level</td>
+                        <td class="px-6 py-4">Job Architecture, Compensation</td>
+                        <td class="px-6 py-4">Core component of the leveling framework for internal equity.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Grade / Job Level</td>
+                        <td class="px-6 py-4">Job Architecture, Compensation</td>
+                        <td class="px-6 py-4">Often the primary key for linking a role to a specific salary band.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Seniority Label</td>
+                        <td class="px-6 py-4">Job Architecture, Career Pathing</td>
+                        <td class="px-6 py-4">A user-friendly label (e.g., "Senior") that complements the formal Level/Grade.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Feeder Roles</td>
+                        <td class="px-6 py-4">Career Pathing & Talent Mobility</td>
+                        <td class="px-6 py-4">Maps where talent for this role comes from, supporting succession planning.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Reports To</td>
+                        <td class="px-6 py-4">Performance Management, HRIS</td>
+                        <td class="px-6 py-4">Defines the primary manager for the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Location / Region</td>
+                        <td class="px-6 py-4">Workforce Planning, Talent Acquisition</td>
+                        <td class="px-6 py-4">Used for strategic planning, compensation, and candidate sourcing.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Location Type</td>
+                        <td class="px-6 py-4">Workforce Planning, Talent Acquisition</td>
+                        <td class="px-6 py-4">Specifies if the role is Remote, Hybrid, or On-site.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Employment Type</td>
+                        <td class="px-6 py-4">Workforce Planning, Talent Acquisition</td>
+                        <td class="px-6 py-4">Categorizes the role as Full-Time, Part-Time, etc.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">3</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Contract Type</td>
+                        <td class="px-6 py-4">Workforce Planning, Talent Acquisition</td>
+                        <td class="px-6 py-4">Specifies if the role is Permanent, Fixed-Term, Contractor, etc.</td>
+                    </tr>
+                    <!-- Step 4 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Skills Table</td>
+                        <td class="px-6 py-4">L&D / LMS, Job Architecture</td>
+                        <td class="px-6 py-4">The critical link between a role and the skills needed to perform it. Drives learning.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Soft Skills Table</td>
+                        <td class="px-6 py-4">L&D / LMS, Job Architecture</td>
+                        <td class="px-6 py-4">Defines the crucial behavioral competencies for a role.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Education Requirements</td>
+                        <td class="px-6 py-4">Talent Acquisition</td>
+                        <td class="px-6 py-4">Used as a baseline screening criterion for external candidates.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Language Requirements</td>
+                        <td class="px-6 py-4">Talent Acquisition</td>
+                        <td class="px-6 py-4">Specifies language proficiency needed for the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Travel Requirements</td>
+                        <td class="px-6 py-4">Talent Acquisition</td>
+                        <td class="px-6 py-4">Sets expectations about travel for the role.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Experience Requirements</td>
+                        <td class="px-6 py-4">Talent Acquisition</td>
+                        <td class="px-6 py-4">Sets expectations for the level of prior experience needed for the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Tools & Technologies</td>
+                        <td class="px-6 py-4">Talent Acquisition, L&D / LMS</td>
+                        <td class="px-6 py-4">Lists specific software/hardware skills required; can inform training needs.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Certifications</td>
+                        <td class="px-6 py-4">Talent Acquisition, L&D / LMS</td>
+                        <td class="px-6 py-4">Required credentials for screening candidates and tracking in the LMS.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">4</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Learning Resources</td>
+                        <td class="px-6 py-4">L&D / LMS</td>
+                        <td class="px-6 py-4">Directly links the role to specific, pre-vetted training content in the LMS.</td>
+                    </tr>
+                    <!-- Step 5 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">KPIs / Outcomes</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Defines what success looks like in terms of measurable results.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Performance Review Cycle</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Sets the cadence for formal performance evaluations.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Professional Development Support</td>
+                        <td class="px-6 py-4">L&D / LMS, Employee Experience</td>
+                        <td class="px-6 py-4">Communicates company commitment to growth (e.g., mentorship, coaching).</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Impact Areas</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Describes the key areas where the role is expected to make an impact.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Behavioral Competencies</td>
+                        <td class="px-6 py-4">Performance Management</td>
+                        <td class="px-6 py-4">Defines the "how" of performance - the expected behaviors.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Mobility Options</td>
+                        <td class="px-6 py-4">Career Pathing & Talent Mobility</td>
+                        <td class="px-6 py-4">Highlights opportunities for lateral moves, projects, gigs, etc.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Time Allocation (%)</td>
+                        <td class="px-6 py-4">Workforce Planning</td>
+                        <td class="px-6 py-4">Used for resource management and understanding focus areas.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Succession Plan Ready</td>
+                        <td class="px-6 py-4">Workforce Planning</td>
+                        <td class="px-6 py-4">Flags if a succession plan is needed for this role.</td>
+                    </tr>
+                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Criticality to Business</td>
+                        <td class="px-6 py-4">Workforce Planning & Talent Mobility</td>
+                        <td class="px-6 py-4">Pinpoints high-risk roles that require a talent pipeline.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">5</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Backup Resource Assigned</td>
+                        <td class="px-6 py-4">Workforce Planning</td>
+                        <td class="px-6 py-4">Identifies a specific person as a backup for a critical role.</td>
+                    </tr>
+                    <!-- Step 6 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">6</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Career Path – Next Roles</td>
+                        <td class="px-6 py-4">Career Pathing & Talent Mobility</td>
+                        <td class="px-6 py-4">Creates a visible career map and powers the internal talent marketplace.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">6</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">AI Recommendations</td>
+                        <td class="px-6 py-4">Career Pathing & L&D</td>
+                        <td class="px-6 py-4">Personalizes career exploration and suggests learning to bridge skill gaps.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">6</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Career Path Mapping</td>
+                        <td class="px-6 py-4">Career Pathing & Employee Experience</td>
+                        <td class="px-6 py-4">Provides a visual representation of potential career journeys.</td>
+                    </tr>
+                    <!-- Step 7 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Billable / Non-Billable</td>
+                        <td class="px-6 py-4">Finance / Operations</td>
+                        <td class="px-6 py-4">Used for project accounting and resource management.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Access Level / Permissions</td>
+                        <td class="px-6 py-4">IT / Security</td>
+                        <td class="px-6 py-4">Determines system and data access rights for the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Start Date / Onboarding Date</td>
+                        <td class="px-6 py-4">HRIS / Operations</td>
+                        <td class="px-6 py-4">Tracks the operational start for a new hire in the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Status</td>
+                        <td class="px-6 py-4">HRIS / Workforce Planning</td>
+                        <td class="px-6 py-4">Indicates if the role is Open, Filled, On Hold, etc.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Approval Status</td>
+                        <td class="px-6 py-4">HRIS / Operations</td>
+                        <td class="px-6 py-4">Tracks the workflow status of the role creation/edit process.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Security Clearance</td>
+                        <td class="px-6 py-4">Compliance / Talent Acquisition</td>
+                        <td class="px-6 py-4">Specifies any required security clearance levels.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Background Check</td>
+                        <td class="px-6 py-4">Compliance / Talent Acquisition</td>
+                        <td class="px-6 py-4">Indicates if a background check is required.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Mandatory Compliance Training</td>
+                        <td class="px-6 py-4">L&D / LMS, Compliance</td>
+                        <td class="px-6 py-4">Creates an automated rule to assign required courses in the LMS.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">7</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Equipment Provisioning</td>
+                        <td class="px-6 py-4">IT / Operations</td>
+                        <td class="px-6 py-4">Details the hardware/software to be provided for the role.</td>
+                    </tr>
+                    <!-- Step 8 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">8</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Salary Band</td>
+                        <td class="px-6 py-4">Compensation, Talent Acquisition</td>
+                        <td class="px-6 py-4">Defines the approved compensation range for the role.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">8</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Remote Work Policy</td>
+                        <td class="px-6 py-4">Talent Acquisition, Employee Experience</td>
+                        <td class="px-6 py-4">A key data point for attracting talent and setting expectations.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">8</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Travel Expectations</td>
+                        <td class="px-6 py-4">Talent Acquisition</td>
+                        <td class="px-6 py-4">Custom field to detail travel frequency beyond the standard requirement.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-200 rounded-full">P3</span></td>
+                        <td class="px-6 py-4 font-medium">8</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">On-call Duties</td>
+                        <td class="px-6 py-4">Talent Acquisition, Operations</td>
+                        <td class="px-6 py-4">Specifies expectations for on-call availability.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">P2</span></td>
+                        <td class="px-6 py-4 font-medium">8</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Innovation Time</td>
+                        <td class="px-6 py-4">Employee Experience, Talent Acquisition</td>
+                        <td class="px-6 py-4">Highlights company policy on dedicated time for innovation.</td>
+                    </tr>
+                    <!-- Step 9 -->
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">9</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Created By / Owner</td>
+                        <td class="px-6 py-4">Job Architecture & Auditing</td>
+                        <td class="px-6 py-4">Tracks who created the role definition for governance.</td>
+                    </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">9</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Last Updated</td>
+                        <td class="px-6 py-4">Job Architecture & Auditing</td>
+                        <td class="px-6 py-4">Timestamp for the most recent change to the role.</td>
+                    </tr>
+                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4"><span class="inline-block px-2 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">P1</span></td>
+                        <td class="px-6 py-4 font-medium">9</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Activity Log</td>
+                        <td class="px-6 py-4">Job Architecture & Auditing</td>
+                        <td class="px-6 py-4">Provides a critical governance and audit trail to ensure the integrity of job data.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let sortDirection = 'asc'; // Keep track of the current sort direction
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById("roleTable");
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.rows);
+            const sortIndicator = document.getElementById('sort-indicator');
+
+            // Toggle direction
+            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+
+            // Update sort indicator
+            sortIndicator.innerHTML = sortDirection === 'asc' ? ' &uarr;' : ' &darr;';
+
+            const sortedRows = rows.sort((a, b) => {
+                // Get the text content of the cell in the sorting column
+                const aText = a.cells[columnIndex].textContent.trim();
+                const bText = b.cells[columnIndex].textContent.trim();
+                
+                // Extract the number from the priority string (e.g., "P1" -> 1)
+                const aValue = parseInt(aText.replace('P', ''), 10);
+                const bValue = parseInt(bText.replace('P', ''), 10);
+
+                // Compare based on the current sort direction
+                if (sortDirection === 'asc') {
+                    return aValue - bValue;
+                } else {
+                    return bValue - aValue;
+                }
+            });
+
+            // Remove existing rows from the table
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+
+            // Append the sorted rows back to the table
+            tbody.append(...sortedRows);
+        }
+    </script>
+
+</body>
+</html>

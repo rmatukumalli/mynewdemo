@@ -1,0 +1,207 @@
+/* Styles specific to Manage Skill Validation & Endorsements page */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#validation-oversight-content p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.table-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.table-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+#pending-validations-table,
+#recent-endorsements-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#pending-validations-table th,
+#pending-validations-table td,
+#recent-endorsements-table th,
+#recent-endorsements-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+#pending-validations-table th,
+#recent-endorsements-table th {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: bold;
+}
+
+#pending-validations-table tbody tr:nth-child(even),
+#recent-endorsements-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#pending-validations-table tbody tr:hover,
+#recent-endorsements-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Buttons Styling */
+.approve-btn, .reject-btn, .view-details-btn, .flag-btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.approve-btn {
+    background-color: #28a745; /* Green for approve */
+    color: white;
+}
+.approve-btn:hover {
+    background-color: #218838;
+}
+
+.reject-btn {
+    background-color: #dc3545; /* Red for reject */
+    color: white;
+}
+.reject-btn:hover {
+    background-color: #c82333;
+}
+
+.view-details-btn {
+    background-color: #007bff; /* Blue for details */
+    color: white;
+}
+.view-details-btn:hover {
+    background-color: #0056b3;
+}
+
+.flag-btn {
+    background-color: #ffc107; /* Yellow for flag */
+    color: #333;
+}
+.flag-btn:hover {
+    background-color: #e0a800;
+}
+
+
+/* Responsive adjustments for tables */
+@media (max-width: 992px) { /* Adjust breakpoint as needed */
+    #pending-validations-table,
+    #pending-validations-table thead,
+    #pending-validations-table tbody,
+    #pending-validations-table th,
+    #pending-validations-table td,
+    #pending-validations-table tr,
+    #recent-endorsements-table,
+    #recent-endorsements-table thead,
+    #recent-endorsements-table tbody,
+    #recent-endorsements-table th,
+    #recent-endorsements-table td,
+    #recent-endorsements-table tr {
+        display: block;
+    }
+
+    #pending-validations-table thead tr,
+    #recent-endorsements-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #pending-validations-table tr,
+    #recent-endorsements-table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    #pending-validations-table td,
+    #recent-endorsements-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 45%; /* Adjust based on longest label */
+        white-space: normal;
+        text-align: left;
+        min-height: 30px; /* Ensure cells have some height */
+        display: flex;
+        align-items: center;
+    }
+
+    #pending-validations-table td:before,
+    #recent-endorsements-table td:before {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: 40%; /* Adjust based on longest label */
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        transform: translateY(-50%);
+    }
+
+    /* Specific labels for pending-validations-table */
+    #pending-validations-table td:nth-of-type(1):before { content: "User:"; }
+    #pending-validations-table td:nth-of-type(2):before { content: "Skill:"; }
+    #pending-validations-table td:nth-of-type(3):before { content: "Submitted By:"; }
+    #pending-validations-table td:nth-of-type(4):before { content: "Date Submitted:"; }
+    #pending-validations-table td:nth-of-type(5):before { content: "Status:"; }
+    #pending-validations-table td:nth-of-type(6):before { content: "Actions:"; }
+    
+    /* Specific labels for recent-endorsements-table */
+    #recent-endorsements-table td:nth-of-type(1):before { content: "User:"; }
+    #recent-endorsements-table td:nth-of-type(2):before { content: "Skill:"; }
+    #recent-endorsements-table td:nth-of-type(3):before { content: "Endorsed By:"; }
+    #recent-endorsements-table td:nth-of-type(4):before { content: "Date Endorsed:"; }
+    #recent-endorsements-table td:nth-of-type(5):before { content: "Status:"; }
+    #recent-endorsements-table td:nth-of-type(6):before { content: "Actions:"; }
+
+    #pending-validations-table td:last-child,
+    #recent-endorsements-table td:last-child {
+        border-bottom: none; /* Remove bottom border for the last cell in a "row" */
+    }
+
+    .approve-btn, .reject-btn, .view-details-btn, .flag-btn {
+        display: inline-block; /* Or block with margin */
+        margin-bottom: 5px;
+    }
+    #pending-validations-table td:nth-of-type(6), #recent-endorsements-table td:nth-of-type(6) {
+        padding-left: 10px; /* Reset padding for action cells */
+    }
+    #pending-validations-table td:nth-of-type(6):before, #recent-endorsements-table td:nth-of-type(6):before {
+        content: ""; /* Remove label for action cells if buttons are self-explanatory */
+         display: none;
+    }
+}

@@ -1,0 +1,93 @@
+<!-- Enhanced Modal for Adding/Mapping AI-Suggested Skills -->
+<div id="addSkillModal" class="add-skill-modal" style="display: none;">
+    <div class="add-skill-modal-content">
+        <div class="add-skill-modal-header">
+            <h2>Map or Add Skill to Ontology</h2>
+            <span class="add-skill-modal-close">&times;</span>
+        </div>
+        <div class="add-skill-modal-body">
+            <div id="addSkillMessage" class="add-skill-message" style="display: none; margin-bottom: 15px;"></div>
+            <form id="addSkillForm">
+                <div class="form-group">
+                    <label for="skillName">Skill Name (editable):</label>
+                    <input type="text" id="skillName" name="skillName" required>
+                    <div id="skillNameAlert" class="add-skill-message" style="display: none; margin-top: 5px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skillDescription">Description (optional):</label>
+                    <textarea id="skillDescription" name="skillDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="skillCapability">Capability (required):</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <select id="skillCapability" name="skillCapability" required style="flex-grow: 1;">
+                            <option value="">-- Select Capability --</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <button type="button" id="addNewCapabilityBtn" class="btn btn-outline-secondary btn-sm">Add New</button>
+                    </div>
+                </div>
+                <div id="addNewCapabilitySection" style="display: none; border: 1px solid #eee; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                    <label for="newCapabilityName">New Capability Name:</label>
+                    <input type="text" id="newCapabilityName" style="width: calc(100% - 110px); margin-right:10px; display:inline-block;">
+                    <button type="button" id="saveNewCapabilityBtn" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" id="cancelNewCapabilityBtn" class="btn btn-secondary btn-sm">Cancel</button>
+                    <div id="newCapabilityMessage" class="add-skill-message" style="display: none; margin-top: 5px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skillCompetency">Competency (required, filtered by Capability):</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <select id="skillCompetency" name="skillCompetency" required disabled style="flex-grow: 1;">
+                            <option value="">-- Select Competency --</option>
+                            <!-- Options will be populated and filtered by JavaScript -->
+                        </select>
+                        <button type="button" id="addNewCompetencyBtn" class="btn btn-outline-secondary btn-sm" disabled>Add New</button>
+                    </div>
+                </div>
+                <div id="addNewCompetencySection" style="display: none; border: 1px solid #eee; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                    <label for="newCompetencyName">New Competency Name (for selected Capability):</label>
+                    <input type="text" id="newCompetencyName" style="width: calc(100% - 110px); margin-right:10px; display:inline-block;">
+                    <button type="button" id="saveNewCompetencyBtn" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" id="cancelNewCompetencyBtn" class="btn btn-secondary btn-sm">Cancel</button>
+                    <div id="newCompetencyMessage" class="add-skill-message" style="display: none; margin-top: 5px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skillTags">Tags (optional, comma-separated):</label>
+                    <input type="text" id="skillTags" name="skillTags" placeholder="e.g., AI Suggested, Marketing">
+                </div>
+                
+                <div class="form-group">
+                    <label>Proficiency Levels (prefilled by AI):</label>
+                    <!-- Example: For simplicity, we'll assume a fixed set of proficiency levels. 
+                         In a real app, these might be dynamically generated or more complex. -->
+                    <div id="skillProficiencyLevels">
+                        <div>
+                            <input type="checkbox" id="profFoundational" name="proficiency" value="1">
+                            <label for="profFoundational">Foundational (Level 1)</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="profIntermediate" name="proficiency" value="2">
+                            <label for="profIntermediate">Intermediate (Level 2)</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="profAdvanced" name="proficiency" value="3">
+                            <label for="profAdvanced">Advanced (Level 3)</label>
+                        </div>
+                    </div>
+                    <small>Note: The AI-suggested proficiency will be pre-selected. You can adjust if needed.</small>
+                    <!-- Hidden input to store the original AI proficiency for reference or pre-selection logic -->
+                    <input type="hidden" id="aiSuggestedProficiencyLevel" name="aiSuggestedProficiencyLevel">
+                </div>
+
+                <div class="add-skill-modal-footer">
+                    <button type="button" class="btn btn-secondary add-skill-modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Skill to Ontology</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,254 @@
+/* Styles specific to Configure Skills Gap Analysis page */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#gap-analysis-config-content p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-container, .config-list-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.form-container h2, .config-list-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+#global-config-form div, #team-config-form div {
+    margin-bottom: 15px;
+}
+
+#global-config-form label, #team-config-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+#global-config-form input[type="number"],
+#global-config-form select,
+#team-config-form input[type="text"],
+#team-config-form input[type="number"],
+#team-config-form select {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#global-config-form button[type="submit"],
+#save-team-config-button {
+    background-color: #007bff; /* Admin primary color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#global-config-form button[type="submit"]:hover,
+#save-team-config-button:hover {
+    background-color: #0056b3;
+}
+
+#add-team-config-button {
+    background-color: #28a745; /* Green for add */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+#add-team-config-button:hover {
+    background-color: #218838;
+}
+
+#team-configs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#team-configs-table th,
+#team-configs-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+#team-configs-table th {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: bold;
+}
+
+#team-configs-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#team-configs-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #ffc107; /* Yellow for edit */
+    color: #333;
+}
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+}
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Modal Styles */
+.modal {
+    /* display: none; Re-enable this if not controlled by JS initially */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Dim background */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Adjusted for better centering */
+    padding: 25px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px; /* Max width for larger screens */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #global-config-form input[type="number"],
+    #global-config-form select,
+    #team-config-form input[type="text"],
+    #team-config-form input[type="number"],
+    #team-config-form select {
+        width: 100%;
+    }
+
+    #team-configs-table,
+    #team-configs-table thead,
+    #team-configs-table tbody,
+    #team-configs-table th,
+    #team-configs-table td,
+    #team-configs-table tr {
+        display: block;
+    }
+
+    #team-configs-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #team-configs-table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    #team-configs-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+
+    #team-configs-table td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    #team-configs-table td:nth-of-type(1):before { content: "Team/Dept"; }
+    #team-configs-table td:nth-of-type(2):before { content: "Scale"; }
+    #team-configs-table td:nth-of-type(3):before { content: "Threshold"; }
+    #team-configs-table td:nth-of-type(4):before { content: "Key Skills"; }
+    #team-configs-table td:nth-of-type(5):before { content: "Actions"; }
+    
+    .modal-content {
+        width: 90%;
+        margin: 15% auto;
+    }
+}

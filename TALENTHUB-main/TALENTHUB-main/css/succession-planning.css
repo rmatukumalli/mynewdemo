@@ -1,0 +1,329 @@
+/* Succession Planning Specific Styles */
+/* Uses Akara color variables from theme.css */
+
+body {
+    font-family: var(--font-primary, 'Inter', sans-serif);
+    background-color: var(--akara-light-gray, #f4f7f9);
+    color: var(--akara-text-color, #333);
+    line-height: 1.6;
+}
+
+#succession-planning-root {
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+}
+
+/* Input styles using Tailwind apply for base, focus rings can use Akara colors */
+.input-style {
+    @apply px-3 py-2 border rounded-md shadow-sm sm:text-sm;
+    border-color: var(--akara-medium-gray, #E0E0E0);
+}
+.input-style:focus {
+    outline: none;
+    border-color: var(--akara-accent-blue, #0073C4);
+    box-shadow: 0 0 0 3px rgba(0, 115, 196, 0.2); /* Similar to theme.css focus */
+}
+
+/* Button styles to match the theme */
+/* Primary buttons (e.g., Add Employee, Save) */
+.btn-primary {
+    @apply px-4 py-2 text-white rounded-md shadow-sm font-medium;
+    background-color: var(--akara-primary-red, #DA291C);
+    transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #A91F1C; /* Darker Akara Red */
+}
+.btn-primary:focus {
+    @apply outline-none ring-2 ring-offset-2;
+    ring-color: var(--akara-primary-red, #DA291C);
+}
+
+/* Secondary buttons (e.g., Cancel, Back to List) */
+.btn-secondary {
+    @apply px-4 py-2 rounded-md shadow-sm font-medium;
+    background-color: var(--akara-medium-gray, #E0E0E0);
+    color: var(--akara-text-color, #333);
+    border: 1px solid var(--akara-dark-gray, #A0A0A0);
+    transition: background-color 0.3s ease;
+}
+.btn-secondary:hover {
+    background-color: #CACACA; /* Slightly darker medium gray */
+}
+.btn-secondary:focus {
+    @apply outline-none ring-2 ring-offset-2;
+    ring-color: var(--akara-dark-gray, #A0A0A0);
+}
+
+/* Specific action buttons (Talent Pools, Grids) */
+.btn-action-purple { /* For Talent Pools button */
+    @apply px-3 py-2 text-white rounded-md text-sm font-medium;
+    background-color: var(--akara-accent-blue, #0073C4); /* Using accent blue for purple-like */
+}
+.btn-action-purple:hover {
+    background-color: #005A9C; /* Darker accent blue */
+}
+.btn-action-teal { /* For Perf/Potential Grid */
+     @apply px-3 py-2 text-white rounded-md text-sm font-medium;
+    background-color: var(--akara-success-green, #2E7D32); /* Using success green for teal-like */
+}
+.btn-action-teal:hover {
+    background-color: #1B5E20; /* Darker success green */
+}
+.btn-action-orange { /* For Risk/Impact Grid */
+     @apply px-3 py-2 text-white rounded-md text-sm font-medium;
+    background-color: var(--akara-warning-orange, #ED6C02);
+}
+.btn-action-orange:hover {
+    background-color: #C65600; /* Darker warning orange */
+}
+.btn-action-green { /* For Add Successor to List */
+    @apply px-3 py-1.5 text-sm font-medium text-white rounded-md;
+    background-color: var(--akara-success-green, #2E7D32);
+}
+.btn-action-green:hover {
+    background-color: #1B5E20;
+}
+
+
+/* Card styles for consistency */
+.info-card {
+    @apply bg-white p-5 rounded-lg shadow-lg h-full;
+    border: 1px solid var(--akara-medium-gray, #E0E0E0);
+}
+.info-card-title {
+    @apply flex items-center text-lg font-semibold mb-3;
+    color: var(--akara-primary-blue, #003A70);
+}
+.info-card-content {
+    @apply text-sm space-y-1;
+    color: var(--akara-text-color, #333);
+}
+
+/* Table styles for consistency */
+.styled-table {
+    @apply min-w-full divide-y;
+    divide-color: var(--akara-medium-gray, #E0E0E0);
+}
+.styled-table thead {
+    background-color: var(--akara-light-gray, #F5F5F5);
+}
+.styled-table th {
+    @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider;
+    color: var(--akara-primary-blue, #003A70);
+}
+.styled-table tbody {
+    @apply bg-white divide-y;
+    divide-color: var(--akara-medium-gray, #E0E0E0);
+}
+.styled-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm;
+    color: var(--akara-text-color, #333);
+}
+.styled-table tr:hover {
+    background-color: #EBF5FF; /* A very light blue for hover, adjust as needed */
+}
+
+/* Modal styles */
+.modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50; /* Increased opacity */
+}
+.modal-content-sp {
+    @apply bg-white p-6 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto;
+    border: 1px solid var(--akara-dark-gray, #A0A0A0);
+}
+.modal-header-sp {
+    @apply flex justify-between items-center mb-6 pb-3 border-b;
+    border-color: var(--akara-medium-gray, #E0E0E0);
+}
+.modal-title-sp {
+    @apply text-2xl font-semibold;
+    color: var(--akara-primary-blue, #003A70);
+}
+
+/* 9-Box Grid Specific Styles */
+.nine-box-grid-container {
+    @apply bg-white shadow-xl rounded-lg p-4 md:p-6;
+    border: 1px solid var(--akara-medium-gray, #E0E0E0);
+}
+.nine-box-title {
+    @apply text-2xl font-semibold mb-6 text-center;
+    color: var(--akara-primary-blue, #003A70);
+}
+.nine-box-axis-label {
+    @apply text-center font-medium text-sm md:text-base;
+    color: var(--akara-text-color, #333);
+}
+.nine-box-cell { 
+    /* This class is on the container for the 9-box grid, not individual cells */
+}
+
+.nine-box-cell-item { /* This class is for each of the 9 individual cells */
+    @apply p-1 md:p-2 rounded-md shadow-sm; /* Reduced padding */
+    border: 1px solid var(--akara-dark-gray, #A0A0A0); 
+    /* Removed aspect-ratio and min-height to allow natural sizing based on content and grid constraints */
+    display: flex; 
+    flex-direction: column; 
+    /* min-height: 80px; /* Optional: a smaller min-height if needed */
+    /* max-height: 120px; /* Optional: constrain max height */
+}
+.nine-box-cell-title {
+    @apply font-semibold mb-0.5; /* Reduced margin */
+    font-size: 0.7rem; /* Tailwind text-xs is 0.75rem, this is slightly smaller */
+    line-height: 1; /* Compact line height */
+    color: var(--akara-primary-blue, #003A70);
+}
+.nine-box-employee-item {
+    @apply p-0.5 rounded shadow-xs cursor-pointer truncate; /* Reduced padding */
+    font-size: 0.65rem; /* Smaller font for employee names */
+    line-height: 1.2;
+    background-color: rgba(255, 255, 255, 0.75); /* Tailwind bg-white bg-opacity-75 */
+}
+.nine-box-employee-item:hover {
+    background-color: var(--akara-light-gray, #F5F5F5);
+    color: var(--akara-primary-red, #DA291C);
+}
+
+/* Styles for the 9-Box structure */
+.nine-box-row {
+    display: flex;
+    flex-direction: column; /* Mobile-first: Y-label stacks above cells */
+    gap: 2px; /* Reduced gap */
+    margin-bottom: 2px; /* Reduced margin */
+}
+
+.nine-box-y-label {
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding: 2px 4px; /* Reduced padding */
+    font-size: 0.7rem; /* Smaller font */
+    font-weight: 500; 
+    color: var(--akara-text-color, #333);
+    background-color: var(--akara-light-gray, #F5F5F5); 
+    border-radius: 0.25rem; 
+}
+
+.nine-box-row-cells {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); 
+    gap: 2px; /* Reduced gap */
+    flex-grow: 1;
+    border: 1px solid var(--akara-medium-gray, #E0E0E0); 
+    padding: 2px; /* Reduced padding */
+    border-radius: var(--border-radius-base, 8px); 
+}
+
+@media (min-width: 768px) { /* md breakpoint */
+    .nine-box-row {
+        flex-direction: row; 
+        gap: 4px; /* Reduced gap */
+        margin-bottom: 4px; /* Reduced margin */
+    }
+    .nine-box-y-label {
+        width: 100px; /* Slightly reduced width for Y-axis label */
+        flex-shrink: 0;
+        justify-content: flex-end; 
+        text-align: right;
+        padding: 4px; /* Reduced padding */
+        font-size: 0.75rem; /* Tailwind text-xs */
+        background-color: transparent; 
+        border-radius: 0;
+    }
+    .nine-box-row-cells {
+        gap: 4px; /* Reduced gap */
+        padding: 4px; 
+    }
+    .nine-box-cell-item {
+        @apply p-1 md:p-2; /* Adjust padding for desktop */
+         /* min-height: 60px; /* Smaller min-height for desktop cells */
+    }
+    .nine-box-cell-title {
+        font-size: 0.75rem; /* Tailwind text-xs for desktop */
+    }
+    .nine-box-employee-item {
+        font-size: 0.7rem; /* Slightly smaller for desktop */
+    }
+}
+
+
+/* Color indicators - these use Tailwind classes directly in JS.
+   To fully theme these with Akara colors, Tailwind config needs an update.
+   The CSS below provides fallbacks or overrides if Tailwind classes are not perfectly matching.
+*/
+.readiness-ready-now { background-color: #D1FAE5; color: #065F46; } /* Light Green, Dark Green Text */
+.readiness-1-2-years { background-color: #FEF3C7; color: #92400E; } /* Light Yellow, Dark Yellow/Brown Text */
+.readiness-3-5-years { background-color: #FFEDD5; color: #C2410C; } /* Light Orange, Dark Orange Text */
+.readiness-gt-5-years { background-color: #FEE2E2; color: #991B1B; } /* Light Red, Dark Red Text */
+
+.performance-exceptional-icon { color: var(--akara-warning-orange, #ED6C02); } /* Using warning orange for star */
+.performance-exceeds-icon { color: var(--akara-success-green, #2E7D32); }
+.performance-meets-icon { color: var(--akara-accent-blue, #0073C4); }
+.performance-needs-improvement-icon { color: var(--akara-primary-red, #DA291C); }
+
+.risk-high, .impact-high { color: var(--akara-primary-red, #DA291C); }
+.risk-medium, .impact-medium { color: var(--akara-warning-orange, #ED6C02); }
+.risk-low, .impact-low { color: var(--akara-success-green, #2E7D32); }
+
+/* Header text for main app */
+header h1 {
+    color: var(--akara-primary-blue, #003A70);
+}
+header .text-indigo-600 { /* Overriding Tailwind's indigo for header */
+    color: var(--akara-primary-blue, #003A70) !important;
+}
+header .bg-indigo-600 {
+    background-color: var(--akara-primary-red, #DA291C) !important;
+}
+header .hover\:bg-indigo-700:hover {
+    background-color: #A91F1C !important; /* Darker Akara Red */
+}
+header .focus\:ring-indigo-500:focus {
+    --tw-ring-color: var(--akara-primary-red, #DA291C) !important;
+}
+header .text-purple-500 { color: var(--akara-accent-blue, #0073C4) !important; }
+header .bg-purple-500 { background-color: var(--akara-accent-blue, #0073C4) !important; }
+header .hover\:bg-purple-600:hover { background-color: #005A9C !important; }
+
+header .text-teal-500 { color: var(--akara-white, #FFFFFF) !important; } /* Text on teal button */
+header .bg-teal-500 { background-color: var(--akara-success-green, #2E7D32) !important; }
+header .hover\:bg-teal-600:hover { background-color: #1B5E20 !important; }
+
+header .text-orange-500 { color: var(--akara-white, #FFFFFF) !important; } /* Text on orange button */
+header .bg-orange-500 { background-color: var(--akara-warning-orange, #ED6C02) !important; }
+header .hover\:bg-orange-600:hover { background-color: #C65600 !important; }
+
+
+/* Animations */
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments for 9-box grid y-axis labels */
+@media (max-width: 767px) { /* Apply to screens smaller than md breakpoint */
+    .nine-box-axis-label.md\:text-right { /* Target y-axis labels specifically */
+        writing-mode: vertical-rl; 
+        transform: rotate(180deg);
+        text-align: center !important; /* Override md:text-right */
+        justify-content: center !important; /* Override md:justify-end */
+        font-size: 0.8em;
+        padding: 0.25rem !important;
+    }
+}
+@media (min-width: 768px) {
+    .nine-box-axis-label.md\:text-right {
+         writing-mode: horizontal-tb; transform: none;
+    }
+}
+
+/* Ensure the hidden Tailwind classes for color generation are available if not purged */
+/* These are mostly for reference as direct application of vars is preferred */
+.hidden-color-classes {
+    @apply bg-green-100 text-green-700 bg-yellow-100 text-yellow-700 bg-orange-100 text-orange-700 bg-red-100 text-red-700;
+    @apply bg-green-50 bg-green-200 bg-yellow-50 bg-yellow-200 bg-red-50 bg-red-200;
+    @apply bg-blue-50 bg-blue-100 bg-gray-100;
+}

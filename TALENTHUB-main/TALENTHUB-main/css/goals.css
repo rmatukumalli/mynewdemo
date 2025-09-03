@@ -1,0 +1,77 @@
+/* Styling for the Goals Page */
+
+.goal-card {
+    border-left: 5px solid #007bff; /* Blue accent for cards */
+    transition: box-shadow .3s ease-in-out;
+}
+
+.goal-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.goal-card .card-header {
+    background-color: #f8f9fa; /* Light grey background for header */
+    font-weight: bold;
+}
+
+.goal-card .card-footer {
+    background-color: #f8f9fa;
+}
+
+/* Priority Badges */
+.badge-priority-low {
+    background-color: #28a745; /* Green for Low */
+    color: white;
+}
+
+.badge-priority-medium {
+    background-color: #ffc107; /* Yellow for Medium */
+    color: #212529; /* Dark text for better contrast on yellow */
+}
+
+.badge-priority-high {
+    background-color: #dc3545; /* Red for High */
+    color: white;
+}
+
+/* Status Badges - Bootstrap default colors are used, but can be customized here if needed */
+/* Example: .badge-info for 'In Progress' */
+
+/* Modal Styling */
+#addGoalModal .modal-lg {
+    max-width: 800px; /* Wider modal for more form fields */
+}
+
+#addGoalForm .form-group {
+    margin-bottom: 1.5rem; /* More spacing between form groups */
+}
+
+/* Progress Bar and Slider */
+.progress {
+    height: 20px; /* Make progress bar a bit thicker */
+    font-size: 0.85rem;
+}
+
+.progress-bar {
+    transition: width .6s ease;
+}
+
+.form-control-range { /* Style for the progress slider */
+    width: 100%;
+}
+
+/* Responsive adjustments if necessary */
+@media (max-width: 768px) {
+    .d-flex.justify-content-between.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .d-flex.justify-content-between.align-items-center h1 {
+        margin-bottom: 1rem;
+    }
+
+    .goal-card .card-footer .btn {
+        margin-bottom: 0.5rem; /* Space out buttons on small screens if they wrap */
+    }
+}

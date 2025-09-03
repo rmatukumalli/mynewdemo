@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Wizard | Akara Airlines</title>
+    <link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAA11j03AAAAABJRU5ErkJggg==">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+    <link href="/career-pathing-styles.css" rel="stylesheet">
+    <link href="/css/main-layout.css" rel="stylesheet">
+    <link href="css/job-architecture.css" rel="stylesheet">
+    <style>
+        .stepper-tab.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+        .stepper-tab.completed {
+            background-color: #dbeafe; /* blue-100 */
+            color: #1e3a8a; /* blue-800 */
+        }
+        .stepper-tab.ai-powered {
+            background-image: linear-gradient(to right, #93c5fd, #c4b5fd); /* Lighter gradient */
+            color: #1e3a8a; /* Darker text for contrast */
+        }
+        .stepper-tab.ai-powered.active {
+            background-image: none; /* Remove gradient when active */
+            background-color: #1d4ed8; /* Darker blue for active AI tab */
+            color: white;
+        }
+        .stepper-tab.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="h-screen flex flex-col bg-slate-100">
+        <header class="bg-white border-b border-slate-200 flex items-center justify-between px-4 py-2 sticky top-0 z-20">
+        </header>
+        <main class="p-4 flex-1 flex flex-col">
+            <div class="w-full max-w-7xl mx-auto flex-1 flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-3">
+                        <svg class="h-7 w-7 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 013-3h.008c1.538 0 2.962.836 3.75 2.121" /></svg>
+                        <h1 class="text-lg font-bold text-slate-800 cursor-pointer" id="job-architecture-heading">Job Architecture</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <a href="/import-export/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Import/Export Data</a>
+                        <a href="job_architecture_help_modern.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Help</a>
+                        <a href="job-architecture-prd.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">PRD</a>
+                        <a href="/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Home</a>
+                    </div>
+                </div>
+                <div id="welcome-banner" class="bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                    <h2 class="text-lg font-bold text-slate-800 mb-1">Welcome to the Job Architecture Wizard</h2>
+                    <p class="text-slate-600">This tool guides you through defining, organizing, and managing your company's roles, skills, and career paths. To get started, use the stepper navigation below or click the "Next Step" button to begin building your organization's foundational structure.</p>
+                </div>
+                <div id="stepper-container" class="mb-4">
+                    <div class="stepper-container-wrapper">
+                        <div id="stepper" class="flex items-center gap-1 overflow-x-auto whitespace-nowrap scroll-smooth"></div>
+                    </div>
+                </div>
+                <div id="wizard-content-wrapper" class="bg-white p-4 sm:p-6 rounded-lg border border-slate-200 shadow-sm flex-1 flex flex-col"></div>
+                <footer id="wizard-footer" class="mt-4 mb-16 flex justify-between items-center">
+                    <button id="back-btn" class="border border-slate-300 bg-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">Back</button>
+                    <div>
+                        <button id="next-btn" class="bg-blue-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-blue-700">Next Step</button>
+                        <button id="finish-btn" class="bg-green-600 text-white px-5 py-2 rounded-md font-semibold text-sm hover:bg-green-700 hidden" onclick="window.location.href='/index.html'">Finish</button>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- The Modal for Editing/Adding Items -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <!-- Modal content is generated dynamically by utils.js -->
+    </div>
+
+    <!-- Scripts: Order is critical for dependencies -->
+    <script type="module" src="/job-architecture/js/utils.js"></script>
+    <script type="module" src="/job-architecture/js/modules/organization.js"></script>
+    <script type="module" src="/job-architecture/js/modules/business-units.js"></script>
+    <script type="module" src="/job-architecture/js/modules/departments.js"></script>
+    <script type="module" src="/job-architecture/js/modules/job-families.js"></script>
+    <script type="module" src="/job-architecture/js/modules/job-levels.js"></script>
+    <script type="module" src="/job-architecture/js/modules/job-profiles.js"></script>
+    <script type="module" src="/job-architecture/js/modules/skill-gaps.js"></script>
+    <script type="module" src="/job-architecture/js/modules/career-paths.js"></script>
+    <script type="module" src="/job-architecture/js/modules/review-ai.js"></script>
+    <script type="module" src="/job-architecture/js/modules/career-paths.js"></script>
+    <script type="module" src="/job-architecture/js/modules/review-ai.js"></script>
+    <script type="module" src="/job-architecture/js/main.js"></script>
+    <script src="/career-pathing-scripts.js"></script>
+    <div class="custom-footer" style="background-color: #002D62; color: white; text-align: center; padding: 1rem 0; font-size: 0.875rem; position: fixed; left: 0; bottom: 0; width: 100%; z-index: 1000;">
+        Conceptual mock prepared by Raj Matukumalli — optimized for desktop.
+    </div>
+</body>
+</html>

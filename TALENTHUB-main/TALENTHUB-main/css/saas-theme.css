@@ -1,0 +1,317 @@
+/* css/saas-theme.css */
+
+/* Core Palette & Typography */
+:root {
+    --primary-color: #4A90E2; /* A professional blue */
+    --primary-hover-color: #357ABD;
+    --secondary-color: #50E3C2; /* A complementary teal/mint */
+    --accent-color: #F5A623; /* An accent orange for calls to action or highlights */
+
+    --text-color-dark: #2c3e50; /* Dark grey for primary text */
+    --text-color-medium: #7f8c8d; /* Medium grey for secondary text */
+    --text-color-light: #bdc3c7; /* Light grey for subtle text */
+    --text-color-on-primary: #ffffff; /* Text on primary background */
+
+    --background-color-light: #f7f9fc; /* Very light grey for main background */
+    --background-color-white: #ffffff; /* White for cards, modals, etc. */
+    --border-color-soft: #e4e7eb; /* Soft border color */
+    --border-color-medium: #d0d7de; /* Medium border color */
+
+    --font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+    --box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius-sm: 0.25rem; /* 4px */
+    --border-radius-md: 0.5rem;  /* 8px */
+    --border-radius-lg: 0.75rem; /* 12px */
+}
+
+body {
+    font-family: var(--font-family-sans-serif);
+    margin: 0;
+    padding: 0; /* Remove all padding, flexbox will manage space */
+    background-color: var(--background-color-light);
+    color: var(--text-color-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* padding-top: 70px; /* Removed, nav is part of flex flow or fixed */
+    /* padding-bottom: 80px; /* Removed, footer is part of flex flow */
+}
+
+/* Global Top Navigation Bar */
+.saas-top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Standard height for a top nav */
+    background-color: var(--background-color-white);
+    border-bottom: 1px solid var(--border-color-soft);
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem; /* Further reduced nav horizontal padding */
+    z-index: 1000;
+    box-shadow: var(--box-shadow-sm);
+    flex-shrink: 0; /* Prevent nav from shrinking */
+}
+
+.saas-top-nav .logo {
+    font-size: 1.35rem; /* Slightly reduced logo font size */
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: auto; /* Pushes other items to the right */
+    white-space: nowrap; /* Prevent logo text from wrapping */
+}
+
+.saas-top-nav .nav-links {
+    flex-shrink: 0; /* Prevent the nav-links container from shrinking */
+}
+
+.saas-top-nav .nav-links a {
+    color: var(--text-color-medium);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem; /* Reduced button horizontal padding */
+    /* margin-left: 0.5rem; /* Removed margin as it's the only link for now */
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.saas-top-nav .nav-links a:hover,
+.saas-top-nav .nav-links a.active {
+    background-color: var(--primary-color);
+    color: var(--text-color-on-primary);
+}
+
+/* Main Content Container - Overriding .container from modern-index.css */
+/* This .container will be wrapped by a main content flex child */
+
+/* Create a wrapper for the main content area that will grow */
+.saas-main-content-wrapper {
+    flex: 1; /* Allows this wrapper to take up available space */
+    padding-top: 0; /* Removed padding as top nav is no longer fixed or present */
+    display: flex;
+    flex-direction: column;
+}
+
+.container { /* This is the content box INSIDE the wrapper */
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    background-color: var(--background-color-white);
+    box-shadow: var(--box-shadow-md);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    /* flex-grow: 1; /* If .container itself should grow within saas-main-content-wrapper */
+}
+
+
+/* Header within .container */
+header {
+    background: var(--primary-color); /* Solid primary color */
+    /* Or a more subtle gradient:
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover-color) 100%); */
+    color: var(--text-color-on-primary);
+    padding: 3rem 2rem; /* Generous padding */
+    text-align: center;
+    /* border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0; Removed as .container handles overflow */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem; /* Slightly reduced for a cleaner look */
+    font-weight: 700; /* Bolder */
+}
+
+/* Main content area */
+.main-content {
+    padding: 2.5rem; /* Consistent padding */
+}
+
+.main-content > h2 { /* e.g., "Discover Opportunities..." */
+    color: var(--text-color-dark);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.main-content > p:first-of-type { /* e.g., "Your central hub..." paragraph */
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-color-medium);
+    margin-bottom: 2.5rem;
+}
+
+/* Tab Container Styles */
+.tabs-container {
+    margin-top: 2rem;
+}
+
+.tabs-nav {
+    border-bottom: 2px solid var(--border-color-medium);
+    margin-bottom: 1.5rem;
+}
+
+.tabs-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tabs-nav li {
+    margin-right: 0.25rem;
+    margin-bottom: -2px;
+}
+
+.tabs-nav-button {
+    padding: 0.8rem 1.25rem; /* Adjusted padding */
+    font-size: 0.95rem; /* Slightly smaller font */
+    font-weight: 500;
+    color: var(--text-color-medium);
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.tabs-nav-button:hover {
+    color: var(--primary-color);
+    background-color: var(--background-color-light); /* Subtle hover */
+}
+
+.tabs-nav-button.active {
+    color: var(--primary-color);
+    background-color: var(--background-color-white);
+    border-color: var(--border-color-medium) var(--border-color-medium) var(--background-color-white);
+    font-weight: 600;
+}
+
+.tabs-nav-button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 1px;
+}
+
+/* Tab Panel Styles */
+.tab-panel {
+    padding: 1.5rem;
+    border: 1px solid var(--border-color-medium);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    background-color: var(--background-color-white);
+}
+
+.tab-panel h2 {
+    color: var(--text-color-dark);
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color-soft);
+    padding-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.tab-panel h3 {
+    color: var(--primary-color); /* Use primary color for H3s in tabs */
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.tab-panel p {
+    margin-bottom: 1rem;
+    color: var(--text-color-dark);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.tab-panel ul {
+    list-style-type: none; /* Remove default bullets for a cleaner look */
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.tab-panel li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem; /* Indent with padding */
+    position: relative;
+}
+
+.tab-panel li::before { /* Custom bullet */
+    content: '•';
+    color: var(--primary-color);
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0; /* Adjust if line-height causes misalignment */
+}
+
+.tab-panel a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.tab-panel a:hover {
+    color: var(--primary-hover-color);
+    text-decoration: underline;
+}
+
+/* Grid layout for Talent Marketplace tab subsections */
+#tab-talent-marketplace .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Changed auto-fill to auto-fit, further reduced minmax */
+    gap: 1.5rem; /* Keep gap */
+    padding-top: 1rem;
+}
+
+#tab-talent-marketplace .grid-container .content-section {
+    background-color: var(--background-color-light);
+    box-sizing: border-box; /* Ensure padding/border don't add to width causing overflow */
+    border: 1px solid var(--border-color-soft);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#tab-talent-marketplace .grid-container .content-section:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-md);
+}
+
+#tab-talent-marketplace .grid-container .content-section h3 {
+    margin-top: 0;
+    font-size: 1.2rem; /* Adjusted size */
+    color: var(--primary-color);
+}
+
+#tab-talent-marketplace .grid-container .content-section ul {
+    padding-left: 0; /* Handled by li::before */
+    flex-grow: 1;
+}
+
+/* Footer Styles */
+.saas-footer {
+    background-color: #002D62; /* Navy blue - User specific */
+    color: white; /* User specific */
+    text-align: center;
+    padding: 18px 0; /* User specific */
+    font-family: Arial, sans-serif; /* User specific */
+    font-size: 14px; /* User specific */
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    /* Removed position: fixed and related properties */
+}

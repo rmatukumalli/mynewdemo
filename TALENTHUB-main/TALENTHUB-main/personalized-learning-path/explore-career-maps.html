@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Pathing - Modern UI Wireframes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #FAF0E6; /* Linen */
+            min-height: 100vh;
+            color: #5D5C61; /* Earthy Grey */
+        }
+
+        .container {
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #5D5C61; /* Earthy Grey */
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .wireframe-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #5D5C61; /* Earthy Grey */
+        }
+
+        /* Main Career Map Visualization */
+        .career-map {
+            position: relative;
+            height: 800px; /* Increased height to accommodate larger rings */
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .timeline-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .timeline-ring {
+            position: absolute;
+            border: 2px dashed #e0e0e0;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring-1 { width: 400px; height: 400px; }
+        .ring-2 { width: 600px; height: 600px; }
+        .ring-3 { width: 800px; height: 800px; }
+        .ring-4 { width: 1000px; height: 1000px; }
+        .ring-5 { width: 1200px; height: 1200px; }
+
+        .timeline-labels {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .timeline-label {
+            position: absolute;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #5D5C61; /* Earthy Grey */
+            background: #FAF0E6; /* Linen */
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            white-space: nowrap;
+        }
+
+        .label-center { top: -12px; left: -30px; }
+        .label-1 { top: -130px; left: -35px; }
+        .label-2 { top: -205px; left: -35px; }
+        .label-3 { top: -280px; left: -35px; }
+        .label-4 { top: -355px; left: -35px; }
+
+        .role-node {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease, left 0.8s ease, top 0.8s ease;
+            border: 1px solid transparent;
+            min-width: 100px;
+            max-width: 150px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin: 5px;
+            z-index: 10;
+        }
+
+        .role-node:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .role-node.current {
+            background: #D8A7B1; /* Dusty Rose */
+            color: white;
+            border-color: #D8A7B1;
+        }
+
+        .role-node.tech { border-color: #B4CBB2; } /* Sage Green */
+        .role-node.product { border-color: #F7D4BC; } /* Peach */
+        .role-node.data { border-color: #A4B9D8; } /* Periwinkle */
+
+        .role-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* Control Panel */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .filter-btn:hover {
+            border-color: #D8A7B1; /* Dusty Rose */
+            background: #fff8f9;
+        }
+
+        .filter-btn.active {
+            background: #D8A7B1; /* Dusty Rose */
+            color: white;
+            border-color: #D8A7B1;
+        }
+
+        /* Side Panel */
+        .main-layout {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .left-panel {
+            flex: 1;
+            min-width: 720px;
+        }
+
+        .side-panel {
+            width: 400px;
+            background: #001f3f; /* Navy Blue */
+            color: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: relative;
+            display: none; /* Hidden by default */
+        }
+
+        .side-panel.show {
+            display: block;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .role-details {
+            margin-bottom: 2rem;
+        }
+
+        .role-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-meta {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+        }
+
+        .pathways {
+            margin-top: 2rem;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #D8A7B1; /* Dusty Rose */
+        }
+
+        .legend {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .legend h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .legend ul {
+            list-style: none;
+        }
+
+        .legend li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 2px;
+            margin-right: 0.5rem;
+        }
+
+        .line-promotion { background: gold; }
+        .line-lateral { background: grey; }
+        .line-demotion { border-top: 1px dashed red; }
+        .line-transfer { background: blue; }
+        .line-cross-functional { background: linear-gradient(90deg, #B4CBB2, #F7D4BC); }
+        .line-rotation { border-top: 1px dotted black; }
+        .line-stretch { border-top: 1px dashed #B4CBB2; }
+        .line-redeployment { border-top: 2px dashed orange; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .career-map {
+                height: 400px;
+            }
+            
+            .role-node {
+                min-width: 100px;
+                font-size: 0.8rem;
+                padding: 0.5rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+
+        /* Demo interactions */
+        .demo-note {
+            background: #fef5e7;
+            border: 1px solid #f6ad55;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: #744210;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div id="tooltip" class="tooltip"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Career Pathing Platform</h1>
+            <p>Interactive wireframes for modern career progression visualization</p>
+        </div>
+
+        <div class="wireframe-section">
+            <h2 class="section-title">Find Your Career Path</h2>
+            <div class="controls">
+                <div>
+                    <label for="current-role-select" style="display: block; margin-bottom: 0.5rem;">Your Current Role</label>
+                    <select id="current-role-select" class="filter-btn"></select>
+                </div>
+                <div>
+                    <label for="aspirational-role-select" style="display: block; margin-bottom: 0.5rem;">Your Aspirational Role</label>
+                    <select id="aspirational-role-select" class="filter-btn"></select>
+                </div>
+                <button id="find-path-btn" class="filter-btn active">Find Path</button>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="wireframe-section left-panel">
+                <h2 class="section-title">Main Career Map View</h2>
+                
+    
+                <div class="controls">
+                    <button class="filter-btn active" data-filter="all">All Roles</button>
+                    <button class="filter-btn" data-filter="tech">Tech Track</button>
+                    <button class="filter-btn" data-filter="product">Product Track</button>
+                    <button class="filter-btn" data-filter="data">Data Track</button>
+                    <button class="filter-btn" data-filter="management">Management Track</button>
+                </div>
+                <div class="controls">
+                    <button class="filter-btn" data-filter="promotion">Promotion</button>
+                    <button class="filter-btn" data-filter="lateral">Lateral</button>
+                    <button class="filter-btn" data-filter="demotion">Demotion</button>
+                    <button class="filter-btn" data-filter="temporary">Temporary</button>
+                </div>
+    
+                <div class="career-map">
+                    <div class="timeline-rings">
+                        <div class="timeline-ring ring-1"></div>
+                        <div class="timeline-ring ring-2"></div>
+                        <div class="timeline-ring ring-3"></div>
+                        <div class="timeline-ring ring-4"></div>
+                        <div class="timeline-ring ring-5"></div>
+                    </div>
+    
+                    <div class="timeline-labels">
+                        <div class="timeline-label label-center">Start</div>
+                        <div class="timeline-label label-1">2-3 Years</div>
+                        <div class="timeline-label label-2">4-5 Years</div>
+                        <div class="timeline-label label-3">6-8 Years</div>
+                        <div class="timeline-label label-4">8+ Years</div>
+                    </div>
+
+                    <div id="user-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.2); overflow: hidden;">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGFuZHNvbWUlMjBtYW58ZW58MHx8MHx8fDA%3D" alt="User" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+    
+                    <!-- Role nodes will be injected here by JavaScript -->
+                <canvas id="connections-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+            </div>
+            <div class="legend">
+                <h4>Career Move Types</h4>
+                <ul>
+                    <li><span class="line-promotion"></span> Promotion</li>
+                    <li><span class="line-lateral"></span> Lateral</li>
+                    <li><span class="line-demotion"></span> Demotion</li>
+                    <li><span class="line-transfer"></span> Transfer</li>
+                    <li><span class="line-cross-functional"></span> Cross-functional</li>
+                    <li><span class="line-rotation"></span> Rotation</li>
+                    <li><span class="line-stretch"></span> Stretch Assignment</li>
+                    <li><span class="line-redeployment"></span> Redeployment</li>
+                </ul>
+            </div>
+        </div>
+    
+            <div id="role-details-panel" class="side-panel">
+                <button class="close-btn">&times;</button>
+                <h2 class="section-title" style="color: white;">Role Details Panel</h2>
+                
+                <div class="role-details">
+                    <div id="panel-role-title" class="role-title">Customer Success Representative</div>
+                        <div id="panel-role-meta" class="role-meta">Current Role • 2-3 Years Experience Level</div>
+                        
+                        <div id="panel-skills-list" class="skills-list">
+                            <span class="skill-tag">Customer Support</span>
+                            <span class="skill-tag">CRM Systems</span>
+                            <span class="skill-tag">Data Analysis</span>
+                            <span class="skill-tag">Communication</span>
+                            <span class="skill-tag">Problem Solving</span>
+                        </div>
+                        
+                        <p id="panel-role-description" style="opacity: 0.9; line-height: 1.6;">
+                            Build strong customer relationships and drive product adoption. 
+                            This role develops critical business skills and opens pathways to 
+                            product management, sales, and data analysis roles.
+                        </p>
+                    </div>
+                    
+                    <div class="pathways">
+                        <h3 style="margin-bottom: 1rem;">Recommended Career Paths</h3>
+                        <div id="panel-pathways-list">
+                            <div class="pathway-item">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">→ Senior CRM Manager</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">2-3 years • Focus on automation and strategy</div>
+                            </div>
+                            
+                            <div class="pathway-item">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">→ Product Manager</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">3-4 years • Leverage customer insights</div>
+                            </div>
+                            
+                            <div class="pathway-item">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">→ Data Analyst</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">1-2 years • Build on data skills</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendations" style="margin-top: 2rem;">
+                        <h3 style="margin-bottom: 1rem;">Recommended Courses by Skillsoft</h3>
+                        <div id="panel-recommendations-list">
+                            <!-- Recommendations will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const roleData = [
+  {
+    "role_id": "role_apm_hyd",
+    "role_name": "Associate Product Manager – Hyderabad",
+    "category": "Product Track",
+    "experience_years_min": 1,
+    "experience_years_max": 2,
+    "moves_from_current": 0,
+    "skills": ["Product Roadmapping", "Agile Methodologies", "Market Research", "User Story Writing"],
+    "recommendations": [
+        { "title": "Product Management Fundamentals", "provider": "Skillsoft" },
+        { "title": "Agile for Product Managers", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_pm_hyd", "move_type": "promotion", "level_change": 1, "moves_from_current": 1, "temporary": false },
+      { "target_role_id": "role_apm_blr", "move_type": "transfer", "level_change": 0, "moves_from_current": 1, "temporary": false },
+      { "target_role_id": "role_jr_ux_designer", "move_type": "lateral", "level_change": 0, "moves_from_current": 1, "temporary": false },
+      { "target_role_id": "role_intern_pm", "move_type": "demotion", "level_change": -1, "moves_from_current": 1, "temporary": false },
+      { "target_role_id": "role_rotation_sales", "move_type": "temporary", "level_change": 0, "moves_from_current": 1, "temporary": true }
+    ]
+  },
+  {
+    "role_id": "role_apm_blr",
+    "role_name": "Associate Product Manager – Bangalore",
+    "category": "Product Track",
+    "experience_years_min": 1,
+    "experience_years_max": 2,
+    "moves_from_current": 1,
+    "skills": ["Product Roadmapping", "Agile Methodologies", "Market Research", "User Story Writing"],
+    "recommendations": [
+        { "title": "Product Management Fundamentals", "provider": "Skillsoft" },
+        { "title": "Agile for Product Managers", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_pm_blr", "move_type": "promotion", "level_change": 1, "moves_from_current": 2, "temporary": false },
+      { "target_role_id": "role_apm_sfo", "move_type": "transfer", "level_change": 0, "moves_from_current": 2, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_apm_sfo",
+    "role_name": "Associate Product Manager – San Francisco",
+    "category": "Product Track",
+    "experience_years_min": 1,
+    "experience_years_max": 2,
+    "moves_from_current": 2,
+    "skills": ["Product Roadmapping", "Agile Methodologies", "Market Research", "User Story Writing"],
+    "recommendations": [
+        { "title": "Product Management Fundamentals", "provider": "Skillsoft" },
+        { "title": "Agile for Product Managers", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_pm_sfo", "move_type": "promotion", "level_change": 1, "moves_from_current": 3, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_pm_hyd",
+    "role_name": "Product Manager – Hyderabad",
+    "category": "Product Track",
+    "experience_years_min": 3,
+    "experience_years_max": 5,
+    "moves_from_current": 1,
+    "skills": ["Product Strategy", "Competitive Analysis", "Pricing", "Go-to-market Strategy"],
+    "recommendations": [
+        { "title": "Advanced Product Management", "provider": "Skillsoft" },
+        { "title": "Strategic Thinking", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_senior_pm_hyd", "move_type": "promotion", "level_change": 1, "moves_from_current": 2, "temporary": false },
+      { "target_role_id": "role_pm_blr", "move_type": "transfer", "level_change": 0, "moves_from_current": 2, "temporary": false },
+      { "target_role_id": "role_ux_lead", "move_type": "lateral", "level_change": 0, "moves_from_current": 2, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_pm_blr",
+    "role_name": "Product Manager – Bangalore",
+    "category": "Product Track",
+    "experience_years_min": 3,
+    "experience_years_max": 5,
+    "moves_from_current": 2,
+    "skills": ["Product Strategy", "Competitive Analysis", "Pricing", "Go-to-market Strategy"],
+    "recommendations": [
+        { "title": "Advanced Product Management", "provider": "Skillsoft" },
+        { "title": "Strategic Thinking", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_senior_pm_blr", "move_type": "promotion", "level_change": 1, "moves_from_current": 3, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_pm_sfo",
+    "role_name": "Product Manager – San Francisco",
+    "category": "Product Track",
+    "experience_years_min": 3,
+    "experience_years_max": 5,
+    "moves_from_current": 3,
+    "skills": ["Product Strategy", "Competitive Analysis", "Pricing", "Go-to-market Strategy"],
+    "recommendations": [
+        { "title": "Advanced Product Management", "provider": "Skillsoft" },
+        { "title": "Strategic Thinking", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_senior_pm_sfo", "move_type": "promotion", "level_change": 1, "moves_from_current": 4, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_senior_pm_hyd",
+    "role_name": "Senior Product Manager – Hyderabad",
+    "category": "Product Track",
+    "experience_years_min": 5,
+    "experience_years_max": 7,
+    "moves_from_current": 2,
+    "skills": ["Product Leadership", "Portfolio Management", "Mentoring", "Public Speaking"],
+    "recommendations": [
+        { "title": "Product Leadership", "provider": "Skillsoft" },
+        { "title": "Communicating with Confidence", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_principal_pm", "move_type": "promotion", "level_change": 1, "moves_from_current": 3, "temporary": false },
+      { "target_role_id": "role_senior_pm_blr", "move_type": "transfer", "level_change": 0, "moves_from_current": 3, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_senior_pm_blr",
+    "role_name": "Senior Product Manager – Bangalore",
+    "category": "Product Track",
+    "experience_years_min": 5,
+    "experience_years_max": 7,
+    "moves_from_current": 3,
+    "skills": ["Product Leadership", "Portfolio Management", "Mentoring", "Public Speaking"],
+    "recommendations": [
+        { "title": "Product Leadership", "provider": "Skillsoft" },
+        { "title": "Communicating with Confidence", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_principal_pm", "move_type": "promotion", "level_change": 1, "moves_from_current": 4, "temporary": false },
+      { "target_role_id": "role_senior_pm_sfo", "move_type": "transfer", "level_change": 0, "moves_from_current": 4, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_senior_pm_sfo",
+    "role_name": "Senior Product Manager – San Francisco",
+    "category": "Product Track",
+    "experience_years_min": 5,
+    "experience_years_max": 7,
+    "moves_from_current": 4,
+    "skills": ["Product Leadership", "Portfolio Management", "Mentoring", "Public Speaking"],
+    "recommendations": [
+        { "title": "Product Leadership", "provider": "Skillsoft" },
+        { "title": "Communicating with Confidence", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_principal_pm", "move_type": "promotion", "level_change": 1, "moves_from_current": 5, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_principal_pm",
+    "role_name": "Principal Product Manager",
+    "category": "Product Track",
+    "experience_years_min": 7,
+    "experience_years_max": 9,
+    "moves_from_current": 4,
+    "skills": ["Product Vision", "Cross-functional Leadership", "Business Acumen", "Innovation"],
+    "recommendations": [
+        { "title": "Advanced Product Strategy", "provider": "Skillsoft" },
+        { "title": "Leading Innovation", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_director_product", "move_type": "promotion", "level_change": 1, "moves_from_current": 5, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_director_product",
+    "role_name": "Director of Product",
+    "category": "Management Track",
+    "experience_years_min": 9,
+    "experience_years_max": 12,
+    "moves_from_current": 5,
+    "skills": ["Team Leadership", "Budgeting", "P&L Management", "Executive Communication"],
+    "recommendations": [
+        { "title": "Leadership for Directors", "provider": "Skillsoft" },
+        { "title": "Financial Acumen for Leaders", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_vp_product", "move_type": "promotion", "level_change": 1, "moves_from_current": 6, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_vp_product",
+    "role_name": "VP of Product",
+    "category": "Management Track",
+    "experience_years_min": 12,
+    "experience_years_max": 15,
+    "moves_from_current": 6,
+    "skills": ["Corporate Strategy", "Market Disruption", "Board-level Communication", "Organizational Design"],
+    "recommendations": [
+        { "title": "Executive Leadership Program", "provider": "Skillsoft" },
+        { "title": "Leading Through Disruption", "provider": "Skillsoft" }
+    ],
+    "connections": []
+  },
+  {
+    "role_id": "role_jr_ux_designer",
+    "role_name": "Junior UX Designer",
+    "category": "Tech Track",
+    "experience_years_min": 1,
+    "experience_years_max": 3,
+    "moves_from_current": 1,
+    "skills": ["Wireframing", "Prototyping", "User Research", "Figma"],
+    "recommendations": [
+        { "title": "UX Design Fundamentals", "provider": "Skillsoft" },
+        { "title": "Introduction to Figma", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_ui_ux_designer", "move_type": "promotion", "level_change": 1, "moves_from_current": 2, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_ui_ux_designer",
+    "role_name": "UI/UX Designer",
+    "category": "Tech Track",
+    "experience_years_min": 3,
+    "experience_years_max": 5,
+    "moves_from_current": 2,
+    "skills": ["Interaction Design", "Visual Design", "Usability Testing", "Design Systems"],
+    "recommendations": [
+        { "title": "Advanced UX Design", "provider": "Skillsoft" },
+        { "title": "Building Design Systems", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_ux_lead", "move_type": "promotion", "level_change": 1, "moves_from_current": 3, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_ux_lead",
+    "role_name": "UX Lead",
+    "category": "Tech Track",
+    "experience_years_min": 5,
+    "experience_years_max": 7,
+    "moves_from_current": 3,
+    "skills": ["Design Leadership", "Mentoring", "Project Management", "Stakeholder Management"],
+    "recommendations": [
+        { "title": "Design Leadership and Management", "provider": "Skillsoft" },
+        { "title": "Influencing Stakeholders", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_principal_ux", "move_type": "promotion", "level_change": 1, "moves_from_current": 4, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_principal_ux",
+    "role_name": "Principal UX Designer",
+    "category": "Tech Track",
+    "experience_years_min": 7,
+    "experience_years_max": 9,
+    "moves_from_current": 4,
+    "skills": ["Design Strategy", "Innovation", "Thought Leadership", "Service Design"],
+    "recommendations": [
+        { "title": "Strategic Design and Innovation", "provider": "Skillsoft" },
+        { "title": "Service Design Blueprinting", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_design_director", "move_type": "promotion", "level_change": 1, "moves_from_current": 5, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_design_director",
+    "role_name": "Director of Design",
+    "category": "Management Track",
+    "experience_years_min": 9,
+    "experience_years_max": 12,
+    "moves_from_current": 5,
+    "skills": ["Team Leadership", "Budgeting", "Design Operations", "Executive Communication"],
+    "recommendations": [
+        { "title": "Leadership for Directors", "provider": "Skillsoft" },
+        { "title": "Design Operations at Scale", "provider": "Skillsoft" }
+    ],
+    "connections": []
+  },
+  {
+    "role_id": "role_intern_pm",
+    "role_name": "Product Management Intern",
+    "category": "Product Track",
+    "experience_years_min": 0,
+    "experience_years_max": 1,
+    "moves_from_current": 1,
+    "skills": ["Data Collection", "Note Taking", "Presentation Skills", "Teamwork"],
+    "recommendations": [
+        { "title": "Introduction to Product Management", "provider": "Skillsoft" },
+        { "title": "Effective Communication", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_apm_hyd", "move_type": "promotion", "level_change": 1, "moves_from_current": 2, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_rotation_sales",
+    "role_name": "Sales Rotation (6 mo)",
+    "category": "Management Track",
+    "experience_years_min": 1,
+    "experience_years_max": 2,
+    "moves_from_current": 1,
+    "skills": ["Salesforce", "Lead Generation", "Negotiation", "Customer Relationship Management"],
+    "recommendations": [
+        { "title": "Introduction to Sales", "provider": "Skillsoft" },
+        { "title": "Negotiation Essentials", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_apm_hyd", "move_type": "return", "level_change": 0, "moves_from_current": 2, "temporary": true }
+    ]
+  },
+  {
+    "role_id": "role_jr_data_analyst",
+    "role_name": "Junior Data Analyst",
+    "category": "Data Track",
+    "experience_years_min": 1,
+    "experience_years_max": 3,
+    "moves_from_current": 1,
+    "skills": ["SQL", "Excel", "Data Visualization", "Statistics"],
+    "recommendations": [
+        { "title": "Data Analysis with Excel", "provider": "Skillsoft" },
+        { "title": "SQL Fundamentals", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_data_analyst", "move_type": "promotion", "level_change": 1, "moves_from_current": 2, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_data_analyst",
+    "role_name": "Data Analyst",
+    "category": "Data Track",
+    "experience_years_min": 3,
+    "experience_years_max": 5,
+    "moves_from_current": 2,
+    "skills": ["Python (Pandas, NumPy)", "Tableau", "A/B Testing", "Storytelling with Data"],
+    "recommendations": [
+        { "title": "Data Analysis with Python", "provider": "Skillsoft" },
+        { "title": "Advanced Tableau", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_senior_data_analyst", "move_type": "promotion", "level_change": 1, "moves_from_current": 3, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_senior_data_analyst",
+    "role_name": "Senior Data Analyst",
+    "category": "Data Track",
+    "experience_years_min": 5,
+    "experience_years_max": 7,
+    "moves_from_current": 3,
+    "skills": ["Predictive Modeling", "Machine Learning Concepts", "ETL Processes", "Mentoring"],
+    "recommendations": [
+        { "title": "Introduction to Machine Learning", "provider": "Skillsoft" },
+        { "title": "Data Warehousing and ETL", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_data_scientist", "move_type": "promotion", "level_change": 1, "moves_from_current": 4, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_data_scientist",
+    "role_name": "Data Scientist",
+    "category": "Data Track",
+    "experience_years_min": 5,
+    "experience_years_max": 8,
+    "moves_from_current": 4,
+    "skills": ["Machine Learning (Scikit-learn, TensorFlow)", "Natural Language Processing", "Big Data Technologies (Spark)", "Experiment Design"],
+    "recommendations": [
+        { "title": "Deep Learning Fundamentals", "provider": "Skillsoft" },
+        { "title": "Natural Language Processing with Python", "provider": "Skillsoft" }
+    ],
+    "connections": [
+      { "target_role_id": "role_senior_data_scientist", "move_type": "promotion", "level_change": 1, "moves_from_current": 5, "temporary": false }
+    ]
+  },
+  {
+    "role_id": "role_senior_data_scientist",
+    "role_name": "Senior Data Scientist",
+    "category": "Data Track",
+    "experience_years_min": 8,
+    "experience_years_max": 10,
+    "moves_from_current": 5,
+    "skills": ["Research", "Algorithm Development", "Technical Leadership", "Business Impact Analysis"],
+    "recommendations": [
+        { "title": "Advanced Machine Learning", "provider": "Skillsoft" },
+        { "title": "Leading Data Science Teams", "provider": "Skillsoft" }
+    ],
+    "connections": []
+  }
+];
+
+        const roleDataById = roleData.reduce((acc, role) => {
+            acc[role.role_id] = role;
+            return acc;
+        }, {});
+
+        const careerMap = document.querySelector('.career-map');
+        const currentRoleSelect = document.getElementById('current-role-select');
+        const aspirationalRoleSelect = document.getElementById('aspirational-role-select');
+        const findPathBtn = document.getElementById('find-path-btn');
+
+        function populateRoleSelects() {
+            roleData.forEach(role => {
+                const option1 = document.createElement('option');
+                option1.value = role.role_id;
+                option1.textContent = role.role_name;
+                currentRoleSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = role.role_id;
+                option2.textContent = role.role_name;
+                aspirationalRoleSelect.appendChild(option2);
+            });
+        }
+
+        function createRoleNodes() {
+            roleData.forEach(role => {
+                const node = document.createElement('div');
+                node.classList.add('role-node');
+                node.classList.add(role.category.split(' ')[0].toLowerCase());
+                node.dataset.id = role.role_id;
+                
+                const icon = document.createElement('span');
+                icon.classList.add('role-icon');
+                icon.textContent = '📈';
+                
+                node.appendChild(icon);
+                node.append(role.role_name);
+                careerMap.insertBefore(node, careerMap.firstChild);
+            });
+        }
+
+        createRoleNodes();
+        const roleNodes = document.querySelectorAll('.role-node');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const sidePanel = document.getElementById('role-details-panel');
+        const closeBtn = sidePanel.querySelector('.close-btn');
+        
+        const panelRoleTitle = document.getElementById('panel-role-title');
+        const panelRoleMeta = document.getElementById('panel-role-meta');
+        const panelSkillsList = document.getElementById('panel-skills-list');
+        const panelRoleDescription = document.getElementById('panel-role-description');
+        const panelPathwaysList = document.getElementById('panel-pathways-list');
+        const panelRecommendationsList = document.getElementById('panel-recommendations-list');
+        const canvas = document.getElementById('connections-canvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+
+        function showTooltip(content, event) {
+            tooltip.innerHTML = content;
+            tooltip.style.left = `${event.pageX + 10}px`;
+            tooltip.style.top = `${event.pageY + 10}px`;
+            tooltip.style.opacity = 1;
+        }
+
+        function hideTooltip() {
+            tooltip.style.opacity = 0;
+        }
+
+        function drawConnections(filter = 'all') {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const nodes = document.querySelectorAll('.role-node');
+            const nodePositions = {};
+            nodes.forEach(node => {
+                const rect = node.getBoundingClientRect();
+                const containerRect = canvas.getBoundingClientRect();
+                nodePositions[node.dataset.id] = {
+                    x: rect.left + rect.width / 2 - containerRect.left,
+                    y: rect.top + rect.height / 2 - containerRect.top
+                };
+            });
+            Object.values(roleDataById).forEach(role => {
+                if (role.connections) {
+                    role.connections.forEach(connection => {
+                        if (filter !== 'all' && connection.move_type !== filter && (filter !== 'temporary' || !connection.temporary)) {
+                            return;
+                        }
+
+                        const startNode = nodePositions[role.role_id];
+                        const endNode = nodePositions[connection.target_role_id];
+
+                        if (startNode && endNode) {
+                            ctx.beginPath();
+                            ctx.moveTo(startNode.x, startNode.y);
+                            ctx.lineTo(endNode.x, endNode.y);
+
+                            switch (connection.move_type) {
+                                case 'promotion':
+                                    ctx.strokeStyle = 'gold';
+                                    ctx.lineWidth = 2;
+                                    break;
+                                case 'lateral':
+                                    ctx.strokeStyle = 'grey';
+                                    ctx.lineWidth = 1;
+                                    break;
+                                case 'demotion':
+                                    ctx.strokeStyle = 'red';
+                                    ctx.setLineDash([5, 5]);
+                                    break;
+                                case 'transfer':
+                                    ctx.strokeStyle = 'blue';
+                                    break;
+                                case 'cross-functional':
+                                    var gradient = ctx.createLinearGradient(startNode.x, startNode.y, endNode.x, endNode.y);
+                                    gradient.addColorStop(0, "#B4CBB2");
+                                    gradient.addColorStop(1, "#F7D4BC");
+                                    ctx.strokeStyle = gradient;
+                                    break;
+                                case 'rotation':
+                                    ctx.strokeStyle = 'black';
+                                    ctx.setLineDash([2, 2]);
+                                    break;
+                                case 'stretch':
+                                    ctx.strokeStyle = '#B4CBB2';
+                                    ctx.setLineDash([5, 5]);
+                                    break;
+                                case 'redeployment':
+                                    ctx.strokeStyle = 'orange';
+                                    ctx.setLineDash([10, 5, 2, 5]);
+                                    break;
+                                default:
+                                    ctx.strokeStyle = 'black';
+                                    ctx.lineWidth = 1;
+                                    ctx.setLineDash([]);
+                            }
+                            ctx.stroke();
+                            ctx.setLineDash([]); // Reset for next line
+
+                            // Add badges
+                            const endNodeElement = document.querySelector(`[data-id="${connection.target_role_id}"]`);
+                            if (endNodeElement) {
+                                if (connection.move_type === 'transfer') {
+                                    const badge = document.createElement('span');
+                                    badge.textContent = '📍';
+                                    badge.title = connection.transfer_location;
+                                    endNodeElement.appendChild(badge);
+                                }
+                                if (connection.move_type === 'stretch') {
+                                    const badge = document.createElement('span');
+                                    badge.textContent = '⭐';
+                                    endNodeElement.appendChild(badge);
+                                }
+                                if (connection.move_type === 'redeployment') {
+                                    const badge = document.createElement('span');
+                                    badge.textContent = '🟠';
+                                    badge.title = connection.reason;
+                                    endNodeElement.appendChild(badge);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function arrangeInRadarView() {
+            const map = document.querySelector('.career-map');
+            const mapCenterX = map.offsetWidth / 2;
+            const mapCenterY = map.offsetHeight / 2;
+            const radii = [150, 200, 300, 400, 500, 600, 700, 800]; // Radii for tiers 0 through 7
+
+            const moves = {};
+            Object.values(roleDataById).forEach(role => {
+                const move = role.moves_from_current;
+                if (!moves[move]) {
+                    moves[move] = [];
+                }
+                moves[move].push(role.role_id);
+            });
+
+            Object.keys(moves).forEach(move => {
+                const rolesInMove = moves[move];
+                let angleIncrement = 360 / (rolesInMove.length);
+                let angle = 0;
+
+                const apmHydIndex = rolesInMove.indexOf('role_apm_hyd');
+                if (apmHydIndex > -1) {
+                    // Position APM Hyderabad to the right
+                    const apmHydRole = roleDataById['role_apm_hyd'];
+                    const apmHydNode = document.querySelector(`[data-id="role_apm_hyd"]`);
+                    if (apmHydNode) {
+                        const radius = radii[move];
+                        const angleRad = 0; // 0 degrees for right side
+                        const x = mapCenterX + radius * Math.cos(angleRad);
+                        const y = mapCenterY + radius * Math.sin(angleRad);
+                        apmHydNode.style.left = `${x - (apmHydNode.offsetWidth / 2)}px`;
+                        apmHydNode.style.top = `${y - (apmHydNode.offsetHeight / 2)}px`;
+                    }
+                    // Remove it from the list to arrange the rest
+                    rolesInMove.splice(apmHydIndex, 1);
+                }
+
+                angleIncrement = 360 / (rolesInMove.length);
+                angle = 90; // Start from the top
+
+                rolesInMove.forEach((roleId, index) => {
+                    const role = roleDataById[roleId];
+                    const nodeElement = document.querySelector(`[data-id="${roleId}"]`);
+                    if (nodeElement) {
+                        const radius = radii[move];
+                        angle = 90 + angleIncrement * index;
+                        const angleRad = angle * (Math.PI / 180);
+                        const x = mapCenterX + radius * Math.cos(angleRad);
+                        const y = mapCenterY + radius * Math.sin(angleRad);
+                        nodeElement.style.left = `${x - (nodeElement.offsetWidth / 2)}px`;
+                        nodeElement.style.top = `${y - (nodeElement.offsetHeight / 2)}px`;
+                    }
+                });
+            });
+        }
+
+        function arrangeInHorizontalLine() {
+            const map = document.querySelector('.career-map');
+            const mapCenterX = map.offsetWidth / 2;
+            const mapCenterY = map.offsetHeight / 2;
+            const radii = [0, 200, 300, 400, 500, 600, 700, 800];
+
+            const techRoles = roleData.filter(role => role.category === 'Tech Track')
+                .sort((a, b) => a.experience_years_min - b.experience_years_min);
+
+            const totalWidth = techRoles.length * 160; // 150px width + 10px margin
+            let startX = mapCenterX - totalWidth / 2;
+
+            techRoles.forEach(role => {
+                const nodeElement = document.querySelector(`[data-id="${role.role_id}"]`);
+                if (nodeElement) {
+                    const radius = radii[role.moves_from_current];
+                    const y = mapCenterY - radius;
+                    nodeElement.style.left = `${startX}px`;
+                    nodeElement.style.top = `${y - nodeElement.offsetHeight / 2}px`;
+                    startX += 160;
+                }
+            });
+        }
+
+        window.addEventListener('load', () => {
+            populateRoleSelects();
+            arrangeInRadarView();
+            drawConnections();
+        });
+        window.addEventListener('resize', () => {
+            arrangeInRadarView();
+            drawConnections();
+        });
+
+        roleNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                roleNodes.forEach(n => n.classList.remove('current'));
+                node.classList.add('current');
+                
+                const nodeId = node.dataset.id;
+                const data = roleDataById[nodeId];
+
+                if (data) {
+                    panelRoleTitle.textContent = data.role_name;
+                    panelRoleMeta.textContent = `${data.category} • ${data.experience_years_min}-${data.experience_years_max} Years Experience`;
+                    panelRoleDescription.textContent = data.description || '';
+                    
+                    panelSkillsList.innerHTML = (data.skills || [])
+                        .map(skill => `<span class="skill-tag">${skill}</span>`)
+                        .join('');
+                        
+                    panelPathwaysList.innerHTML = (data.connections || []).map(path => {
+                            const targetRole = roleDataById[path.target_role_id];
+                            return `
+                            <div class="pathway-item">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">→ ${targetRole.role_name}</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8;">${path.move_type}</div>
+                            </div>
+                        `}).join('');
+
+                    panelRecommendationsList.innerHTML = (data.recommendations || []).map(rec => {
+                        return `
+                        <div class="pathway-item">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">${rec.title}</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Provider: ${rec.provider}</div>
+                        </div>
+                    `}).join('');
+                }
+                
+                sidePanel.classList.add('show');
+            });
+
+            node.addEventListener('mouseover', (event) => {
+                const nodeId = node.dataset.id;
+                const data = roleDataById[nodeId];
+                if (data) {
+                    showTooltip(data.role_name, event);
+                }
+            });
+
+            node.addEventListener('mouseout', () => {
+                hideTooltip();
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidePanel.classList.remove('show');
+        });
+
+        findPathBtn.addEventListener('click', () => {
+            const startRoleId = currentRoleSelect.value;
+            const endRoleId = aspirationalRoleSelect.value;
+            const path = findPath(startRoleId, endRoleId);
+            highlightPath(path);
+        });
+
+        function findPath(startRoleId, endRoleId) {
+            // Simple BFS to find the shortest path
+            const queue = [[startRoleId, [startRoleId]]];
+            const visited = new Set([startRoleId]);
+
+            while (queue.length > 0) {
+                const [currentRoleId, path] = queue.shift();
+
+                if (currentRoleId === endRoleId) {
+                    return path;
+                }
+
+                const role = roleDataById[currentRoleId];
+                if (role.connections) {
+                    for (const connection of role.connections) {
+                        if (!visited.has(connection.target_role_id)) {
+                            visited.add(connection.target_role_id);
+                            const newPath = [...path, connection.target_role_id];
+                            queue.push([connection.target_role_id, newPath]);
+                        }
+                    }
+                }
+            }
+            return []; // No path found
+        }
+
+        function highlightPath(path) {
+            roleNodes.forEach(node => {
+                if (path.includes(node.dataset.id)) {
+                    node.classList.add('current');
+                    node.style.display = 'block';
+                } else {
+                    node.style.display = 'none';
+                }
+            });
+
+            // Redraw connections for the highlighted path
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < path.length - 1; i++) {
+                const startNodeId = path[i];
+                const endNodeId = path[i+1];
+                const startNodeElement = document.querySelector(`[data-id="${startNodeId}"]`);
+                const endNodeElement = document.querySelector(`[data-id="${endNodeId}"]`);
+
+                if (startNodeElement && endNodeElement) {
+                    const startRect = startNodeElement.getBoundingClientRect();
+                    const endRect = endNodeElement.getBoundingClientRect();
+                    const containerRect = canvas.getBoundingClientRect();
+
+                    const startPos = {
+                        x: startRect.left + startRect.width / 2 - containerRect.left,
+                        y: startRect.top + startRect.height / 2 - containerRect.top
+                    };
+                    const endPos = {
+                        x: endRect.left + endRect.width / 2 - containerRect.left,
+                        y: endRect.top + endRect.height / 2 - containerRect.top
+                    };
+
+                    ctx.beginPath();
+                    ctx.moveTo(startPos.x, startPos.y);
+                    ctx.lineTo(endPos.x, endPos.y);
+                    ctx.strokeStyle = 'gold';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+
+                roleNodes.forEach(node => {
+                    const roleId = node.dataset.id;
+                    const role = roleDataById[roleId];
+
+                    if (filter === 'all' || (role.category && role.category.toLowerCase().includes(filter))) {
+                        node.style.display = 'block';
+                    } else {
+                        node.style.display = 'none';
+                    }
+                });
+
+                if (filter === 'tech') {
+                    arrangeInHorizontalLine();
+                } else {
+                    arrangeInRadarView();
+                }
+
+                setTimeout(() => {
+                    drawConnections(filter);
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>

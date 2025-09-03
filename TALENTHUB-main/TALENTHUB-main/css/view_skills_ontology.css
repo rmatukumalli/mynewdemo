@@ -1,0 +1,990 @@
+/* saas-theme.css - Merged and adapted for a cohesive daylight look */
+:root {
+    /* Base Colors - Adjusted for a softer, more professional feel */
+    --bg-color: #fcfcfd; /* Very subtle off-white, almost pure white */
+    --primary-color: #ffffff; /* Pure White - Card/Panel Background */
+    --secondary-color: #eef1f5; /* Light gray for subtle accents */
+    --border-color: #e2e6eb; /* Softer, muted border */
+    --shadow-color-light: rgba(0, 0, 0, 0.06); /* Lighter, more diffused shadow */
+    --shadow-color-medium: rgba(0, 0, 0, 0.12); /* Slightly stronger for depth, but still soft */
+    --shadow-color-inset: rgba(0, 0, 0, 0.02); /* Very subtle inset */
+
+    /* Text Colors - Darker and more legible */
+    --text-color-dark: #212529; /* Near black for primary text */
+    --text-color-medium: #495057; /* Darker gray for secondary text/labels */
+    --text-color-light: #6c757d; /* Muted gray for auxiliary text */
+
+    /* Accent Colors - More harmonious and distinct */
+    --accent-violet: #6b4c9b; /* Deeper, rich purple */
+    --accent-violet-dark: #5a3d82; /* Darker purple for hover */
+    --accent-blue: #007bff; /* Vibrant standard blue */
+    --accent-blue-dark: #0056b3; /* Darker blue for hover */
+    --accent-green: #28a745; /* Clean, clear green */
+    --accent-green-dark: #1e7e34; /* Darker green for hover */
+    --accent-orange: #fd7e14; /* Warm orange for highlights/badges */
+
+    /* Typography */
+    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+    --heading-font-weight: 700;
+    --body-font-weight: 400;
+    --header-bg: #2c3e50; /* Added for header background */
+    --font-family: 'Inter', sans-serif; /* Added for general font-family */
+}
+
+/* Reset and Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-base);
+    background-color: var(--bg-color);
+    color: var(--text-color-dark);
+    line-height: var(--line-height-base);
+    height: 100%; /* Ensure body takes full height for flex container */
+    /* Removed overflow: hidden to allow page scrolling */
+    font-size: var(--font-size-base); /* Base font size */
+}
+
+/* Main Layout Container - Full viewport width and height */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw; /* Ensure full viewport width */
+    min-height: 100vh; /* Ensure full viewport height */
+    padding: 0;
+    max-width: none;
+    margin: 0;
+}
+
+/* Header */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--header-bg);
+    color: white;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.header-icon-container {
+    margin-right: 16px;
+}
+
+.header-icon-container svg {
+    stroke: white;
+}
+
+.header-text h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+.header-text p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.header-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    margin-top: 15px; /* Add some space when wrapping */
+}
+
+.home-link, .hierarchy-button, .proficiency-button {
+    background-color: var(--accent-blue); /* Blue background */
+    color: white; /* White text for contrast */
+    border: 1px solid var(--accent-blue); /* Blue border */
+    padding: 12px 25px; /* Consistent padding */
+    border-radius: 10px; /* Softer rounding */
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 8px var(--shadow-color-light); /* Subtle initial shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center text within buttons */
+    gap: 10px; /* Space for potential icons */
+    text-decoration: none; /* For home-link */
+    min-width: 120px; /* Ensure consistent minimum width for all buttons */
+    height: 45px; /* Explicitly set consistent height */
+    text-align: center; /* Ensure text is centered */
+}
+
+.home-link:hover, .hierarchy-button:hover, .proficiency-button:hover {
+    background-color: var(--accent-blue-dark); /* Darker blue on hover */
+    color: white; /* Keep text white on hover */
+    transform: translateY(-3px); /* More noticeable lift */
+    box-shadow: 0 8px 20px var(--shadow-color-medium); /* Deeper shadow on hover */
+}
+
+.home-link:active, .hierarchy-button:active, .proficiency-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px var(--shadow-color-inset) inset; /* Inset shadow for pressed look */
+}
+
+/* Main Content Area - Grid Layout - Adjusted for larger panels */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Revert to equal fractional width as initially requested */
+    gap: 40px; /* Significantly increased consistent gap */
+    padding: 40px; /* Generous padding for the main content area */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Column Styles - Reusable for panels - Much more prominent design */
+.ontology-column {
+    background-color: var(--primary-color);
+    border-radius: 20px; /* Even more rounded corners for a softer, modern look */
+    border: 1px solid var(--border-color);
+    padding: 35px; /* More generous consistent padding */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 30px var(--shadow-color-light); /* Softer, larger initial shadow */
+    min-height: 500px; /* Ensure columns have a good minimum height */
+    transition: box-shadow 0.4s ease, transform 0.2s ease; /* Smoother transitions */
+    /* Removed min-width: 0; to allow content to dictate minimum size */
+}
+
+.ontology-column:hover {
+    box-shadow: 0 18px 45px var(--shadow-color-medium); /* Even deeper, more diffused shadow on hover */
+    transform: translateY(-5px); /* Gentle lift on hover */
+}
+
+.ontology-column h4 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 18px; /* More padding below border */
+    margin-top: 0;
+    margin-bottom: 30px; /* More margin after heading */
+    font-size: 24px; /* Larger, more readable heading */
+    color: var(--text-color-dark);
+    font-weight: var(--heading-font-weight);
+    letter-spacing: -0.5px;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+/* Specific Column Assignments */
+.selection-panel {
+    grid-column: 1;
+    min-width: 350px; /* Re-apply a reasonable min-width */
+    max-width: 450px; /* Re-apply a reasonable max-width */
+}
+.skills-column {
+    grid-column: 2;
+}
+.behaviors-column {
+    grid-column: 3;
+}
+.skill-tree-column {
+    display: none;
+}
+
+/* Content Scrolling within Columns - Improved scrollbar aesthetics */
+.skills-column .skill-tags,
+.behaviors-column .skill-tags,
+.skill-details-scrollable-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 15px; /* Increased padding for scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-color-light) transparent;
+}
+
+.skills-column .skill-tags::-webkit-scrollbar,
+.behaviors-column .skill-tags::-webkit-scrollbar,
+.skill-details-scrollable-area::-webkit-scrollbar {
+    width: 10px; /* Wider scrollbar */
+}
+.skills-column .skill-tags::-webkit-scrollbar-track,
+.behaviors-column .skill-tags::-webkit-scrollbar-track,
+.skill-details-scrollable-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+.skills-column .skill-tags::-webkit-scrollbar-thumb,
+.behaviors-column .skill-tags::-webkit-scrollbar-thumb,
+.skill-details-scrollable-area::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 5px; /* More rounded scrollbar thumb */
+    border: 3px solid transparent; /* Larger border to make thumb thinner visually */
+    background-clip: padding-box;
+}
+.skills-column .skill-tags::-webkit-scrollbar-thumb:hover,
+.behaviors-column .skill-tags::-webkit-scrollbar-thumb:hover,
+.skill-details-scrollable-area::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-color-light);
+}
+
+/* Form Group & Inputs - Enhanced visual feedback */
+.form-group {
+    margin-bottom: 30px; /* Increased margin */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 12px; /* More space below label */
+    color: var(--text-color-medium);
+    font-weight: 600;
+    font-size: 16px; /* Labels align with base font size */
+}
+
+.select-wrapper select,
+.search-box input {
+    width: 100%;
+    /* Removed max-width, overflow, text-overflow, white-space to allow browser default handling */
+    padding: 14px 18px; /* More generous padding */
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color-dark);
+    border-radius: 12px; /* Softer rounded corners */
+    font-size: 17px; /* Slightly larger font inside inputs */
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.select-wrapper select option {
+    /* Removed white-space, overflow, text-overflow to allow browser default handling */
+}
+
+.select-wrapper select:focus,
+.search-box input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.25); /* More prominent, soft focus ring */
+}
+
+.select-wrapper select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--secondary-color);
+    filter: grayscale(20%); /* More distinct disabled state */
+}
+
+/* Custom dropdown arrow for select */
+.select-wrapper {
+    position: relative;
+    /* Removed overflow: hidden; to allow browser default handling */
+}
+.select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    right: 18px; /* Adjusted position */
+    top: 50%;
+    transform: translateY(-50%) scale(0.9); /* Slightly smaller arrow */
+    color: var(--text-color-light); /* Lighter arrow */
+    pointer-events: none;
+    font-size: 12px;
+}
+
+/* General Buttons (for "Product & Business", "Business Strategy" type elements) */
+.btn {
+    padding: 14px 30px; /* More generous padding */
+    border-radius: 12px; /* Consistent softer rounding */
+    border: 1px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 17px; /* Slightly larger font */
+    box-shadow: 0 3px 10px var(--shadow-color-light); /* More noticeable button shadow */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-color); /* Default neutral background */
+    color: var(--text-color-dark); /* Default text color */
+}
+.btn:hover {
+    transform: translateY(-3px); /* More noticeable lift */
+    box-shadow: 0 8px 22px var(--shadow-color-medium); /* Deeper shadow on hover */
+    background-color: #e4e7ed; /* Slightly darker on hover */
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 5px var(--shadow-color-inset) inset; /* Inset shadow */
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+}
+.btn-primary.active, .btn-primary:hover {
+    background-color: var(--accent-blue-dark);
+}
+.btn-primary.active {
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); /* Stronger active shadow */
+}
+
+/* Breadcrumb Navigation - More subtle and well-spaced */
+.breadcrumb {
+    margin-bottom: 30px;
+    color: var(--text-color-light);
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* More space between items */
+    flex-wrap: wrap;
+    font-weight: var(--body-font-weight);
+}
+.breadcrumb a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.breadcrumb span {
+    color: var(--text-color-light);
+}
+
+/* Skill and Behavior Tags - Redesigned for premium feel */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Increased gap between tags */
+    margin-bottom: 0;
+    align-items: flex-start;
+}
+
+.skill-tag, .behavior-tag {
+    min-height: 58px; /* Larger touch targets */
+    padding: 16px 30px; /* More generous padding */
+    border-radius: 35px; /* Very rounded, distinct pill shape */
+    font-size: 16px; /* Clear font size */
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 3px 12px var(--shadow-color-light); /* More pronounced tag shadow */
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Allow content to be visible */
+    text-overflow: clip; /* No ellipsis, show full text */
+    cursor: pointer;
+    user-select: none;
+    text-align: center; /* Center text if it wraps */
+    /* Removed max-width: 100% to allow dynamic width based on content and flex-wrap */
+    word-break: break-word; /* Break long words */
+}
+
+.skill-tag {
+    background-color: var(--secondary-color);
+    color: var(--text-color-dark);
+    border: 1px solid var(--border-color);
+}
+
+.skill-tag:hover {
+    background-color: #dce1e7; /* More distinct hover state */
+    transform: translateY(-3px); /* Stronger lift */
+    box-shadow: 0 10px 25px var(--shadow-color-medium);
+}
+
+.skill-tag.active {
+    background-color: var(--accent-green);
+    color: white;
+    font-weight: 600;
+    border-color: var(--accent-green);
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4); /* Green accent shadow */
+    transform: translateY(-2px); /* Slight lift */
+}
+.skill-tag.active:hover {
+    background-color: var(--accent-green-dark);
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5);
+}
+.skill-tag.active:active {
+    box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2) inset;
+}
+
+.behavior-tag {
+    background-color: var(--accent-violet);
+    color: white;
+    border: 1px solid var(--accent-violet);
+}
+
+.behavior-tag:hover {
+    background-color: var(--accent-violet-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(107, 76, 155, 0.4); /* Violet accent shadow */
+}
+
+.behavior-tag.active {
+    background-color: var(--accent-violet-dark);
+    border-color: var(--accent-violet-dark);
+    font-weight: 600;
+    transform: translateY(-2px);
+}
+.behavior-tag.active:hover {
+    background-color: #4a336f; /* Even darker violet */
+    box-shadow: 0 10px 25px rgba(107, 76, 155, 0.5);
+}
+.behavior-tag.active:active {
+    box-shadow: 0 2px 5px rgba(107, 76, 155, 0.2) inset;
+}
+
+/* Skill Details Panel - Refined presentation */
+.skill-details {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.skill-details #detail-skill-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* More space below heading */
+    font-size: 26px; /* Larger, clearer skill name */
+    font-weight: var(--heading-font-weight);
+    color: var(--text-color-dark);
+}
+
+.skill-details .description {
+    color: var(--text-color-medium);
+    margin-bottom: 30px;
+    line-height: 1.8; /* Enhanced readability for description */
+    font-size: 16px;
+}
+
+.category-badge {
+    background-color: var(--accent-orange);
+    color: white;
+    padding: 10px 20px; /* More generous padding */
+    border-radius: 30px; /* Very pill-like */
+    font-size: 15px; /* Slightly larger font for badge */
+    display: inline-block;
+    margin-bottom: 25px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    box-shadow: 0 3px 8px rgba(253, 126, 20, 0.3); /* Softer orange shadow */
+}
+
+/* Search results styling - More polished dropdown */
+.search-box {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px; /* Consistent rounded corners */
+    width: 100%;
+    max-height: 350px; /* Increased max height */
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 10px 30px var(--shadow-color-medium); /* Stronger, softer shadow for dropdown */
+    left: 0;
+    top: calc(100% + 12px); /* Position slightly more below the input */
+    padding: 10px 0; /* Padding inside the dropdown for items */
+}
+
+.search-result-item {
+    padding: 15px 20px; /* More padding */
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-color-dark);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.search-result-item:hover {
+    background-color: var(--secondary-color);
+    transform: translateX(8px); /* More noticeable slide effect on hover */
+}
+
+/* Responsive Adjustments - Fine-tuned breakpoints */
+@media (max-width: 1600px) { /* Larger desktops/laptops */
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* Set all columns to equal fractional width as requested */
+        gap: 40px; /* Significantly increased consistent gap */
+        padding: 40px; /* Generous padding for the main content area */
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 1200px) { /* Adjust for larger tablets/smaller desktops */
+    .main-content {
+        grid-template-columns: 1fr 1.3fr; /* More space for the combined column */
+        gap: 30px;
+        padding: 30px;
+    }
+    .selection-panel {
+        grid-column: 1;
+    }
+    .skills-column {
+        grid-column: 2;
+    }
+    .behaviors-column {
+        grid-column: 2;
+        margin-top: 30px; /* More space if stacked */
+    }
+    .ontology-column {
+        min-height: auto;
+        padding: 30px;
+        border-radius: 18px;
+    }
+    .ontology-column h4 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    .top-bar {
+        padding: 16px 30px;
+    }
+    .hierarchy-button, .proficiency-button {
+        padding: 11px 22px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 992px) { /* Tablets */
+    .main-content {
+        grid-template-columns: 1fr;
+        padding: 25px;
+        gap: 25px;
+    }
+    .selection-panel,
+    .skills-column,
+    .behaviors-column {
+        grid-column: 1;
+        margin-top: 0;
+    }
+.ontology-column h4 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 18px; /* More padding below border */
+    margin-top: 0;
+    margin-bottom: 30px; /* More margin after heading */
+    font-size: 24px; /* Larger, more readable heading */
+    color: var(--text-color-dark);
+    font-weight: var(--heading-font-weight);
+    letter-spacing: -0.5px;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+    .hierarchy-button, .proficiency-button {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+    .btn {
+        font-size: 16px;
+        padding: 12px 25px;
+    }
+    .skill-tag, .behavior-tag {
+        min-height: 52px;
+        padding: 14px 25px;
+        font-size: 15px;
+    }
+    .skill-details #detail-skill-name {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) { /* Mobile */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    .header-text h1 {
+        font-size: 22px;
+    }
+
+    .header-text p {
+        font-size: 13px;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .home-link, .hierarchy-button, .proficiency-button {
+        width: 100%;
+        min-width: unset;
+        padding: 10px 15px;
+        font-size: 14px;
+        height: auto;
+    }
+
+    .main-content {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .ontology-column {
+        padding: 20px;
+        border-radius: 15px;
+        min-height: auto;
+        max-width: none; /* Remove max-width for full width on mobile */
+        min-width: unset; /* Remove min-width for full width on mobile */
+    }
+
+    .ontology-column h4 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .select-wrapper select,
+    .search-box input {
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+
+    .skill-tags {
+        gap: 15px;
+    }
+
+    .skill-tag, .behavior-tag {
+        min-height: 45px;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 30px;
+        width: 100%; /* Make tags take full width */
+    }
+
+    .skill-details #detail-skill-name {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .skill-details .description {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .category-badge {
+        padding: 8px 15px;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .search-results {
+        max-height: 250px;
+        top: calc(100% + 8px);
+    }
+
+    .search-result-item {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        font-size: 11px;
+    }
+
+    .custom-footer {
+        padding: 0.75rem 0;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) { /* Smaller Mobile Devices */
+    .page-header {
+        padding: 10px 15px;
+        margin-bottom: 15px;
+    }
+
+    .header-text h1 {
+        font-size: 20px;
+    }
+
+    .header-text p {
+        font-size: 12px;
+    }
+
+    .header-actions {
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .home-link, .hierarchy-button, .proficiency-button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .main-content {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .ontology-column {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .ontology-column h4 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .select-wrapper select,
+    .search-box input {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .skill-tags {
+        gap: 10px;
+    }
+
+    .skill-tag, .behavior-tag {
+        min-height: 40px;
+        padding: 10px 15px;
+        font-size: 13px;
+        border-radius: 25px;
+    }
+
+    .skill-details #detail-skill-name {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .skill-details .description {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .category-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .search-results {
+        max-height: 200px;
+        top: calc(100% + 6px);
+    }
+
+    .search-result-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .footer-links {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .footer-links a {
+        font-size: 10px;
+    }
+
+    .custom-footer {
+        padding: 0.5rem 0;
+        font-size: 0.7rem;
+    }
+}
+
+/* Footer */
+.page-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+    margin-top: 24px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-copy {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.powered-by {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.powered-by img {
+    height: 20px;
+}
+
+.custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.875rem;
+    width: 100%;
+    /* Removed fixed positioning for better mobile flow */
+    /* position: fixed; */
+    /* left: 0; */
+    /* bottom: 0; */
+    /* z-index: 1000; */
+}
+
+/* Styles for inline relationship help text */
+.relationships-container .relationship-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.relationships-container .relationship-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.relationships-container .relationship-section h4 {
+    font-size: 1.2em;
+    color: var(--text-color-dark);
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.relationships-container .relationship-help-text {
+    background-color: var(--secondary-color);
+    border-left: 4px solid var(--accent-blue);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--text-color-medium);
+}
+
+.relationships-container .relationship-help-text p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.relationships-container .relationship-help-text h5 {
+    font-size: 1em;
+    color: var(--text-color-dark);
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+.relationships-container .relationship-help-text ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.relationships-container .relationship-help-text li {
+    margin-bottom: 5px;
+}
+
+.relationships-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.relationships-container ul li {
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+    color: var(--text-color-dark);
+    box-shadow: 0 2px 5px var(--shadow-color-light);
+}
+
+.relationships-container ul li .relationship-type {
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--accent-blue); /* Default for relationship types */
+}
+
+/* Specific colors for relationship types */
+.relationships-container ul li .part-of,
+.relationships-container ul li .isgeneralizationof,
+.relationships-container ul li .isspecializationof {
+    color: var(--accent-violet); /* Hierarchy */
+}
+
+.relationships-container ul li .prerequisite,
+.relationships-container ul li .required-by,
+.relationships-container ul li .issuccessorto,
+.relationships-container ul li .iscorequisitewith {
+    color: var(--accent-green); /* Learning Path */
+}
+
+.relationships-container ul li .related-to,
+.relationships-container ul li .iscomplementaryto,
+.relationships-container ul li .isalternativeto,
+.relationships-container ul li .issimilarto {
+    color: var(--accent-orange); /* Associative */
+}
+
+.relationships-container ul li .isusedin,
+.relationships-container ul li .isenabledby,
+.relationships-container ul li .iscontradictoryto {
+    color: var(--accent-blue); /* Contextual */
+}

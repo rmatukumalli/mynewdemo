@@ -1,0 +1,213 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F8F8F8; /* New Background */
+    color: #333333; /* New Text Color */
+}
+
+/* New Brand color definitions */
+.akara-blue { color: #1C4E80 !important; } /* New Primary Blue */
+.akara-red { color: #ed1f17; } /* Keeping original red for now, might be replaced */
+.bg-akara-blue { background-color: #1C4E80 !important; } /* New Primary Blue */
+.hover-bg-akara-blue-dark:hover { background-color: #123659 !important; } /* Darker New Primary Blue */
+
+/* Phasing out .akara-red for CTAs, will be replaced by Primary Blue or Accent Teal */
+.bg-akara-red { background-color: #1C4E80; } /* Defaulting to Primary Blue for now */
+.hover-bg-akara-red-dark:hover { background-color: #123659; }
+.border-akara-red { border-color: #1C4E80; }
+
+
+.text-akara-blue-light { color: #6DD5ED !important; } /* New Accent Teal */
+.text-akara-primary-blue { color: #1C4E80 !important; }
+.bg-akara-accent-teal { background-color: #6DD5ED !important; }
+
+
+.search-hero {
+    /* Using Primary Blue for the gradient overlay */
+    background: linear-gradient(rgba(28, 78, 128, 0.85), rgba(28, 78, 128, 0.85)), url('https://placehold.co/1200x400/1C4E80/FFFFFF?text=Akara+Airlines+View') no-repeat center center;
+    background-size: cover;
+}
+.search-hero h1, .search-hero p {
+    color: #FFFFFF; /* Ensure text is white on dark hero */
+}
+.search-hero .form-checkbox { /* Ensure checkbox is visible */
+    border-color: #FFFFFF;
+}
+.search-hero .form-checkbox:checked {
+    background-color: #6DD5ED; /* Accent Teal for checked state */
+    border-color: #6DD5ED;
+}
+.search-hero label span { /* Text next to checkbox */
+    color: #E0F7FA; /* Light teal/white for readability */
+}
+
+
+/* Global Custom scrollbar for a more modern look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #E9ECEF; /* Cooler light gray */
+}
+::-webkit-scrollbar-thumb {
+    background: #1C4E80; /* New Primary Blue */
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #123659; /* Darker New Primary Blue */
+}
+
+/* General Prose Updates */
+.prose h2 {
+    color: #1C4E80; /* Primary Blue for major headings */
+}
+.prose h3 {
+    color: #123659; /* Darker Primary Blue for sub-headings */
+}
+.prose p, .prose ul, .prose li {
+    color: #333333; /* Standard text color */
+}
+
+
+/* Chatbot Styles - Header and Send button to use new Primary Blue */
+#chatbotContainer .bg-akara-blue { /* Chatbot Header */
+    background-color: #1C4E80 !important;
+}
+#chatbotContainer #sendChatButton.bg-akara-red { /* Chatbot Send Button */
+    background-color: #1C4E80 !important;
+}
+#chatbotContainer #sendChatButton.hover\:bg-akara-red-dark:hover {
+    background-color: #123659 !important;
+}
+/* Chatbot user message bubble - use Accent Teal */
+#chatMessages .bg-akara-red.text-white {
+    background-color: #6DD5ED !important; /* Accent Teal */
+    color: #1C4E80 !important; /* Primary Blue text for contrast */
+}
+
+
+/* Applicant Insight Chart Styles */
+.insight-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.625rem;
+}
+.insight-list li span {
+    flex-shrink: 0;
+    margin-right: 1rem;
+    color: #333333;
+}
+.insight-bar-bg {
+    flex-grow: 1;
+    background-color: #E9ECEF; /* Cooler light gray */
+    border-radius: 0.375rem;
+    height: 0.75rem;
+    overflow: hidden;
+}
+.insight-bar {
+    height: 100%;
+    border-radius: 0.375rem;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Specific Gradients for Horizontal Bars - Updated with new palette */
+.insight-list-worked-at .insight-bar { /* Navy Blue derived */
+    background-image: linear-gradient(to right, #4A4E6A, #1A1D45);
+}
+.insight-list-worked-as .insight-bar { /* Lighter Dark Blue derived */
+    background-image: linear-gradient(to right, #8c8ea2, #4d4f6b);
+}
+
+/* Vertical Bar Chart Styles for "Years of Experience" */
+.vertical-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20%;
+    height: 100%;
+    position: relative;
+}
+.vertical-bar {
+    width: 70%;
+    margin: 0 auto;
+    background-color: #1C4E80; /* Primary Blue */
+    border-radius: 0.25rem 0.25rem 0 0;
+    transition: height 0.5s ease-in-out;
+    position: relative; 
+}
+.vertical-bar-label {
+    font-size: 0.65rem;
+    color: #333333;
+    margin-top: 0.25rem;
+    text-align: center;
+    line-height: 1;
+    position: absolute;
+    bottom: -1.2em;
+    width: 100%;
+    left: 0;
+}
+
+/* 3D Pie Chart Effect for Top Skills */
+.pie-chart-container {
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+.pie-chart-skills {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-image: conic-gradient(
+        #1C4E80 0% 40%,       /* Java - Primary Blue */
+        #6DD5ED 40% 70%,      /* Spring Boot - Accent Teal */
+        #87CEEB 70% 90%,      /* AWS - Lighter Sky Blue */
+        #A9A9A9 90% 100%     /* Other - Medium Gray */
+    );
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(50deg) rotateZ(-20deg) skewY(10deg); 
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15), inset 0 -3px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-out;
+    animation: fadeInPie 0.8s ease-out forwards;
+}
+.pie-chart-container:hover .pie-chart-skills {
+    transform: rotateX(45deg) rotateZ(-15deg) skewY(5deg) scale(1.03);
+}
+.pie-chart-skills::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background-image: conic-gradient(
+        #123659 0% 40%,       /* Darker Primary Blue */
+        #4cb9d1 40% 70%,      /* Darker Accent Teal */
+        #60A3D9 70% 90%,      /* Darker Sky Blue */
+        #808080 90% 100%     /* Darker Gray */
+    );
+    transform: translateZ(-12px);
+    filter: brightness(0.85);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.25);
+}
+@keyframes fadeInPie {
+    from { opacity: 0; transform: rotateX(60deg) rotateZ(-30deg) skewY(15deg) scale(0.8); }
+    to { opacity: 1; transform: rotateX(50deg) rotateZ(-20deg) skewY(10deg) scale(1); }
+}
+.pie-legend-skills { list-style: none; padding: 0; }
+.pie-legend-skills li { display: flex; align-items: center; }
+.pie-legend-skills span[class*="legend-color-"] {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.legend-color-java { background-color: #1C4E80; }
+.legend-color-spring { background-color: #6DD5ED; }
+.legend-color-aws { background-color: #87CEEB; }
+.legend-color-other { background-color: #A9A9A9; }
+
+/* General card background */
+.bg-white.p-5.rounded-lg, .bg-white.p-6.rounded-xl { /* Targeting existing card structures */
+    background-color: #FFFFFF !important; /* Ensure cards are white */
+}

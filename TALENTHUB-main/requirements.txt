@@ -1,10 +1,7 @@
-Flask>=2.0
-Flask-SQLAlchemy>=2.5
-Flask-Migrate>=3.0
-Flask-Marshmallow>=0.14 # Using a common version, can be updated if needed
-marshmallow-sqlalchemy>=0.23 # For SQLAlchemyAutoSchema
-Flask-CORS>=3.0
+Flask
 gunicorn
-honcho
-pandas
-openpyxl
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Marshmallow
+Flask-Cors
+marshmallow-sqlalchemy

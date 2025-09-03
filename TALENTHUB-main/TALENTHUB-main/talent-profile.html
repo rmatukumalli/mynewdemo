@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   My Talent Profile - Akara Talent Hub
+  </title>
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;✈️&lt;/text&gt;&lt;/svg&gt;" rel="icon">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="css/ats_dashboard.css" rel="stylesheet">
+  <link href="css/skills-intelligence-theme.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="stylesheet" href="css/profile.css"> Commented out to use layout from styles.css like learning-platform.html -->
+  <link href="css/talent-profile.css" rel="stylesheet">
+  <!-- New CSS file -->
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css';
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <!-- INCLUDE _shared_navbar_css.html -->
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <!-- INCLUDE _shared_navbar_body.html -->
+  <section class="section" id="talent-profile-page-area">
+   <div class="container">
+    <h2>
+     My Talent Profile
+    </h2>
+    <div class="my-talent-hub-layout-container">
+     <nav class="my-talent-hub-sidebar-nav" id="sidebar-talent-profile">
+      <ul class="my-talent-hub-nav-list">
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link active" data-talenthub-tab="th-profile-overview" href="#th-profile-overview">
+         <i class="fas fa-user">
+         </i>
+         Profile Overview
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-mentoring" href="#th-mentoring">
+         <i class="fas fa-handshake">
+         </i>
+         Mentoring
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-development" href="#th-development">
+         <i class="fas fa-road">
+         </i>
+         Development Plan
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-experience" href="#th-experience">
+         <i class="fas fa-briefcase">
+         </i>
+         My Experience
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-discussions" href="#th-discussions">
+         <i class="fas fa-comments">
+         </i>
+         Discussions
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-documents" href="#th-documents">
+         <i class="fas fa-file-alt">
+         </i>
+         My Documents
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-opportunities" href="#th-opportunities">
+         <i class="fas fa-star">
+         </i>
+         My Opportunities
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-badges" href="#th-badges">
+         <i class="fas fa-medal">
+         </i>
+         Badges
+        </a>
+       </li>
+       <li class="my-talent-hub-nav-item">
+        <a class="my-talent-hub-nav-link" data-talenthub-tab="th-skills-summary" href="#th-skills-summary">
+         <i class="fas fa-chart-bar">
+         </i>
+         Skills Summary
+        </a>
+       </li>
+      </ul>
+     </nav>
+     <div class="my-talent-hub-main-content">
+      <div class="my-talent-hub-tab-content active" id="th-profile-overview">
+       <div class="profile-header">
+        <div class="profile-avatar">
+         <img alt="User Profile" src="https://static-alter1.vidnoz.com/system/asset/202408/66beeabb5fa40.jpg">
+        </div>
+        <div class="profile-info">
+         <h2>
+          John Doe
+         </h2>
+         <p>
+          Senior Flight Operations Coordinator
+         </p>
+         <p>
+          Flight Operations Department
+         </p>
+        </div>
+        <button class="btn-primary">
+         Edit Profile
+        </button>
+       </div>
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          Career Interests
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="interests-container">
+         <span class="interest-tag">
+          Flight Operations Management
+         </span>
+         <span class="interest-tag">
+          Safety Leadership
+         </span>
+         <span class="interest-tag">
+          International Operations
+         </span>
+         <span class="interest-tag">
+          Mentoring
+         </span>
+        </div>
+       </div>
+       <div class="profile-section">
+        <h3>
+         Recent Activity
+        </h3>
+        <div class="activity-list">
+         <div class="activity-item">
+          <i class="fas fa-briefcase">
+          </i>
+          <span>
+           Applied for Flight Operations Manager role in Tokyo
+          </span>
+          <span class="activity-date">
+           2 days ago
+          </span>
+         </div>
+         <div class="activity-item">
+          <i class="fas fa-graduation-cap">
+          </i>
+          <span>
+           Completed "Aviation Safety Management" course
+          </span>
+          <span class="activity-date">
+           1 week ago
+          </span>
+         </div>
+         <div class="activity-item">
+          <i class="fas fa-users">
+          </i>
+          <span>
+           Started mentoring Sarah Johnson in Flight Operations
+          </span>
+          <span class="activity-date">
+           2 weeks ago
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-mentoring">
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          My Mentors
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="mentoring-list">
+         <div class="mentor-item">
+          <img alt="Mentor" class="mentor-avatar" src="https://picsum.photos/seed/maria/60/60">
+          <div class="mentor-info">
+           <h4>
+            Captain Maria Rodriguez
+           </h4>
+           <p>
+            Senior Flight Operations Manager
+           </p>
+           <p>
+            Mentoring since: January 2024
+           </p>
+          </div>
+          <button class="btn-secondary">
+           Message
+          </button>
+         </div>
+        </div>
+       </div>
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          My Mentees
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="mentoring-list">
+         <div class="mentor-item">
+          <img alt="Mentee" class="mentor-avatar" src="https://picsum.photos/seed/sarah/60/60">
+          <div class="mentor-info">
+           <h4>
+            Sarah Johnson
+           </h4>
+           <p>
+            Junior Flight Coordinator
+           </p>
+           <p>
+            Mentoring since: March 2024
+           </p>
+          </div>
+          <button class="btn-secondary">
+           Message
+          </button>
+         </div>
+         <div class="mentor-item">
+          <img alt="Mentee" class="mentor-avatar" src="https://picsum.photos/seed/michael/60/60">
+          <div class="mentor-info">
+           <h4>
+            Michael Chen
+           </h4>
+           <p>
+            Flight Operations Trainee
+           </p>
+           <p>
+            Mentoring since: April 2024
+           </p>
+          </div>
+          <button class="btn-secondary">
+           Message
+          </button>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-development">
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          Current Development Goals
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="development-goals">
+         <div class="goal-item">
+          <h4>
+           Leadership Certification
+          </h4>
+          <p>
+           Complete advanced leadership program by Q4 2024
+          </p>
+          <div class="progress-bar-container">
+           <div class="progress" style="width: 65%">
+           </div>
+          </div>
+          <span class="progress-text">
+           65% Complete
+          </span>
+         </div>
+         <div class="goal-item">
+          <h4>
+           International Operations Expertise
+          </h4>
+          <p>
+           Gain experience in European operations
+          </p>
+          <div class="progress-bar-container">
+           <div class="progress" style="width: 30%">
+           </div>
+          </div>
+          <span class="progress-text">
+           30% Complete
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-experience">
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          Work Experience
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="experience-timeline">
+         <div class="experience-item">
+          <div class="experience-date">
+           2022 - Present
+          </div>
+          <div class="experience-content">
+           <h4>
+            Senior Flight Operations Coordinator
+           </h4>
+           <p>
+            Akara Airlines - Atlanta Hub
+           </p>
+           <ul>
+            <li>
+             Coordinate daily flight operations for 200+ flights
+            </li>
+            <li>
+             Lead crisis management during weather disruptions
+            </li>
+            <li>
+             Mentor junior coordinators and trainees
+            </li>
+           </ul>
+          </div>
+         </div>
+         <div class="experience-item">
+          <div class="experience-date">
+           2019 - 2022
+          </div>
+          <div class="experience-content">
+           <h4>
+            Flight Operations Coordinator
+           </h4>
+           <p>
+            Akara Airlines - Los Angeles Hub
+           </p>
+           <ul>
+            <li>
+             Managed flight schedules and crew assignments
+            </li>
+            <li>
+             Coordinated with air traffic control and ground services
+            </li>
+            <li>
+             Implemented safety protocols and procedures
+            </li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-discussions">
+       <div class="profile-section">
+        <h3>
+         Recent Discussions
+        </h3>
+        <div class="discussions-list">
+         <div class="discussion-item">
+          <h4>
+           Best Practices for Weather Delay Management
+          </h4>
+          <p>
+           Flight Operations Community &bull; 5 replies
+          </p>
+          <span class="discussion-date">
+           3 days ago
+          </span>
+         </div>
+         <div class="discussion-item">
+          <h4>
+           International Route Planning Strategies
+          </h4>
+          <p>
+           Operations Excellence Group &bull; 12 replies
+          </p>
+          <span class="discussion-date">
+           1 week ago
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-documents">
+       <div class="profile-section">
+        <div class="profile-section-header">
+         <h3>
+          Certifications & Documents
+         </h3>
+         <button class="btn-add">
+          <i class="fas fa-plus">
+          </i>
+          Add
+         </button>
+        </div>
+        <div class="documents-list">
+         <div class="document-item">
+          <i class="fas fa-certificate">
+          </i>
+          <div class="document-info">
+           <h4>
+            Aviation Safety Management Certificate
+           </h4>
+           <p>
+            Issued: March 2024 &bull; Valid until: March 2027
+           </p>
+          </div>
+          <button class="btn-secondary">
+           Download
+          </button>
+         </div>
+         <div class="document-item">
+          <i class="fas fa-file-pdf">
+          </i>
+          <div class="document-info">
+           <h4>
+            Leadership Training Completion
+           </h4>
+           <p>
+            Issued: January 2024
+           </p>
+          </div>
+          <button class="btn-secondary">
+           Download
+          </button>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-skills-summary">
+       <div class="profile-section">
+        <h3>
+         My Skills Dashboard
+        </h3>
+        <div id="skills-dashboard-content">
+         <p>
+          Loading skills dashboard...
+         </p>
+         <!-- Content for skills dashboard, potentially an iframe or JS-loaded content -->
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-opportunities">
+       <div class="profile-section">
+        <h3>
+         My Opportunities
+        </h3>
+        <div class="profile-tiles-grid">
+         <div class="profile-tile opportunities-tile" data-subsection="gigs">
+          <div class="tile-icon">
+           <i class="fas fa-briefcase">
+           </i>
+          </div>
+          <div class="tile-count">
+           8
+          </div>
+          <div class="tile-title">
+           Gigs
+          </div>
+          <p class="tile-description">
+           Available short-term assignments
+          </p>
+         </div>
+         <div class="profile-tile opportunities-tile" data-subsection="jobs">
+          <div class="tile-icon">
+           <i class="fas fa-building">
+           </i>
+          </div>
+          <div class="tile-count">
+           12
+          </div>
+          <div class="tile-title">
+           Jobs
+          </div>
+          <p class="tile-description">
+           Full-time opportunities
+          </p>
+         </div>
+         <div class="profile-tile opportunities-tile" data-subsection="applied">
+          <div class="tile-icon">
+           <i class="fas fa-file-signature">
+           </i>
+          </div>
+          <div class="tile-count">
+           3
+          </div>
+          <div class="tile-title">
+           Applied For
+          </div>
+          <p class="tile-description">
+           Applications in progress
+          </p>
+         </div>
+         <div class="profile-tile opportunities-tile" data-subsection="working">
+          <div class="tile-icon">
+           <i class="fas fa-tasks">
+           </i>
+          </div>
+          <div class="tile-count">
+           2
+          </div>
+          <div class="tile-title">
+           Working On
+          </div>
+          <p class="tile-description">
+           Currently active assignments
+          </p>
+         </div>
+         <div class="profile-tile opportunities-tile" data-subsection="completed">
+          <div class="tile-icon">
+           <i class="fas fa-check-circle">
+           </i>
+          </div>
+          <div class="tile-count">
+           7
+          </div>
+          <div class="tile-title">
+           Completed
+          </div>
+          <p class="tile-description">
+           Successfully finished projects
+          </p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="my-talent-hub-tab-content" id="th-badges">
+       <div class="profile-section">
+        <h3>
+         My Badges
+        </h3>
+        <div class="profile-tiles-grid">
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-shield-alt fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Safety Champion
+          </div>
+          <p class="tile-description">
+           Completed advanced safety training
+          </p>
+          <div class="tile-date">
+           Earned: Mar 2024
+          </div>
+         </div>
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-users fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Team Leader
+          </div>
+          <p class="tile-description">
+           Led cross-functional team
+          </p>
+          <div class="tile-date">
+           Earned: Jan 2024
+          </div>
+         </div>
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-graduation-cap fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Learning Enthusiast
+          </div>
+          <p class="tile-description">
+           Completed 10+ modules
+          </p>
+          <div class="tile-date">
+           Earned: Feb 2024
+          </div>
+         </div>
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-handshake fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Mentor
+          </div>
+          <p class="tile-description">
+           Active mentor for 6+ months
+          </p>
+          <div class="tile-date">
+           Earned: Apr 2024
+          </div>
+         </div>
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-star fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Top Performer
+          </div>
+          <p class="tile-description">
+           Exceeded quarterly targets
+          </p>
+          <div class="tile-date">
+           Earned: Q1 2024
+          </div>
+         </div>
+         <div class="profile-tile badge-tile">
+          <div class="tile-icon">
+           <i class="fas fa-lightbulb fa-2x">
+           </i>
+          </div>
+          <div class="tile-title">
+           Innovator
+          </div>
+          <p class="tile-description">
+           Contributed a novel idea
+          </p>
+          <div class="tile-date">
+           Earned: Dec 2023
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script src="js/profile.js">
+  </script>
+  <!-- Existing profile JS -->
+  <script src="js/talent-profile.js">
+  </script>
+  <!-- New JS file -->
+  <div class="custom-footer">
+   Conceptual mock prepared by Raj Matukumalli — optimized for desktop.
+  </div>
+ </body>
+</html>

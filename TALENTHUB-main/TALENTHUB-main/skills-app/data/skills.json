@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "JavaScript", "category": "Programming Language" },
+  { "id": 2, "name": "React", "category": "Frontend Framework" },
+  { "id": 3, "name": "Node.js", "category": "Backend Framework" },
+  { "id": 4, "name": "CSS", "category": "Styling" },
+  { "id": 5, "name": "HTML", "category": "Markup Language" }
+]

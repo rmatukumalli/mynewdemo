@@ -1,0 +1,262 @@
+<!-- Slide-out Hierarchy Panel -->
+<div class="sidebar" id="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+    <div class="skill-details" id="skill-details-panel" style="display: none;">
+        <h3 id="detail-skill-name">
+            <span class="skill-name-text"></span>
+        </h3>
+        <div class="category-badge" id="detail-skill-category-badge"></div>
+        <p class="description" id="detail-skill-description"></p>
+
+        <div class="hierarchy-view" id="skill-hierarchy-panel">
+            <!-- Grandparent Skill Box -->
+            <div class="skill-box grandparent" id="grandparent-skill-box" style="display: none;">
+                <h3>Skill Group</h3>
+                <p id="grandparent-name">Grandparent Name</p>
+            </div>
+            <!-- Connector Line -->
+            <div class="connector-line"></div>
+            <!-- Parent Skill Box -->
+            <div class="skill-box parent" id="parent-skill-box" style="display: none;">
+                <h3>Skill Set</h3>
+                <p id="parent-name">Parent Name</p>
+            </div>
+            <!-- Connector Line -->
+            <div class="connector-line"></div>
+            <!-- Current Skill -->
+            <div class="skill-box current-skill">
+                <h3>Core Skill</h3>
+                <p id="current-skill-name-hierarchy">Current Skill Name</p>
+            </div>
+        </div>
+
+        <!-- Relationships Container -->
+        <div id="relationships-container" class="relationships-container" style="display: none;">
+            <!-- Hierarchy Relationships (taxonomy structure) -->
+            <div class="relationship-section">
+                <h4>Hierarchy Relationships (taxonomy structure)</h4>
+                <div class="relationship-help-text">
+                    <p>Here’s a breakdown of the benefits of each interrelationship type in your ontology:</p>
+                    <div class="relationship-type-detail">
+                        <h5>Part of (e.g., Design Thinking Methodologies → Innovation)</h5>
+                        <ul>
+                            <li>Helps build a modular skills tree so that when someone develops one component skill, the platform can suggest the parent skill and related siblings.</li>
+                            <li>Enables organizations to see which broader capability areas a person covers.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isGeneralizationOf (Broader Skill)</h5>
+                        <ul>
+                            <li>Useful for role mapping — if a person knows “Data Science,” the platform can infer exposure to more specialized child skills.</li>
+                            <li>Helps in career matching at scale, since general skills often appear in many job families.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isSpecializationOf (Niche Skill)</h5>
+                        <ul>
+                            <li>Allows granularity in skill validation — a candidate with “NLP” expertise is not just a data scientist, but a specialist in AI subfields.</li>
+                            <li>Drives precision in talent redeployment and project staffing by pinpointing depth areas.</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul id="hierarchy-relationships-list"></ul>
+            </div>
+
+            <!-- Learning Path Relationships (sequencing and dependencies) -->
+            <div class="relationship-section">
+                <h4>Learning Path Relationships (sequencing and dependencies)</h4>
+                <div class="relationship-help-text">
+                    <div class="relationship-type-detail">
+                        <h5>Prerequisite (Foundation Skill)</h5>
+                        <ul>
+                            <li>Structures learning journeys — platforms can recommend what to learn first (e.g., Algebra before Calculus).</li>
+                            <li>Prevents skill gaps by showing dependencies between beginner and advanced skills.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isSuccessorTo (Next Step Skill)</h5>
+                        <ul>
+                            <li>Fuels career progression recommendations — when an employee masters a skill, the platform can suggest the next logical one.</li>
+                            <li>Supports upskilling pathways for succession planning.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isCorequisiteWith (Parallel Skill)</h5>
+                        <ul>
+                            <li>Surfaces bundled learning opportunities — e.g., “Statistics + Data Visualization” should be learned together.</li>
+                            <li>Improves team design — ensuring projects have both complementary skill sets at the same time.</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul id="learning-path-relationships-list"></ul>
+            </div>
+
+            <!-- Associative Relationships (lateral links) -->
+            <div class="relationship-section">
+                <h4>Associative Relationships (lateral links)</h4>
+                <div class="relationship-help-text">
+                    <div class="relationship-type-detail">
+                        <h5>Related to (Trend Spotting ↔ Future Forecasting)</h5>
+                        <ul>
+                            <li>Broadens discovery — employees can explore adjacent skills that enrich their core expertise.</li>
+                            <li>Encourages cross-disciplinary innovation by connecting skills that often co-occur.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isComplementaryTo (Complementary Skill)</h5>
+                        <ul>
+                            <li>Fuels role readiness analysis — e.g., Python + Machine Learning is stronger than either alone.</li>
+                            <li>Suggests skill pairings for development plans.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isAlternativeTo (Alternative Skill)</h5>
+                        <ul>
+                            <li>Supports talent mobility — if an employee knows React, they can transition into Angular roles more easily.</li>
+                            <li>Provides flexibility in matching candidates to projects, recognizing skill substitutes.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isSimilarTo (Similar Skill)</h5>
+                        <ul>
+                            <li>Reduces redundancy in skill frameworks by linking near-duplicates.</li>
+                            <li>Enhances search and recommendations — a query for “Agile” also surfaces “Scrum.”</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul id="associative-relationships-list"></ul>
+            </div>
+
+            <!-- Contextual Relationships (application and constraints) -->
+            <div class="relationship-section">
+                <h4>Contextual Relationships (application and constraints)</h4>
+                <div class="relationship-help-text">
+                    <div class="relationship-type-detail">
+                        <h5>isUsedIn (Project Management)</h5>
+                        <ul>
+                            <li>Places skills in real-world contexts, making ontology more relatable.</li>
+                            <li>Strengthens role-to-skill mapping by connecting abstract skills to applied domains.</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isEnabledBy (Leadership)</h5>
+                        <ul>
+                            <li>Shows capability dependencies — leadership may enable effective project management.</li>
+                            <li>Helps in designing blended development programs (technical + behavioral).</li>
+                        </ul>
+                    </div>
+                    <div class="relationship-type-detail">
+                        <h5>isContradictoryTo (Outdated Method)</h5>
+                        <ul>
+                            <li>Keeps frameworks current and future-ready by signaling that some skills are declining.</li>
+                            <li>Guides reskilling efforts away from outdated practices toward emerging skills.</li>
+                        </ul>
+                    </div>
+                </div>
+                <ul id="contextual-relationships-list"></ul>
+            </div>
+        </div>
+
+
+        <!-- Behaviors Container -->
+        <div class="behaviors-container" id="behaviors-container-hierarchy" style="display: none;">
+            <h4>Demonstrated By</h4>
+            <div class="behaviors-grid">
+                <!-- Behavior items will be injected here -->
+            </div>
+        </div>
+
+        <!-- Proficiencies Container - Added to align with CSS -->
+        <div class="proficiencies-container" id="proficiencies-container" style="display: none;">
+            <h4>Proficiency Levels</h4>
+            <div class="proficiency-tabs">
+                <button class="proficiency-tab" id="proficiency-beginner-tab" data-level="beginner">Beginner</button>
+                <button class="proficiency-tab" id="proficiency-intermediate-tab" data-level="intermediate">Intermediate</button>
+                <button class="proficiency-tab" id="proficiency-advanced-tab" data-level="advanced">Advanced</button>
+                <button class="proficiency-tab" id="proficiency-expert-tab" data-level="expert">Expert</button>
+            </div>
+            <div class="proficiency-details-container" id="proficiency-details-container">
+                <!-- Proficiency details will be injected here or toggled -->
+                <div class="proficiency-detail" id="proficiency-detail-beginner" style="display: none;">
+                    <h4>Beginner</h4>
+                    <p>Details for Beginner proficiency level.</p>
+                </div>
+                <div class="proficiency-detail" id="proficiency-detail-intermediate" style="display: none;">
+                    <h4>Intermediate</h4>
+                    <p>Details for Intermediate proficiency level.</p>
+                </div>
+                <div class="proficiency-detail" id="proficiency-detail-advanced" style="display: none;">
+                    <h4>Advanced</h4>
+                    <p>Details for Advanced proficiency level.</p>
+                </div>
+                <div class="proficiency-detail" id="proficiency-detail-expert" style="display: none;">
+                    <h4>Expert</h4>
+                    <p>Details for Expert proficiency level.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Toggles the visibility of the sidebar panel.
+     * It adds or removes the 'visible' class to the sidebar element,
+     * which controls its slide-in/slide-out animation via CSS transitions.
+     */
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            sidebar.classList.toggle('visible');
+        } else {
+            console.error('Sidebar element not found.');
+        }
+    }
+
+    // You might also want a way to show the sidebar, e.g., from an external button
+    // function showSidebar() {
+    //     const sidebar = document.getElementById('sidebar');
+    //     if (sidebar) {
+    //         sidebar.classList.add('visible');
+    //     }
+    // }
+
+    // Example of how you might initialize content or handle events
+    document.addEventListener('DOMContentLoaded', () => {
+        // Example: If you have a button to open the sidebar, attach event listener here
+        // const openSidebarBtn = document.getElementById('open-sidebar-btn');
+        // if (openSidebarBtn) {
+        //     openSidebarBtn.addEventListener('click', showSidebar);
+        // }
+
+        // Event listeners for proficiency tabs
+        const proficiencyTabs = document.querySelectorAll('.proficiency-tab');
+        const proficiencyDetailsContainer = document.getElementById('proficiency-details-container');
+
+        proficiencyTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove 'active' class from all tabs
+                proficiencyTabs.forEach(t => t.classList.remove('active'));
+                // Add 'active' class to the clicked tab
+                tab.classList.add('active');
+
+                // Hide all proficiency details
+                const allDetails = proficiencyDetailsContainer.querySelectorAll('.proficiency-detail');
+                allDetails.forEach(detail => detail.style.display = 'none');
+
+                // Show the details corresponding to the clicked tab
+                const level = tab.dataset.level;
+                const detailToShow = document.getElementById(`proficiency-detail-${level}`);
+                if (detailToShow) {
+                    detailToShow.style.display = 'block';
+                }
+            });
+        });
+
+        // Set initial active tab and display its details (e.g., "Beginner")
+        const initialActiveTab = document.getElementById('proficiency-beginner-tab');
+        if (initialActiveTab) {
+            initialActiveTab.click(); // Simulate a click to activate the first tab
+        }
+    });
+</script>

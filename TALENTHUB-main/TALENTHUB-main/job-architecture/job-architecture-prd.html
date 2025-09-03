@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Architecture Wizard PRD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 1024px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        h1, h2, h3 {
+            color: #1f2937;
+        }
+        h1 {
+            font-weight: 700;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: #3b82f6; /* Tailwind's blue-500 */
+            border-radius: 2px;
+        }
+        .ai-badge {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1e40af;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid #93c5fd;
+            margin-left: 0.75rem;
+        }
+        .list-item-title {
+            font-weight: 600;
+            color: #374151;
+        }
+        .list-item-content {
+            font-weight: 400;
+            color: #6b7280;
+        }
+        .tooltip-trigger {
+            border-bottom: 1px dashed #6b7280;
+            cursor: help;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12">
+    <div class="container mx-auto space-y-12">
+        <header class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Product Requirements Document</h1>
+            <h2 class="text-2xl font-medium text-gray-700">Job Architecture Wizard</h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+                This document outlines the functionality and technical requirements for a web-based tool designed to guide users through defining and managing an organization's roles, skills, and career paths.
+            </p>
+        </header>
+
+        <div class="flex justify-between items-center mb-8">
+            <a href="../index.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                Home
+            </a>
+            <a href="index.html" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out">
+                &larr; Back to Role Architecture
+            </a>
+        </div>
+
+        <!-- Section 1: Introduction -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">1. Introduction</h2>
+            <p class="text-gray-600">
+                This document outlines the functionality and technical requirements for the **Job Architecture Wizard**, a web-based tool designed to guide users through defining, organizing, and managing an organization's roles, skills, and career paths. This wizard provides a structured, step-by-step approach to building a comprehensive job architecture, with features for data entry, editing, and visualization.
+            </p>
+        </section>
+
+        <!-- Section 2: Goals -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">2. Goals</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li><strong class="text-gray-800">Streamline Job Architecture Definition:</strong> Provide a user-friendly interface to define organizational structures (organizations, business units, departments), job groupings (job families, role groups), and job levels.</li>
+                <li><strong class="text-gray-800">Centralize Skill Management:</strong> Integrate skill definitions and proficiency levels into job profiles.</li>
+                <li><strong class="text-gray-800">Facilitate Career Pathing:</strong> Enable the creation and visualization of potential career progression paths based on defined job levels and skills.</li>
+                <li><strong class="text-gray-800">Support Data Management:</strong> Allow users to add, edit, and delete architectural components.</li>
+                <li><strong class="text-gray-800">Provide AI-Powered Insights (Future/Planned):</strong> Incorporate AI capabilities for suggestions, gap analysis, and review processes.</li>
+            </ul>
+        </section>
+
+        <!-- Section 3: Scope -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">3. Scope</h2>
+            <p class="text-gray-600">
+                The current scope covers the front-end functionality of the Job Architecture Wizard, including the multi-step navigation, data input/display for various architectural components, and client-side data management using mock data. Backend integration for persistent storage and actual AI processing is outside the immediate scope but will be considered for future phases.
+            </p>
+        </section>
+
+        <!-- Section 4: User Stories -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">4. User Stories</h2>
+            <div class="space-y-4 text-gray-600">
+                <p>As an HR Administrator, I want to define my company's organizational structure (Business Units, Departments) so that I can accurately categorize jobs.</p>
+                <p>As an HR Administrator, I want to create and manage Job Families and Role Groups to organize similar jobs.</p>
+                <p>As an HR Administrator, I want to define Job Levels with associated responsibilities, salary ranges, and skill levels so that I can establish clear career progression.</p>
+                <p>As an HR Administrator, I want to view and edit existing organizational data easily to keep the job architecture up-to-date.</p>
+                <p>As an HR Administrator, I want to see potential career paths for a given job level to help employees plan their development.</p>
+                <p>As an HR Administrator, I want to search and filter job levels by various criteria (Business Unit, Department, Role Group) to quickly find relevant information.</p>
+                <p>As an HR Administrator, I want to add, edit, and delete skills associated with job profiles.</p>
+                <p>As an HR Administrator, I want to review AI-generated suggestions for job profiles, skill gaps, and career paths.</p>
+            </div>
+        </section>
+        
+        <!-- Section 5: Functional Requirements -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">5. Functional Requirements</h2>
+            <div class="space-y-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">5.1. Stepper Navigation</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li><strong class="list-item-title">FR1.1:</strong> The wizard shall display a clear, horizontal stepper navigation at the top, indicating the current step, completed steps, and upcoming steps.</li>
+                        <li><strong class="list-item-title">FR1.2:</strong> Each step in the stepper shall be clickable, allowing users to navigate directly to any previously visited or future step.</li>
+                        <li><strong class="list-item-title">FR1.3:</strong> Steps identified as "AI-Powered" shall have a distinct visual style (e.g., an icon, a different color). <span class="ai-badge">AI-Powered</span></li>
+                        <li><strong class="list-item-title">FR1.4:</strong> "Back" and "Next Step" buttons shall be available for sequential navigation.</li>
+                        <li><strong class="list-item-title">FR1.5:</strong> The "Back" button shall be disabled on the first step.</li>
+                        <li><strong class="list-item-title">FR1.6:</strong> A "Finish" button shall appear on the final step, replacing the "Next Step" button, to conclude the wizard.</li>
+                        <li><strong class="list-item-title">FR1.7:</strong> The stepper navigation shall be horizontally scrollable on smaller screens, with fade effects indicating more content is available.</li>
+                        <li><strong class="list-item-title">FR1.8:</strong> Clicking the "Job Architecture" heading shall reset the wizard to the first step.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">5.2. Data Management (CRUD Operations)</h3>
+                    <p class="text-gray-600 mb-2">For each architectural component (Organization, Business Unit, Department, Job Family, Job Level, Job Profile, Skill Gap, Career Path):</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li><strong class="list-item-title">FR2.1:</strong> The system shall display a table-like view of existing data for the current step.</li>
+                        <li><strong class="list-item-title">FR2.2:</strong> The system shall provide an "Add" button to create new entries.</li>
+                        <li><strong class="list-item-title">FR2.3:</strong> The system shall provide "Edit" functionality for existing entries, opening a modal with pre-filled forms.</li>
+                        <li><strong class="list-item-title">FR2.4:</strong> The system shall provide "Delete" functionality for existing entries, with a confirmation prompt.</li>
+                        <li><strong class="list-item-title">FR2.5:</strong> All data modifications (add, edit, delete) shall be reflected immediately in the UI.</li>
+                        <li><strong class="list-item-title">FR2.6:</strong> Data shall be loaded from consolidated-mock-data.json on initialization and managed client-side within the appData object.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">5.3. Specific Step Functionality</h3>
+                    <ul class="list-disc list-inside space-y-4 text-gray-600">
+                        <li><strong class="list-item-title">Job Levels:</strong> The Job Levels table shall support searching by text, filtering by Business Unit, Department, and Role Group, and pagination. A "Career Path" button shall be available for each Job Level.</li>
+                        <li><strong class="list-item-title">Job Profiles:</strong> Users can define and manage profiles with skills and proficiency levels. <span class="ai-badge">AI-Powered</span></li>
+                        <li><strong class="list-item-title">Skill Gaps:</strong> A placeholder for future skill gap analysis. It is marked as AI-Powered. <span class="ai-badge">AI-Powered</span></li>
+                        <li><strong class="list-item-title">Career Paths:</strong> Shall generate and display potential career progressions. <span class="ai-badge">AI-Powered</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">5.4. Modals</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li><strong class="list-item-title">FR4.1:</strong> A generic modal component shall be used for all add, edit, and delete operations.</li>
+                        <li><strong class="list-item-title">FR4.2:</strong> The modal shall support multiple tabs for organizing form content.</li>
+                        <li><strong class="list-item-title">FR4.3:</strong> The modal shall include "Cancel" and "Confirm" buttons.</li>
+                        <li><strong class="list-item-title">FR4.4:</strong> The modal shall be responsive and accessible.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Non-Functional Requirements -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">6. Non-Functional Requirements</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.1. Performance</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.1.1:</strong> The application shall load quickly.</li>
+                        <li><strong class="list-item-title">NFR6.1.2:</strong> UI updates and data manipulations shall be responsive.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.2. Usability</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.2.1:</strong> The user interface shall be intuitive.</li>
+                        <li><strong class="list-item-title">NFR6.2.2:</strong> Clear feedback shall be provided for all user actions.</li>
+                        <li><strong class="list-item-title">NFR6.2.3:</strong> The design shall be consistent across all steps and modal interactions.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.3. Accessibility</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.3.1:</strong> The application shall adhere to WCAG 2.1 AA guidelines.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.4. Maintainability</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.4.1:</strong> The codebase shall be modular and well-structured.</li>
+                        <li><strong class="list-item-title">NFR6.4.2:</strong> Styling shall be managed using Tailwind CSS.</li>
+                        <li><strong class="list-item-title">NFR6.4.3:</strong> Data handling logic shall be clearly separated from UI rendering.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.5. Security (Future)</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.5.1:</strong> Appropriate authentication and authorization mechanisms shall be in place.</li>
+                        <li><strong class="list-item-title">NFR6.5.2:</strong> Input validation shall be implemented on both client and server sides.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">6.6. Responsiveness</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong class="list-item-title">NFR6.6.1:</strong> The application shall be fully responsive.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Technical Architecture (High-Level) -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">7. Technical Architecture (High-Level)</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Frontend</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong>Framework:</strong> A modern JavaScript framework (e.g., React, Vue.js, or Angular).</li>
+                        <li><strong>Styling:</strong> Tailwind CSS.</li>
+                        <li><strong>State Management:</strong> A dedicated state management library.</li>
+                        <li><strong>File Structure:</strong> Modular structure (e.g., `src/components/`, `src/pages/`).</li>
+                        <li><strong>Libraries:</strong> `recharts`, `react-table`, `react-icons`, `Chart.js`, and `Font Awesome`.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Data Management</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong>Client-Side Mock Data:</strong> `consolidated-mock-data.json` for initial data.</li>
+                        <li><strong>Global State:</strong> A global state object holds the current data.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Backend (Future Consideration)</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li><strong>Technology Stack:</strong> RESTful API with Node.js/Express, Python/Django, etc.</li>
+                        <li><strong>Database:</strong> NoSQL database (e.g., MongoDB, Firestore).</li>
+                        <li><strong>AI Services:</strong> Integration with a generative AI model (e.g., Gemini).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Open Questions / Future Considerations -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">8. Open Questions / Future Considerations</h2>
+            <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>Backend Integration: What API endpoints are required for CRUD operations?</li>
+                        <li>AI Implementation: What specific AI models will be used?</li>
+                        <li>User Authentication/Authorization: How will user access be managed?</li>
+                        <li>Error Handling: More robust error handling and user feedback.</li>
+                        <li>Data Validation: Client-side and server-side validation.</li>
+                        <li>Scalability: How will the application handle a large volume of data?</li>
+                        <li>Internationalization (i18n): Support for multiple languages.</li>
+                        <li>Testing: Unit, integration, and end-to-end testing strategies.</li>
+            </ul>
+        </section>
+
+        <!-- Section 9: Skills Ontology & Data Model -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">9. Skills Ontology & Data Model</h2>
+            <div class="space-y-4">
+                <p class="text-gray-600">
+                    The skills ontology is a foundational component for all talent management capabilities. It provides the structured, canonical list of skills and skill sets that is required to power features like Skill Gap Analysis, Personalized Learning Recommendations, and Career Pathing. The skills ontology team is responsible for managing this master data and ensuring its quality.
+                </p>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">9.1. Required Data Elements</h3>
+                    <p class="text-gray-600 mb-2">
+                        For each skill, the ontology must provide the following fields to be effective. The hierarchy is defined as **Skill Group > Skill Set > Skill**.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong class="list-item-title">`skillId`:</strong> A unique, consistent alphanumeric identifier for the skill (e.g., `s-pyt-001`). This ID is critical for data integrity when referencing skills across different systems (HRIS, LMS).</li>
+                        <li><strong class="list-item-title">`name`:</strong> The human-readable name of the skill (e.g., "Python Programming," "Active Listening"). This is what is displayed to the user.</li>
+                        <li><strong class="list-item-title">`description`:</strong> A brief, clear description of the skill. This helps users and AI models understand the skill's scope and meaning.</li>
+                        <li><strong class="list-item-title">`category`:</strong> A high-level classification for the skill (e.g., "Programming Languages," "Project Management," "Data Analysis"). This is used for filtering, searching, and organizing skills.</li>
+                        <li><strong class="list-item-title">`proficiencyLevels`:</strong> A structured array of proficiency levels, each with a `level` and a `description` (e.g., "Beginner," "Intermediate," "Advanced"). These levels are defined for the *individual skill* and are essential for a standardized skill assessment in the Skill Gap Analysis feature.</li>
+                        <li><strong class="list-item-title">`relatedSkills`:</strong> An optional array of `skillId`s that are conceptually related or prerequisites. This is a key input for the AI to make intelligent, non-linear recommendations in the Career Pathing "Radar View."</li>
+                        <li><strong class="list-item-title">`Skill Set`:</strong> A field to link a skill to its parent Skill Set (e.g., the skill "Python Programming" belongs to the Skill Set "Software Development"). This enables a hierarchical view of skills.</li>
+                        <li><strong class="list-item-title">`Skill Group`:</strong> A field to link a Skill Set to its parent Skill Group (e.g., the Skill Set "Software Development" belongs to the Skill Group "Engineering & Technology"). This represents the highest level of hierarchy.</li>
+                    </ul>
+                    <h4 class="text-lg font-semibold mb-2 mt-6">Sample Skill Records</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-500 rounded-lg overflow-hidden">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">skillId</th>
+                                    <th scope="col" class="px-6 py-3">name</th>
+                                    <th scope="col" class="px-6 py-3">description</th>
+                                    <th scope="col" class="px-6 py-3">Skill Group</th>
+                                    <th scope="col" class="px-6 py-3">Skill Set</th>
+                                    <th scope="col" class="px-6 py-3">category</th>
+                                    <th scope="col" class="px-6 py-3">proficiencyLevels</th>
+                                    <th scope="col" class="px-6 py-3">relatedSkills</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">s-pyt-001</td>
+                                    <td class="px-6 py-4">Python Programming</td>
+                                    <td class="px-6 py-4">Ability to write, debug, and deploy Python code.</td>
+                                    <td class="px-6 py-4">Engineering & Technology</td>
+                                    <td class="px-6 py-4">Software Development</td>
+                                    <td class="px-6 py-4">Hard Skill</td>
+                                    <td class="px-6 py-4">Beginner, Intermediate, Advanced, Expert</td>
+                                    <td class="px-6 py-4">s-alg-002, s-web-003</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">s-act-001</td>
+                                    <td class="px-6 py-4">Active Listening</td>
+                                    <td class="px-6 py-4">Ability to fully concentrate on what is being said.</td>
+                                    <td class="px-6 py-4">Human Resources & Communication</td>
+                                    <td class="px-6 py-4">Interpersonal Skills</td>
+                                    <td class="px-6 py-4">Soft Skill</td>
+                                    <td class="px-6 py-4">Basic, Proficient, Advanced</td>
+                                    <td class="px-6 py-4">ss-emp-002</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">s-pjm-001</td>
+                                    <td class="px-6 py-4">Project Management</td>
+                                    <td class="px-6 py-4">Ability to plan, execute, and close projects.</td>
+                                    <td class="px-6 py-4">Operations</td>
+                                    <td class="px-6 py-4">Leadership & Management</td>
+                                    <td class="px-6 py-4">Hard Skill</td>
+                                    <td class="px-6 py-4">Foundational, Practitioner, Master</td>
+                                    <td class="px-6 py-4">s-ldr-001, s-risk-001</td>
+                                </tr>
+                                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">s-dta-001</td>
+                                    <td class="px-6 py-4">Data Analysis</td>
+                                    <td class="px-6 py-4">Ability to collect, process, and interpret data.</td>
+                                    <td class="px-6 py-4">Data & Analytics</td>
+                                    <td class="px-6 py-4">Analytical Skills</td>
+                                    <td class="px-6 py-4">Hard Skill</td>
+                                    <td class="px-6 py-4">Novice, Competent, Expert</td>
+                                    <td class="px-6 py-4">s-sta-001, s-sql-001</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">9.2. Skills-as-a-Service (SaaS) Model</h3>
+                    <p class="text-gray-600 mb-2">
+                        The skills ontology must function as a centralized service, providing a master source of truth for all skill data. This requires a robust backend that supports:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li><strong class="list-item-title">CRUD Operations:</strong> The ability for authorized users or systems to Create, Read, Update, and Delete skill definitions.</li>
+                        <li><strong class="list-item-title">Version Control:</strong> A system to manage different versions of the ontology to handle updates without breaking historical data.</li>
+                        <li><strong class="list-item-title">API Access:</strong> A well-documented API for other applications (like the Job Architecture Wizard and the Talent Marketplace) to query and integrate skill data.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Import/Export Functionality -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">10. Import/Export Functionality</h2>
+            <div class="space-y-4">
+                <p class="text-gray-600">
+                    The wizard shall provide a dedicated feature for bulk data management, enabling users to import a pre-formatted file to populate the job architecture or export their existing data for backup and offline editing.
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                    <li><strong class="list-item-title">FR10.1:</strong> The system shall provide an "Import" button to allow users to upload a CSV or similar structured data file.</li>
+                    <li><strong class="list-item-title">FR10.2:</strong> An "Export" button shall generate and download a file containing the entire job architecture data currently in the system.</li>
+                    <li><strong class="list-item-title">FR10.3:</strong> An "upload template" link shall be provided to give users a clear structure for their data file. The template will be available at: <a href="https://talentmarketplace-cef07465a80e.herokuapp.com/import-export/index.html" class="text-blue-600 hover:underline" target="_blank">View Upload Template</a></li>
+                    <li><strong class="list-item-title">FR10.4:</strong> The import process shall include validation checks to ensure the uploaded data conforms to the required structure and schema.</li>
+                </ul>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-2">10.5. Comprehensive Role Import Schema</h3>
+                    <p class="text-gray-600 mb-4">This schema includes all necessary fields for a robust role architecture that powers advanced features like dynamic career paths, skill gap analysis, personalized learning, and connections.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">1. Core Role Definition & Hierarchy</h4>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
+                                <li><strong>`Role Title`</strong>: The official name of the role.</li>
+                                <li><strong>`Role Summary`</strong>: A brief description used for internal directories and search.</li>
+                                <li><strong>`Job Description`</strong>: The full-text, detailed definition of the role and its duties.</li>
+                                <li><strong>`Business Unit / Division`</strong>: High-level organizational group.</li>
+                                <li><strong>`Department`</strong>: Specific functional area.</li>
+                                <li><strong>`Job Family`</strong>: A grouping of related roles for career pathing.</li>
+                                <li><strong>`Role Group / Team`</strong>: The immediate team for operational context.</li>
+                                <li><strong>`Role Code / ID`</strong>: A unique, consistent identifier for the role.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">2. Skills, Competencies, & Expertise</h4>
+                            <p class="text-gray-600 mb-2">These fields are crucial for mapping skills and behavioral traits to a role. The two tables are distinct but related, allowing for granular skill mapping while also defining broader behavioral expectations. The data would be structured with a unique ID for each skill or competency, and a proficiency level where applicable.</p>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
+                                <li><strong>`Skills Table`</strong>: An array or structured list of hard skills (e.g., `[{"id": "s-pyt-001", "level": "Advanced"}, {"id": "s-sql-003", "level": "Intermediate"}]`).</li>
+                                <li><strong>`Soft Skills Table`</strong>: This is a structured array, similar to the `Skills Table`, but for soft skills. It would contain a list of skill IDs from the master skills ontology and their associated proficiency levels. This is for granular mapping of specific soft skills like "Active Listening" or "Time Management." (e.g., `[{"id": "ss-act-001", "level": "Intermediate"}, {"id": "ss-tm-002", "level": "Proficient"}]`).</li>
+                                <li><strong>`Behavioral Competencies`</strong>: This is a list of key behavioral competencies expected in the role, linking back to your master ontology. These are often broader, more abstract concepts that may be composed of multiple soft skills. For example, the "Communication" competency could be supported by the soft skills "Active Listening" and "Public Speaking." (e.g., `["Leadership", "Collaboration", "Customer Focus"]`).</li>
+                                <li><strong>`Tools & Technologies`</strong>: Specific software or tools required for the role.</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">3. Career Pathing & Relationships</h4>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
+                                <li><strong>`Level`</strong>: The seniority level of the role (e.g., IC3, M1).</li>
+                                <li><strong>`Feeder Roles`</strong>: A list of role IDs that are common entry points into this role.</li>
+                                <li><strong>`Reports To`</strong>: The Role Code of the direct management position.</li>
+                                <li><strong>`Reporting Lines`</strong>: Defines the formal management structure.</li>
+                                <li><strong>`Matrix Relationships`</strong>: An array of role IDs to which this role has a dotted-line or project-based reporting relationship.</li>
+                                <li><strong>`Career Track`</strong>: The official path a role belongs to (e.g., "Management," "Individual Contributor").</li>
+                                <li><strong>`Career Path – Next Roles`</strong>: A structured list of suggested next roles.</li>
+                                <li><strong>`Career Path Mapping`</strong>: A structured field that defines the relationships between roles to build the "Subway Map View."</li>
+                                <li><strong>`AI Recommendations`</strong>: A placeholder for a structured field that can be populated by the AI to define custom paths.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">4. Employee Development & Learning</h4>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
+                                <li><strong>`Education Requirements`</strong>: Required degrees or certifications.</li>
+                                <li><strong>`Certifications`</strong>: Specific certifications needed.</li>
+                                <li><strong>`Learning Resources`</strong>: An array of URLs or IDs linking to recommended courses, articles, or videos from the Learning Management System.</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">5. Operational & HR Metadata</h4>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-1">
+                                <li><strong>`Status`</strong>: Open, Filled, On Hold.</li>
+                                <li><strong>`Approval Status`</strong>: Tracks the workflow status of the role.</li>
+                                <li><strong>`Location / Region`</strong>: The geographic location of the role.</li>
+                                <li><strong>`Employment Type`</strong>: Full-time, Part-time, Contract, etc.</li>
+                                <li><strong>`Salary Band`</strong>: The approved compensation range.</li>
+                                <li><strong>`Remote Work Policy`</strong>: Details on remote work eligibility.</li>
+                                <li><strong>`On-call Duties`</strong>: Specifies expectations for on-call availability.</li>
+                                <li><strong>`Innovation Time`</strong>: Policy on dedicated time for innovation.</li>
+                                <li><strong>`Activity Log`</strong>: An audit trail of changes to the role.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appendix: Role Fields Data -->
+        <section class="card">
+            <h2 class="text-2xl font-semibold section-title">Appendix: Role Fields Data</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-500 rounded-lg overflow-hidden">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Field</th>
+                            <th scope="col" class="px-6 py-3">Owning Role(s)</th>
+                            <th scope="col" class="px-6 py-3">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Core Role Definition & Hierarchy -->
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td colspan="3" class="px-6 py-4 font-bold text-gray-900">1. Core Role Definition & Hierarchy</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Role Title</td>
+                            <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                            <td class="px-6 py-4">The official name of the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Role Summary</td>
+                            <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                            <td class="px-6 py-4">A brief description used for internal directories and search.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Job Description</td>
+                            <td class="px-6 py-4">Job Architecture, Talent Acquisition</td>
+                            <td class="px-6 py-4">The full-text, detailed definition of the role and its duties.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Key Responsibilities</td>
+                            <td class="px-6 py-4">Job Architecture, Performance Management</td>
+                            <td class="px-6 py-4">Core duties of the role, essential for performance management.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Decision Scope</td>
+                            <td class="px-6 py-4">Performance Management</td>
+                            <td class="px-6 py-4">Defines the level of autonomy and impact on business decisions.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Business Unit / Division</td>
+                            <td class="px-6 py-4">Workforce Planning, Job Architecture</td>
+                            <td class="px-6 py-4">High-level organizational group.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Department</td>
+                            <td class="px-6 py-4">Workforce Planning, Job Architecture</td>
+                            <td class="px-6 py-4">Specific functional area.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Job Family</td>
+                            <td class="px-6 py-4">Job Architecture, Workforce Planning</td>
+                            <td class="px-6 py-4">A grouping of related roles for career pathing.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Role Group / Team</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">The immediate team for operational context.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Role Code / ID</td>
+                            <td class="px-6 py-4">Job Architecture / HRIS</td>
+                            <td class="px-6 py-4">A unique, consistent identifier for the role.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Created Date</td>
+                            <td class="px-6 py-4">Job Architecture / Auditing</td>
+                            <td class="px-6 py-4">Core metadata for governance and tracking the architecture's history.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Team Size</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">Data point for analyzing spans and layers.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Level</td>
+                            <td class="px-6 py-4">Job Architecture</td>
+                            <td class="px-6 py-4">The seniority level of the role (e.g., IC3, M1).</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Grade / Job Level</td>
+                            <td class="px-6 py-4">Compensation, Job Architecture</td>
+                            <td class="px-6 py-4">The official grade or level for compensation and career progression.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Seniority Label</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">A label indicating the role's seniority (e.g., Senior, Principal).</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Created By / Owner</td>
+                            <td class="px-6 py-4">Job Architecture & Auditing</td>
+                            <td class="px-6 py-4">Tracks who created the role definition for governance.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Last Updated</td>
+                            <td class="px-6 py-4">Job Architecture & Auditing</td>
+                            <td class="px-6 py-4">Timestamp for the most recent change to the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Activity Log</td>
+                            <td class="px-6 py-4">Job Architecture & Auditing</td>
+                            <td class="px-6 py-4">Provides a critical governance and audit trail.</td>
+                        </tr>
+
+                        <!-- Skills, Competencies, & Expertise -->
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td colspan="3" class="px-6 py-4 font-bold text-gray-900">2. Skills, Competencies, & Expertise</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Skills Table</td>
+                            <td class="px-6 py-4">Job Architecture, L&D</td>
+                            <td class="px-6 py-4">A structured list of hard skills and proficiency levels required for the role.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Soft Skills Table</td>
+                            <td class="px-6 py-4">Job Architecture, L&D</td>
+                            <td class="px-6 py-4">A structured list of soft skills and proficiency levels required.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Education Requirements</td>
+                            <td class="px-6 py-4">Talent Acquisition, Compliance</td>
+                            <td class="px-6 py-4">Required degrees or educational qualifications.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Language Requirements</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Required language proficiencies for the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Experience Requirements</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Minimum years or type of experience required.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Tools & Technologies</td>
+                            <td class="px-6 py-4">IT, Job Architecture</td>
+                            <td class="px-6 py-4">Specific software, platforms, or tools required.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Certifications</td>
+                            <td class="px-6 py-4">Compliance, L&D</td>
+                            <td class="px-6 py-4">Required professional certifications.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Impact Areas</td>
+                            <td class="px-6 py-4">Performance Management</td>
+                            <td class="px-6 py-4">The key business areas the role is expected to influence.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Behavioral Competencies</td>
+                            <td class="px-6 py-4">Performance Management, L&D</td>
+                            <td class="px-6 py-4">A list of key behavioral competencies expected in the role.</td>
+                        </tr>
+
+                        <!-- Career Pathing & Relationships -->
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td colspan="3" class="px-6 py-4 font-bold text-gray-900">3. Career Pathing & Relationships</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Reporting Lines</td>
+                            <td class="px-6 py-4">Performance Management</td>
+                            <td class="px-6 py-4">Defines formal management structure.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Matrix Relationships</td>
+                            <td class="px-6 py-4">Performance Management, Operations</td>
+                            <td class="px-6 py-4">Dotted-line or project-based reporting relationships.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Feeder Roles</td>
+                            <td class="px-6 py-4">Talent Acquisition, Career Pathing</td>
+                            <td class="px-6 py-4">Roles that typically lead into this position.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Reports To</td>
+                            <td class="px-6 py-4">Performance Management, HRIS</td>
+                            <td class="px-6 py-4">The direct manager's role code or ID.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Career Track</td>
+                            <td class="px-6 py-4">Career Pathing</td>
+                            <td class="px-6 py-4">The official career track this role belongs to.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Career Path – Next Roles</td>
+                            <td class="px-6 py-4">Career Pathing</td>
+                            <td class="px-6 py-4">A structured list of suggested next roles for career progression.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">AI Recommendations</td>
+                            <td class="px-6 py-4">AI Services</td>
+                            <td class="px-6 py-4">A structured field populated by AI to suggest dynamic career paths.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Career Path Mapping</td>
+                            <td class="px-6 py-4">Job Architecture</td>
+                            <td class="px-6 py-4">Defines the relationships between roles to build the "Subway Map."</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Succession Plan Ready</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">Indicates if the role is part of a succession plan.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Backup Resource Assigned</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">The person assigned as a backup for the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Mobility Options</td>
+                            <td class="px-6 py-4">Employee Experience</td>
+                            <td class="px-6 py-4">Options for internal mobility (e.g., rotational programs, lateral moves).</td>
+                        </tr>
+
+                        <!-- Employee Development & Learning -->
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td colspan="3" class="px-6 py-4 font-bold text-gray-900">4. Employee Development & Learning</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Learning Resources</td>
+                            <td class="px-6 py-4">L&D</td>
+                            <td class="px-6 py-4">Links to recommended courses, articles, or videos from the LMS.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">KPIs / Outcomes</td>
+                            <td class="px-6 py-4">Performance Management</td>
+                            <td class="px-6 py-4">Key performance indicators and expected outcomes for the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Performance Review Cycle</td>
+                            <td class="px-6 py-4">Performance Management</td>
+                            <td class="px-6 py-4">The schedule for performance reviews for this role.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Professional Development Support</td>
+                            <td class="px-6 py-4">L&D</td>
+                            <td class="px-6 py-4">Details on company support for professional development.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Innovation Time</td>
+                            <td class="px-6 py-4">Employee Experience, Talent Acquisition</td>
+                            <td class="px-6 py-4">Highlights company policy on dedicated time for innovation.</td>
+                        </tr>
+                        
+                        <!-- Operational & HR Metadata -->
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td colspan="3" class="px-6 py-4 font-bold text-gray-900">5. Operational & HR Metadata</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Location / Region</td>
+                            <td class="px-6 py-4">Talent Acquisition, Operations</td>
+                            <td class="px-6 py-4">The geographic location of the role.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Location Type</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Type of location (e.g., office, hybrid, remote).</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Employment Type</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Type of employment (e.g., Full-time, Part-time).</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Contract Type</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Type of contract (e.g., permanent, fixed-term).</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Billable / Non-Billable</td>
+                            <td class="px-6 py-4">Operations</td>
+                            <td class="px-6 py-4">Indicates if the role is billable to clients.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-90-100">Access Level / Permissions</td>
+                            <td class="px-6 py-4">IT, Operations</td>
+                            <td class="px-6 py-4">Defines system access and permissions for the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Start Date / Onboarding Date</td>
+                            <td class="px-6 py-4">HRIS / Operations</td>
+                            <td class="px-6 py-4">Date the role was filled or onboarding begins.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Status</td>
+                            <td class="px-6 py-4">HRIS / Workforce Planning</td>
+                            <td class="px-6 py-4">Indicates if the role is Open, Filled, On Hold, etc.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Approval Status</td>
+                            <td class="px-6 py-4">HRIS / Operations</td>
+                            <td class="px-6 py-4">Tracks the workflow status of the role creation/edit process.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Security Clearance</td>
+                            <td class="px-6 py-4">Compliance / Talent Acquisition</td>
+                            <td class="px-6 py-4">Specifies any required security clearance levels.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Background Check</td>
+                            <td class="px-6 py-4">Compliance / Talent Acquisition</td>
+                            <td class="px-6 py-4">Indicates if a background check is required.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Mandatory Compliance Training</td>
+                            <td class="px-6 py-4">L&D / LMS, Compliance</td>
+                            <td class="px-6 py-4">Creates an automated rule to assign required courses in the LMS.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Equipment Provisioning</td>
+                            <td class="px-6 py-4">IT / Operations</td>
+                            <td class="px-6 py-4">Details the hardware/software to be provided for the role.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Salary Band</td>
+                            <td class="px-6 py-4">Compensation, Talent Acquisition</td>
+                            <td class="px-6 py-4">Defines the approved compensation range for the role.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Remote Work Policy</td>
+                            <td class="px-6 py-4">Talent Acquisition, Employee Experience</td>
+                            <td class="px-6 py-4">A key data point for attracting talent and setting expectations.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Travel Expectations</td>
+                            <td class="px-6 py-4">Talent Acquisition</td>
+                            <td class="px-6 py-4">Details travel frequency beyond the standard requirement.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">On-call Duties</td>
+                            <td class="px-6 py-4">Talent Acquisition, Operations</td>
+                            <td class="px-6 py-4">Specifies expectations for on-call availability.</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Time Allocation (%)</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">Breakdown of time allocated to different functions.</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Criticality to Business</td>
+                            <td class="px-6 py-4">Workforce Planning</td>
+                            <td class="px-6 py-4">A metric indicating the importance of the role to business operations.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,7 +1,0 @@
-Flask
-gunicorn
-Flask-SQLAlchemy
-Flask-Migrate
-Flask-Marshmallow
-Flask-Cors
-marshmallow-sqlalchemy

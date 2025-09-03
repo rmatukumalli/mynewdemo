@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Candidate Skill Graph - Skillsoft TalentConnect
+  </title>
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css';
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <style>
+   /* Original page-specific styles will be preserved below */
+        /* New styles for single viewport layout - copied from skills-graph.html and adapted */
+        html {
+            height: 100%;
+            margin: 0;
+        }
+        body.iframe-mode { /* Special class for when this page is in an iframe */
+            height: auto; /* Allow body to size to content */
+            overflow-y: auto; /* Allow scrolling within the iframe if content overflows */
+        }
+        body:not(.iframe-mode) { /* Styles for standalone page */
+            height: 100vh; /* Use vh for full viewport height */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent body scrollbar, delegate to .content-area */
+            background-color: #f4f7f9; /* Original background for the page */
+            font-family: var(--font-primary, 'Helvetica Neue', Helvetica, Arial, sans-serif); /* Ensure font is applied */
+            color: var(--delta-text-color, #333333);
+            line-height: 1.6;
+        }
+        .navbar { /* Ensure navbar doesn't grow/shrink */
+            flex-shrink: 0;
+            position: sticky; /* Make navbar sticky */
+            top: 0;
+            z-index: 1000; /* Ensure navbar stays on top */
+        }
+        body.iframe-mode .navbar,
+        body.iframe-mode .page-header {
+            display: none; /* Hide navbar and page header in iframe mode */
+        }
+
+        /* Use .graph-details-container as the .page-container equivalent */
+        .graph-details-container.page-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow page-container to fill remaining vertical space */
+            overflow: hidden; /* Prevent page-container from showing scrollbars, delegate to children */
+            width: 100%; /* Override theme.css .container width */
+            max-width: 100%; /* Override theme.css .container max-width */
+            padding: 0; /* Remove padding from theme.css .container if it interferes */
+            margin: 0; /* Remove margin from theme.css .container */
+        }
+        body.iframe-mode .graph-details-container.page-container {
+            overflow: visible; /* Allow content to determine height */
+        }
+
+        .main-content-wrapper {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            /* margin-top: 1rem; /* Adjust as needed if page-header is inside page-container */
+        }
+        body.iframe-mode .main-content-wrapper {
+            overflow: visible;
+        }
+        body.iframe-mode .sidebar-nav {
+            display: none; /* Hide sidebar in iframe mode */
+        }
+
+        .sidebar-nav {
+            width: 260px; /* Slightly wider for this page's content */
+            flex-shrink: 0;
+            background-color: var(--delta-light-gray, #F5F5F5);
+            padding: 1rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--delta-medium-gray, #E0E0E0);
+        }
+        .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--delta-primary-blue, #003A70);
+            text-decoration: none;
+            border-radius: var(--border-radius-base, 8px);
+            margin-bottom: 0.5rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .sidebar-nav li a:hover,
+        .sidebar-nav li a.active {
+            background-color: var(--delta-accent-blue, #0073C4);
+            color: var(--delta-white, #FFFFFF);
+        }
+        .content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem; /* Padding for the content area itself */
+        }
+        body.iframe-mode .content-area {
+            overflow-y: visible; /* Allow content to expand */
+            padding: 0.5rem; /* Reduced padding for iframe mode */
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+            /* padding-top: 1rem; /* For scroll spy offset if navbar is fixed, handled by .page-header margin */
+        }
+        .content-section:last-child { margin-bottom: 0; }
+
+        /* Original page-specific styles for skills-graph-details.html */
+        /* Ensure these styles work within the new .content-area structure */
+        .page-header { /* This header is now inside .graph-details-container.page-container */
+            flex-shrink: 0; /* Prevent this header from shrinking */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem; /* Reduced margin as it's inside scrolling area */
+            padding-left: 1.5rem; /* Add padding to match content-area if needed */
+            padding-right: 1.5rem;
+        }
+        .page-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--delta-primary-blue);
+        }
+        .back-button {
+            padding: 0.6rem 1.2rem;
+            /* background-color: var(--delta-secondary-gray); From theme? Use theme button if possible */
+            color: var(--delta-primary-blue);
+            border: 1px solid var(--delta-medium-gray);
+            border-radius: var(--border-radius-base);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        .back-button:hover {
+            background-color: var(--delta-medium-gray);
+        }
+        .page-candidate-info-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background-color: #f0f6ff; border-radius: 8px; }
+        .page-candidate-photo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--delta-white); }
+        .page-candidate-details h3 { margin: 0 0 0.3rem 0; font-size: 1.4rem; color: var(--delta-primary-blue); }
+        .page-candidate-details p { font-size: 0.95rem; margin: 0.2rem 0; color: #333; } /* Added small margin for P */
+        
+        .page-benchmark-profile { 
+            font-size: 1.05rem; /* Increased font size */
+            margin-left: auto; 
+            text-align: right; 
+            color: var(--delta-text-color, #333); 
+            padding: 0.75rem 1rem; /* Added padding */
+            background-color: var(--delta-white, #fff); /* White background */
+            border-radius: var(--border-radius-base, 6px); 
+            border: 1px solid var(--delta-accent-blue, #0073C4); /* Accent border */
+            box-shadow: var(--box-shadow-light, 0 1px 3px rgba(0,0,0,0.05));
+        }
+        .page-benchmark-profile strong { /* "Comparing Against:" label */
+            color: var(--delta-primary-blue, #003A70);
+            display: block; 
+            margin-bottom: 0.3rem; /* Space between label and name */
+            font-weight: 600; /* Ensure label is bold */
+        }
+        #pageBenchmarkProfileName { /* The actual benchmark profile name */
+            font-weight: bold; 
+            color: var(--delta-primary-red, #DA291C); /* Use a prominent color */
+            font-size: 1.1em; /* Slightly larger than the label */
+        }
+
+        .page-skill-graph-layout { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 2rem; margin-bottom: 2rem; }
+        .page-skill-graph-visualization, .page-overall-match-score-container { padding:1.5rem; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fdfdfd;}
+        .page-skill-graph-visualization h4, .page-overall-match-score-container h4 { margin-top:0; margin-bottom:1rem; font-size: 1.1rem; color: var(--delta-primary-blue); }
+        
+        .page-overall-match-score .match-score-value { font-size:3rem; font-weight: bold; color: var(--delta-primary-red); margin-bottom: 0.5rem; text-align: center;}
+        .page-overall-match-score .match-score-progress-bar { height:20px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; margin-bottom: 0.5rem;}
+        .page-overall-match-score .match-score-progress { height:100%; background-color: var(--delta-success-green); border-radius: 10px; transition: width 0.5s ease-in-out;}
+        .page-overall-match-score #pageMatchScoreText { font-size:0.9rem; text-align: center; color: #555;}
+
+        .page-skill-summary-table-container, .page-insights-recommendations-panel, .page-actions-next-steps { margin-top:2rem; padding:1.5rem; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fdfdfd;}
+        .page-skill-summary-table-container h4, .page-insights-recommendations-panel h4, .page-actions-next-steps h4 { margin-top:0; margin-bottom:1rem; font-size: 1.1rem; color: var(--delta-primary-blue); }
+        
+        .skill-summary-table { width: 100%; border-collapse: collapse; }
+        .skill-summary-table th, .skill-summary-table td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #eee; }
+        .skill-summary-table th { background-color: #f8f9fa; font-weight: 500; font-size:0.9rem; }
+        .skill-summary-table td { font-size: 0.85rem; }
+        .skill-summary-table .gap-positive { color: var(--delta-success-green); font-weight: bold; }
+        .skill-summary-table .gap-negative { color: var(--delta-primary-red); font-weight: bold; }
+        .skill-summary-table .gap-neutral { color: var(--delta-dark-gray); }
+
+        .insights-list { list-style: none; padding-left: 0; font-size:0.9rem; }
+        .insights-list li { margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .insights-list li .fas { margin-right: 0.75rem; color: var(--delta-accent-blue); font-size: 1.1rem; }
+        
+        .action-buttons .btn-action { margin-right: 0.75rem; }
+        .action-buttons .btn-action:last-child { margin-right: 0; }
+
+        #pageLoadingIndicator { text-align:center; padding:3rem; font-size: 1.2rem; color: #555;}
+        #pageLoadingIndicator .fas { margin-right: 0.5rem; }
+
+        /* Styles for enhanced data display - adapted from skills-graph.html */
+        .skill-summary-table th:nth-child(2), .skill-summary-table td:nth-child(2) { /* Importance column */
+            text-align: center;
+            font-style: italic;
+            min-width: 80px; /* Give importance column some space */
+        }
+        .gap-critical {
+            background-color: #ffdddd !important; /* Light red background for critical gaps */
+            color: #D8000C !important; 
+            font-weight: bold;
+        }
+        .gap-high-importance {
+            background-color: #fff3cd !important; /* Light yellow for high importance gaps */
+        }
+        #pageQualitativeMatchLabel { /* ID used in js/skills-graph-details.js */
+            display: block;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            color: var(--delta-primary-blue);
+        }
+        .insights-list ul { /* For nested list in interview focus */
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-top: 0.3rem;
+        }
+        .insights-list ul li {
+            font-size: 0.95em; /* Slightly smaller than main insight li */
+            margin-bottom: 0.3rem;
+        }
+        /* Ensure FontAwesome icons in insights are styled if not globally done */
+        .insights-list .fa-star { color: #ffc107; } 
+        .insights-list .fa-bomb { color: #dc3545; } 
+        .insights-list .fa-search { color: var(--delta-accent-blue); }
+        .insights-list .fa-check-circle { color: var(--delta-success-green); }
+        .insights-list .fa-exclamation-triangle { color: var(--delta-warning-orange); }
+        .insights-list .fa-graduation-cap { color: var(--delta-accent-blue); }
+        .insights-list .fa-thumbs-up { color: var(--delta-success-green); }
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="iframe-mode">
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <!-- Add class to body if in iframe -->
+  <div class="main-container">
+  </div>
+  <div class="graph-details-container page-container">
+   <!-- Added page-container class -->
+   <div class="page-header">
+    <h1 id="pageCandidateName">
+     Candidate Skill Graph
+    </h1>
+    <a class="back-button" href="javascript:history.back()">
+     <i class="fas fa-arrow-left">
+     </i>
+     Back
+    </a>
+   </div>
+   <div class="main-content-wrapper">
+    <aside class="sidebar-nav">
+     <ul>
+      <li>
+       <a href="#candidate-info-section">
+        Candidate Info
+       </a>
+      </li>
+      <li>
+       <a href="#skill-comparison-section">
+        Skill Comparison & Match
+       </a>
+      </li>
+      <li>
+       <a href="#skill-summary-section">
+        Skill Summary
+       </a>
+      </li>
+      <li>
+       <a href="#insights-section">
+        Insights & Recommendations
+       </a>
+      </li>
+      <li>
+       <a href="#actions-section">
+        Actions
+       </a>
+      </li>
+     </ul>
+    </aside>
+    <main class="content-area">
+     <div id="pageLoadingIndicator" style="display:none;">
+      <i class="fas fa-spinner fa-spin">
+      </i>
+      Loading candidate data...
+     </div>
+     <div id="graphPageContent" style="display:none;">
+      <section class="content-section" id="candidate-info-section">
+       <div class="page-candidate-info-header">
+        <img alt="Candidate Photo" class="page-candidate-photo" id="pageCandidatePhoto" src="https://picsum.photos/seed/placeholder/70/70">
+        <div class="page-candidate-details">
+         <h3 id="pageCandidateNameHeader">
+         </h3>
+         <p id="pageCandidateRole">
+         </p>
+         <p id="pageCandidateTimeInRole">
+         </p>
+         <!-- Placeholder for Time in Role -->
+         <p id="pageCandidateLocation">
+         </p>
+        </div>
+        <div class="page-benchmark-profile">
+         <p>
+          <strong>
+           Comparing Against:
+          </strong>
+          <br>
+          <span id="pageBenchmarkProfileName">
+          </span>
+         </p>
+        </div>
+       </div>
+      </section>
+      <section class="content-section" id="skill-comparison-section">
+       <div class="page-skill-graph-layout">
+        <div class="page-skill-graph-visualization">
+         <h4>
+          Skill Comparison
+         </h4>
+         <canvas id="pageSkillRadarChart">
+         </canvas>
+        </div>
+        <div class="page-overall-match-score-container">
+         <h4>
+          Overall Match
+         </h4>
+         <div class="page-overall-match-score">
+          <p class="match-score-value" id="pageOverallMatchScoreValue">
+           0%
+          </p>
+          <div class="match-score-progress-bar">
+           <div class="match-score-progress" id="pageOverallMatchProgressBar" style="width: 0%;">
+           </div>
+          </div>
+          <p id="pageMatchScoreText">
+           Calculating...
+          </p>
+         </div>
+        </div>
+       </div>
+      </section>
+      <section class="content-section" id="skill-summary-section">
+       <div class="page-skill-summary-table-container">
+        <h4>
+         Skill Summary
+        </h4>
+        <div style="max-height: 300px; overflow-y: auto;">
+         <!-- Increased max-height slightly -->
+         <table class="skill-summary-table">
+          <thead>
+           <tr>
+            <th>
+             Skill
+            </th>
+            <th>
+             Importance
+            </th>
+            <th>
+             Candidate
+            </th>
+            <th>
+             Benchmark
+            </th>
+            <th>
+             Gap
+            </th>
+           </tr>
+          </thead>
+          <tbody id="pageSkillSummaryTableBody">
+           <tr>
+            <td colspan="4" style="text-align:center;">
+             Loading...
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </section>
+      <section class="content-section" id="insights-section">
+       <div class="page-insights-recommendations-panel">
+        <h4>
+         Insights & Recommendations
+        </h4>
+        <ul class="insights-list" id="pageInsightsList">
+         <li>
+          <i class="fas fa-spinner fa-spin">
+          </i>
+          Loading...
+         </li>
+        </ul>
+       </div>
+      </section>
+      <section class="content-section" id="actions-section">
+       <div class="page-actions-next-steps">
+        <h4>
+         Actions
+        </h4>
+        <div class="action-buttons">
+         <button class="btn-primary btn-small" id="pageViewResumeBtn">
+          <i class="fas fa-file-alt">
+          </i>
+          Resume
+         </button>
+         <button class="btn-primary btn-small" id="pageScheduleInterviewBtn">
+          <i class="fas fa-calendar-alt">
+          </i>
+          Interview
+         </button>
+         <button class="btn-secondary btn-small" id="pageSendDevPlanBtn">
+          <i class="fas fa-paper-plane">
+          </i>
+          Send Plan
+         </button>
+        </div>
+       </div>
+      </section>
+     </div>
+     <!-- End of graphPageContent -->
+    </main>
+   </div>
+   <!-- End of main-content-wrapper -->
+  </div>
+  <!-- End of graph-details-container -->
+  <script>
+   // Sidebar navigation and scroll spy - Copied from skills-graph.html
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+            const contentSections = document.querySelectorAll('.content-area .content-section');
+            const contentArea = document.querySelector('.content-area'); // Ensure this targets the correct scrollable area
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection && contentArea) {
+                        // Scroll target section into view within the .content-area
+                        contentArea.scrollTo({
+                            top: targetSection.offsetTop - contentArea.offsetTop, // Adjust for .content-area's own offset if it has padding/margin
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            function updateActiveLink() {
+                if (!contentArea || contentSections.length === 0) return;
+
+                let currentSectionId = '';
+                // Adjust offset to be relative to the contentArea's scroll position and viewport
+                const scrollSpyOffset = contentArea.offsetTop + (contentArea.clientHeight / 3);
+
+
+                contentSections.forEach(section => {
+                    // Check if section is in view, considering the contentArea's scroll position
+                    if (section.offsetTop <= contentArea.scrollTop + scrollSpyOffset && 
+                        (section.offsetTop + section.offsetHeight) > contentArea.scrollTop + scrollSpyOffset - (contentArea.clientHeight /3) ) { // ensure a part of section is visible
+                        currentSectionId = '#' + section.id;
+                    }
+                });
+                
+                if (!currentSectionId && contentSections.length > 0) {
+                    if (contentArea.scrollTop + contentArea.clientHeight >= contentArea.scrollHeight - 5) { // 5px tolerance for bottom
+                         currentSectionId = '#' + contentSections[contentSections.length - 1].id;
+                    } else if (contentArea.scrollTop < 50) { // 50px tolerance for top
+                         currentSectionId = '#' + contentSections[0].id;
+                    }
+                }
+
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === currentSectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            if (contentArea) {
+                contentArea.addEventListener('scroll', updateActiveLink);
+                // Call after data is loaded and graphPageContent is visible
+                // For now, call it once, but ideally this is tied to #graphPageContent becoming visible
+                const observer = new MutationObserver((mutationsList, observer) => {
+                    for(const mutation of mutationsList) {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            if (document.getElementById('graphPageContent').style.display !== 'none') {
+                                updateActiveLink();
+                                // observer.disconnect(); // Optional: stop observing after first show
+                            }
+                        }
+                    }
+                });
+                const graphContentElement = document.getElementById('graphPageContent');
+                if (graphContentElement) {
+                     observer.observe(graphContentElement, { attributes: true });
+                }
+                updateActiveLink(); // Initial call
+            }
+        });
+  </script>
+  <script src="js/skills-graph-details.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

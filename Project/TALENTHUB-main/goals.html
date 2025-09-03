@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Goals - Akara Talent Hub
+  </title>
+  <link href="css/theme.css" rel="stylesheet">
+  <!-- Akara Theme CSS -->
+  <!-- Bootstrap CSS for Modals (if not covered by theme/styles.css) -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <!-- Ensure admin styles are linked -->
+  <link href="css/goals.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" id="fontAwesomeCdn" onerror="loadLocalFontAwesome()" rel="stylesheet">
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN, falling back to local file.');
+            var localLink = document.createElement('link');
+            localLink.rel = 'stylesheet';
+            localLink.href = 'css/all.min.css'; // Assuming you have a local copy
+            document.head.appendChild(localLink);
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) {
+                cdnLink.onerror = null;
+            }
+        }
+  </script>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div class="main-container">
+  </div>
+  <section class="section active main-content-padding" id="goals-section" style="padding-top: 20px; flex-grow: 1;">
+   <!-- Reduced padding-top for non-home sections, added main-content-padding -->
+   <div class="container" style="display: flex; gap: 20px;">
+    <!-- Using flex for sidebar layout -->
+    <nav class="my-talent-hub-sidebar-nav" id="sidebar-goals" style="width: 250px; flex-shrink: 0;">
+     <ul class="my-talent-hub-nav-list">
+      <li class="my-talent-hub-nav-item">
+       <a class="my-talent-hub-nav-link active" data-goals-tab="goals-overview" href="#goals-overview">
+        <i class="fas fa-bullseye">
+        </i>
+        Goals Overview
+       </a>
+      </li>
+      <li class="my-talent-hub-nav-item">
+       <a class="my-talent-hub-nav-link" data-target="#addGoalModal" data-toggle="modal" href="#">
+        <i class="fas fa-plus-circle">
+        </i>
+        Add New Goal
+       </a>
+      </li>
+      <li class="my-talent-hub-nav-item">
+       <a class="my-talent-hub-nav-link" data-goals-tab="team-goals" href="#team-goals">
+        <i class="fas fa-users">
+        </i>
+        Team Goals (Placeholder)
+       </a>
+      </li>
+      <li class="my-talent-hub-nav-item">
+       <a class="my-talent-hub-nav-link" data-goals-tab="goal-analytics" href="#goal-analytics">
+        <i class="fas fa-chart-line">
+        </i>
+        Analytics (Placeholder)
+       </a>
+      </li>
+     </ul>
+    </nav>
+    <div class="my-talent-hub-main-content" style="flex-grow: 1;">
+     <div class="my-talent-hub-tab-content active" id="goals-overview">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+       <h1>
+        Employee Goals
+       </h1>
+       <button class="btn-primary" data-target="#addGoalModal" data-toggle="modal">
+        <i class="fas fa-plus">
+        </i>
+        Add New Goal
+       </button>
+      </div>
+      <!-- Add Goal Modal -->
+      <div aria-hidden="true" aria-labelledby="addGoalModalLabel" class="modal fade" id="addGoalModal" tabindex="-1">
+       <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+         <div class="modal-header">
+          <h5 class="modal-title" id="addGoalModalLabel">
+           Add New Goal
+          </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+           <span aria-hidden="true">
+            &times;
+           </span>
+          </button>
+         </div>
+         <div class="modal-body">
+          <form id="addGoalForm">
+           <div class="form-group">
+            <label for="goalTitle">
+             Goal Title
+            </label>
+            <input class="form-control" id="goalTitle" placeholder="Enter goal title" required type="text">
+           </div>
+           <div class="form-group">
+            <label for="goalDescription">
+             Description
+            </label>
+            <textarea class="form-control" id="goalDescription" placeholder="Describe the goal" rows="3"></textarea>
+           </div>
+           <div class="form-row">
+            <div class="form-group col-md-6">
+             <label for="goalOwner">
+              Goal Owner
+             </label>
+             <select class="form-control" id="goalOwner">
+              <option disabled selected>
+               Choose...
+              </option>
+              <!-- Options populated by JS -->
+             </select>
+            </div>
+            <div class="form-group col-md-6">
+             <label for="goalDueDate">
+              Due Date
+             </label>
+             <input class="form-control" id="goalDueDate" type="date">
+            </div>
+           </div>
+           <div class="form-row">
+            <div class="form-group col-md-6">
+             <label for="goalStatus">
+              Status
+             </label>
+             <select class="form-control" id="goalStatus">
+              <option selected value="Not Started">
+               Not Started
+              </option>
+              <option value="In Progress">
+               In Progress
+              </option>
+              <option value="Completed">
+               Completed
+              </option>
+              <option value="On Hold">
+               On Hold
+              </option>
+              <option value="Cancelled">
+               Cancelled
+              </option>
+             </select>
+            </div>
+            <div class="form-group col-md-6">
+             <label for="goalPriority">
+              Priority
+             </label>
+             <select class="form-control" id="goalPriority">
+              <option value="Low">
+               Low
+              </option>
+              <option selected value="Medium">
+               Medium
+              </option>
+              <option value="High">
+               High
+              </option>
+             </select>
+            </div>
+           </div>
+           <div class="form-group">
+            <label for="goalAlignment">
+             Alignment with Company Objectives
+            </label>
+            <select class="form-control" id="goalAlignment" multiple>
+             <option value="obj1">
+              Increase Market Share
+             </option>
+             <option value="obj2">
+              Improve Customer Satisfaction
+             </option>
+             <option value="obj3">
+              Enhance Operational Efficiency
+             </option>
+             <option value="obj4">
+              Develop New Products
+             </option>
+            </select>
+           </div>
+           <div class="form-group">
+            <label for="goalKPIs">
+             Key Performance Indicators (KPIs)
+            </label>
+            <textarea class="form-control" id="goalKPIs" placeholder="e.g., Achieve 10% sales growth; Reduce customer complaints by 5%" rows="2"></textarea>
+           </div>
+          </form>
+         </div>
+         <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal" type="button">
+           Close
+          </button>
+          <button class="btn btn-primary" id="saveGoalButton" type="button">
+           Save Goal
+          </button>
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- Goals List -->
+      <div class="mt-4" id="goalsList">
+       <!-- Goal cards will be dynamically added here by goals.js -->
+       <!-- Sample structure is in goals.js -->
+      </div>
+     </div>
+     <div class="my-talent-hub-tab-content" id="team-goals" style="padding-top: 20px;">
+      <h2>
+       Team Goals
+      </h2>
+      <p>
+       This section will display team-specific goals and progress. (Placeholder)
+      </p>
+     </div>
+     <div class="my-talent-hub-tab-content" id="goal-analytics" style="padding-top: 20px;">
+      <h2>
+       Goal Analytics
+      </h2>
+      <p>
+       This section will display analytics related to goal achievement. (Placeholder)
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Bootstrap JS and dependencies (jQuery, Popper.js, Bootstrap JS) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+  </script>
+  <script src="js/goals.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+/* Recommendations Container: Flexbox for two-column layout */
+.recommendations-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Sidebar: Filters and Search */
+.sidebar {
+    flex: 0 0 280px; /* Fixed width for the sidebar */
+    padding: 20px;
+    background-color: #e9ecef;
+    border-right: 1px solid #dee2e6;
+    border-radius: 8px 0 0 8px;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #0056b3; /* Primary color for headings */
+}
+
+.sidebar h4 {
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #343a40;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.filter-group input[type="text"],
+.filter-group select {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.filter-group input[type="checkbox"],
+.filter-group input[type="radio"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.filter-group select[multiple] {
+    height: auto; /* Adjust height for multi-select */
+    min-height: 100px;
+}
+
+/* Content Area: Main display for recommendations */
+.content-area {
+    flex: 1; /* Takes remaining space */
+    padding: 20px;
+    margin-left: 20px; /* Space between sidebar and content */
+}
+
+.recommendations-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #007bff; /* Accent color for header underline */
+}
+
+.recommendations-header h1 {
+    font-size: 2.2em;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+.recommendations-header p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+/* Job Role Sections */
+.job-role-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.job-role-section h3 {
+    font-size: 1.6em;
+    color: #28a745; /* Different color for role titles */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Content Cards Layout */
+.content-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.content-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-card h4 { /* Title of the card */
+    font-size: 1.3em;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.content-card p {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.content-card .card-meta {
+    font-size: 0.85em;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.content-card .card-meta strong {
+    color: #333;
+}
+
+.loading-message, .no-results-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #777;
+    padding: 30px;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 992px) {
+    .recommendations-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        flex: 1 1 auto; /* Allow sidebar to take full width on smaller screens */
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 20px;
+    }
+
+    .content-area {
+        margin-left: 0;
+    }
+
+    .content-cards {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        padding: 15px;
+    }
+    .sidebar h2 {
+        font-size: 1.3em;
+    }
+    .sidebar h4 {
+        font-size: 1em;
+    }
+
+    .content-area {
+        padding: 15px;
+    }
+
+    .recommendations-header h1 {
+        font-size: 1.8em;
+    }
+    .recommendations-header p {
+        font-size: 1em;
+    }
+
+    .job-role-section h3 {
+        font-size: 1.4em;
+    }
+
+    .content-cards {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+
+    .content-card h4 {
+        font-size: 1.2em;
+    }
+}

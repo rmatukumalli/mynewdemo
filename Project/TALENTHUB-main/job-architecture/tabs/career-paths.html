@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Career Navigator - Akara Talent Pathfinder
+  </title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" id="fontAwesomeCdn" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" onerror="loadLocalFontAwesome()" referrerpolicy="no-referrer" rel="stylesheet">
+  <!-- Bootstrap CSS for Navbar -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
+  <link href="../../career-pathing-styles.css" rel="stylesheet">
+  <script>
+   function loadLocalFontAwesome() {
+            console.warn('Failed to load Font Awesome from CDN. Ensure a local fallback or alternative CDN is configured if necessary.');
+            var cdnLink = document.getElementById('fontAwesomeCdn');
+            if (cdnLink) { cdnLink.onerror = null; }
+        }
+  </script>
+  <link href="../../css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body class="text-slate-800">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-20">
+      <div class="w-full max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
+          <div class="flex items-center gap-3">
+              <svg class="h-7 w-7 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 013-3h.008c1.538 0 2.962.836 3.75 2.121" /></svg>
+              <h1 class="text-lg font-bold text-slate-800">Job Architecture</h1>
+          </div>
+          <div class="flex items-center gap-4">
+              <a href="/import-export/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Import/Export Data</a>
+              <a href="job_architecture_help_modern.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Help</a>
+              <a href="/index.html" class="text-sm font-semibold text-slate-800 hover:text-blue-600">Home</a>
+          </div>
+      </div>
+  </header>
+  <div class="main-container">
+  </div>
+  <div class="py-3 px-4" id="employeeSummaryBar">
+   <div class="container mx-auto flex flex-wrap justify-center md:justify-between text-sm">
+    <div class="summary-item">
+     <span class="summary-label">
+      Employee:
+     </span>
+     <span id="summaryEmployeeName">
+     </span>
+    </div>
+    <div class="summary-item">
+     <span class="summary-label">
+      Current Role:
+     </span>
+     <span id="summaryCurrentRole">
+     </span>
+    </div>
+    <div class="summary-item">
+     <span class="summary-label">
+      Grade:
+     </span>
+     <span id="summaryGrade">
+     </span>
+    </div>
+    <div class="summary-item">
+     <span class="summary-label">
+      Department:
+     </span>
+     <span id="summaryDepartment">
+     </span>
+    </div>
+    <div class="summary-item">
+     <span class="summary-label">
+      Location:
+     </span>
+     <span id="summaryLocation">
+     </span>
+    </div>
+    <div class="summary-item">
+     <span class="summary-label">
+      Manager:
+     </span>
+     <span id="summaryManager">
+     </span>
+    </div>
+   </div>
+  </div>
+  <div class="cp-container container mx-auto px-4 py-8">
+    <!-- New Introductory Section START -->
+    <section id="career-path-welcome-message" class="mb-8 p-6 bg-sky-50 rounded-lg shadow">
+      <h1 class="text-3xl font-bold text-delta-blue mb-4">Welcome to Your Career Navigator!</h1>
+      <p class="text-lg text-slate-700 mb-3">
+        This page is your personal guide to understanding and planning your career journey within Akara using the Career Navigator. We're here to help you visualize your growth and identify exciting opportunities.
+      </p>
+      <div class="mt-4">
+        <h2 class="text-xl font-semibold text-delta-blue mb-2">How to Use This Page:</h2>
+        <ul class="list-disc list-inside text-slate-600 space-y-1">
+          <li><strong>Review Your Current Role:</strong> See details about your current position and skills.</li>
+          <li><strong>Explore Aspirational Roles:</strong> Discover potential next steps in your career using the navigator. Click on any role to see more details.</li>
+          <li><strong>Analyze Path Details:</strong> Understand the skills you have and those you can develop for a chosen aspirational role.</li>
+          <li><strong>Plan Your Development:</strong> Use the "Learning Focus" to identify key skills for growth and access development resources.</li>
+          <li><strong>Discover More:</strong> Check out "Explore Further Opportunities" for additional role suggestions tailored to you.</li>
+        </ul>
+      </div>
+      <p class="mt-4 text-md text-slate-700">
+        We're excited to support your growth and development at Akara!
+      </p>
+    </section>
+    <!-- New Introductory Section END -->
+
+   <div id="careerPathVisualizationContainer">
+    <h2 class="text-2xl font-bold text-delta-blue mb-4">
+     Current Role
+    </h2>
+    <div class="current-role-section-tree-root">
+     <div id="currentRoleDisplayArea">
+      <!-- Current role card will be injected here -->
+     </div>
+    </div>
+    <h2 class="text-2xl font-bold text-delta-blue mt-8 mb-4">
+     Aspirational Roles
+    </h2>
+    <div id="branchContainer">
+     <!-- Career path branches will be injected here by JS -->
+    </div>
+   </div>
+   <div class="hidden mt-12" id="cpAnalysisSection">
+    <section class="cp-card cp-path-analysis">
+     <div class="flex justify-between items-center mb-4">
+      <h3 class="text-3xl font-bold text-delta-blue">
+       <i class="fas fa-microscope">
+       </i>
+       Path Analysis:
+       <span id="analysisRoleName">
+       </span>
+      </h3>
+      <button class="text-delta-red hover:text-delta-dark-red text-2xl font-bold" id="closeAnalysisBtn">
+       &times;
+      </button>
+     </div>
+     <p class="text-delta-dark-gray mb-6 text-md leading-relaxed" id="analysisRoleDescription">
+     </p>
+     <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
+      <div>
+       <h4 class="text-xl font-semibold mb-3 text-delta-blue">
+        <i class="fas fa-check-double">
+        </i>
+        Your Relevant Skills
+       </h4>
+       <ul class="list-disc list-inside space-y-1.5 text-delta-text-dark pl-1" id="possessedSkillsList">
+       </ul>
+      </div>
+      <div>
+       <h4 class="text-xl font-semibold mb-3 text-delta-red">
+        <i class="fas fa-graduation-cap">
+        </i>
+        Your Learning Focus
+       </h4>
+       <ul class="space-y-2 text-delta-text-dark" id="missingSkillsList">
+       </ul>
+       <div class="mt-4" id="devPlanButtonContainer">
+        <!-- Button will be injected here by JS -->
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+   <!-- Role Suggestions Section -->
+   <section class="mt-12" id="roleSuggestionsSection">
+    <h2 class="text-2xl font-bold text-delta-blue mb-6 text-center">
+     Discover More Opportunities
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="suggestionsGridContainer">
+     <!-- Suggestion cards will be injected here by JS -->
+    </div>
+   </section>
+  </div>
+  <div class="cp-notification-base" id="cpNotificationBar">
+  </div>
+  <!-- Bootstrap JS and Popper.js for Navbar dropdowns -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+  </script>
+  <!-- Custom Scripts -->
+  <script src="../../career-pathing-scripts.js">
+  </script>
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

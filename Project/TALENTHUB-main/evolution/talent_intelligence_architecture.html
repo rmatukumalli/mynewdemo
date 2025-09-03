@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Talent Intelligence Architecture
+  </title>
+  <!-- Include Tailwind CSS from CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom styles for color variables and basic layout -->
+  <style>
+   :root {
+            --delta-blue: #2563eb; /* A shade of blue for primary elements */
+            --delta-red: #ef4444; /* A shade of red for accent/danger elements */
+        }
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f8fafc; /* Lighter background */
+            line-height: 1.6;
+            color: #334155;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .button-delta-red-outline {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--delta-red);
+            color: var(--delta-red);
+            background-color: transparent;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .button-delta-red-outline:hover {
+            background-color: var(--delta-red);
+            color: white;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+        }
+        .btn-primary {
+            background-color: var(--delta-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1e40af; /* Darker blue on hover */
+        }
+        .btn-secondary {
+            background-color: #6b7280; /* Gray */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563; /* Darker gray on hover */
+        }
+        .architecture-diagram {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container mx-auto p-6">
+   <!-- Back to Roadmap Button -->
+   <button class="button-delta-red-outline mb-10 flex items-center justify-center px-6 py-3 text-lg" id="back-to-roadmap">
+    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+     <path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round">
+     </path>
+    </svg>
+    Back to Roadmap
+   </button>
+   <div class="content-section text-center mb-12">
+    <h1 class="text-4xl font-extrabold text-slate-800 mb-4">
+     Talent Intelligence Architecture
+    </h1>
+    <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+     This page provides a comprehensive overview of the Talent Intelligence platform's architecture, detailing its core components and their intricate interactions. The visual diagram below offers a clear representation of the system's design.
+    </p>
+    <!-- Placeholder image as the original path is external and not provided -->
+    <img alt="Talent Intelligence Functional Architecture Diagram" class="architecture-diagram" onerror="this.onerror=null;this.src='https://placehold.co/800x500/ddeafe/2563eb?text=Talent+Intelligence+Architecture+Diagram';" src="../images/Talent Intelligence Functional Architecture.png"/>
+   </div>
+   <div class="text-center my-8">
+    <a class="btn-primary inline-block px-8 py-3 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out" href="architecture_image_view.html" target="_blank">
+     View Full Architecture Diagram
+    </a>
+    <p class="text-sm text-slate-500 mt-3">
+     (Opens in a new tab for a detailed view)
+    </p>
+   </div>
+   <div class="text-center mt-12 content-section">
+    <h2 class="text-3xl font-bold text-slate-800 mb-4">
+     Project Plan &amp; Timeline
+    </h2>
+    <p class="text-lg text-slate-700 mb-6 leading-relaxed">
+     Explore the detailed project plan and timeline for the development and implementation of the Talent Intelligence platform, outlining key milestones and phases.
+    </p>
+    <!-- Adjust path as needed based on actual project structure -->
+    <a class="btn-secondary inline-block px-8 py-3 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out" href="../project_timeline.html">
+     View Project Timeline
+    </a>
+   </div>
+  </div>
+  <script>
+   // Script to navigate back to the future_roadmap.html page
+        document.getElementById('back-to-roadmap').addEventListener('click', function() {
+            window.location.href = 'future_roadmap.html'; // Assuming future_roadmap.html is in the same directory
+        });
+  </script>
+  
+ </body>
+</html>

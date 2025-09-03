@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Skills-Based Hiring - Talent Marketplace
+  </title>
+  <link href="css/admin-styles.css" rel="stylesheet">
+  <link href="css/all.min.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+  <style>
+   /* Placeholder styles for the new page */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        div.container { /* Ensure this is the main content wrapper that should expand */
+            flex-grow: 1;
+        }
+        /* .container styles might be adjusted by theme.css or kept if specific layout is needed */
+        header h1 {
+            text-align: center;
+            color: #333;
+            padding: 1rem 0; /* Add some padding to the main H1 */
+        }
+        /* Add more specific styles as sections are built */
+  </style>
+  <link href="css/main-layout.css" rel="stylesheet">
+  <style>
+   .custom-footer {
+    background-color: #002D62;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure footer is above other content */
+  }
+  body {
+    padding-bottom: 60px; /* Adjust to accommodate footer height, approx. 18px font + 20px padding */
+  }
+  </style>
+ </head>
+ <body>
+  <style>
+   .top-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    padding: 10px 20px;
+    z-index: 1000;
+  }
+
+  .home-button {
+    color: white;
+    background-color: #002D62;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+
+  .home-button:hover {
+    background-color: #004080;
+  }
+
+  body {
+    padding-top: 60px;
+    margin: 0;
+  }
+  </style>
+  <div class="top-nav">
+   <a class="home-button" href="index.html">
+    Home
+   </a>
+  </div>
+  <div id="hiring-copilot-global-notification-area" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050;">
+  </div>
+  <div class="main-container">
+  </div>
+  <div class="container">
+   <header>
+    <h1>
+     Skills-Based Hiring
+    </h1>
+   </header>
+   <main>
+    <section class="dashboard-section" id="overall-analytics-overview" style="border: 1px solid #eee; padding: 25px; margin-bottom: 20px; background-color: #fff;">
+     <div class="analytics-container">
+      <div class="chart-panel">
+       <h3>
+        Hiring Snapshot
+       </h3>
+       <div class="donut-chart-container">
+        <img alt="Hiring Overview Donut Chart" src="images/sample-donut-chart-airline.png" style="width: 100%; max-width: 220px; display: block; margin: 20px auto;">
+        <ul class="chart-legend">
+         <li>
+          <span class="legend-color" style="background-color: #36A2EB;">
+          </span>
+          External Hires (60%)
+         </li>
+         <li>
+          <span class="legend-color" style="background-color: #FFCE56;">
+          </span>
+          Internal Mobility (30%)
+         </li>
+         <li>
+          <span class="legend-color" style="background-color: #4BC0C0;">
+          </span>
+          New Talent Pool (10%)
+         </li>
+         <li style="margin-top: 10px;">
+          <strong>
+           Recent Placements: 7
+          </strong>
+         </li>
+        </ul>
+       </div>
+      </div>
+      <div class="employee-analytics-panel">
+       <h3>
+        Workforce Insights
+       </h3>
+       <!-- Changed from Employee Insights for broader context -->
+       <div class="analytics-metrics">
+        <div class="metric-item">
+         <span class="metric-value">
+          614
+         </span>
+         <p>
+          Total Employees
+         </p>
+        </div>
+        <div class="metric-item">
+         <span class="metric-value">
+          71%
+         </span>
+         <p>
+          Avg. Role Fit
+         </p>
+        </div>
+        <div class="metric-item">
+         <span class="metric-value">
+          4.5yr
+         </span>
+         <p>
+          Avg. Tenure
+         </p>
+        </div>
+       </div>
+       <h4>
+        Key Competencies (Organization-wide)
+       </h4>
+       <div class="shared-skills-chart">
+        <div class="skill-bar">
+         <span class="skill-name">
+          Safety Compliance
+         </span>
+         <div class="bar-container">
+          <div class="bar" style="width: 85%; background-color: #36A2EB;">
+          </div>
+         </div>
+         <span class="skill-value">
+          85%
+         </span>
+        </div>
+        <div class="skill-bar">
+         <span class="skill-name">
+          Communication
+         </span>
+         <div class="bar-container">
+          <div class="bar" style="width: 70%; background-color: #36A2EB;">
+          </div>
+         </div>
+         <span class="skill-value">
+          70%
+         </span>
+        </div>
+        <div class="skill-bar">
+         <span class="skill-name">
+          Customer Service
+         </span>
+         <div class="bar-container">
+          <div class="bar" style="width: 78%; background-color: #36A2EB;">
+          </div>
+         </div>
+         <span class="skill-value">
+          78%
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section class="dashboard-section" id="airline-skills-landscape" style="border: 1px solid #eee; padding: 25px; margin-bottom: 20px; background-color: #fff;">
+     <h2>
+      Airline Industry Skills Landscape
+     </h2>
+     <div class="skills-trends-summary">
+      <div class="trend-category">
+       <span class="trend-label">
+        Disappearing
+       </span>
+       <div class="progress-bar-container">
+        <div class="progress-bar disappearing" style="width: 25%;">
+        </div>
+       </div>
+       <span class="trend-percentage">
+        25%
+       </span>
+      </div>
+      <div class="trend-category">
+       <span class="trend-label">
+        Constant
+       </span>
+       <div class="progress-bar-container">
+        <div class="progress-bar constant" style="width: 45%;">
+        </div>
+       </div>
+       <span class="trend-percentage">
+        45%
+       </span>
+      </div>
+      <div class="trend-category">
+       <span class="trend-label">
+        Emerging
+       </span>
+       <div class="progress-bar-container">
+        <div class="progress-bar emerging" style="width: 30%;">
+        </div>
+       </div>
+       <span class="trend-percentage">
+        30%
+       </span>
+      </div>
+     </div>
+     <div class="skills-trends-details">
+      <div class="skills-column">
+       <h3>
+        Disappearing Skills
+       </h3>
+       <ul class="skills-list trend-list">
+        <li>
+         Manual Ticketing Systems
+         <span class="trend-change negative">
+          -65%
+         </span>
+        </li>
+        <li>
+         Legacy Avionics Operation
+         <span class="trend-change negative">
+          -50%
+         </span>
+        </li>
+        <li>
+         Basic Ground Crew Coordination
+         <span class="trend-change negative">
+          -40%
+         </span>
+        </li>
+       </ul>
+      </div>
+      <div class="skills-column">
+       <h3>
+        Constant Skills
+       </h3>
+       <ul class="skills-list trend-list">
+        <li>
+         Customer Service Excellence
+         <span class="trend-change neutral">
+          &harr;
+         </span>
+        </li>
+        <li>
+         Aircraft Safety Procedures
+         <span class="trend-change neutral">
+          &harr;
+         </span>
+        </li>
+        <li>
+         Crew Resource Management (CRM)
+         <span class="trend-change neutral">
+          &harr;
+         </span>
+        </li>
+       </ul>
+      </div>
+      <div class="skills-column">
+       <h3>
+        Top Emerging Skills
+       </h3>
+       <ul class="skills-list trend-list">
+        <li>
+         Unmanned Aerial Vehicle (UAV) Operations
+         <span class="trend-change positive">
+          +95%
+         </span>
+        </li>
+        <li>
+         Sustainable Aviation Fuel (SAF) Management
+         <span class="trend-change positive">
+          +85%
+         </span>
+        </li>
+        <li>
+         AI in Flight Operations & MRO
+         <span class="trend-change positive">
+          +70%
+         </span>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </section>
+    <!-- Content related to "Screen Candidates" has been moved to screen-candidates.html -->
+    <!-- The sections for Analytics Dashboard, Search and Filters, Smart Suggestions, -->
+    <!-- Candidate Segmentation, Engage Candidates, and related modals were here. -->
+    <section style="padding: 20px; text-align: center; background-color: #e9ecef; border-radius: 8px;">
+     <h2>
+      Screen Candidates Functionality
+     </h2>
+     <p>
+      The "Screen Candidates" features including analytics, search, smart suggestions, and candidate segmentation have been moved to their own dedicated page.
+     </p>
+     <p>
+      <a class="btn-primary" href="screen-candidates.html" style="text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px;">
+       Go to Screen Candidates Page
+      </a>
+     </p>
+    </section>
+   </main>
+  </div>
+  <!-- Scripts will be added later -->
+  <!-- The Co-Pilot container and script for skills-hiring.js might still be relevant if other parts of this page use them -->
+  <!-- For now, assuming the Co-Pilot is primarily for the moved sections, it's removed from here. -->
+  <!-- If skills-hiring.js is still needed for other functionalities on this page, it should be kept. -->
+  <!-- <div id="hiring-copilot-container" style="position: fixed; bottom: 20px; right: 20px; width: 350px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 8px; background-color: #f9fafb;"></div> -->
+  <!-- <script src="js/skills-hiring.js"></script> -->
+  <div class="custom-footer">
+   Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+ <script>document.addEventListener('contextmenu', event => event.preventDefault());</script>
+</body>
+</html>

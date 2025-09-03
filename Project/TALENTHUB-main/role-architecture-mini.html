@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Dictionary</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="role-architecture-mini.css">
+</head>
+<body>
+    <header class="main-header">
+        <a href="/index.html" class="home-link">Home</a>
+    </header>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-icon-container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div class="header-text">
+                <h1>Role Dictionary</h1>
+                <p>Manage all Roles across your organization.</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card action-card">
+                <div class="action-card-left">
+                    <h2>What would you like to do?</h2>
+                    <div class="action-buttons">
+                        <button id="add-role-btn" class="btn"><span>Add roles</span> <span class="btn-icon">+</span></button>
+                        <button id="import-roles-btn" class="btn"><span>Import roles</span> <span class="btn-icon">↑</span></button>
+                        <button id="export-role-btn" class="btn"><span>Export role</span> <span class="btn-icon">↓</span></button>
+                    </div>
+                </div>
+                <div class="action-card-right">
+                    <p>6 draft changes</p>
+                    <button id="review-changes-btn" class="btn btn-primary"><span>Review and apply changes</span> <span class="btn-icon">→</span></button>
+                </div>
+            </div>
+
+            <div class="card filter-card">
+                <div class="search-bar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="search-input" placeholder="Search role by name, description or tag">
+                </div>
+                <div class="filter-controls">
+                    <div id="filter-tag-container" class="filter-tag" style="display: none;">
+                        <span id="filter-tag-text"></span>
+                        <button id="remove-filter-btn" class="remove-tag-btn">×</button>
+                    </div>
+                    <a href="#" id="clear-filters-link" class="clear-filters-link">clear all filters</a>
+                    <div class="filter-toggles">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="drafts-toggle" class="toggle-input">
+                            <label for="drafts-toggle" class="toggle-label"></label>
+                        </div>
+                        <span>Show drafts only</span>
+                        <select id="department-filter" class="filter-select">
+                            <option value="">Role department</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Design">Design</option>
+                        </select>
+                        <select id="type-filter" class="filter-select">
+                            <option value="">Role type</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Contract">Contract</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="card roles-list-card">
+                    <div class="roles-list-header">
+                        <h3 id="roles-count">Roles (0)</h3>
+                        <select class="sort-select">
+                            <option>sort by: recently changed</option>
+                        </select>
+                    </div>
+                    <div class="roles-list" id="roles-list">
+                        <!-- Roles will be dynamically inserted here -->
+                    </div>
+                    <a href="#" class="load-more-link">Load more Roles</a>
+                </div>
+
+                <div class="card role-details-card" id="role-details-card">
+                    <!-- Role details will be dynamically inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <div class="footer-links">
+                <a href="#">Custom Policy</a>
+                <a href="#">License Agreement</a>
+                <a href="#">Privacy Notice</a>
+                <a href="#">Accessibility Statement</a>
+                <a href="#">Help</a>
+            </div>
+            <div class="footer-copy">
+                <p>© Copyright 2025 Skillsoft Ireland Limited. All rights reserved.</p>
+                <div class="powered-by">
+                    <span>Powered by</span>
+                    <img src="https://raw.githubusercontent.com/user-attachments/assets/c2a3929a-e295-4694-8ef9-f2970c99173d" alt="Skillsoft Percipio">
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div class="custom-footer">
+    Demo Experience by Raj Matukumalli &ndash; For Illustrative Purposes Only - Optimized for Desktop
+  </div>
+
+    <!-- Skill Details Modal -->
+    <div id="skill-modal-overlay" class="modal-overlay">
+        <div class="modal-content" id="skill-modal-content">
+            <!-- Skill modal content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Add Role Modal -->
+    <div id="add-role-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Role</h3>
+                <button class="modal-close-btn" onclick="hideAddRoleModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-role-form">
+                    <div class="modal-section">
+                        <h4>Role Information</h4>
+                        <div class="form-grid-add-role">
+                            <div class="form-group">
+                                <label for="role-title">Role Title</label>
+                                <input type="text" id="role-title" class="form-input" placeholder="Enter role title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role-family">Family</label>
+                                <select id="role-family" class="form-input" required>
+                                    <option value="Software Development">Software Development</option>
+                                    <option value="Data & Analytics">Data & Analytics</option>
+                                    <option value="Infrastructure">Infrastructure</option>
+                                    <option value="Product Design">Product Design</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="role-department">Department</label>
+                                <select id="role-department" class="form-input" required>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Product">Product</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="role-level">Level</label>
+                                <select id="role-level" class="form-input" required>
+                                    <option value="entry-level (P1)">Entry-Level (P1)</option>
+                                    <option value="mid-level (P2)">Mid-Level (P2)</option>
+                                    <option value="senior (P3)">Senior (P3)</option>
+                                    <option value="staff (P4)">Staff (P4)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-full-width">
+                            <label for="role-type">Role Type</label>
+                            <select id="role-type" class="form-input" required>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="modal-section">
+                        <h4>Details</h4>
+                        <div class="form-group">
+                            <label for="role-description">Description</label>
+                            <textarea id="role-description" class="form-input" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="role-responsibilities">Key Responsibilities (comma-separated)</label>
+                            <textarea id="role-responsibilities" class="form-input" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="role-tags">Tags (comma-separated)</label>
+                            <input type="text" id="role-tags" class="form-input" placeholder="e.g., React, Node.js, SQL" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideAddRoleModal()">Cancel</button>
+                <button id="create-role-btn" class="btn btn-primary">Create Role</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Draft Modal -->
+    <div id="edit-draft-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Draft</h3>
+                <button class="modal-close-btn" onclick="hideEditDraftModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-draft-form">
+                    <div class="modal-section">
+                        <h4>Role Information</h4>
+                        <div class="form-grid-add-role">
+                            <div class="form-group">
+                                <label for="edit-role-title">Role Title</label>
+                                <input type="text" id="edit-role-title" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-role-family">Family</label>
+                                <select id="edit-role-family" class="form-input" required>
+                                    <option value="Software Development">Software Development</option>
+                                    <option value="Data & Analytics">Data & Analytics</option>
+                                    <option value="Infrastructure">Infrastructure</option>
+                                    <option value="Product Design">Product Design</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-role-department">Department</label>
+                                <select id="edit-role-department" class="form-input" required>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Product">Product</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-role-level">Level</label>
+                                <select id="edit-role-level" class="form-input" required>
+                                    <option value="entry-level (P1)">Entry-Level (P1)</option>
+                                    <option value="mid-level (P2)">Mid-Level (P2)</option>
+                                    <option value="senior (P3)">Senior (P3)</option>
+                                    <option value="staff (P4)">Staff (P4)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-full-width">
+                            <label for="edit-role-type">Role Type</label>
+                            <select id="edit-role-type" class="form-input" required>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Contract">Contract</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-section">
+                        <h4>Details</h4>
+                        <div class="form-group">
+                            <label for="edit-role-description">Description</label>
+                            <textarea id="edit-role-description" class="form-input" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-role-responsibilities">Key Responsibilities (comma-separated)</label>
+                            <textarea id="edit-role-responsibilities" class="form-input" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-role-tags">Tags (comma-separated)</label>
+                            <input type="text" id="edit-role-tags" class="form-input" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideEditDraftModal()">Cancel</button>
+                <button id="save-changes-btn" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA STORE ---
+        const rolesData = [
+            { id: 'data-scientist', title: 'Data Scientist', department: 'Engineering', level: 'mid-level (P2)', type: 'Full-time', tags: ['Machine Learning Expertise', 'Data Visualization Techniques', 'Statistical Analysis and Modeling', 'Python', 'R'], updated: '11/20/2025', isDraft: true, family: 'Data & Analytics', created: 'Jan 15, 2025', description: 'The Data Scientist is responsible for analyzing large amounts of complex raw data to find patterns and build models.', responsibilities: ['Work with stakeholders to identify opportunities for leveraging company data.','Mine and analyze data from company databases to drive optimization.','Assess the effectiveness and accuracy of new data sources and data gathering techniques.'], related: ['software-engineer', 'devops-engineer'] },
+            { id: 'software-engineer', title: 'Software Engineer', department: 'Engineering', level: 'mid-level (P2)', type: 'Full-time', tags: ['TypeScript', 'GraphQL', 'Docker', 'React', 'Node.js', 'CI/CD'], updated: '06/20/2025', isDraft: true, family: 'Software Development', created: 'May 10, 2025', description: 'The Software Engineer is responsible for designing, developing, and maintaining scalable, high-quality software solutions that meet both user and business needs.', responsibilities: ['Develop, test, and deploy software applications using modern programming languages and frameworks','Collaborate cross-functionally with product, design, and QA teams in agile sprints','Participate in code reviews and contribute to technical best practices'], related: ['frontend-engineer', 'senior-software-engineer', 'sre', 'devops-engineer'] },
+            { id: 'devops-engineer', title: 'DevOps Engineer', department: 'Engineering', level: 'mid-level (P2)', type: 'Contract', tags: ['TypeScript', 'Vue.js', 'Express.js', 'AWS', 'Jenkins', 'Terraform'], updated: '10/20/2025', isDraft: false, family: 'Infrastructure', created: 'Feb 20, 2025', description: 'A DevOps Engineer works with developers and IT staff to oversee the code releases, combining understanding of both engineering and coding.', responsibilities: ['Build and set up new development tools and infrastructure','Understand the needs of stakeholders and conveying this to developers','Work on ways to automate and improve development and release processes'], related: ['sre', 'software-engineer'] },
+            { id: 'ux-designer', title: 'UX Designer', department: 'Design', level: 'mid-level (P2)', type: 'Full-time', tags: ['Figma', 'Adobe XD', 'Sketch', 'User Research', 'Prototyping'], updated: '09/20/2025', isDraft: true, family: 'Product Design', created: 'Mar 01, 2025', description: 'A UX Designer is responsible for creating user-centered designs by understanding business requirements, and user feedback.', responsibilities: ['Conducting user research and testing','Developing wireframes and task flows based on user needs','Collaborating with Designers and Developers to create intuitive, user-friendly software'], related: ['frontend-engineer'] },
+            { id: 'frontend-engineer', title: 'Frontend Engineer', department: 'Engineering', level: 'Mid-Level (P2)', type: 'Full-time', tags: ['HTML', 'CSS', 'JavaScript', 'React'], updated: '05/15/2025', isDraft: false, family: 'Software Development', created: 'Apr 01, 2025', description: 'Specializes in building the user interface of websites and web applications.', responsibilities: ['Developing user-facing features', 'Building reusable code and libraries for future use'], related: ['software-engineer', 'ux-designer'] },
+            { id: 'senior-software-engineer', title: 'Senior Software Engineer', department: 'Engineering', level: 'Lead (P4)', type: 'Full-time', tags: ['System Architecture', 'Mentoring', 'Java', 'Spring'], updated: '05/10/2025', isDraft: false, family: 'Software Development', created: 'Mar 15, 2025', description: 'Leads design and implementation of software solutions.', responsibilities: ['Mentoring junior engineers', 'Making high-level design choices'], related: ['software-engineer', 'devops-engineer'] },
+            { id: 'sre', title: 'Site Reliability Engineer', department: 'Engineering', level: 'Senior (P4)', type: 'Full-time', tags: ['Kubernetes', 'Prometheus', 'Go', 'Python'], updated: '04/20/2025', isDraft: false, family: 'Infrastructure', created: 'Feb 01, 2025', description: 'Ensures that the company’s services are reliable and scalable.', responsibilities: ['Engaging in and improving the whole lifecycle of services', 'Scaling systems sustainably through mechanisms like automation'], related: ['devops-engineer', 'software-engineer'] }
+        ];
+
+        const skillsData = {
+            'JavaScript': { family: 'Programming Languages', level: 'Proficient (L4)', created: 'May 10, 2025', rolesCount: 12, description: 'JavaScript is a high-level, often just-in-time compiled programming language that conforms to the ECMAScript specification. It\'s used for web development, game development, mobile applications, and server-side programming.', keywords: ['Programming', 'JS', 'Web Development', 'Frontend', 'Scripting'], taxonomy: ['Skillsoft stock taxonomy', 'Technical', 'Programming languages', 'JavaScript'] },
+            'React': { family: 'Libraries/Frameworks', level: 'Expert (L5)', created: 'May 11, 2025', rolesCount: 8, description: 'React is a free and open-source front-end JavaScript library for building user interfaces based on UI components.', keywords: ['Frontend', 'JS Library', 'Web Development'], taxonomy: ['Skillsoft stock taxonomy', 'Technical', 'Web Development', 'React'] },
+            'Docker': { family: 'DevOps', level: 'Intermediate (L3)', created: 'May 12, 2025', rolesCount: 15, description: 'Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.', keywords: ['Containerization', 'DevOps', 'Deployment'], taxonomy: ['Skillsoft stock taxonomy', 'Technical', 'DevOps', 'Docker'] }
+        };
+
+        // --- DOM ELEMENTS ---
+        const rolesListContainer = document.getElementById('roles-list');
+        const roleDetailsContainer = document.getElementById('role-details-card');
+        const rolesCountElement = document.getElementById('roles-count');
+        const searchInput = document.getElementById('search-input');
+        const draftsToggle = document.getElementById('drafts-toggle');
+        const departmentFilter = document.getElementById('department-filter');
+        const typeFilter = document.getElementById('type-filter');
+        const clearFiltersLink = document.getElementById('clear-filters-link');
+        const skillModalOverlay = document.getElementById('skill-modal-overlay');
+        const skillModalContent = document.getElementById('skill-modal-content');
+        const addRoleModalOverlay = document.getElementById('add-role-modal-overlay');
+        const addRoleForm = document.getElementById('add-role-form');
+        const editDraftModalOverlay = document.getElementById('edit-draft-modal-overlay');
+        const editDraftForm = document.getElementById('edit-draft-form');
+        let currentlyEditingRoleId = null;
+
+        let currentFilters = {
+            searchTerm: '',
+            showDrafts: false,
+            department: '',
+            type: ''
+        };
+
+        // --- RENDER FUNCTIONS ---
+        const renderRolesList = (roles) => {
+            rolesListContainer.innerHTML = '';
+            if (roles.length === 0) {
+                rolesListContainer.innerHTML = '<p style="text-align:center; padding: 20px;">No roles match the current filters.</p>';
+            }
+            roles.forEach(role => {
+                const roleCard = document.createElement('div');
+                roleCard.className = 'role-card';
+                roleCard.dataset.id = role.id;
+                roleCard.onclick = () => selectRole(role.id);
+
+                const tagsHtml = role.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('');
+                const moreTagsHtml = role.tags.length > 3 ? `<span class="tag tag-more">+${role.tags.length - 3} more</span>` : '';
+                const draftBadgeHtml = role.isDraft ? '<span class="draft-badge">Draft</span>' : '';
+
+                roleCard.innerHTML = `
+                    <div class="role-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20"x2="6" y2="14"></line></svg></div>
+                    <div class="role-card-info"><h4>${role.title}</h4><p class="role-meta">${role.department} | ${role.level}</p><div class="role-tags">${tagsHtml}${moreTagsHtml}</div><p class="role-updated">Updated: ${role.updated}</p></div>
+                    ${draftBadgeHtml}
+                `;
+                rolesListContainer.appendChild(roleCard);
+            });
+            rolesCountElement.textContent = `Roles (${roles.length})`;
+        };
+
+        const renderRoleDetails = (role) => {
+            if (!role) {
+                roleDetailsContainer.innerHTML = '<p style="text-align:center; padding: 40px;">Select a role to see details.</p>';
+                return;
+            }
+            const skillsHtml = role.tags.map(tag => `<span class="skill-tag" onclick="showSkillModal('${tag}')">${tag}</span>`).join('');
+            const responsibilitiesHtml = role.responsibilities.map(r => `<li>${r}</li>`).join('');
+
+            roleDetailsContainer.innerHTML = `
+                <div class="role-details-header"><div class="role-title-section"><h2>${role.title}</h2>${role.isDraft ? '<p class="draft-notice">This role has draft changes available</p>' : ''}</div><div class="role-actions"><button class="btn btn-secondary">Cancel</button><button class="btn btn-secondary">Save as draft</button><button class="btn btn-primary">Apply changes</button></div></div>
+                ${role.isDraft ? `<div class="draft-changes-section"><div class="draft-change-item"><span class="field-label">Title:</span> <span class="field-value">Senior ${role.title} (Changed)</span></div><div class="draft-change-item"><span class="field-label">Level:</span> <span class="field-value">Senior (P3) (Changed)</span></div><div class="draft-actions"><button class="btn btn-secondary" onclick="showEditDraftModal('${role.id}')">Edit draft</button><button class="btn btn-danger">Discard draft</button></div></div>` : ''}
+                <div class="details-section"><h3>Role Information</h3><div class="form-grid"><div class="form-group"><label>Department</label><input type="text" value="${role.department}" readonly></div><div class="form-group"><label>Family</label><input type="text" value="${role.family}" readonly></div><div class="form-group"><label>Level</label><select><option>${role.level}</option></select></div><div class="form-group"><label>Created</label><input type="text" value="${role.created}" readonly></div></div></div>
+                <div class="details-section"><h3>Skills <span class="total-count">${role.tags.length} skills total</span></h3><div class="skills-tags">${skillsHtml}</div><input type="text" class="skills-input" placeholder="Type to add skills"></div>
+                <div class="details-section"><h3>Job Description</h3><p>${role.description}</p></div>
+                <div class="details-section"><h3>Key Responsibilities</h3><ul>${responsibilitiesHtml}</ul></div>
+                
+                <div class="details-section related-roles-section">
+                    <h3>Related Roles</h3>
+                    <div class="related-roles-grid">
+                        ${(role.related || []).map(relatedId => {
+                            const relatedRole = rolesData.find(r => r.id === relatedId);
+                            if (!relatedRole) return '';
+                            return `<div class="related-role-card"><h4>${relatedRole.title}</h4><p>${relatedRole.level}</p></div>`;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <div class="role-details-footer"><button class="btn btn-secondary">Cancel</button><button class="btn btn-secondary">Save as draft</button><button class="btn btn-primary">Apply changes</button></div>
+            `;
+        };
+
+        const renderSkillModal = (skillName) => {
+            const skill = skillsData[skillName] || Object.values(skillsData)[0];
+            const keywordsHtml = skill.keywords.map(k => `<span class="tag">${k}</span>`).join('');
+            const taxonomyHtml = skill.taxonomy.map((t, i) => `<span class="tag ${i === skill.taxonomy.length - 1 ? 'tag-active' : ''}">${t}</span>`).join('');
+            skillModalContent.innerHTML = `<div class="modal-header"><h3>Skill Details</h3><button class="modal-close-btn" onclick="hideSkillModal()">×</button></div><div class="modal-body"><h2>${skillName}</h2><div class="modal-section"><h4>Skill Information</h4><div class="info-grid"><div><span>Family</span><p>${skill.family}</p></div><div><span>Level</span><p>${skill.level}</p></div><div><span>Created</span><p>${skill.created}</p></div><div><span>Roles with the skill</span><p>${skill.rolesCount}</p></div></div></div><div class="modal-section"><h4>Skill Description</h4><p>${skill.description}</p></div><div class="modal-section"><h4>Tags / Keywords</h4><div class="keywords-tags">${keywordsHtml}</div></div><div class="modal-section"><div class="taxonomy-header"><h4>Taxonomy Path</h4><select><option>Select: Skillsoft stock taxonomy</option></select></div><div class="taxonomy-path">${taxonomyHtml}</div></div></div><div class="modal-footer"><button class="btn btn-primary" onclick="hideSkillModal()">Close</button></div>`;
+        };
+
+        // --- EVENT HANDLERS & LOGIC ---
+        const selectRole = (roleId) => {
+            const role = rolesData.find(r => r.id === roleId);
+            if (!role) return;
+            document.querySelectorAll('.role-card').forEach(card => card.classList.toggle('selected', card.dataset.id === roleId));
+            renderRoleDetails(role);
+        };
+
+        const applyFilters = () => {
+            let filteredRoles = [...rolesData];
+            if (currentFilters.showDrafts) {
+                filteredRoles = filteredRoles.filter(role => role.isDraft);
+            }
+            if (currentFilters.department) {
+                filteredRoles = filteredRoles.filter(role => role.department === currentFilters.department);
+            }
+            if (currentFilters.type) {
+                filteredRoles = filteredRoles.filter(role => role.type === currentFilters.type);
+            }
+            if (currentFilters.searchTerm) {
+                const term = currentFilters.searchTerm.toLowerCase();
+                filteredRoles = filteredRoles.filter(role =>
+                    role.title.toLowerCase().includes(term) ||
+                    role.description.toLowerCase().includes(term) ||
+                    role.tags.some(tag => tag.toLowerCase().includes(term))
+                );
+            }
+            renderRolesList(filteredRoles);
+            if (filteredRoles.length > 0) {
+                selectRole(filteredRoles[0].id);
+            } else {
+                renderRoleDetails(null);
+            }
+        };
+
+        const showSkillModal = (skillName) => {
+            renderSkillModal(skillName);
+            skillModalOverlay.style.display = 'flex';
+        };
+
+        const hideSkillModal = () => {
+            skillModalOverlay.style.display = 'none';
+        };
+
+        const showAddRoleModal = () => {
+            addRoleForm.reset();
+            addRoleModalOverlay.style.display = 'flex';
+        };
+
+        const hideAddRoleModal = () => {
+            addRoleModalOverlay.style.display = 'none';
+        };
+
+        const showEditDraftModal = (roleId) => {
+            const role = rolesData.find(r => r.id === roleId);
+            if (!role) return;
+
+            currentlyEditingRoleId = roleId;
+
+            document.getElementById('edit-role-title').value = role.title;
+            document.getElementById('edit-role-family').value = role.family;
+            document.getElementById('edit-role-department').value = role.department;
+            document.getElementById('edit-role-level').value = role.level;
+            document.getElementById('edit-role-type').value = role.type;
+            document.getElementById('edit-role-description').value = role.description;
+            document.getElementById('edit-role-responsibilities').value = role.responsibilities.join(', ');
+            document.getElementById('edit-role-tags').value = role.tags.join(', ');
+
+            editDraftModalOverlay.style.display = 'flex';
+        };
+
+        const hideEditDraftModal = () => {
+            editDraftModalOverlay.style.display = 'none';
+            currentlyEditingRoleId = null;
+        };
+
+        const saveDraftChanges = (event) => {
+            event.preventDefault();
+            if (!currentlyEditingRoleId) return;
+
+            const roleIndex = rolesData.findIndex(r => r.id === currentlyEditingRoleId);
+            if (roleIndex === -1) return;
+
+            const updatedRole = {
+                ...rolesData[roleIndex],
+                title: document.getElementById('edit-role-title').value,
+                family: document.getElementById('edit-role-family').value,
+                department: document.getElementById('edit-role-department').value,
+                level: document.getElementById('edit-role-level').value,
+                type: document.getElementById('edit-role-type').value,
+                description: document.getElementById('edit-role-description').value,
+                responsibilities: document.getElementById('edit-role-responsibilities').value.split(',').map(r => r.trim()),
+                tags: document.getElementById('edit-role-tags').value.split(',').map(tag => tag.trim()),
+                updated: new Date().toLocaleDateString(),
+            };
+
+            rolesData[roleIndex] = updatedRole;
+            applyFilters();
+            selectRole(updatedRole.id);
+            hideEditDraftModal();
+        };
+
+        const addNewRole = (event) => {
+            event.preventDefault();
+            const title = document.getElementById('role-title').value;
+            const department = document.getElementById('role-department').value;
+            const level = document.getElementById('role-level').value;
+            const type = document.getElementById('role-type').value;
+            const family = document.getElementById('role-family').value;
+            const tags = document.getElementById('role-tags').value.split(',').map(tag => tag.trim());
+            const description = document.getElementById('role-description').value;
+            const responsibilities = document.getElementById('role-responsibilities').value.split(',').map(r => r.trim());
+
+            if (!title || !department || !level || !type || !family || tags.length === 0 || !description || responsibilities.length === 0) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const newRole = {
+                id: `role-${Date.now()}`,
+                title,
+                department,
+                level,
+                type,
+                tags,
+                updated: new Date().toLocaleDateString(),
+                isDraft: true,
+                family,
+                created: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: '2025' }),
+                description,
+                responsibilities
+            };
+
+            rolesData.unshift(newRole); // Add to the beginning of the array
+            applyFilters();
+            selectRole(newRole.id);
+            hideAddRoleModal();
+        };
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial Render
+            applyFilters();
+            if (rolesData.length > 0) {
+                selectRole(rolesData[1].id);
+            }
+
+            // Filter Event Listeners
+            searchInput.addEventListener('input', (e) => {
+                currentFilters.searchTerm = e.target.value;
+                applyFilters();
+            });
+            draftsToggle.addEventListener('change', (e) => {
+                currentFilters.showDrafts = e.target.checked;
+                applyFilters();
+            });
+            departmentFilter.addEventListener('change', (e) => {
+                currentFilters.department = e.target.value;
+                applyFilters();
+            });
+            typeFilter.addEventListener('change', (e) => {
+                currentFilters.type = e.target.value;
+                applyFilters();
+            });
+            clearFiltersLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                searchInput.value = '';
+                draftsToggle.checked = false;
+                departmentFilter.value = '';
+                typeFilter.value = '';
+                currentFilters = { searchTerm: '', showDrafts: false, department: '', type: '' };
+                applyFilters();
+                selectRole(rolesData[1].id);
+            });
+
+            // Modal Listeners
+            skillModalOverlay.addEventListener('click', (event) => {
+                if (event.target === skillModalOverlay) hideSkillModal();
+            });
+            addRoleModalOverlay.addEventListener('click', (event) => {
+                if (event.target === addRoleModalOverlay) hideAddRoleModal();
+            });
+            editDraftModalOverlay.addEventListener('click', (event) => {
+                if (event.target === editDraftModalOverlay) hideEditDraftModal();
+            });
+
+
+            // General Action Button Listeners
+            document.getElementById('add-role-btn').addEventListener('click', showAddRoleModal);
+            document.getElementById('create-role-btn').addEventListener('click', addNewRole);
+            document.getElementById('save-changes-btn').addEventListener('click', saveDraftChanges);
+            document.getElementById('import-roles-btn').addEventListener('click', () => alert('Import roles clicked.'));
+            document.getElementById('export-role-btn').addEventListener('click', () => alert('Export role clicked.'));
+            document.getElementById('review-changes-btn').addEventListener('click', () => alert('Review and apply changes clicked.'));
+        });
+    </script>
+</body>
+</html>

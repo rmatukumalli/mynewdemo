@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app --chdir TALENTHUB-main
+web: PYTHONPATH=. gunicorn wsgi:app --chdir TALENTHUB-main/TALENTHUB-main
